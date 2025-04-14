@@ -18,5 +18,10 @@ namespace SONA
             SignUp login = new SignUp(this);
             pnLogin.Controls.Add(login);
         }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

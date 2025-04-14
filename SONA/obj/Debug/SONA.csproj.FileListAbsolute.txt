@@ -24,3 +24,17 @@ C:\Study\tinyProject\SONA\SONA\obj\Debug\SONA.csproj.Up2Date
 C:\Study\tinyProject\SONA\SONA\obj\Debug\SONA.exe
 C:\Study\tinyProject\SONA\SONA\obj\Debug\SONA.pdb
 C:\Study\tinyProject\SONA\SONA\obj\Debug\SONA.SignUp.resources
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\bin\Debug\SONA.exe.config
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\bin\Debug\SONA.exe
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\bin\Debug\SONA.pdb
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.csproj.AssemblyReference.cache
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.Login.resources
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.SONA.resources
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.SignUp.resources
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.Properties.Resources.resources
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.csproj.GenerateResource.cache
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.csproj.CoreCompileInputs.cache
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.csproj.Up2Date
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.exe
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\obj\Debug\SONA.pdb
+C:\Users\Tnvho\OneDrive\Project\SONA\SONA\bin\Debug\Guna.UI2.dll

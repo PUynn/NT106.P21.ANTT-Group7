@@ -51,5 +51,10 @@ namespace SONA
             S.pnLogin.Controls.Add(info);
 
         }
+
+        private void guna2Panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
