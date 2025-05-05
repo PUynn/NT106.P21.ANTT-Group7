@@ -124,6 +124,9 @@
   <data name="Albums" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Albums.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="homeOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\homeOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Pins" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pins.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,9 +184,6 @@
   <data name="PlayAni" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayAni.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LoginBGR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LoginBGR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Volume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Volume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -195,6 +195,9 @@
   </data>
   <data name="Next" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Next.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SONA2Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SONA2Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,8 +220,8 @@
   <data name="icons8-facebook-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-facebook-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="homeOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\homeOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LoginBGR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoginBGR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="discoverOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\discoverOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,7 +238,7 @@
   <data name="discoverOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\discoverOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SONA2Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SONA2Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SearchOFF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SearchOFF1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
