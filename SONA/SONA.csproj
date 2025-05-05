@@ -249,6 +249,9 @@
     <None Include="Resources\Right.png" />
     <None Include="Resources\SONA2Logo.png" />
     <None Include="Resources\SearchOFF1.png" />
+    <None Include="Resources\MyLibraryON.png" />
+    <None Include="Resources\Search1.png" />
+    <None Include="Resources\Search2.png" />
     <Content Include="SONA.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

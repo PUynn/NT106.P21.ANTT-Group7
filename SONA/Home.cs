@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using NAudio.Dsp;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,41 +28,17 @@ namespace SONA
             S = s;
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e)
+        private void MyClick()
         {
-
+            pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
+            btnDiscover.Checked = false;
+            btnHome.Checked = false;
+            btnSearch.Checked = false;
+            txtSearch.Visible = false;
+            btnSearch.Visible = true;
         }
 
 
-        private void guna2Button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2PictureBox5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2PictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void guna2Button29_Click(object sender, EventArgs e)
         {
@@ -79,12 +56,12 @@ namespace SONA
 
         private void btnPlaylists_Click(object sender, EventArgs e)
         {
-
+            MyClick();
         }
 
         private void guna2Button10_Click(object sender, EventArgs e)
         {
-
+            MyClick();
         }
 
         private void btnLibrary_Click(object sender, EventArgs e)
@@ -93,19 +70,65 @@ namespace SONA
 
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void btnFavorited_Click(object sender, EventArgs e)
         {
-
+            MyClick();
         }
 
         private void btnAlbums_Click(object sender, EventArgs e)
         {
+            MyClick();
+        }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            MenuClick();
+            txtSearch.Visible = true;
+            btnSearch.Visible = false;
+        }
+
+        private void MenuClick()
+        {
+            pnMyLibrary.FillColor = Color.FromArgb(39, 39, 39);
+            btnAlbums.Checked = false;
+            btnPlaylists.Checked = false;
+            btnLibrary.Checked = false;
+            btnFavorited.Checked = false;
+            btnChat.Checked = false;
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            MenuClick();    
+            txtSearch.Visible = false;
+            btnSearch.Visible = true;
+        }
+
+        private void btnDiscover_Click(object sender, EventArgs e)
+        {
+            MenuClick();
+            txtSearch.Visible = false;
+            btnSearch.Visible = true;
+        }
+
+        private void btnChat_Click(object sender, EventArgs e)
+        {
+            MyClick();
+        }
+
+        private void btnArtists_Click(object sender, EventArgs e)
+        {
+            MyClick();
+        }
+
+        private void pnMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            S.Close();
         }
     }
 }
