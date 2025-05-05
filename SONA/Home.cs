@@ -86,5 +86,26 @@ namespace SONA
         {
 
         }
+
+        private void btnLibrary_Click(object sender, EventArgs e)
+        {
+            pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnFavorited_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAlbums_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
