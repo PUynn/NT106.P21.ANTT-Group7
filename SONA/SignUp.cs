@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -64,9 +65,31 @@ namespace SONA
 
         private void guna2Button4_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(guna2TextBox1.Text))
+            {
+                label5.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+                return;
+            }
+
             SignUpInfor signUpInfor = new SignUpInfor(S);
             S.pnLogin.Controls.Clear();
             S.pnLogin.Controls.Add(signUpInfor);
+        }
+
+        private void guna2TextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (!string.IsNullOrEmpty(guna2TextBox1.Text))
+                    guna2Button4_Click(sender, e);
+                else
+                    label5.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+            }
+        }
+
+        private void SignUp_Load(object sender, EventArgs e)
+        {
+            label5.Text = "";
         }
     }
 }

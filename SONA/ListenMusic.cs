@@ -15,11 +15,6 @@ namespace SONA
 {
     public partial class ListenMusic : UserControl
     {
-        //string connectString = @"Data Source=(local);Initial Catalog=MUSIC_APP;Integrated Security=True";
-        //SqlConnection connect;
-        //SqlCommand command;
-        //SqlDataAdapter adapter;
-        //DataTable dtb;
 
         Home H;
         WaveOutEvent woe;
@@ -51,36 +46,6 @@ namespace SONA
         {
             try
             {
-                //isPlaying = false;
-                //isAutoReplay = false;
-                //connect = new SqlConnection(connectString);
-
-                //connect.Open();
-
-                //command = new SqlCommand("SELECT * FROM SONGS", connect);
-                //adapter = new SqlDataAdapter(command);
-                //dtb = new DataTable();
-
-                //adapter.Fill(dtb);
-
-                //if (dtb.Rows.Count > 0 && songIndex >= 0 && songIndex < dtb.Rows.Count)
-                //{
-                //    srcPicture = dtb.Rows[songIndex]["PICTURE_SONG"].ToString();
-                //    srcMusic = dtb.Rows[songIndex]["AM_THANH"].ToString();
-                //}
-                //else
-                //{
-                //    MessageBox.Show("No song found at index " + songIndex + ".");
-                //    connect.Close();
-                //    return;
-                //}
-
-                //if (!System.IO.File.Exists(srcMusic))
-                //{
-                //    MessageBox.Show("Music file not found: " + srcMusic);
-                //    connect.Close();
-                //    return;
-                //}
 
                 afr = new AudioFileReader(srcMusic);
                 afr.Volume = guna2TrackBar2.Value / 100f;
@@ -98,7 +63,6 @@ namespace SONA
                 guna2Button1.Image = Properties.Resources.PauseAni;
                 timer1.Start();
 
-                //connect.Close();
             }
             catch (Exception ex)
             {

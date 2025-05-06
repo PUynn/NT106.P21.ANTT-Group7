@@ -1,4 +1,5 @@
-﻿using NAudio.Dsp;
+﻿using Guna.UI2.WinForms;
+using NAudio.Dsp;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -101,6 +102,17 @@ namespace SONA
             MenuClick();    
             txtSearch.Visible = false;
             btnSearch.Visible = true;
+
+            var listenMusic = panel1.Controls.OfType<ListenMusic>().FirstOrDefault();
+            if (listenMusic != null)
+            {
+                listenMusic.StopMusicAndDispose();
+            }
+
+            Home home = new Home(S);
+            S.pnMain.Controls.Clear();
+            S.pnMain.Controls.Add(home);
+            home.Dock = DockStyle.Fill;
         }
 
         private void btnDiscover_Click(object sender, EventArgs e)

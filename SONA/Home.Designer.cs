@@ -255,7 +255,7 @@
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.txtSearch.PlaceholderText = "Search..";
+            this.txtSearch.PlaceholderText = "Search";
             this.txtSearch.SelectedText = "";
             this.txtSearch.Size = new System.Drawing.Size(491, 54);
             this.txtSearch.TabIndex = 0;
