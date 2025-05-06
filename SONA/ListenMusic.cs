@@ -13,14 +13,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SONA
 {
-    public partial class ListenMusic: UserControl
+    public partial class ListenMusic : UserControl
     {
-        SONA S;
-        string connectString = @"Data Source=(local);Initial Catalog=MUSIC_APP;Integrated Security=True";
-        SqlConnection connect;
-        SqlCommand command;
-        SqlDataAdapter adapter;
-        DataTable dtb;
+        //string connectString = @"Data Source=(local);Initial Catalog=MUSIC_APP;Integrated Security=True";
+        //SqlConnection connect;
+        //SqlCommand command;
+        //SqlDataAdapter adapter;
+        //DataTable dtb;
+
+        Home H;
         WaveOutEvent woe;
         AudioFileReader afr;
         int songIndex;
@@ -30,11 +31,12 @@ namespace SONA
         bool isPlaying;
         bool isAutoReplay;
 
-        public ListenMusic(SONA s, int songIndex)
+        public ListenMusic(Home h, string music, string image)
         {
-            InitializeComponent();
-            S = s;
-            this.songIndex = songIndex;
+            H = h;
+            InitializeComponent(); ;
+            srcMusic = music;
+            srcPicture = image;
         }
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
@@ -44,41 +46,41 @@ namespace SONA
                 woe.Play();
             }
         }
-        
+
         private void ListenMusic_Load(object sender, EventArgs e)
         {
             try
             {
-                isPlaying = false;
-                isAutoReplay = false;
-                connect = new SqlConnection(connectString);
+                //isPlaying = false;
+                //isAutoReplay = false;
+                //connect = new SqlConnection(connectString);
 
-                connect.Open();
+                //connect.Open();
 
-                command = new SqlCommand("SELECT * FROM SONGS", connect);
-                adapter = new SqlDataAdapter(command);
-                dtb = new DataTable();
+                //command = new SqlCommand("SELECT * FROM SONGS", connect);
+                //adapter = new SqlDataAdapter(command);
+                //dtb = new DataTable();
 
-                adapter.Fill(dtb);
+                //adapter.Fill(dtb);
 
-                if (dtb.Rows.Count > 0 && songIndex >= 0 && songIndex < dtb.Rows.Count)
-                {
-                    srcPicture = dtb.Rows[songIndex]["PICTURE_SONG"].ToString();
-                    srcMusic = dtb.Rows[songIndex]["AM_THANH"].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("No song found at index " + songIndex + ".");
-                    connect.Close();
-                    return;
-                }
+                //if (dtb.Rows.Count > 0 && songIndex >= 0 && songIndex < dtb.Rows.Count)
+                //{
+                //    srcPicture = dtb.Rows[songIndex]["PICTURE_SONG"].ToString();
+                //    srcMusic = dtb.Rows[songIndex]["AM_THANH"].ToString();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("No song found at index " + songIndex + ".");
+                //    connect.Close();
+                //    return;
+                //}
 
-                if (!System.IO.File.Exists(srcMusic))
-                {
-                    MessageBox.Show("Music file not found: " + srcMusic);
-                    connect.Close();
-                    return;
-                }
+                //if (!System.IO.File.Exists(srcMusic))
+                //{
+                //    MessageBox.Show("Music file not found: " + srcMusic);
+                //    connect.Close();
+                //    return;
+                //}
 
                 afr = new AudioFileReader(srcMusic);
                 afr.Volume = guna2TrackBar2.Value / 100f;
@@ -96,7 +98,7 @@ namespace SONA
                 guna2Button1.Image = Properties.Resources.PauseAni;
                 timer1.Start();
 
-                connect.Close();
+                //connect.Close();
             }
             catch (Exception ex)
             {

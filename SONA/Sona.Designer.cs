@@ -43,7 +43,6 @@
             this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnMain.Location = new System.Drawing.Point(0, 0);
             this.pnMain.Name = "pnMain";
-            this.pnMain.ShadowDecoration.Parent = this.pnMain;
             this.pnMain.Size = new System.Drawing.Size(1771, 1012);
             this.pnMain.TabIndex = 0;
             this.pnMain.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
@@ -52,7 +51,6 @@
             // 
             this.pnLogin.Location = new System.Drawing.Point(533, 85);
             this.pnLogin.Name = "pnLogin";
-            this.pnLogin.ShadowDecoration.Parent = this.pnLogin;
             this.pnLogin.Size = new System.Drawing.Size(704, 853);
             this.pnLogin.TabIndex = 0;
             // 

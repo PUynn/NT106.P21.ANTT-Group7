@@ -65,17 +65,17 @@ namespace SONA
             // guna2Panel1
             // 
             this.guna2Panel1.Controls.Add(this.guna2PictureBox1);
-            this.guna2Panel1.Location = new System.Drawing.Point(12, 0);
+            this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1478, 735);
+            this.guna2Panel1.Size = new System.Drawing.Size(1490, 735);
             this.guna2Panel1.TabIndex = 0;
             // 
             // guna2PictureBox1
             // 
             this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(379, 34);
+            this.guna2PictureBox1.Location = new System.Drawing.Point(400, 30);
             this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(709, 669);
+            this.guna2PictureBox1.Size = new System.Drawing.Size(680, 680);
             this.guna2PictureBox1.TabIndex = 0;
             this.guna2PictureBox1.TabStop = false;
             // 
@@ -90,9 +90,9 @@ namespace SONA
             this.guna2Panel2.Controls.Add(this.guna2Panel3);
             this.guna2Panel2.Controls.Add(this.guna2Button11);
             this.guna2Panel2.Controls.Add(this.guna2Button10);
-            this.guna2Panel2.Location = new System.Drawing.Point(12, 754);
+            this.guna2Panel2.Location = new System.Drawing.Point(0, 754);
             this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(1478, 200);
+            this.guna2Panel2.Size = new System.Drawing.Size(1490, 200);
             this.guna2Panel2.TabIndex = 0;
             // 
             // guna2Panel5
@@ -356,7 +356,7 @@ namespace SONA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
             this.Controls.Add(this.guna2Panel2);
             this.Controls.Add(this.guna2Panel1);
             this.Name = "ListenMusic";
