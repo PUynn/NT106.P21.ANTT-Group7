@@ -16,10 +16,14 @@ namespace SONA
     public partial class SignUpInfor: UserControl
     {
         SONA S;
-        public SignUpInfor(SONA s)
+        ConnectSQL connectSQL;
+        string srcEmail;
+
+        public SignUpInfor(SONA s, string email)
         {
             InitializeComponent();
             S = s;
+            srcEmail = email;
         }
 
         private void label9_Click(object sender, EventArgs e)
@@ -98,9 +102,29 @@ namespace SONA
         {
             if (checkSignUpInfor())
             {
-                Home h = new Home(S);
-                S.pnMain.Controls.Clear();
-                S.pnMain.Controls.Add(h);
+                try
+                {
+                    connectSQL = new ConnectSQL();
+                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'";
+                    DataTable dtb = connectSQL.Query(queryPhone);
+
+                    if (dtb.Rows.Count > 0)
+                    {
+                        lblSdt.Text = "Số điện thoại đã tồn tại!";
+                        return;
+                    }
+
+                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')";
+                    connectSQL.ExecuteQuery(queryInsert);
+
+                    Home h = new Home(S);
+                    S.pnMain.Controls.Clear();
+                    S.pnMain.Controls.Add(h);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
             }
 
         }
@@ -123,7 +147,7 @@ namespace SONA
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                guna2CircleButton1.Image = Image.FromFile(openFileDialog.FileName);
+                btnAvatar.Image = Image.FromFile(openFileDialog.FileName);
             }
         }
 

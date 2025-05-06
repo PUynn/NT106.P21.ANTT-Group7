@@ -15,11 +15,9 @@ namespace SONA
     public partial class HomeContent : UserControl
     {
         Home H;
-        string connectString = @"Data Source=(local);Initial Catalog=MUSIC_APP;Integrated Security=True";
-        SqlConnection connect;
-        SqlCommand command;
-        SqlDataAdapter adapter;
-        DataTable dtb;
+        ConnectSQL connectSQL;
+        DataTable dtbSongs, dtbArtist;
+
         public HomeContent(Home h)
         {
             InitializeComponent();
@@ -31,21 +29,22 @@ namespace SONA
 
             try
             {
-                connect = new SqlConnection(connectString);
-                connect.Open();
+                connectSQL = new ConnectSQL();
+                dtbSongs = connectSQL.Get("SONGS");
+                dtbArtist = connectSQL.Get("SINGER");
 
-                command = new SqlCommand("SELECT * FROM SONGS", connect);
-                adapter = new SqlDataAdapter(command);
-                dtb = new DataTable();
-                adapter.Fill(dtb);
-
-                foreach (DataRow dr in dtb.Rows)
+                foreach (DataRow dr in dtbSongs.Rows)
                 {
                     SongForm songForm = new SongForm(H, dr["NAME_SONG"].ToString(), (dr["PICTURE_SONG"].ToString()), dr["AM_THANH"].ToString());
                     flpSongs.Controls.Add(songForm);
                 }
 
-                connect.Close();
+                foreach (DataRow dr in dtbArtist.Rows)
+                {
+                    ArtistForm artistForm = new ArtistForm(H, dr["NAME_SINGER"].ToString(), (dr["PICTURE_SINGER"].ToString()));
+                    flpArtists.Controls.Add(artistForm);
+                }
+
             }
             catch (Exception ex)
             {

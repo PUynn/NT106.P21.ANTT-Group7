@@ -113,6 +113,7 @@
     <Compile Include="ArtistForm.Designer.cs">
       <DependentUpon>ArtistForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConnectSQL.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -174,6 +175,9 @@
     <Compile Include="SongForm.Designer.cs">
       <DependentUpon>SongForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ArtistForm.resx">
+      <DependentUpon>ArtistForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>

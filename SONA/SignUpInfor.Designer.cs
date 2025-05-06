@@ -38,7 +38,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnDangNhap = new Guna.UI2.WinForms.Guna2Button();
             this.lblPass = new System.Windows.Forms.Label();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSdt = new Guna.UI2.WinForms.Guna2TextBox();
@@ -179,23 +179,23 @@
             this.lblPass.Text = "Mật khẩu của bạn phải có ít nhất\r\n- 1 chữ cái\r\n- 1 chữ số hoặc ký tự đặc biệt (ví" +
     " dụ @, !, ?. #)\r\n- 8 ký tự";
             // 
-            // guna2CircleButton1
+            // btnAvatar
             // 
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Image = global::SONA.Properties.Resources.icons8_add_user_male_50__1_;
-            this.guna2CircleButton1.ImageSize = new System.Drawing.Size(35, 35);
-            this.guna2CircleButton1.Location = new System.Drawing.Point(64, 87);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(60, 60);
-            this.guna2CircleButton1.TabIndex = 19;
-            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
+            this.btnAvatar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAvatar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAvatar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAvatar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAvatar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAvatar.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnAvatar.ForeColor = System.Drawing.Color.White;
+            this.btnAvatar.Image = global::SONA.Properties.Resources.icons8_add_user_male_50__1_;
+            this.btnAvatar.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnAvatar.Location = new System.Drawing.Point(64, 87);
+            this.btnAvatar.Name = "btnAvatar";
+            this.btnAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.btnAvatar.Size = new System.Drawing.Size(60, 60);
+            this.btnAvatar.TabIndex = 19;
+            this.btnAvatar.Click += new System.EventHandler(this.guna2CircleButton1_Click);
             // 
             // guna2Button3
             // 
@@ -304,7 +304,7 @@
             this.lblConfirm.AutoSize = true;
             this.lblConfirm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConfirm.ForeColor = System.Drawing.Color.Red;
-            this.lblConfirm.Location = new System.Drawing.Point(372, 560);
+            this.lblConfirm.Location = new System.Drawing.Point(372, 570);
             this.lblConfirm.Name = "lblConfirm";
             this.lblConfirm.Size = new System.Drawing.Size(232, 20);
             this.lblConfirm.TabIndex = 22;
@@ -324,7 +324,7 @@
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblSdt);
             this.Controls.Add(this.btnDangNhap);
-            this.Controls.Add(this.guna2CircleButton1);
+            this.Controls.Add(this.btnAvatar);
             this.Controls.Add(this.tbSdt);
             this.Controls.Add(this.tbUser);
             this.Controls.Add(this.tbConfirm);
@@ -353,7 +353,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2TextBox tbUser;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
+        private Guna.UI2.WinForms.Guna2CircleButton btnAvatar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblAvatar;
         private System.Windows.Forms.Label label9;

@@ -28,6 +28,8 @@ namespace SONA
         private const string RedirectUri = "http://localhost:8000/facebook-signin";
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
         SONA S;
+        ConnectSQL connectSQL;
+
         private HttpListener httpListener;
         public Login(SONA s)
         {
@@ -85,7 +87,7 @@ namespace SONA
                         OpenHomeForm();
                         S.TopMost = true;
                         S.Activate();
-                        MessageBox.Show($"Xin chào {userInfo.Name}");
+                        // MessageBox.Show($"Xin chào {userInfo.Name}");
                     }));
                 }
             }
@@ -223,24 +225,78 @@ namespace SONA
                     OpenHomeForm();
                     S.TopMost = true;
                     S.Activate();
-                    MessageBox.Show($"Xin chào {name}");
+                    // MessageBox.Show($"Xin chào {name}");
                 }));
             }
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            OpenHomeForm();
+            lblCheck.Text = "";
+
+            if (string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPass.Text))
+            {
+                lblCheck.Text = "Vui lòng nhập đầy đủ email và mật khẩu!";
+                return;
+            }
+
+            try
+            {
+                connectSQL = new ConnectSQL();
+                string queryEmail = $"SELECT * FROM USERS WHERE EMAIL = '{tbEmail.Text}'";
+                DataTable dt = connectSQL.Query(queryEmail);
+
+                if (dt.Rows.Count > 0)
+                {
+                    string password = dt.Rows[0]["PASSWORD_TK"].ToString();
+                    if (password == tbPass.Text)
+                    {
+                        S.TopMost = true;
+                        S.Activate();
+                        // MessageBox.Show("Đăng nhập thành công!");
+                        OpenHomeForm();
+                    }
+                    else
+                        lblCheck.Text = "Mật khẩu không chính xác!";
+                }
+                else
+                    lblCheck.Text = "Email không tồn tại!";
+            }
+            catch (Exception ex)
+            {
+                lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
+            }
         }
 
         private void lbQuenmatkhau_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://pham-dang-quang-jn3ufhr.gamma.site/");
+            System.Diagnostics.Process.Start("https://www.facebook.com/viethoang.trannguyen.35");
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
         {
             S.Close();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            lblCheck.Text = "";
+        }
+
+        private void tbEmail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnDangNhap_Click(sender, e);
+            }    
+        }
+
+        private void tbPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnDangNhap_Click(sender, e);
+            }
         }
     }
 }

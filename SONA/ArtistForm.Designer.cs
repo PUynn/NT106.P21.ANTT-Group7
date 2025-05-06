@@ -29,46 +29,48 @@
         private void InitializeComponent()
         {
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.btnPictureSinger = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2Panel1
             // 
-            this.guna2Panel1.Controls.Add(this.guna2HtmlLabel4);
-            this.guna2Panel1.Controls.Add(this.guna2CircleButton1);
+            this.guna2Panel1.Controls.Add(this.btnPictureSinger);
+            this.guna2Panel1.Controls.Add(this.lblNameSinger);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(224, 254);
+            this.guna2Panel1.Size = new System.Drawing.Size(250, 254);
             this.guna2Panel1.TabIndex = 0;
             // 
-            // guna2CircleButton1
+            // lblNameSinger
             // 
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(0, 0);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(224, 208);
-            this.guna2CircleButton1.TabIndex = 0;
+            this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
+            this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSinger.ForeColor = System.Drawing.Color.White;
+            this.lblNameSinger.Location = new System.Drawing.Point(13, 214);
+            this.lblNameSinger.Name = "lblNameSinger";
+            this.lblNameSinger.Size = new System.Drawing.Size(15, 24);
+            this.lblNameSinger.TabIndex = 10;
+            this.lblNameSinger.Text = "A";
             // 
-            // guna2HtmlLabel4
+            // btnPictureSinger
             // 
-            this.guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2HtmlLabel4.ForeColor = System.Drawing.Color.White;
-            this.guna2HtmlLabel4.Location = new System.Drawing.Point(3, 217);
-            this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-            this.guna2HtmlLabel4.Size = new System.Drawing.Size(15, 24);
-            this.guna2HtmlLabel4.TabIndex = 10;
-            this.guna2HtmlLabel4.Text = "A";
+            this.btnPictureSinger.BorderRadius = 10;
+            this.btnPictureSinger.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPictureSinger.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPictureSinger.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPictureSinger.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPictureSinger.FillColor = System.Drawing.Color.Transparent;
+            this.btnPictureSinger.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnPictureSinger.ForeColor = System.Drawing.Color.White;
+            this.btnPictureSinger.ImageSize = new System.Drawing.Size(50, 50);
+            this.btnPictureSinger.Location = new System.Drawing.Point(13, 0);
+            this.btnPictureSinger.Name = "btnPictureSinger";
+            this.btnPictureSinger.Size = new System.Drawing.Size(224, 208);
+            this.btnPictureSinger.TabIndex = 11;
+            this.btnPictureSinger.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
             // ArtistForm
             // 
@@ -77,7 +79,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "ArtistForm";
-            this.Size = new System.Drawing.Size(224, 254);
+            this.Size = new System.Drawing.Size(250, 254);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -87,7 +89,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
+        private Guna.UI2.WinForms.Guna2Button btnPictureSinger;
     }
 }
