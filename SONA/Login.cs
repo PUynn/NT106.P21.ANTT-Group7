@@ -1,5 +1,4 @@
 ﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Services;
 using System;
@@ -17,20 +16,21 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
-using System.Xml.Linq;
+using Google.Apis.Oauth2.v2.Data;
 
 namespace SONA
 {
     public partial class Login : UserControl
     {
-        private const string AppId = "984538890449740"; 
-        private const string AppSecret = "1f3490111b9ddddbf4010a67954a1522"; 
+        private const string AppId = "984538890449740";
+        private const string AppSecret = "1f3490111b9ddddbf4010a67954a1522";
         private const string RedirectUri = "http://localhost:8000/facebook-signin";
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
         SONA S;
         ConnectSQL connectSQL;
 
         private HttpListener httpListener;
+
         public Login(SONA s)
         {
             InitializeComponent();
@@ -44,11 +44,10 @@ namespace SONA
             S.pnLogin.Controls.Add(l);
             httpListener?.Stop();
         }
+
         private void OpenHomeForm()
         {
-            Home h = new Home(S);
-            S.pnMain.Controls.Clear();
-            S.pnMain.Controls.Add(h);
+            S.ShowHome();
         }
 
         private async void btnLoginGoogle_Click(object sender, EventArgs e)
@@ -85,9 +84,7 @@ namespace SONA
                     this.Invoke(new Action(() =>
                     {
                         OpenHomeForm();
-                        S.TopMost = true;
                         S.Activate();
-                        // MessageBox.Show($"Xin chào {userInfo.Name}");
                     }));
                 }
             }
@@ -96,8 +93,6 @@ namespace SONA
                 MessageBox.Show("Lỗi đăng nhập: " + ex.Message);
             }
         }
-
-
 
         private void btnFacebookLogin_Click(object sender, EventArgs e)
         {
@@ -223,9 +218,7 @@ namespace SONA
                 this.Invoke(new Action(() =>
                 {
                     OpenHomeForm();
-                    S.TopMost = true;
                     S.Activate();
-                    // MessageBox.Show($"Xin chào {name}");
                 }));
             }
         }
@@ -251,9 +244,7 @@ namespace SONA
                     string password = dt.Rows[0]["PASSWORD_TK"].ToString();
                     if (password == tbPass.Text)
                     {
-                        S.TopMost = true;
                         S.Activate();
-                        // MessageBox.Show("Đăng nhập thành công!");
                         OpenHomeForm();
                     }
                     else
@@ -288,7 +279,7 @@ namespace SONA
             if (e.KeyCode == Keys.Enter)
             {
                 btnDangNhap_Click(sender, e);
-            }    
+            }
         }
 
         private void tbPass_KeyDown(object sender, KeyEventArgs e)

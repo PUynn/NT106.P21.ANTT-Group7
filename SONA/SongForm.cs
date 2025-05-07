@@ -28,7 +28,6 @@ namespace SONA
             lbNameSong.Text = nameSong;
             btnPictureSong.BackgroundImage = Image.FromFile(imgSong);
             btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
-
         }
 
         private void guna2Button17_Click(object sender, EventArgs e)
@@ -36,13 +35,11 @@ namespace SONA
             ListenMusic listenMusic = new ListenMusic(H, srcSong, srcImage);
             H.panel1.Controls.Clear();
             H.panel1.Controls.Add(listenMusic);
-            listenMusic.Dock = DockStyle.Fill;
-
+            H.SetCurrentListenMusic(listenMusic);
         }
 
         private void SongForm_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

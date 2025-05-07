@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,7 @@ namespace SONA
     public partial class Home : UserControl
     {
         SONA S;
-        string connectString = @"Data Source=(local);Initial Catalog=MUSIC_APP;Integrated Security=True";
-        SqlConnection connect;
-        SqlCommand command;
-        SqlDataAdapter adapter;
-        DataTable dtb;
+        private ListenMusic currentListenMusic;
 
         public Home(SONA s)
         {
@@ -39,8 +34,6 @@ namespace SONA
             btnSearch.Visible = true;
         }
 
-
-
         private void guna2Button29_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -48,11 +41,14 @@ namespace SONA
 
         private void Home_Load(object sender, EventArgs e)
         {
-            HomeContent h = new HomeContent(this);
-            h.Dock = DockStyle.Fill;
-            panel1.Controls.Add(h);
+            if (panel1.Controls.Count == 0 || panel1.Controls[0].GetType() != typeof(HomeContent))
+            {
+                HomeContent homeContent = new HomeContent(this);
+                homeContent.Dock = DockStyle.Fill;
+                panel1.Controls.Clear();
+                panel1.Controls.Add(homeContent);
+            }
         }
-
 
         private void btnPlaylists_Click(object sender, EventArgs e)
         {
@@ -67,7 +63,6 @@ namespace SONA
         private void btnLibrary_Click(object sender, EventArgs e)
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
-
         }
 
         private void btnFavorited_Click(object sender, EventArgs e)
@@ -99,14 +94,14 @@ namespace SONA
 
         private void btnHome_Click(object sender, EventArgs e)
         {
-            MenuClick();    
+            MenuClick();
             txtSearch.Visible = false;
             btnSearch.Visible = true;
 
-            var listenMusic = panel1.Controls.OfType<ListenMusic>().FirstOrDefault();
-            if (listenMusic != null)
+            if (currentListenMusic != null)
             {
-                listenMusic.StopMusicAndDispose();
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
             }
 
             Home home = new Home(S);
@@ -134,7 +129,6 @@ namespace SONA
 
         private void pnMenu_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -142,7 +136,7 @@ namespace SONA
             S.Close();
         }
 
-        private void btnMinimize_Click(object sender, EventArgs e)
+        public void btnMinimize_Click(object sender, EventArgs e)
         {
             S.WindowState = FormWindowState.Minimized;
         }
@@ -151,16 +145,30 @@ namespace SONA
         {
             if (e.KeyCode == Keys.Enter)
             {
+                if (currentListenMusic != null)
+                {
+                    currentListenMusic.StopMusicAndDispose();
+                    currentListenMusic = null;
+                }
+
                 SearchForm searchForm = new SearchForm(this);
                 panel1.Controls.Clear();
                 panel1.Controls.Add(searchForm);
             }
-
         }
 
         private void txtSearch_Click(object sender, EventArgs e)
         {
             txtSearch.Focus();
+        }
+
+        public void SetCurrentListenMusic(ListenMusic listenMusic)
+        {
+            if (currentListenMusic != null && currentListenMusic != listenMusic)
+            {
+                currentListenMusic.StopMusicAndDispose();
+            }
+            currentListenMusic = listenMusic;
         }
     }
 }

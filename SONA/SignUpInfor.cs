@@ -13,7 +13,7 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace SONA
 {
-    public partial class SignUpInfor: UserControl
+    public partial class SignUpInfor : UserControl
     {
         SONA S;
         ConnectSQL connectSQL;
@@ -31,7 +31,7 @@ namespace SONA
 
         }
 
-        private bool checkSignUpInfor ()
+        private bool checkSignUpInfor()
         {
             lblName.Text = lblSdt.Text = lblConfirm.Text = "";
             lblPass.ForeColor = Color.FromArgb(102, 102, 102);
@@ -70,13 +70,13 @@ namespace SONA
             for (int i = 0; i < tbPass.Text.Length; i++)
             {
                 if (char.IsDigit(tbPass.Text[i]))
-                    checkNum = true;             
+                    checkNum = true;
                 else if (char.IsLetter(tbPass.Text[i]))
                     checkLetter = true;
                 else if (tbPass.Text[i] == '@' || tbPass.Text[i] == '#' || tbPass.Text[i] == '!' || tbPass.Text[i] == '?')
                     checkSpecial = true;
             }
-            
+
             if (!checkNum || !checkLetter || !checkSpecial)
             {
                 lblPass.ForeColor = Color.Red;
@@ -117,16 +117,13 @@ namespace SONA
                     string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')";
                     connectSQL.ExecuteQuery(queryInsert);
 
-                    Home h = new Home(S);
-                    S.pnMain.Controls.Clear();
-                    S.pnMain.Controls.Add(h);
+                    S.ShowHome();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
-
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
@@ -141,7 +138,7 @@ namespace SONA
             S.pnLogin.Controls.Add(signUp);
         }
 
-        private void setAvatar ()
+        private void setAvatar()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
@@ -171,7 +168,7 @@ namespace SONA
             if (e.KeyCode == Keys.Enter)
             {
                 btnDangNhap_Click(sender, e);
-            }    
+            }
         }
 
         private void tbSdt_KeyDown(object sender, KeyEventArgs e)

@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using Guna.UI2.WinForms;
 using NAudio.Wave;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SONA
 {
-    public partial class ListenMusic : UserControl
+    public partial class MusicBar: UserControl
     {
         Home H;
         WaveOutEvent woe;
@@ -25,14 +24,12 @@ namespace SONA
         bool isPlaying;
         bool isAutoReplay;
         TimeSpan lastPosition;
-
-        public ListenMusic(Home h, string music, string image)
+        public MusicBar(Home h, string music, string image)
         {
-            H = h;
             InitializeComponent();
+            H = h;
             srcMusic = music;
             srcPicture = image;
-            this.Disposed += (s, e) => StopMusicAndDispose();
         }
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
@@ -44,7 +41,7 @@ namespace SONA
             }
         }
 
-        private bool InitializeAudio()
+        private void InitializeAudio()
         {
             try
             {
@@ -66,16 +63,13 @@ namespace SONA
                     afr.CurrentTime = lastPosition;
                 }
 
-                guna2PictureBox1.Image = Image.FromFile(srcPicture);
-                guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                btnPicture.BackgroundImage = Image.FromFile(srcPicture);
+                btnPicture.BackgroundImageLayout = ImageLayout.Stretch;
                 guna2HtmlLabel2.Text = afr.TotalTime.ToString(@"mm\:ss");
-
-                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error during audio initialization: " + ex.Message);
-                return false;
             }
         }
 
@@ -83,26 +77,16 @@ namespace SONA
         {
             try
             {
-                StopMusicAndDispose();
+                InitializeAudio();
 
-                if (InitializeAudio())
-                {
-                    woe.Play();
-                    isPlaying = true;
-                    btnStart.Image = Properties.Resources.PauseAni;
-                    timer1.Start();
-                }
-                else
-                {
-                    isPlaying = false;
-                    btnStart.Image = Properties.Resources.PlayAni;
-                }
+                woe.Play();
+                isPlaying = true;
+                btnStart.Image = Properties.Resources.PauseAni;
+                timer1.Start();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error during initialization: " + ex.Message);
-                isPlaying = false;
-                btnStart.Image = Properties.Resources.PlayAni;
             }
         }
 
@@ -130,10 +114,7 @@ namespace SONA
                 {
                     if (woe == null || afr == null)
                     {
-                        if (!InitializeAudio())
-                        {
-                            return;
-                        }
+                        InitializeAudio();
                     }
 
                     woe.Play();
@@ -145,27 +126,21 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
-                isPlaying = false;
-                btnStart.Image = Properties.Resources.PlayAni;
             }
         }
 
         private void guna2Button10_Click(object sender, EventArgs e)
         {
-
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (afr != null)
-            {
-                guna2HtmlLabel1.Text = afr.CurrentTime.ToString(@"mm\:ss");
-                guna2TrackBar1.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
-            }
+
         }
 
         private void ListenMusic_Leave(object sender, EventArgs e)
         {
+
         }
 
         private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e)
@@ -196,6 +171,11 @@ namespace SONA
         }
 
         private void guna2Button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Button11_Click(object sender, EventArgs e)
         {
 
         }

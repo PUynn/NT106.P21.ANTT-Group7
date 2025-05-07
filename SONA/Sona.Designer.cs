@@ -65,6 +65,7 @@
             this.Name = "SONA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SONA";
+            this.Deactivate += new System.EventHandler(this.SONA_Deactivate);
             this.pnMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SONA
 {
-    public partial class SongSearch: UserControl
+    public partial class SongSearch : UserControl
     {
         string srcSong, srcPicture, srcMusic, srcSinger;
         Home H;
@@ -36,6 +36,7 @@ namespace SONA
             ListenMusic listenMusic = new ListenMusic(H, srcMusic, srcPicture);
             H.panel1.Controls.Clear();
             H.panel1.Controls.Add(listenMusic);
+            H.SetCurrentListenMusic(listenMusic);
         }
     }
 }
