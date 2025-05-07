@@ -85,6 +85,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label1.Location = new System.Drawing.Point(60, 42);
@@ -129,6 +130,7 @@
             // lblAvatar
             // 
             this.lblAvatar.AutoSize = true;
+            this.lblAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblAvatar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvatar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblAvatar.Location = new System.Drawing.Point(130, 106);

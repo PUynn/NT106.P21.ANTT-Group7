@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.flpArtists = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpHistory = new System.Windows.Forms.FlowLayoutPanel();
             this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
             this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
@@ -43,12 +44,11 @@
             this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button14 = new Guna.UI2.WinForms.Guna2Button();
-            this.flpHistory = new System.Windows.Forms.FlowLayoutPanel();
-            this.flpArtists = new System.Windows.Forms.FlowLayoutPanel();
+            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2Panel2
@@ -71,6 +71,24 @@
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(1485, 919);
             this.guna2Panel2.TabIndex = 2;
+            // 
+            // flpArtists
+            // 
+            this.flpArtists.AutoScroll = true;
+            this.flpArtists.Location = new System.Drawing.Point(3, 1455);
+            this.flpArtists.Name = "flpArtists";
+            this.flpArtists.Size = new System.Drawing.Size(1453, 290);
+            this.flpArtists.TabIndex = 7;
+            this.flpArtists.WrapContents = false;
+            // 
+            // flpHistory
+            // 
+            this.flpHistory.AutoScroll = true;
+            this.flpHistory.Location = new System.Drawing.Point(3, 1046);
+            this.flpHistory.Name = "flpHistory";
+            this.flpHistory.Size = new System.Drawing.Size(1453, 290);
+            this.flpHistory.TabIndex = 7;
+            this.flpHistory.WrapContents = false;
             // 
             // flpSongs
             // 
@@ -99,18 +117,6 @@
             this.guna2Panel6.Name = "guna2Panel6";
             this.guna2Panel6.Size = new System.Drawing.Size(1453, 482);
             this.guna2Panel6.TabIndex = 3;
-            // 
-            // guna2PictureBox1
-            // 
-            this.guna2PictureBox1.BackgroundImage = global::SONA.Properties.Resources.background;
-            this.guna2PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2PictureBox1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(11, 3);
-            this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(1439, 476);
-            this.guna2PictureBox1.TabIndex = 0;
-            this.guna2PictureBox1.TabStop = false;
             // 
             // guna2Panel3
             // 
@@ -278,29 +284,23 @@
             this.guna2Button14.TabIndex = 5;
             this.guna2Button14.Text = "Refresh";
             // 
-            // flpHistory
+            // guna2PictureBox1
             // 
-            this.flpHistory.AutoScroll = true;
-            this.flpHistory.Location = new System.Drawing.Point(3, 1046);
-            this.flpHistory.Name = "flpHistory";
-            this.flpHistory.Size = new System.Drawing.Size(1453, 290);
-            this.flpHistory.TabIndex = 7;
-            this.flpHistory.WrapContents = false;
-            // 
-            // flpArtists
-            // 
-            this.flpArtists.AutoScroll = true;
-            this.flpArtists.Location = new System.Drawing.Point(3, 1455);
-            this.flpArtists.Name = "flpArtists";
-            this.flpArtists.Size = new System.Drawing.Size(1453, 290);
-            this.flpArtists.TabIndex = 7;
-            this.flpArtists.WrapContents = false;
+            this.guna2PictureBox1.BackgroundImage = global::SONA.Properties.Resources.background;
+            this.guna2PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.guna2PictureBox1.FillColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox1.ImageRotate = 0F;
+            this.guna2PictureBox1.Location = new System.Drawing.Point(11, 3);
+            this.guna2PictureBox1.Name = "guna2PictureBox1";
+            this.guna2PictureBox1.Size = new System.Drawing.Size(1439, 476);
+            this.guna2PictureBox1.TabIndex = 0;
+            this.guna2PictureBox1.TabStop = false;
             // 
             // HomeContent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlText;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel2);
             this.Name = "HomeContent";
             this.Size = new System.Drawing.Size(1485, 919);
@@ -308,8 +308,8 @@
             this.guna2Panel2.ResumeLayout(false);
             this.guna2Panel2.PerformLayout();
             this.guna2Panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.guna2Panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

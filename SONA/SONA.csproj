@@ -149,6 +149,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SearchForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SignUpInfor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -175,6 +181,12 @@
     <Compile Include="SongForm.Designer.cs">
       <DependentUpon>SongForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SongSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SongSearch.Designer.cs">
+      <DependentUpon>SongSearch.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ArtistForm.resx">
       <DependentUpon>ArtistForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SignUpInfor.resx">
       <DependentUpon>SignUpInfor.cs</DependentUpon>
@@ -206,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SongForm.resx">
       <DependentUpon>SongForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SongSearch.resx">
+      <DependentUpon>SongSearch.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
@@ -253,6 +271,7 @@
     <None Include="Resources\x.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Minimize.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

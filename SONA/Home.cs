@@ -141,5 +141,26 @@ namespace SONA
         {
             S.Close();
         }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            S.WindowState = FormWindowState.Minimized;
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchForm searchForm = new SearchForm(this);
+                panel1.Controls.Clear();
+                panel1.Controls.Add(searchForm);
+            }
+
+        }
+
+        private void txtSearch_Click(object sender, EventArgs e)
+        {
+            txtSearch.Focus();
+        }
     }
 }
