@@ -34,6 +34,7 @@ namespace SONA
             btnSearch.Visible = true;
         }
 
+        // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
             if (panel1.Controls.Count == 0 || panel1.Controls[0].GetType() != typeof(HomeContent))
@@ -82,6 +83,7 @@ namespace SONA
             btnChat.Checked = false;
         }
 
+        // Hàm quay trở lại màn hình chính khi nhấn nút home và gọi hàm StopMusicAndDispose để dừng bài hát đang phát
         private void btnHome_Click(object sender, EventArgs e)
         {
             MenuClick();
@@ -127,6 +129,7 @@ namespace SONA
             S.WindowState = FormWindowState.Minimized;
         }
 
+        // Hàm tìm kiếm bài hát khi nhấn enter vào ô tìm kiếm
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -148,6 +151,7 @@ namespace SONA
             txtSearch.Focus();
         }
 
+        // Hàm dừng bài hát khi nó đang phát trong form listenMusic
         public void SetCurrentListenMusic(ListenMusic listenMusic)
         {
             if (currentListenMusic != null && currentListenMusic != listenMusic)

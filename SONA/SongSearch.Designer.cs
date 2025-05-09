@@ -47,7 +47,7 @@
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1480, 100);
+            this.guna2Panel1.Size = new System.Drawing.Size(1440, 100);
             this.guna2Panel1.TabIndex = 0;
             // 
             // btnFavorited
@@ -66,7 +66,7 @@
             this.btnFavorited.Image = global::SONA.Properties.Resources.Favourites;
             this.btnFavorited.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnFavorited.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnFavorited.Location = new System.Drawing.Point(1397, 16);
+            this.btnFavorited.Location = new System.Drawing.Point(1346, 19);
             this.btnFavorited.Name = "btnFavorited";
             this.btnFavorited.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnFavorited.Size = new System.Drawing.Size(55, 41);
@@ -77,7 +77,7 @@
             this.lblTimeSong.BackColor = System.Drawing.Color.Transparent;
             this.lblTimeSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTimeSong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.lblTimeSong.Location = new System.Drawing.Point(1360, 26);
+            this.lblTimeSong.Location = new System.Drawing.Point(1309, 29);
             this.lblTimeSong.Name = "lblTimeSong";
             this.lblTimeSong.Size = new System.Drawing.Size(31, 20);
             this.lblTimeSong.TabIndex = 1;
@@ -128,7 +128,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "SongSearch";
-            this.Size = new System.Drawing.Size(1480, 100);
+            this.Size = new System.Drawing.Size(1440, 100);
             this.Load += new System.EventHandler(this.SongSearch_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();

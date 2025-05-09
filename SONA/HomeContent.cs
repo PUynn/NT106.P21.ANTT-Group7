@@ -20,21 +20,23 @@ namespace SONA
             InitializeComponent();
             H = h;
         }
-
+        
+        // Hàm liệt kê các danh sách bài hát và nghệ sĩ ngẫu nhiên vào trong panel tương ứng
         private void HomeContent_Load(object sender, EventArgs e)
         {
             btnRefreshSong_Click(sender, e);
             btnRefreshArtist_Click(sender, e);
         }
 
+        // Hàm liệt kê các bài hát trong cơ sở dữ liệu và chọn ngẫu nhiên các bài hát từ kết quả truy vấn đó
         private void btnRefreshSong_Click(object sender, EventArgs e)
         {
-            int countSong = 0;
-            HashSet<string> songDiffirent = new HashSet<string>();
+            int countSong = 0; // đếm số lượng bài hát
+            HashSet<string> songDiffirent = new HashSet<string>(); // tránh trùng bài hát
             try
             {
                 ConnectSQL connectSQL = new ConnectSQL();
-                DataTable dtb = connectSQL.Query("SELECT * FROM SONGS INNER JOIN SINGER ON SONGS.ID_SINGER = SINGER.ID_SINGER ORDER BY NEWID()");
+                DataTable dtb = connectSQL.Query("SELECT * FROM SONGS INNER JOIN SINGER ON SONGS.ID_SINGER = SINGER.ID_SINGER ORDER BY NEWID()"); // kết table singer và songs để lấy các thông tin về bài hát và nghệ sĩ cần thiết
                 flpSongs.Controls.Clear();
 
                 foreach (DataRow dr in dtb.Rows)
@@ -55,6 +57,7 @@ namespace SONA
             }
         }
 
+        // Hàm liệt kê các nghệ sĩ trong cơ sở dữ liệu và chọn ngẫu nhiên các nghệ sĩ từ kết quả truy vấn đó
         private void btnRefreshArtist_Click(object sender, EventArgs e)
         {
             int countArtist = 0;

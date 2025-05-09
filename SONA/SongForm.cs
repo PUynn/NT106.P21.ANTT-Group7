@@ -24,6 +24,7 @@ namespace SONA
             src = dr;           
         }
 
+        // Hàm ghi các nội dung cần thiết cho 1 bài hát
         private void SongForm_Load(object sender, EventArgs e)
         {
             lbNameSong.Text = src["NAME_SONG"].ToString();
@@ -31,6 +32,7 @@ namespace SONA
             btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
+        // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
             ListenMusic listenMusic = new ListenMusic(H, src);

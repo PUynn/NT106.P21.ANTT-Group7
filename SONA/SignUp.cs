@@ -22,31 +22,7 @@ namespace SONA
             S = s;
         }
 
-        private void guna2PictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Button3_Click(object sender, EventArgs e)
-        {
-            S.Close();  
-        }
-
+        // Hàm để chuyển sang form đăng nhập
         private void lbDangnhap_Click(object sender, EventArgs e)
         {
             Login info = new Login(S);
@@ -55,17 +31,13 @@ namespace SONA
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e)
+        private void SignUp_Load(object sender, EventArgs e)
         {
-
+            label5.Text = "";
         }
 
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Button4_Click(object sender, EventArgs e)
+        // Hàm để kiểm tra xem email đã có trong cơ sở dữ liệu chưa, nếu chưa thì di chuyển đến form đăng ký thông tin
+        private void btnSignUp_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(tbEmail.Text))
             {
@@ -93,24 +65,21 @@ namespace SONA
             {
                 label5.Text = "Lỗi: " + ex.Message;
             }
-
-
         }
 
-        private void guna2TextBox1_KeyDown(object sender, KeyEventArgs e)
+        // Gọi hàm btnSignUp_Click khi nhấn phím Enter trong textbox tbEmail
+        private void tbEmail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (!string.IsNullOrEmpty(tbEmail.Text))
-                    guna2Button4_Click(sender, e);
-                else
-                    label5.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+                btnSignUp_Click(sender, e);
             }
         }
 
-        private void SignUp_Load(object sender, EventArgs e)
+        // Hàm để đóng form đăng ký
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            label5.Text = "";
+            S.Close();
         }
     }
 }

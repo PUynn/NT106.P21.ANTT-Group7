@@ -20,6 +20,7 @@ namespace SONA
             H = h;
         }
 
+        // Hàm in ra các bài hát tìm thấy bằng cách gọi form SongSearch và truyền vào các thông tin cần thiết
         private void SearchForm_Load(object sender, EventArgs e)
         {
             try

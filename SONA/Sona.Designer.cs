@@ -29,10 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SONA));
-            this.pnMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pnLogin = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pnMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pnLogin
+            // 
+            this.pnLogin.Location = new System.Drawing.Point(533, 85);
+            this.pnLogin.Name = "pnLogin";
+            this.pnLogin.Size = new System.Drawing.Size(704, 853);
+            this.pnLogin.TabIndex = 0;
             // 
             // pnMain
             // 
@@ -46,13 +53,6 @@
             this.pnMain.Size = new System.Drawing.Size(1771, 1012);
             this.pnMain.TabIndex = 0;
             this.pnMain.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
-            // 
-            // pnLogin
-            // 
-            this.pnLogin.Location = new System.Drawing.Point(533, 85);
-            this.pnLogin.Name = "pnLogin";
-            this.pnLogin.Size = new System.Drawing.Size(704, 853);
-            this.pnLogin.TabIndex = 0;
             // 
             // SONA
             // 
@@ -72,6 +72,7 @@
         }
 
         #endregion
+
         public Guna.UI2.WinForms.Guna2Panel pnLogin;
         public Guna.UI2.WinForms.Guna2Panel pnMain;
     }

@@ -16,8 +16,8 @@ namespace SONA
     public partial class ListenMusic : UserControl
     {
         Home H;
-        WaveOutEvent woe;
-        AudioFileReader afr;
+        WaveOutEvent woe; // Đối tượng phát nhạc
+        AudioFileReader afr; // Đối tượng đọc tệp âm thanh
 
         bool isPlaying;
         bool isAutoReplay;
@@ -31,9 +31,10 @@ namespace SONA
             src = dr;
 
             InitializeComponent();
-            this.Disposed += (s, e) => StopMusicAndDispose();
+            this.Disposed += (s, e) => StopMusicAndDispose(); // Giải phóng tài nguyên khi điều khiển bị hủy
         }
 
+        // Hàm chuyển đổi định dạng ngày tháng
         private string ConvertDate(string date)
         {
             try
@@ -52,6 +53,7 @@ namespace SONA
             }
         }
 
+        // Hàm xử lý sự kiện khi nhạc dừng
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (isAutoReplay)
@@ -61,6 +63,7 @@ namespace SONA
             }
         }
 
+        // Hàm dừng nhạc và giải phóng tài nguyên
         public void StopMusicAndDispose()
         {
             if (woe != null)
@@ -79,6 +82,7 @@ namespace SONA
             timer1.Stop();
         }
 
+        // Hàm khởi tạo âm thanh
         private bool InitializeAudio()
         {
             try
@@ -120,6 +124,7 @@ namespace SONA
             }
         }
 
+        // Hàm tự khởi động phát nhạc khi form được load
         private void ListenMusic_Load(object sender, EventArgs e)
         {
             try
@@ -145,6 +150,8 @@ namespace SONA
                 btnPlayMusic.Image = Properties.Resources.PlayAni;
             }
         }
+
+        // Hàm tạm dừng hoặc phát nhạc
         private void btnPlayMusic_Click(object sender, EventArgs e)
         {
             try
@@ -181,6 +188,7 @@ namespace SONA
             }
         }
 
+        // Hàm cập nhật thanh thời gian và lấy thời gian bài hát
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (afr != null)
@@ -189,6 +197,8 @@ namespace SONA
                 tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
             }
         }
+
+        // Hàm cho phép người dùng tua bài hát
         private void tbsTimeSong_Scroll(object sender, ScrollEventArgs e)
         {
             if (afr != null)
@@ -198,6 +208,7 @@ namespace SONA
             }
         }
 
+        // Hàm cho phép người dùng điều chỉnh âm lượng
         private void tbsVolume_Scroll(object sender, ScrollEventArgs e)
         {
             if (afr != null)
@@ -206,6 +217,7 @@ namespace SONA
             }
         }
 
+        // Hàm lặp lại bài hát
         private void btReplay_Click(object sender, EventArgs e)
         {
             isAutoReplay = !isAutoReplay;
@@ -217,6 +229,7 @@ namespace SONA
                 btReplay.Image = Properties.Resources.Record;
         }
 
+        // Hàm gọi form ArtsitInfor chứa các thông tin về nghệ sĩ
         private void btnSinger_Click(object sender, EventArgs e)
         {
             StopMusicAndDispose();

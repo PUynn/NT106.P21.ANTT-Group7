@@ -26,6 +26,7 @@ namespace SONA
             srcEmail = email;
         }
 
+        // Hàm kiểm tra thông tin đăng nhập và báo lỗi nếu không hợp lệ
         private bool checkSignUpInfor()
         {
             lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
@@ -93,11 +94,13 @@ namespace SONA
             return true;
         }
 
+        // Hàm đóng cửa sổ
         private void guna2Button3_Click(object sender, EventArgs e)
         {
             S.Close();
         }
 
+        // Hàm chuyển sang form đăng nhập
         private void lblLogin_Click(object sender, EventArgs e)
         {
             SignUp signUp = new SignUp(S);
@@ -105,6 +108,7 @@ namespace SONA
             S.pnLogin.Controls.Add(signUp);
         }
 
+        // Hàm để chọn ảnh đại diện bằng cách mở file ảnh trong thư mục
         private void setAvatar()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -162,6 +166,7 @@ namespace SONA
             }
         }
 
+        // Hàm để kiểm tra thông tin đăng ký và thêm vào cơ sở dữ liệu
         private void btnSignUp_Click(object sender, EventArgs e)
         {
             if (checkSignUpInfor())

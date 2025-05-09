@@ -23,6 +23,7 @@ namespace SONA
             InitializeComponent();
         }
 
+        // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
             ListenMusic listenMusic = new ListenMusic(H, src);
@@ -31,6 +32,7 @@ namespace SONA
             H.SetCurrentListenMusic(listenMusic);
         }
 
+        // Hàm ghi các nội dung cần thiết cho 1 bài hát
         private void SongSearch_Load(object sender, EventArgs e)
         {
             afr = new AudioFileReader(src["AM_THANH"].ToString());

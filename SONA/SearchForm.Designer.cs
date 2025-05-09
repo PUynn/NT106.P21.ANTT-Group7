@@ -63,6 +63,7 @@
             // 
             // flpResult
             // 
+            this.flpResult.AutoScroll = true;
             this.flpResult.Location = new System.Drawing.Point(3, 121);
             this.flpResult.Name = "flpResult";
             this.flpResult.Size = new System.Drawing.Size(1479, 795);
