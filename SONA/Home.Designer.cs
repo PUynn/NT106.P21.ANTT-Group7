@@ -361,6 +361,7 @@
             this.btnHome.Checked = true;
             this.btnHome.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.btnHome.CheckedState.Image = global::SONA.Properties.Resources.homeOn;
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnHome.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -425,6 +426,7 @@
             this.btnDiscover.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnDiscover.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.btnDiscover.CheckedState.Image = global::SONA.Properties.Resources.discoverOn;
+            this.btnDiscover.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnDiscover.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnDiscover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDiscover.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));

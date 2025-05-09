@@ -132,6 +132,7 @@ namespace SONA
             // 
             // btnPictureSinger
             // 
+            this.btnPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPictureSinger.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSinger.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSinger.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -286,6 +287,7 @@ namespace SONA
             // btnPlayMusic
             // 
             this.btnPlayMusic.CheckedState.Image = global::SONA.Properties.Resources.PlayAni1;
+            this.btnPlayMusic.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPlayMusic.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPlayMusic.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnPlayMusic.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));

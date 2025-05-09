@@ -43,8 +43,8 @@
             this.btnRefresh3 = new Guna.UI2.WinForms.Guna2Button();
             this.lblForYou = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblArtists = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.btnRefresh2 = new Guna.UI2.WinForms.Guna2Button();
-            this.btnRefresh = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRefreshArtist = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRefreshSong = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).BeginInit();
@@ -64,8 +64,8 @@
             this.guna2Panel2.Controls.Add(this.btnRefresh3);
             this.guna2Panel2.Controls.Add(this.lblForYou);
             this.guna2Panel2.Controls.Add(this.lblArtists);
-            this.guna2Panel2.Controls.Add(this.btnRefresh2);
-            this.guna2Panel2.Controls.Add(this.btnRefresh);
+            this.guna2Panel2.Controls.Add(this.btnRefreshArtist);
+            this.guna2Panel2.Controls.Add(this.btnRefreshSong);
             this.guna2Panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel2.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel2.Name = "guna2Panel2";
@@ -262,39 +262,41 @@
             this.lblArtists.TabIndex = 5;
             this.lblArtists.Text = "Your favorite artists";
             // 
-            // btnRefresh2
+            // btnRefreshArtist
             // 
-            this.btnRefresh2.BorderRadius = 5;
-            this.btnRefresh2.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefresh2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefresh2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnRefresh2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnRefresh2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnRefresh2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnRefresh2.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh2.Location = new System.Drawing.Point(1338, 1005);
-            this.btnRefresh2.Name = "btnRefresh2";
-            this.btnRefresh2.Size = new System.Drawing.Size(118, 27);
-            this.btnRefresh2.TabIndex = 5;
-            this.btnRefresh2.Text = "Refresh";
+            this.btnRefreshArtist.BorderRadius = 5;
+            this.btnRefreshArtist.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshArtist.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshArtist.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshArtist.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRefreshArtist.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRefreshArtist.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.btnRefreshArtist.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRefreshArtist.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshArtist.Location = new System.Drawing.Point(1338, 1005);
+            this.btnRefreshArtist.Name = "btnRefreshArtist";
+            this.btnRefreshArtist.Size = new System.Drawing.Size(118, 27);
+            this.btnRefreshArtist.TabIndex = 5;
+            this.btnRefreshArtist.Text = "Refresh";
+            this.btnRefreshArtist.Click += new System.EventHandler(this.btnRefreshArtist_Click);
             // 
-            // btnRefresh
+            // btnRefreshSong
             // 
-            this.btnRefresh.BorderRadius = 5;
-            this.btnRefresh.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefresh.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefresh.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnRefresh.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnRefresh.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.Location = new System.Drawing.Point(1338, 608);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(118, 27);
-            this.btnRefresh.TabIndex = 5;
-            this.btnRefresh.Text = "Refresh";
+            this.btnRefreshSong.BorderRadius = 5;
+            this.btnRefreshSong.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshSong.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshSong.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshSong.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRefreshSong.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRefreshSong.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.btnRefreshSong.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRefreshSong.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshSong.Location = new System.Drawing.Point(1338, 608);
+            this.btnRefreshSong.Name = "btnRefreshSong";
+            this.btnRefreshSong.Size = new System.Drawing.Size(118, 27);
+            this.btnRefreshSong.TabIndex = 5;
+            this.btnRefreshSong.Text = "Refresh";
+            this.btnRefreshSong.Click += new System.EventHandler(this.btnRefreshSong_Click);
             // 
             // HomeContent
             // 
@@ -329,8 +331,8 @@
         private Guna.UI2.WinForms.Guna2Button btnRefresh3;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblForYou;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblArtists;
-        private Guna.UI2.WinForms.Guna2Button btnRefresh2;
-        private Guna.UI2.WinForms.Guna2Button btnRefresh;
+        private Guna.UI2.WinForms.Guna2Button btnRefreshArtist;
+        private Guna.UI2.WinForms.Guna2Button btnRefreshSong;
         private System.Windows.Forms.FlowLayoutPanel flpHistory;
         private System.Windows.Forms.FlowLayoutPanel flpArtists;
     }

@@ -60,6 +60,7 @@
             // btnPictureSong
             // 
             this.btnPictureSong.BorderRadius = 10;
+            this.btnPictureSong.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPictureSong.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSong.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSong.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));

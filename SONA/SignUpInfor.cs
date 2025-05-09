@@ -43,12 +43,6 @@ namespace SONA
                 return false;
             }
 
-            if (string.IsNullOrEmpty(tbPass.Text))
-            {
-                lblcheckPass.ForeColor = Color.Red;
-                return false;
-            }
-
             for (int i = 0; i < tbSdt.Text.Length; i++)
             {
                 if (!char.IsDigit(tbSdt.Text[i]))
@@ -56,6 +50,12 @@ namespace SONA
                     lblCheckSdt.Text = "Số điện thoại không hợp lệ!";
                     return false;
                 }
+            }
+
+            if (string.IsNullOrEmpty(tbPass.Text))
+            {
+                lblcheckPass.ForeColor = Color.Red;
+                return false;
             }
 
             bool checkNum = false;
