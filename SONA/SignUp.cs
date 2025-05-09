@@ -48,7 +48,7 @@ namespace SONA
             try
             {
                 connectSQL = new ConnectSQL();
-                string queryEmail = $"SELECT * FROM USERS WHERE EMAIL = '{tbEmail.Text}'";
+                string queryEmail = $"SELECT * FROM USERS WHERE EMAIL = '{tbEmail.Text}'"; // thực hiện truy vấn để kiểm tra email đã tồn tại trong cơ sở dữ liệu chưa
                 DataTable dt = connectSQL.Query(queryEmail);
 
                 if (dt.Rows.Count > 0)

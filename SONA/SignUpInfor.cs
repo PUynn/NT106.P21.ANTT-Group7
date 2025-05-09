@@ -29,9 +29,11 @@ namespace SONA
         // Hàm kiểm tra thông tin đăng nhập và báo lỗi nếu không hợp lệ
         private bool checkSignUpInfor()
         {
+            // Đặt các giá trị mặc định ban đầu cho các label thông báo
             lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
             lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
 
+            // Kiểm tra các trường thông tin có trống hay không
             if (string.IsNullOrEmpty(tbUser.Text))
             {
                 lblCheckName.Text = "Tên người dùng không được để trống!";
@@ -59,6 +61,8 @@ namespace SONA
                 return false;
             }
 
+            
+            // Kiểm tra mật khẩu có phù hợp với yêu cầu không
             bool checkNum = false;
             bool checkLetter = false;
             bool checkSpecial = false;
@@ -111,11 +115,11 @@ namespace SONA
         // Hàm để chọn ảnh đại diện bằng cách mở file ảnh trong thư mục
         private void setAvatar()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            OpenFileDialog openFileDialog = new OpenFileDialog(); // Tạo một đối tượng để mở file trong thư mục
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"; // Lọc các file định dạng ảnh
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                btnAvatar.Image = Image.FromFile(openFileDialog.FileName);
+                btnAvatar.Image = Image.FromFile(openFileDialog.FileName); // Set ảnh đại diện từ file ảnh trong thư mục
             }
         }
 
@@ -134,6 +138,7 @@ namespace SONA
             lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
         }
 
+        // Các hàm gọi hàm btnSignUp_Click khi nhấn phím Enter trong các textbox
         private void tbUser_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -174,8 +179,8 @@ namespace SONA
                 try
                 {
                     connectSQL = new ConnectSQL();
-                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'";
-                    DataTable dtb = connectSQL.Query(queryPhone);
+                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'"; // Thực hiện truy vấn để kiểm tra số điện thoại đã tồn tại trong cơ sở dữ liệu chưa
+                    DataTable dtb = connectSQL.Query(queryPhone); // Gọi hàm truy vấn và lưu kết quả vào dtb
 
                     if (dtb.Rows.Count > 0)
                     {
@@ -183,8 +188,8 @@ namespace SONA
                         return;
                     }
 
-                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')";
-                    connectSQL.ExecuteQuery(queryInsert);
+                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')"; // thêm thông tin người dùng vào cơ sở dữ liệu
+                    connectSQL.ExecuteQuery(queryInsert); // Gọi hàm truy vấn để thực hiện câu lệnh thêm vào cơ sở dữ liệu
 
                     S.ShowHome();
                 }

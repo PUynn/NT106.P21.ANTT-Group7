@@ -53,12 +53,12 @@ namespace SONA
             }
         }
 
-        // Hàm xử lý sự kiện khi nhạc dừng
+        // Hàm bật lại nhạc khi nhạc dừng
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (isAutoReplay)
             {
-                afr.Position = 0;
+                afr.Position = 0; // Đặt lại vị trí phát nhạc về đầu
                 woe.Play();
             }
         }
@@ -68,18 +68,18 @@ namespace SONA
         {
             if (woe != null)
             {
-                lastPosition = afr?.CurrentTime ?? TimeSpan.Zero;
-                woe.PlaybackStopped -= OnPlaybackStopped;
+                lastPosition = afr?.CurrentTime ?? TimeSpan.Zero; // Lưu lại vị trí hiện tại
+                woe.PlaybackStopped -= OnPlaybackStopped; // Ngừng theo dõi sự kiện dừng phát
                 woe.Stop();
-                woe.Dispose();
+                woe.Dispose(); // Giải phóng tài nguyên cho đối tượng phát nhạc
                 woe = null;
             }
             if (afr != null)
             {
-                afr.Dispose();
+                afr.Dispose(); // Giải phóng tài nguyên cho đối tượng đọc tệp âm thanh
                 afr = null;
             }
-            timer1.Stop();
+            timer1.Stop(); // Dừng bộ đếm thời gian
         }
 
         // Hàm khởi tạo âm thanh
@@ -89,23 +89,23 @@ namespace SONA
             {
                 if (afr == null)
                 {
-                    afr = new AudioFileReader(src["AM_THANH"].ToString());
-                    afr.Volume = tbsVolume.Value / 100f;
+                    afr = new AudioFileReader(src["AM_THANH"].ToString()); // Đọc tệp âm thanh từ trong cơ sở dữ liệu
+                    afr.Volume = tbsVolume.Value / 100f; // Đặt giá trị âm lượng ban đầu là 50%
                 }
 
                 if (woe == null)
                 {
                     woe = new WaveOutEvent();
-                    woe.Init(afr);
-                    woe.PlaybackStopped += OnPlaybackStopped;
+                    woe.Init(afr); // Khởi tạo đối tượng phát nhạc với tệp âm thanh
+                    woe.PlaybackStopped += OnPlaybackStopped; // Theo dõi sự kiện dừng phát
                 }
 
-                if (lastPosition != TimeSpan.Zero)
+                if (lastPosition != TimeSpan.Zero) // Kiểm tra xem có vị trí đã lưu không
                 {
-                    afr.CurrentTime = lastPosition;
+                    afr.CurrentTime = lastPosition; // Đặt lại vị trí phát nhạc về vị trí đã lưu
                 }
 
-                lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss");
+                lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss"); // Lấy thời gian tổng của bài hát
                 lblNameSinger.Text = src["NAME_SINGER"].ToString();
                 lblSince.Text = ConvertDate(src["BIRTHDATE"].ToString());
 
@@ -129,13 +129,13 @@ namespace SONA
         {
             try
             {
-                StopMusicAndDispose();
+                StopMusicAndDispose(); // Giải phóng tài nguyên trước khi khởi động lại
                 if (InitializeAudio())
                 {
-                    woe.Play();
+                    woe.Play(); // Phát nhạc
                     isPlaying = true;
                     btnPlayMusic.Image = Properties.Resources.PauseAni;
-                    timer1.Start();
+                    timer1.Start(); // Bắt đầu bộ đếm thời gian
                 }
                 else
                 {
@@ -156,22 +156,19 @@ namespace SONA
         {
             try
             {
-                if (isPlaying)
+                if (isPlaying) // Nếu đang phát nhạc
                 {
-                    lastPosition = afr.CurrentTime;
-                    woe.Pause();
+                    lastPosition = afr.CurrentTime; // Lưu lại vị trí hiện tại
+                    woe.Pause(); // Tạm dừng phát nhạc
                     btnPlayMusic.Image = Properties.Resources.PlayAni;
                     isPlaying = false;
-                    timer1.Stop();
+                    timer1.Stop(); // Dừng bộ đếm thời gian
                 }
                 else
                 {
-                    if (woe == null || afr == null)
+                    if (woe == null || afr == null) // Nếu chưa được khởi tạo
                     {
-                        if (!InitializeAudio())
-                        {
-                            return;
-                        }
+                        if (!InitializeAudio()) return; // Khởi tạo lại âm thanh, nếu không được thì return
                     }
 
                     woe.Play();
@@ -194,7 +191,7 @@ namespace SONA
             if (afr != null)
             {
                 lblProcess.Text = afr.CurrentTime.ToString(@"mm\:ss");
-                tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
+                tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100); // Cập nhật thanh thời gian bằng cách lấy thời gian hiện tại chia cho tổng thời gian
             }
         }
 
@@ -203,8 +200,8 @@ namespace SONA
         {
             if (afr != null)
             {
-                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * tbsTimeSong.Value / 100);
-                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition);
+                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * tbsTimeSong.Value / 100); // Tính toán vị trí mới dựa trên giá trị thanh trượt
+                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition); // Đặt lại vị trí phát nhạc
             }
         }
 
@@ -213,18 +210,17 @@ namespace SONA
         {
             if (afr != null)
             {
-                afr.Volume = tbsVolume.Value / 100f;
+                afr.Volume = tbsVolume.Value / 100f; // Đặt lại âm lượng dựa trên giá trị thanh trượt
             }
         }
 
         // Hàm lặp lại bài hát
         private void btReplay_Click(object sender, EventArgs e)
         {
-            isAutoReplay = !isAutoReplay;
+            isAutoReplay = !isAutoReplay; // Đảo ngược trạng thái lặp lại
 
             if (isAutoReplay)
                 btReplay.Image = Properties.Resources.RecoreOn;
-            
             else
                 btReplay.Image = Properties.Resources.Record;
         }
