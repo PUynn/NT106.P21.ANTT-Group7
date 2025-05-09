@@ -113,6 +113,12 @@
     <Compile Include="ArtistForm.Designer.cs">
       <DependentUpon>ArtistForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArtistInfor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArtistInfor.Designer.cs">
+      <DependentUpon>ArtistInfor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectSQL.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>UserControl</SubType>
@@ -195,6 +201,9 @@
     </Compile>
     <EmbeddedResource Include="ArtistForm.resx">
       <DependentUpon>ArtistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArtistInfor.resx">
+      <DependentUpon>ArtistInfor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
@@ -281,6 +290,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Minimize.png" />
+    <None Include="Resources\ReplayOff.png" />
+    <None Include="Resources\RecoreOn.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

@@ -30,8 +30,8 @@
         {
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnFavorited = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblNameArtist = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblTimeSong = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblNameSong = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.btnPictureSong = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
@@ -40,8 +40,8 @@
             // guna2Panel1
             // 
             this.guna2Panel1.Controls.Add(this.btnFavorited);
-            this.guna2Panel1.Controls.Add(this.guna2HtmlLabel3);
-            this.guna2Panel1.Controls.Add(this.lblNameArtist);
+            this.guna2Panel1.Controls.Add(this.lblTimeSong);
+            this.guna2Panel1.Controls.Add(this.lblNameSinger);
             this.guna2Panel1.Controls.Add(this.lblNameSong);
             this.guna2Panel1.Controls.Add(this.btnPictureSong);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -72,36 +72,36 @@
             this.btnFavorited.Size = new System.Drawing.Size(55, 41);
             this.btnFavorited.TabIndex = 2;
             // 
-            // guna2HtmlLabel3
+            // lblTimeSong
             // 
-            this.guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2HtmlLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.guna2HtmlLabel3.Location = new System.Drawing.Point(1360, 26);
-            this.guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            this.guna2HtmlLabel3.Size = new System.Drawing.Size(31, 20);
-            this.guna2HtmlLabel3.TabIndex = 1;
-            this.guna2HtmlLabel3.Text = "3:28";
+            this.lblTimeSong.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeSong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.lblTimeSong.Location = new System.Drawing.Point(1360, 26);
+            this.lblTimeSong.Name = "lblTimeSong";
+            this.lblTimeSong.Size = new System.Drawing.Size(31, 20);
+            this.lblTimeSong.TabIndex = 1;
+            this.lblTimeSong.Text = "3:28";
             // 
-            // lblNameArtist
+            // lblNameSinger
             // 
-            this.lblNameArtist.BackColor = System.Drawing.Color.Transparent;
-            this.lblNameArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameArtist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.lblNameArtist.Location = new System.Drawing.Point(111, 43);
-            this.lblNameArtist.Name = "lblNameArtist";
-            this.lblNameArtist.Size = new System.Drawing.Size(83, 20);
-            this.lblNameArtist.TabIndex = 1;
-            this.lblNameArtist.Text = "Charlie Puth";
+            this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
+            this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSinger.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.lblNameSinger.Location = new System.Drawing.Point(111, 47);
+            this.lblNameSinger.Name = "lblNameSinger";
+            this.lblNameSinger.Size = new System.Drawing.Size(83, 20);
+            this.lblNameSinger.TabIndex = 1;
+            this.lblNameSinger.Text = "Charlie Puth";
             // 
             // lblNameSong
             // 
             this.lblNameSong.BackColor = System.Drawing.Color.Transparent;
-            this.lblNameSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSong.ForeColor = System.Drawing.Color.White;
             this.lblNameSong.Location = new System.Drawing.Point(111, 22);
             this.lblNameSong.Name = "lblNameSong";
-            this.lblNameSong.Size = new System.Drawing.Size(74, 24);
+            this.lblNameSong.Size = new System.Drawing.Size(80, 27);
             this.lblNameSong.TabIndex = 1;
             this.lblNameSong.Text = "Attention";
             // 
@@ -128,6 +128,7 @@
             this.Controls.Add(this.guna2Panel1);
             this.Name = "SongSearch";
             this.Size = new System.Drawing.Size(1480, 100);
+            this.Load += new System.EventHandler(this.SongSearch_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -137,10 +138,10 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblNameArtist;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSong;
         private Guna.UI2.WinForms.Guna2Button btnPictureSong;
         private Guna.UI2.WinForms.Guna2Button btnFavorited;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblTimeSong;
     }
 }

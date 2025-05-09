@@ -26,31 +26,26 @@ namespace SONA
             srcEmail = email;
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private bool checkSignUpInfor()
         {
-            lblName.Text = lblSdt.Text = lblConfirm.Text = "";
-            lblPass.ForeColor = Color.FromArgb(102, 102, 102);
+            lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
+            lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
 
             if (string.IsNullOrEmpty(tbUser.Text))
             {
-                lblName.Text = "Tên người dùng không được để trống!";
+                lblCheckName.Text = "Tên người dùng không được để trống!";
                 return false;
             }
 
             if (string.IsNullOrEmpty(tbSdt.Text))
             {
-                lblSdt.Text = "Vui lòng nhập số điện thoại!";
+                lblCheckSdt.Text = "Vui lòng nhập số điện thoại!";
                 return false;
             }
 
             if (string.IsNullOrEmpty(tbPass.Text))
             {
-                lblPass.ForeColor = Color.Red;
+                lblcheckPass.ForeColor = Color.Red;
                 return false;
             }
 
@@ -58,7 +53,7 @@ namespace SONA
             {
                 if (!char.IsDigit(tbSdt.Text[i]))
                 {
-                    lblSdt.Text = "Số điện thoại không hợp lệ!";
+                    lblCheckSdt.Text = "Số điện thoại không hợp lệ!";
                     return false;
                 }
             }
@@ -79,51 +74,23 @@ namespace SONA
 
             if (!checkNum || !checkLetter || !checkSpecial)
             {
-                lblPass.ForeColor = Color.Red;
+                lblcheckPass.ForeColor = Color.Red;
                 return false;
             }
 
             if (string.IsNullOrEmpty(tbConfirm.Text))
             {
-                lblConfirm.Text = "Vui lòng xác nhận mật khẩu!";
+                lblCheckConfirm.Text = "Vui lòng xác nhận mật khẩu!";
                 return false;
             }
 
             if (tbPass.Text != tbConfirm.Text)
             {
-                lblConfirm.Text = "Mật khẩu nhập lại chưa chính xác!";
+                lblCheckConfirm.Text = "Mật khẩu nhập lại chưa chính xác!";
                 return false;
             }
 
             return true;
-        }
-
-        private void btnDangNhap_Click(object sender, EventArgs e)
-        {
-            if (checkSignUpInfor())
-            {
-                try
-                {
-                    connectSQL = new ConnectSQL();
-                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'";
-                    DataTable dtb = connectSQL.Query(queryPhone);
-
-                    if (dtb.Rows.Count > 0)
-                    {
-                        lblSdt.Text = "Số điện thoại đã tồn tại!";
-                        return;
-                    }
-
-                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')";
-                    connectSQL.ExecuteQuery(queryInsert);
-
-                    S.ShowHome();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-            }
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
@@ -131,7 +98,7 @@ namespace SONA
             S.Close();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void lblLogin_Click(object sender, EventArgs e)
         {
             SignUp signUp = new SignUp(S);
             S.pnLogin.Controls.Clear();
@@ -148,26 +115,26 @@ namespace SONA
             }
         }
 
-        private void guna2CircleButton1_Click(object sender, EventArgs e)
+        private void btnAvatar_Click(object sender, EventArgs e)
         {
             setAvatar();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void lblAvatar_Click(object sender, EventArgs e)
         {
             setAvatar();
         }
 
         private void SignUpInfor_Load(object sender, EventArgs e)
         {
-            lblName.Text = lblSdt.Text = lblConfirm.Text = "";
+            lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
         }
 
         private void tbUser_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnDangNhap_Click(sender, e);
+                btnSignUp_Click(sender, e);
             }
         }
 
@@ -175,7 +142,7 @@ namespace SONA
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnDangNhap_Click(sender, e);
+                btnSignUp_Click(sender, e);
             }
         }
 
@@ -183,7 +150,7 @@ namespace SONA
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnDangNhap_Click(sender, e);
+                btnSignUp_Click(sender, e);
             }
         }
 
@@ -191,7 +158,35 @@ namespace SONA
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnDangNhap_Click(sender, e);
+                btnSignUp_Click(sender, e);
+            }
+        }
+
+        private void btnSignUp_Click(object sender, EventArgs e)
+        {
+            if (checkSignUpInfor())
+            {
+                try
+                {
+                    connectSQL = new ConnectSQL();
+                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'";
+                    DataTable dtb = connectSQL.Query(queryPhone);
+
+                    if (dtb.Rows.Count > 0)
+                    {
+                        lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
+                        return;
+                    }
+
+                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')";
+                    connectSQL.ExecuteQuery(queryInsert);
+
+                    S.ShowHome();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
             }
         }
     }

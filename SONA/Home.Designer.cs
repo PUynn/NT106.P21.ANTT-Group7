@@ -234,7 +234,6 @@
             this.pnMenu.Name = "pnMenu";
             this.pnMenu.Size = new System.Drawing.Size(1485, 63);
             this.pnMenu.TabIndex = 1;
-            this.pnMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.pnMenu_Paint);
             // 
             // txtSearch
             // 

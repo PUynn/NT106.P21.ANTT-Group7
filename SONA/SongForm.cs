@@ -15,31 +15,28 @@ namespace SONA
     public partial class SongForm : UserControl
     {
         Home H;
-        DataTable dtb;
-        string srcSong, srcImage;
+        DataRow src;
 
-        public SongForm(Home h, string nameSong, string imgSong, string soundSong)
+        public SongForm(Home h, DataRow dr)
         {
             InitializeComponent();
             H = h;
-            srcSong = soundSong;
-            srcImage = imgSong;
-
-            lbNameSong.Text = nameSong;
-            btnPictureSong.BackgroundImage = Image.FromFile(imgSong);
-            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
-        }
-
-        private void guna2Button17_Click(object sender, EventArgs e)
-        {
-            ListenMusic listenMusic = new ListenMusic(H, srcSong, srcImage);
-            H.panel1.Controls.Clear();
-            H.panel1.Controls.Add(listenMusic);
-            H.SetCurrentListenMusic(listenMusic);
+            src = dr;           
         }
 
         private void SongForm_Load(object sender, EventArgs e)
         {
+            lbNameSong.Text = src["NAME_SONG"].ToString();
+            btnPictureSong.BackgroundImage = Image.FromFile(src["PICTURE_SONG"].ToString());
+            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void btnPictureSong_Click(object sender, EventArgs e)
+        {
+            ListenMusic listenMusic = new ListenMusic(H, src);
+            H.panel1.Controls.Clear();
+            H.panel1.Controls.Add(listenMusic);
+            H.SetCurrentListenMusic(listenMusic);
         }
     }
 }

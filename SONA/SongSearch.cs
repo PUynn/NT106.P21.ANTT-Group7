@@ -7,36 +7,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NAudio.Wave;
 
 namespace SONA
 {
     public partial class SongSearch : UserControl
     {
-        string srcSong, srcPicture, srcMusic, srcSinger;
         Home H;
-
-        public SongSearch(Home h, string nameSong, string pictureSong, string Music, string nameSinger)
+        DataRow src;
+        AudioFileReader afr;
+        public SongSearch(Home h, DataRow dr)
         {
-            InitializeComponent();
-            srcSong = nameSong;
-            srcPicture = pictureSong;
-            srcMusic = Music;
-            srcSinger = nameSinger;
-
-            lblNameArtist.Text = srcSinger;
-            lblNameSong.Text = srcSong;
-            btnPictureSong.BackgroundImage = Image.FromFile(srcPicture);
-            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
-
             H = h;
+            src = dr;
+            InitializeComponent();
         }
 
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, srcMusic, srcPicture);
+            ListenMusic listenMusic = new ListenMusic(H, src);
             H.panel1.Controls.Clear();
             H.panel1.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);
+        }
+
+        private void SongSearch_Load(object sender, EventArgs e)
+        {
+            afr = new AudioFileReader(src["AM_THANH"].ToString());
+            lblTimeSong.Text = afr.TotalTime.ToString(@"mm\:ss");
+
+            lblNameSong.Text = src["NAME_SONG"].ToString();
+            lblNameSinger.Text = src["NAME_SINGER"].ToString();
+
+            btnPictureSong.BackgroundImage = Image.FromFile(src["PICTURE_SONG"].ToString());
+            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
+  
         }
     }
 }

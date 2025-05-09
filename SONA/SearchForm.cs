@@ -30,7 +30,7 @@ namespace SONA
                 flpResult.Controls.Clear();
                 foreach (DataRow dr in dtb.Rows)
                 {
-                    SongSearch songSearch = new SongSearch(H, dr["NAME_SONG"].ToString(), (dr["PICTURE_SONG"].ToString()), dr["AM_THANH"].ToString(), dr["NAME_SINGER"].ToString());
+                    SongSearch songSearch = new SongSearch(H, dr);
                     flpResult.Controls.Add(songSearch);
                 }
             }

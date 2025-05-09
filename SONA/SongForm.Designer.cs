@@ -72,7 +72,7 @@
             this.btnPictureSong.Name = "btnPictureSong";
             this.btnPictureSong.Size = new System.Drawing.Size(224, 208);
             this.btnPictureSong.TabIndex = 7;
-            this.btnPictureSong.Click += new System.EventHandler(this.guna2Button17_Click);
+            this.btnPictureSong.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
             // SongForm
             // 

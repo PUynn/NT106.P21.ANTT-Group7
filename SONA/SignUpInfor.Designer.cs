@@ -31,22 +31,22 @@
             this.components = new System.ComponentModel.Container();
             this.tbPass = new Guna.UI2.WinForms.Guna2TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblLogin = new System.Windows.Forms.Label();
             this.tbUser = new Guna.UI2.WinForms.Guna2TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblAvatar = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.btnDangNhap = new Guna.UI2.WinForms.Guna2Button();
-            this.lblPass = new System.Windows.Forms.Label();
+            this.btnSignUp = new Guna.UI2.WinForms.Guna2Button();
+            this.lblcheckPass = new System.Windows.Forms.Label();
             this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSdt = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbConfirm = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblSdt = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblConfirm = new System.Windows.Forms.Label();
+            this.lblCheckSdt = new System.Windows.Forms.Label();
+            this.lblCheckName = new System.Windows.Forms.Label();
+            this.lblCheckConfirm = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.SuspendLayout();
             // 
@@ -82,18 +82,18 @@
             this.label3.Size = new System.Drawing.Size(0, 20);
             this.label3.TabIndex = 17;
             // 
-            // label1
+            // lblLogin
             // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(60, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(224, 20);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Bạn đã có tài khoản? Đăng nhập";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.lblLogin.AutoSize = true;
+            this.lblLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblLogin.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogin.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblLogin.Location = new System.Drawing.Point(60, 42);
+            this.lblLogin.Name = "lblLogin";
+            this.lblLogin.Size = new System.Drawing.Size(224, 20);
+            this.lblLogin.TabIndex = 17;
+            this.lblLogin.Text = "Bạn đã có tài khoản? Đăng nhập";
+            this.lblLogin.Click += new System.EventHandler(this.lblLogin_Click);
             // 
             // tbUser
             // 
@@ -138,7 +138,7 @@
             this.lblAvatar.Size = new System.Drawing.Size(129, 20);
             this.lblAvatar.TabIndex = 17;
             this.lblAvatar.Text = "Chọn ảnh đại diện";
-            this.lblAvatar.Click += new System.EventHandler(this.label4_Click);
+            this.lblAvatar.Click += new System.EventHandler(this.lblAvatar_Click);
             // 
             // label9
             // 
@@ -150,35 +150,34 @@
             this.label9.Size = new System.Drawing.Size(73, 20);
             this.label9.TabIndex = 17;
             this.label9.Text = "Mật khẩu:";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
-            // btnDangNhap
+            // btnSignUp
             // 
-            this.btnDangNhap.Animated = true;
-            this.btnDangNhap.BackColor = System.Drawing.Color.Transparent;
-            this.btnDangNhap.BorderRadius = 33;
-            this.btnDangNhap.FillColor = System.Drawing.Color.DarkGray;
-            this.btnDangNhap.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDangNhap.ForeColor = System.Drawing.Color.White;
-            this.btnDangNhap.HoverState.FillColor = System.Drawing.Color.LightBlue;
-            this.btnDangNhap.ImageSize = new System.Drawing.Size(28, 28);
-            this.btnDangNhap.Location = new System.Drawing.Point(64, 716);
-            this.btnDangNhap.Name = "btnDangNhap";
-            this.btnDangNhap.Size = new System.Drawing.Size(580, 64);
-            this.btnDangNhap.TabIndex = 21;
-            this.btnDangNhap.Text = "Đăng kí";
-            this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
+            this.btnSignUp.Animated = true;
+            this.btnSignUp.BackColor = System.Drawing.Color.Transparent;
+            this.btnSignUp.BorderRadius = 33;
+            this.btnSignUp.FillColor = System.Drawing.Color.DarkGray;
+            this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignUp.ForeColor = System.Drawing.Color.White;
+            this.btnSignUp.HoverState.FillColor = System.Drawing.Color.LightBlue;
+            this.btnSignUp.ImageSize = new System.Drawing.Size(28, 28);
+            this.btnSignUp.Location = new System.Drawing.Point(64, 716);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(580, 64);
+            this.btnSignUp.TabIndex = 21;
+            this.btnSignUp.Text = "Đăng kí";
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
-            // lblPass
+            // lblcheckPass
             // 
-            this.lblPass.AutoSize = true;
-            this.lblPass.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblPass.Location = new System.Drawing.Point(60, 570);
-            this.lblPass.Name = "lblPass";
-            this.lblPass.Size = new System.Drawing.Size(309, 80);
-            this.lblPass.TabIndex = 17;
-            this.lblPass.Text = "Mật khẩu của bạn phải có ít nhất\r\n- 1 chữ cái\r\n- 1 chữ số hoặc ký tự đặc biệt (ví" +
+            this.lblcheckPass.AutoSize = true;
+            this.lblcheckPass.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblcheckPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.lblcheckPass.Location = new System.Drawing.Point(60, 570);
+            this.lblcheckPass.Name = "lblcheckPass";
+            this.lblcheckPass.Size = new System.Drawing.Size(309, 80);
+            this.lblcheckPass.TabIndex = 17;
+            this.lblcheckPass.Text = "Mật khẩu của bạn phải có ít nhất\r\n- 1 chữ cái\r\n- 1 chữ số hoặc ký tự đặc biệt (ví" +
     " dụ @, !, ?. #)\r\n- 8 ký tự";
             // 
             // btnAvatar
@@ -197,7 +196,7 @@
             this.btnAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.btnAvatar.Size = new System.Drawing.Size(60, 60);
             this.btnAvatar.TabIndex = 19;
-            this.btnAvatar.Click += new System.EventHandler(this.guna2CircleButton1_Click);
+            this.btnAvatar.Click += new System.EventHandler(this.btnAvatar_Click);
             // 
             // guna2Button3
             // 
@@ -277,40 +276,39 @@
             this.label6.Size = new System.Drawing.Size(137, 20);
             this.label6.TabIndex = 17;
             this.label6.Text = "Xác nhận mật khẩu:";
-            this.label6.Click += new System.EventHandler(this.label9_Click);
             // 
-            // lblSdt
+            // lblCheckSdt
             // 
-            this.lblSdt.AutoSize = true;
-            this.lblSdt.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSdt.ForeColor = System.Drawing.Color.Red;
-            this.lblSdt.Location = new System.Drawing.Point(60, 416);
-            this.lblSdt.Name = "lblSdt";
-            this.lblSdt.Size = new System.Drawing.Size(192, 20);
-            this.lblSdt.TabIndex = 22;
-            this.lblSdt.Text = "Số điện thoại không hợp lệ!";
+            this.lblCheckSdt.AutoSize = true;
+            this.lblCheckSdt.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheckSdt.ForeColor = System.Drawing.Color.Red;
+            this.lblCheckSdt.Location = new System.Drawing.Point(60, 416);
+            this.lblCheckSdt.Name = "lblCheckSdt";
+            this.lblCheckSdt.Size = new System.Drawing.Size(192, 20);
+            this.lblCheckSdt.TabIndex = 22;
+            this.lblCheckSdt.Text = "Số điện thoại không hợp lệ!";
             // 
-            // lblName
+            // lblCheckName
             // 
-            this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.ForeColor = System.Drawing.Color.Red;
-            this.lblName.Location = new System.Drawing.Point(60, 271);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(261, 20);
-            this.lblName.TabIndex = 22;
-            this.lblName.Text = "Tên người dùng không được để trống!";
+            this.lblCheckName.AutoSize = true;
+            this.lblCheckName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheckName.ForeColor = System.Drawing.Color.Red;
+            this.lblCheckName.Location = new System.Drawing.Point(60, 271);
+            this.lblCheckName.Name = "lblCheckName";
+            this.lblCheckName.Size = new System.Drawing.Size(261, 20);
+            this.lblCheckName.TabIndex = 22;
+            this.lblCheckName.Text = "Tên người dùng không được để trống!";
             // 
-            // lblConfirm
+            // lblCheckConfirm
             // 
-            this.lblConfirm.AutoSize = true;
-            this.lblConfirm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirm.ForeColor = System.Drawing.Color.Red;
-            this.lblConfirm.Location = new System.Drawing.Point(372, 570);
-            this.lblConfirm.Name = "lblConfirm";
-            this.lblConfirm.Size = new System.Drawing.Size(232, 20);
-            this.lblConfirm.TabIndex = 22;
-            this.lblConfirm.Text = "Mật khẩu nhập lại chưa chính xác!";
+            this.lblCheckConfirm.AutoSize = true;
+            this.lblCheckConfirm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheckConfirm.ForeColor = System.Drawing.Color.Red;
+            this.lblCheckConfirm.Location = new System.Drawing.Point(372, 570);
+            this.lblCheckConfirm.Name = "lblCheckConfirm";
+            this.lblCheckConfirm.Size = new System.Drawing.Size(232, 20);
+            this.lblCheckConfirm.TabIndex = 22;
+            this.lblCheckConfirm.Text = "Mật khẩu nhập lại chưa chính xác!";
             // 
             // guna2Elipse1
             // 
@@ -322,10 +320,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.lblConfirm);
-            this.Controls.Add(this.lblName);
-            this.Controls.Add(this.lblSdt);
-            this.Controls.Add(this.btnDangNhap);
+            this.Controls.Add(this.lblCheckConfirm);
+            this.Controls.Add(this.lblCheckName);
+            this.Controls.Add(this.lblCheckSdt);
+            this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.btnAvatar);
             this.Controls.Add(this.tbSdt);
             this.Controls.Add(this.tbUser);
@@ -336,8 +334,8 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblAvatar);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblPass);
+            this.Controls.Add(this.lblLogin);
+            this.Controls.Add(this.lblcheckPass);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.guna2Button3);
             this.Name = "SignUpInfor";
@@ -353,21 +351,21 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button3;
         private Guna.UI2.WinForms.Guna2TextBox tbPass;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblLogin;
         private Guna.UI2.WinForms.Guna2TextBox tbUser;
         private Guna.UI2.WinForms.Guna2CircleButton btnAvatar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblAvatar;
         private System.Windows.Forms.Label label9;
-        private Guna.UI2.WinForms.Guna2Button btnDangNhap;
-        private System.Windows.Forms.Label lblPass;
+        private Guna.UI2.WinForms.Guna2Button btnSignUp;
+        private System.Windows.Forms.Label lblcheckPass;
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2TextBox tbSdt;
         private Guna.UI2.WinForms.Guna2TextBox tbConfirm;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblSdt;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblConfirm;
+        private System.Windows.Forms.Label lblCheckSdt;
+        private System.Windows.Forms.Label lblCheckName;
+        private System.Windows.Forms.Label lblCheckConfirm;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
     }
 }

@@ -18,21 +18,38 @@ namespace SONA
         Home H;
         WaveOutEvent woe;
         AudioFileReader afr;
-        int songIndex;
 
-        string srcPicture;
-        string srcMusic;
         bool isPlaying;
         bool isAutoReplay;
+
+        DataRow src;
         TimeSpan lastPosition;
 
-        public ListenMusic(Home h, string music, string image)
+        public ListenMusic(Home h, DataRow dr)
         {
             H = h;
+            src = dr;
+
             InitializeComponent();
-            srcMusic = music;
-            srcPicture = image;
             this.Disposed += (s, e) => StopMusicAndDispose();
+        }
+
+        private string ConvertDate(string date)
+        {
+            try
+            {
+                DateTime parsedDate = DateTime.Parse(date);
+
+                string month = parsedDate.ToString("MMMM");
+                int day = parsedDate.Day;
+                int year = parsedDate.Year;
+
+                return $"Since {month} {day}, {year}";
+            }
+            catch (FormatException)
+            {
+                return "Invalid date format";
+            }
         }
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
@@ -41,139 +58,6 @@ namespace SONA
             {
                 afr.Position = 0;
                 woe.Play();
-            }
-        }
-
-        private bool InitializeAudio()
-        {
-            try
-            {
-                if (afr == null)
-                {
-                    afr = new AudioFileReader(srcMusic);
-                    afr.Volume = guna2TrackBar2.Value / 100f;
-                }
-
-                if (woe == null)
-                {
-                    woe = new WaveOutEvent();
-                    woe.Init(afr);
-                    woe.PlaybackStopped += OnPlaybackStopped;
-                }
-
-                if (lastPosition != TimeSpan.Zero)
-                {
-                    afr.CurrentTime = lastPosition;
-                }
-
-                guna2PictureBox1.Image = Image.FromFile(srcPicture);
-                guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                guna2HtmlLabel2.Text = afr.TotalTime.ToString(@"mm\:ss");
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error during audio initialization: " + ex.Message);
-                return false;
-            }
-        }
-
-        private void ListenMusic_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                StopMusicAndDispose();
-
-                if (InitializeAudio())
-                {
-                    woe.Play();
-                    isPlaying = true;
-                    btnStart.Image = Properties.Resources.PauseAni;
-                    timer1.Start();
-                }
-                else
-                {
-                    isPlaying = false;
-                    btnStart.Image = Properties.Resources.PlayAni;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error during initialization: " + ex.Message);
-                isPlaying = false;
-                btnStart.Image = Properties.Resources.PlayAni;
-            }
-        }
-
-        private void guna2TrackBar2_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (afr != null)
-            {
-                afr.Volume = guna2TrackBar2.Value / 100f;
-            }
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (isPlaying)
-                {
-                    lastPosition = afr.CurrentTime;
-                    woe.Pause();
-                    btnStart.Image = Properties.Resources.PlayAni;
-                    isPlaying = false;
-                    timer1.Stop();
-                }
-                else
-                {
-                    if (woe == null || afr == null)
-                    {
-                        if (!InitializeAudio())
-                        {
-                            return;
-                        }
-                    }
-
-                    woe.Play();
-                    btnStart.Image = Properties.Resources.PauseAni;
-                    isPlaying = true;
-                    timer1.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-                isPlaying = false;
-                btnStart.Image = Properties.Resources.PlayAni;
-            }
-        }
-
-        private void guna2Button10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (afr != null)
-            {
-                guna2HtmlLabel1.Text = afr.CurrentTime.ToString(@"mm\:ss");
-                guna2TrackBar1.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
-            }
-        }
-
-        private void ListenMusic_Leave(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2TrackBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (afr != null)
-            {
-                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * guna2TrackBar1.Value / 100);
-                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition);
             }
         }
 
@@ -195,9 +79,150 @@ namespace SONA
             timer1.Stop();
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e)
+        private bool InitializeAudio()
         {
+            try
+            {
+                if (afr == null)
+                {
+                    afr = new AudioFileReader(src["AM_THANH"].ToString());
+                    afr.Volume = tbsVolume.Value / 100f;
+                }
 
+                if (woe == null)
+                {
+                    woe = new WaveOutEvent();
+                    woe.Init(afr);
+                    woe.PlaybackStopped += OnPlaybackStopped;
+                }
+
+                if (lastPosition != TimeSpan.Zero)
+                {
+                    afr.CurrentTime = lastPosition;
+                }
+
+                lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss");
+                lblNameSinger.Text = src["NAME_SINGER"].ToString();
+                lblSince.Text = ConvertDate(src["BIRTHDATE"].ToString());
+
+                pbPictureSong.Image = Image.FromFile(src["PICTURE_SONG"].ToString());
+                pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage; ;
+                
+                btnPictureSinger.BackgroundImage = Image.FromFile(src["PICTURE_SINGER"].ToString());
+                btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during audio initialization: " + ex.Message);
+                return false;
+            }
         }
+
+        private void ListenMusic_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                StopMusicAndDispose();
+                if (InitializeAudio())
+                {
+                    woe.Play();
+                    isPlaying = true;
+                    btnPlayMusic.Image = Properties.Resources.PauseAni;
+                    timer1.Start();
+                }
+                else
+                {
+                    isPlaying = false;
+                    btnPlayMusic.Image = Properties.Resources.PlayAni;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during initialization: " + ex.Message);
+                isPlaying = false;
+                btnPlayMusic.Image = Properties.Resources.PlayAni;
+            }
+        }
+        private void btnPlayMusic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (isPlaying)
+                {
+                    lastPosition = afr.CurrentTime;
+                    woe.Pause();
+                    btnPlayMusic.Image = Properties.Resources.PlayAni;
+                    isPlaying = false;
+                    timer1.Stop();
+                }
+                else
+                {
+                    if (woe == null || afr == null)
+                    {
+                        if (!InitializeAudio())
+                        {
+                            return;
+                        }
+                    }
+
+                    woe.Play();
+                    btnPlayMusic.Image = Properties.Resources.PauseAni;
+                    isPlaying = true;
+                    timer1.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                isPlaying = false;
+                btnPlayMusic.Image = Properties.Resources.PlayAni;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (afr != null)
+            {
+                lblProcess.Text = afr.CurrentTime.ToString(@"mm\:ss");
+                tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
+            }
+        }
+        private void tbsTimeSong_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (afr != null)
+            {
+                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * tbsTimeSong.Value / 100);
+                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition);
+            }
+        }
+
+        private void tbsVolume_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (afr != null)
+            {
+                afr.Volume = tbsVolume.Value / 100f;
+            }
+        }
+
+        private void btReplay_Click(object sender, EventArgs e)
+        {
+            isAutoReplay = !isAutoReplay;
+
+            if (isAutoReplay)
+                btReplay.Image = Properties.Resources.RecoreOn;
+            
+            else
+                btReplay.Image = Properties.Resources.Record;
+        }
+
+        private void btnSinger_Click(object sender, EventArgs e)
+        {
+            StopMusicAndDispose();
+            H.panel1.Controls.Clear();
+            H.panel1.Controls.Add(new ArtistInfor(H, src));
+        }
+
     }
 }

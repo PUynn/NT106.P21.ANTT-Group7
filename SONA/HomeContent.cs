@@ -15,9 +15,6 @@ namespace SONA
     public partial class HomeContent : UserControl
     {
         Home H;
-        ConnectSQL connectSQL;
-        DataTable dtbSongs, dtbArtist;
-
         public HomeContent(Home h)
         {
             InitializeComponent();
@@ -29,22 +26,22 @@ namespace SONA
 
             try
             {
-                connectSQL = new ConnectSQL();
-                dtbSongs = connectSQL.Get("SONGS");
-                dtbArtist = connectSQL.Get("SINGER");
+                ConnectSQL connectSQL = new ConnectSQL();
+                DataTable dtb;
 
-                foreach (DataRow dr in dtbSongs.Rows)
+                dtb = connectSQL.Query("SELECT * FROM SONGS INNER JOIN SINGER ON SONGS.ID_SINGER = SINGER.ID_SINGER");
+
+                foreach (DataRow dr in dtb.Rows)
                 {
-                    SongForm songForm = new SongForm(H, dr["NAME_SONG"].ToString(), (dr["PICTURE_SONG"].ToString()), dr["AM_THANH"].ToString());
+                    SongForm songForm = new SongForm(H, dr);
                     flpSongs.Controls.Add(songForm);
                 }
 
-                foreach (DataRow dr in dtbArtist.Rows)
+                foreach (DataRow dr in dtb.Rows)
                 {
-                    ArtistForm artistForm = new ArtistForm(H, dr["NAME_SINGER"].ToString(), (dr["PICTURE_SINGER"].ToString()));
+                    ArtistForm artistForm = new ArtistForm(H, dr);
                     flpArtists.Controls.Add(artistForm);
                 }
-
             }
             catch (Exception ex)
             {
