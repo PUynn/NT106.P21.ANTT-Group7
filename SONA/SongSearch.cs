@@ -35,15 +35,25 @@ namespace SONA
         // Hàm ghi các nội dung cần thiết cho 1 bài hát
         private void SongSearch_Load(object sender, EventArgs e)
         {
-            afr = new AudioFileReader(src["AM_THANH"].ToString());
-            lblTimeSong.Text = afr.TotalTime.ToString(@"mm\:ss");
+            //afr = new AudioFileReader(src["AM_THANH"].ToString());
+            //lblTimeSong.Text = afr.TotalTime.ToString(@"mm\:ss");
 
             lblNameSong.Text = src["NAME_SONG"].ToString();
             lblNameSinger.Text = src["NAME_SINGER"].ToString();
 
-            btnPictureSong.BackgroundImage = Image.FromFile(src["PICTURE_SONG"].ToString());
-            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
-  
+            try
+            {
+                using (var wc = new System.Net.WebClient())
+                using (var stream = wc.OpenRead(src["PICTURE_SONG"].ToString()))
+                {
+                    btnPictureSong.BackgroundImage = Image.FromStream(stream);
+                    btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading image: " + ex.Message);
+            }
         }
     }
 }

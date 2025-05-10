@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
+using System.Net.Http; // Thêm để tải hình ảnh từ URL
+using System.IO;
 
 namespace SONA
 {
-    public partial class ArtistForm: UserControl
+    public partial class ArtistForm : UserControl
     {
         Home H;
         DataRow src;
@@ -23,18 +24,39 @@ namespace SONA
             src = dr;
         }
 
+        private async void ArtistForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                lblNameSinger.Text = src["NAME_SINGER"].ToString();
+
+                // Tải hình ảnh từ URL
+                string pictureUrl = src["PICTURE_SINGER"].ToString();
+                if (!string.IsNullOrEmpty(pictureUrl))
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var imageData = await client.GetByteArrayAsync(pictureUrl);
+                        using (var ms = new MemoryStream(imageData))
+                        {
+                            btnPictureSinger.BackgroundImage = Image.FromStream(ms);
+                        }
+                    }
+                }
+
+                btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading artist image: {ex.Message}");
+            }
+        }
+
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
             ArtistInfor artistInfor = new ArtistInfor(H, src);
             H.panel1.Controls.Clear();
             H.panel1.Controls.Add(artistInfor);
-        }
-
-        private void ArtistForm_Load(object sender, EventArgs e)
-        {
-            lblNameSinger.Text = src["NAME_SINGER"].ToString();
-            btnPictureSinger.BackgroundImage = Image.FromFile(src["PICTURE_SINGER"].ToString());
-            btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

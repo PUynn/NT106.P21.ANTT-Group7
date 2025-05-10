@@ -28,10 +28,10 @@ namespace SONA
 
         private void SONA_Deactivate(object sender, EventArgs e)
         {
-            if (home != null && this.WindowState != FormWindowState.Minimized)
-            {
-                home.btnMinimize_Click(this, EventArgs.Empty);
-            }
+            //if (home != null && this.WindowState != FormWindowState.Minimized)
+            //{
+            //    home.btnMinimize_Click(this, EventArgs.Empty);
+            //}
         }
 
         public void ShowHome()

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using NAudio.Wave;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Guna.UI2.WinForms;
 
 namespace SONA
 {
@@ -83,13 +84,54 @@ namespace SONA
         }
 
         // Hàm khởi tạo âm thanh
-        private bool InitializeAudio()
+        private async Task<bool> InitializeAudio()
         {
             try
             {
+                isPlaying = false;
+                isAutoReplay = false;
+
+                // Load ảnh từ URL
+                try
+                {
+                    using (var wc = new System.Net.WebClient())
+                    using (var stream = wc.OpenRead(src["PICTURE_SONG"].ToString()))
+                    {
+                        pbPictureSong.Image = Image.FromStream(stream);
+                        pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message);
+                    return false;
+                }
+
+                try
+                {
+                    using (var wc = new System.Net.WebClient())
+                    using (var stream = wc.OpenRead(src["PICTURE_SINGER"].ToString()))
+                    {
+                        btnPictureSinger.BackgroundImage = Image.FromStream(stream);
+                        btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message);
+                    return false;
+                }
+
+                // Phát nhạc từ URL (tải về tạm thời)
+                string tempFile = System.IO.Path.GetTempFileName();
+                using (var wc = new System.Net.WebClient())
+                {
+                    await wc.DownloadFileTaskAsync(new Uri(src["AM_THANH"].ToString()), tempFile);
+                }
+
                 if (afr == null)
                 {
-                    afr = new AudioFileReader(src["AM_THANH"].ToString()); // Đọc tệp âm thanh từ trong cơ sở dữ liệu
+                    afr = new AudioFileReader(tempFile); // Đọc tệp âm thanh từ trong cơ sở dữ liệu
                     afr.Volume = tbsVolume.Value / 100f; // Đặt giá trị âm lượng ban đầu là 50%
                 }
 
@@ -106,14 +148,12 @@ namespace SONA
                 }
 
                 lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss"); // Lấy thời gian tổng của bài hát
+
                 lblNameSinger.Text = src["NAME_SINGER"].ToString();
                 lblSince.Text = ConvertDate(src["BIRTHDATE"].ToString());
 
-                pbPictureSong.Image = Image.FromFile(src["PICTURE_SONG"].ToString());
-                pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage; ;
-                
-                btnPictureSinger.BackgroundImage = Image.FromFile(src["PICTURE_SINGER"].ToString());
-                btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
+                //pbPictureSong.Image = Image.FromFile(src["PICTURE_SONG"].ToString());
+                //pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage; ;
 
                 return true;
             }
@@ -125,12 +165,12 @@ namespace SONA
         }
 
         // Hàm tự khởi động phát nhạc khi form được load
-        private void ListenMusic_Load(object sender, EventArgs e)
+        private async void ListenMusic_Load(object sender, EventArgs e)
         {
             try
             {
                 StopMusicAndDispose(); // Giải phóng tài nguyên trước khi khởi động lại
-                if (InitializeAudio())
+                if (await InitializeAudio())
                 {
                     woe.Play(); // Phát nhạc
                     isPlaying = true;
@@ -152,7 +192,7 @@ namespace SONA
         }
 
         // Hàm tạm dừng hoặc phát nhạc
-        private void btnPlayMusic_Click(object sender, EventArgs e)
+        private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
             try
             {
@@ -168,7 +208,7 @@ namespace SONA
                 {
                     if (woe == null || afr == null) // Nếu chưa được khởi tạo
                     {
-                        if (!InitializeAudio()) return; // Khởi tạo lại âm thanh, nếu không được thì return
+                        if (!await InitializeAudio()) return; // Khởi tạo lại âm thanh, nếu không được thì return
                     }
 
                     woe.Play();

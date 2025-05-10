@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using Guna.UI2.WinForms;
+using System.Net.Http; // Thêm để tải hình ảnh từ URL
+using System.IO;
 
 namespace SONA
 {
@@ -21,15 +22,41 @@ namespace SONA
         {
             InitializeComponent();
             H = h;
-            src = dr;           
+            src = dr;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 bài hát
-        private void SongForm_Load(object sender, EventArgs e)
+        private async void SongForm_Load(object sender, EventArgs e)
         {
-            lbNameSong.Text = src["NAME_SONG"].ToString();
-            btnPictureSong.BackgroundImage = Image.FromFile(src["PICTURE_SONG"].ToString());
-            btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
+            try
+            {
+                lbNameSong.Text = src["NAME_SONG"].ToString();
+
+                // Tải hình ảnh từ URL
+                string pictureUrl = src["PICTURE_SONG"]?.ToString();
+                if (!string.IsNullOrEmpty(pictureUrl))
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var imageData = await client.GetByteArrayAsync(pictureUrl);
+                        using (var ms = new MemoryStream(imageData))
+                        {
+                            btnPictureSong.BackgroundImage = Image.FromStream(ms);
+                        }
+                    }
+                }
+                else
+                {
+                    btnPictureSong.BackgroundImage = null; // Hoặc hình ảnh mặc định
+                }
+
+                btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading song image: {ex.Message}");
+                btnPictureSong.BackgroundImage = null; // Xử lý lỗi bằng cách không hiển thị hình
+            }
         }
 
         // Hàm gọi form ListenMusic để phát nhạc
