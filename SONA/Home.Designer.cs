@@ -36,13 +36,13 @@
             this.btnPlaylists = new Guna.UI2.WinForms.Guna2Button();
             this.btnLibrary = new Guna.UI2.WinForms.Guna2Button();
             this.pnMenu = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
+            this.btnFriend = new Guna.UI2.WinForms.Guna2Button();
             this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnMinimize = new Guna.UI2.WinForms.Guna2Button();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
-            this.btnFriend = new Guna.UI2.WinForms.Guna2Button();
             this.btnHome = new Guna.UI2.WinForms.Guna2Button();
-            this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
             this.btnNotification = new Guna.UI2.WinForms.Guna2Button();
             this.btnDiscover = new Guna.UI2.WinForms.Guna2Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -221,19 +221,59 @@
             // 
             // pnMenu
             // 
+            this.pnMenu.Controls.Add(this.btnSetting);
+            this.pnMenu.Controls.Add(this.btnFriend);
             this.pnMenu.Controls.Add(this.txtSearch);
             this.pnMenu.Controls.Add(this.btnMinimize);
             this.pnMenu.Controls.Add(this.btnClose);
             this.pnMenu.Controls.Add(this.btnSearch);
-            this.pnMenu.Controls.Add(this.btnFriend);
             this.pnMenu.Controls.Add(this.btnHome);
-            this.pnMenu.Controls.Add(this.btnSetting);
             this.pnMenu.Controls.Add(this.btnNotification);
             this.pnMenu.Controls.Add(this.btnDiscover);
             this.pnMenu.Location = new System.Drawing.Point(286, 3);
             this.pnMenu.Name = "pnMenu";
             this.pnMenu.Size = new System.Drawing.Size(1485, 63);
             this.pnMenu.TabIndex = 1;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Animated = true;
+            this.btnSetting.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSetting.BorderRadius = 7;
+            this.btnSetting.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnSetting.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.btnSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnSetting.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnSetting.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSetting.Image = global::SONA.Properties.Resources.Setting;
+            this.btnSetting.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnSetting.ImageSize = new System.Drawing.Size(38, 38);
+            this.btnSetting.Location = new System.Drawing.Point(1258, 0);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnSetting.Size = new System.Drawing.Size(67, 63);
+            this.btnSetting.TabIndex = 1;
+            // 
+            // btnFriend
+            // 
+            this.btnFriend.Animated = true;
+            this.btnFriend.BorderColor = System.Drawing.Color.Transparent;
+            this.btnFriend.BorderRadius = 7;
+            this.btnFriend.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnFriend.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.btnFriend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFriend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnFriend.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnFriend.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnFriend.Image = global::SONA.Properties.Resources.User;
+            this.btnFriend.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnFriend.ImageSize = new System.Drawing.Size(38, 38);
+            this.btnFriend.Location = new System.Drawing.Point(1194, 0);
+            this.btnFriend.Name = "btnFriend";
+            this.btnFriend.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnFriend.Size = new System.Drawing.Size(67, 63);
+            this.btnFriend.TabIndex = 1;
             // 
             // txtSearch
             // 
@@ -253,13 +293,13 @@
             this.txtSearch.IconLeft = global::SONA.Properties.Resources.Search1;
             this.txtSearch.IconLeftOffset = new System.Drawing.Point(10, 0);
             this.txtSearch.IconLeftSize = new System.Drawing.Size(26, 26);
-            this.txtSearch.Location = new System.Drawing.Point(441, 5);
+            this.txtSearch.Location = new System.Drawing.Point(441, 7);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
             this.txtSearch.PlaceholderText = "Search";
             this.txtSearch.SelectedText = "";
-            this.txtSearch.Size = new System.Drawing.Size(520, 54);
+            this.txtSearch.Size = new System.Drawing.Size(599, 54);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Visible = false;
             this.txtSearch.Click += new System.EventHandler(this.txtSearch_Click);
@@ -279,10 +319,10 @@
             this.btnMinimize.Image = global::SONA.Properties.Resources.Minimize;
             this.btnMinimize.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnMinimize.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnMinimize.Location = new System.Drawing.Point(1379, 0);
+            this.btnMinimize.Location = new System.Drawing.Point(1356, 0);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnMinimize.Size = new System.Drawing.Size(50, 63);
+            this.btnMinimize.Size = new System.Drawing.Size(67, 63);
             this.btnMinimize.TabIndex = 1;
             this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
@@ -300,10 +340,10 @@
             this.btnClose.Image = global::SONA.Properties.Resources.Close;
             this.btnClose.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnClose.ImageSize = new System.Drawing.Size(50, 50);
-            this.btnClose.Location = new System.Drawing.Point(1435, 0);
+            this.btnClose.Location = new System.Drawing.Point(1418, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnClose.Size = new System.Drawing.Size(50, 63);
+            this.btnClose.Size = new System.Drawing.Size(67, 63);
             this.btnClose.TabIndex = 1;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -332,26 +372,6 @@
             this.btnSearch.TextOffset = new System.Drawing.Point(0, -2);
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // btnFriend
-            // 
-            this.btnFriend.Animated = true;
-            this.btnFriend.BorderColor = System.Drawing.Color.Transparent;
-            this.btnFriend.BorderRadius = 7;
-            this.btnFriend.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnFriend.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnFriend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFriend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnFriend.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnFriend.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnFriend.Image = global::SONA.Properties.Resources.User;
-            this.btnFriend.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnFriend.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnFriend.Location = new System.Drawing.Point(1219, 0);
-            this.btnFriend.Name = "btnFriend";
-            this.btnFriend.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnFriend.Size = new System.Drawing.Size(60, 63);
-            this.btnFriend.TabIndex = 1;
-            // 
             // btnHome
             // 
             this.btnHome.Animated = true;
@@ -370,33 +390,13 @@
             this.btnHome.Image = global::SONA.Properties.Resources.homeOff;
             this.btnHome.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnHome.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnHome.Location = new System.Drawing.Point(9, 5);
+            this.btnHome.Location = new System.Drawing.Point(9, 7);
             this.btnHome.Name = "btnHome";
             this.btnHome.PressedColor = System.Drawing.Color.DarkGray;
             this.btnHome.Size = new System.Drawing.Size(210, 54);
             this.btnHome.TabIndex = 0;
             this.btnHome.Text = "Home";
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.Animated = true;
-            this.btnSetting.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSetting.BorderRadius = 7;
-            this.btnSetting.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnSetting.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnSetting.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnSetting.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnSetting.Image = global::SONA.Properties.Resources.Setting;
-            this.btnSetting.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnSetting.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnSetting.Location = new System.Drawing.Point(1285, 0);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnSetting.Size = new System.Drawing.Size(60, 63);
-            this.btnSetting.TabIndex = 1;
             // 
             // btnNotification
             // 
@@ -412,10 +412,10 @@
             this.btnNotification.Image = global::SONA.Properties.Resources.Notification;
             this.btnNotification.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnNotification.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnNotification.Location = new System.Drawing.Point(1153, 0);
+            this.btnNotification.Location = new System.Drawing.Point(1130, 0);
             this.btnNotification.Name = "btnNotification";
             this.btnNotification.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnNotification.Size = new System.Drawing.Size(60, 63);
+            this.btnNotification.Size = new System.Drawing.Size(67, 63);
             this.btnNotification.TabIndex = 1;
             // 
             // btnDiscover

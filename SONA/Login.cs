@@ -17,6 +17,7 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Google.Apis.Oauth2.v2.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SONA
 {
@@ -81,11 +82,30 @@ namespace SONA
                     });
 
                     Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
-                    this.Invoke(new Action(() =>
+                    string email = userInfo.Email;
+
+                    // Khởi tạo kết nối Supabase
+                    supabaseService = new SupabaseService();
+                    await supabaseService.InitializeAsync();
+                    var userInfos = await supabaseService.GetUserInfosAsync();
+
+                    // Kiểm tra email đã tồn tại chưa
+                    if (userInfos.Any(u => u.email == email))
                     {
-                        OpenHomeForm();
-                        S.Activate();
-                    }));
+                        this.Invoke(new Action(() =>
+                        {
+                            OpenHomeForm();
+                            S.Activate();
+                        }));
+                    }
+                    else
+                    {    
+                        this.Invoke(new Action(() =>
+                        {
+                            lblCheck.Text = "Email chưa tồn tại, vui lòng đăng kí tài khoản!";
+                            S.Activate();
+                        }));
+                    }
                 }
             }
             catch (Exception ex)

@@ -13,12 +13,11 @@ namespace SONA
     public partial class SONA : Form
     {
         private Home home;
-        private Login login;
         public SONA()
         {
             InitializeComponent();
-            SignUp login = new SignUp(this);
-            pnLogin.Controls.Add(login);
+            SignUp signUp  = new SignUp(this);
+            pnLogin.Controls.Add(signUp);
         }
 
         private void SONA_Deactivate(object sender, EventArgs e)

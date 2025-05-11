@@ -44,9 +44,9 @@
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnSignUp = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnSignUpGoogle = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSignUpFb = new Guna.UI2.WinForms.Guna2Button();
+            this.lblCheck = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2.SuspendLayout();
@@ -186,13 +186,13 @@
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.Controls.Add(this.btnSignUp);
-            this.guna2Panel1.Controls.Add(this.guna2Button1);
-            this.guna2Panel1.Controls.Add(this.guna2Button2);
+            this.guna2Panel1.Controls.Add(this.btnSignUpGoogle);
+            this.guna2Panel1.Controls.Add(this.btnSignUpFb);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.Controls.Add(this.guna2Separator2);
             this.guna2Panel1.Controls.Add(this.guna2Separator1);
             this.guna2Panel1.Controls.Add(this.tbEmail);
-            this.guna2Panel1.Controls.Add(this.label5);
+            this.guna2Panel1.Controls.Add(this.lblCheck);
             this.guna2Panel1.Controls.Add(this.label3);
             this.guna2Panel1.ForeColor = System.Drawing.Color.DarkGray;
             this.guna2Panel1.Location = new System.Drawing.Point(88, 125);
@@ -218,52 +218,53 @@
             this.btnSignUp.TabIndex = 8;
             this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
-            // guna2Button1
+            // btnSignUpGoogle
             // 
-            this.guna2Button1.Animated = true;
-            this.guna2Button1.BorderRadius = 35;
-            this.guna2Button1.BorderThickness = 1;
-            this.guna2Button1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.guna2Button1.Image = global::SONA.Properties.Resources.Google;
-            this.guna2Button1.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button1.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button1.Location = new System.Drawing.Point(0, 389);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(528, 72);
-            this.guna2Button1.TabIndex = 7;
-            this.guna2Button1.Text = "Đăng kí bằng Google";
+            this.btnSignUpGoogle.Animated = true;
+            this.btnSignUpGoogle.BorderRadius = 35;
+            this.btnSignUpGoogle.BorderThickness = 1;
+            this.btnSignUpGoogle.FillColor = System.Drawing.Color.Transparent;
+            this.btnSignUpGoogle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignUpGoogle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnSignUpGoogle.Image = global::SONA.Properties.Resources.Google;
+            this.btnSignUpGoogle.ImageOffset = new System.Drawing.Point(0, -1);
+            this.btnSignUpGoogle.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 389);
+            this.btnSignUpGoogle.Name = "btnSignUpGoogle";
+            this.btnSignUpGoogle.Size = new System.Drawing.Size(528, 72);
+            this.btnSignUpGoogle.TabIndex = 7;
+            this.btnSignUpGoogle.Text = "Đăng kí bằng Google";
+            this.btnSignUpGoogle.Click += new System.EventHandler(this.btnSignUpGoogle_Click);
             // 
-            // guna2Button2
+            // btnSignUpFb
             // 
-            this.guna2Button2.Animated = true;
-            this.guna2Button2.BorderRadius = 35;
-            this.guna2Button2.BorderThickness = 1;
-            this.guna2Button2.CheckedState.BorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.CheckedState.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.guna2Button2.Image = global::SONA.Properties.Resources.icons8_facebook_50;
-            this.guna2Button2.ImageOffset = new System.Drawing.Point(0, -1);
-            this.guna2Button2.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button2.Location = new System.Drawing.Point(0, 480);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(528, 72);
-            this.guna2Button2.TabIndex = 6;
-            this.guna2Button2.Text = "Đăng kí bằng Facebook";
+            this.btnSignUpFb.Animated = true;
+            this.btnSignUpFb.BorderRadius = 35;
+            this.btnSignUpFb.BorderThickness = 1;
+            this.btnSignUpFb.CheckedState.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSignUpFb.CheckedState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.btnSignUpFb.FillColor = System.Drawing.Color.Transparent;
+            this.btnSignUpFb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignUpFb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnSignUpFb.Image = global::SONA.Properties.Resources.icons8_facebook_50;
+            this.btnSignUpFb.ImageOffset = new System.Drawing.Point(0, -1);
+            this.btnSignUpFb.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnSignUpFb.Location = new System.Drawing.Point(0, 480);
+            this.btnSignUpFb.Name = "btnSignUpFb";
+            this.btnSignUpFb.Size = new System.Drawing.Size(528, 72);
+            this.btnSignUpFb.TabIndex = 6;
+            this.btnSignUpFb.Text = "Đăng kí bằng Facebook";
             // 
-            // label5
+            // lblCheck
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(3, 292);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(250, 20);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Vui lòng nhập địa chỉ Email của bạn!\r\n";
+            this.lblCheck.AutoSize = true;
+            this.lblCheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheck.ForeColor = System.Drawing.Color.Red;
+            this.lblCheck.Location = new System.Drawing.Point(3, 292);
+            this.lblCheck.Name = "lblCheck";
+            this.lblCheck.Size = new System.Drawing.Size(250, 20);
+            this.lblCheck.TabIndex = 0;
+            this.lblCheck.Text = "Vui lòng nhập địa chỉ Email của bạn!\r\n";
             // 
             // guna2Elipse1
             // 
@@ -311,8 +312,8 @@
         private System.Windows.Forms.ColorDialog colorDialog1;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse3;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button btnSignUpGoogle;
+        private Guna.UI2.WinForms.Guna2Button btnSignUpFb;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
@@ -323,6 +324,6 @@
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
         private Guna.UI2.WinForms.Guna2Button btnSignUp;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCheck;
     }
 }
