@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using NAudio.Dsp;
-using System.Diagnostics.Eventing.Reader;
+using System.Net.Http;
+using System.IO;
 
 namespace SONA
 {
     public partial class SignUpInfor : UserControl
     {
         SONA S;
-        ConnectSQL connectSQL;
+        private SupabaseService supabaseService;
         string srcEmail;
 
         public SignUpInfor(SONA s, string email)
@@ -24,6 +25,7 @@ namespace SONA
             InitializeComponent();
             S = s;
             srcEmail = email;
+            supabaseService = new SupabaseService();
         }
 
         // Hàm kiểm tra thông tin đăng nhập và báo lỗi nếu không hợp lệ
@@ -61,7 +63,6 @@ namespace SONA
                 return false;
             }
 
-            
             // Kiểm tra mật khẩu có phù hợp với yêu cầu không
             bool checkNum = false;
             bool checkLetter = false;
@@ -115,12 +116,18 @@ namespace SONA
         // Hàm để chọn ảnh đại diện bằng cách mở file ảnh trong thư mục
         private void setAvatar()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog(); // Tạo một đối tượng để mở file trong thư mục
-            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"; // Lọc các file định dạng ảnh
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                btnAvatar.Image = Image.FromFile(openFileDialog.FileName); // Set ảnh đại diện từ file ảnh trong thư mục
-            }
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            //openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            //if (openFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    // Chuyển đổi ảnh thành base64 để lưu vào Supabase
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        Image.FromFile(openFileDialog.FileName).Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //        string base64Image = Convert.ToBase64String(ms.ToArray());
+            //        btnAvatar.Image = Image.FromFile(openFileDialog.FileName); // Hiển thị ảnh
+            //    }
+            //}
         }
 
         private void btnAvatar_Click(object sender, EventArgs e)
@@ -172,24 +179,44 @@ namespace SONA
         }
 
         // Hàm để kiểm tra thông tin đăng ký và thêm vào cơ sở dữ liệu
-        private void btnSignUp_Click(object sender, EventArgs e)
+        private async void btnSignUp_Click(object sender, EventArgs e)
         {
             if (checkSignUpInfor())
             {
                 try
                 {
-                    connectSQL = new ConnectSQL();
-                    string queryPhone = $"SELECT * FROM USERS WHERE SDT = '{tbSdt.Text}'"; // Thực hiện truy vấn để kiểm tra số điện thoại đã tồn tại trong cơ sở dữ liệu chưa
-                    DataTable dtb = connectSQL.Query(queryPhone); // Gọi hàm truy vấn và lưu kết quả vào dtb
+                    await supabaseService.InitializeAsync();
+                    var user = await supabaseService.GetUserInfosAsync();
 
-                    if (dtb.Rows.Count > 0)
+                    // Kiểm tra số điện thoại đã tồn tại chưa
+                    if (user.Any(u => u.sdt == tbSdt.Text))
                     {
                         lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
                         return;
                     }
 
-                    string queryInsert = $"INSERT INTO USERS (NAME_USER, SDT, EMAIL, PASSWORD_TK) VALUES ('{tbUser.Text}', '{tbSdt.Text}', '{srcEmail}', '{tbPass.Text}')"; // thêm thông tin người dùng vào cơ sở dữ liệu
-                    connectSQL.ExecuteQuery(queryInsert); // Gọi hàm truy vấn để thực hiện câu lệnh thêm vào cơ sở dữ liệu
+                    // Chuẩn bị đối tượng UserInfo để thêm vào Supabase
+                    var newUser = new UserInfo
+                    {
+                        name_user = tbUser.Text,
+                        sdt = tbSdt.Text,
+                        email = srcEmail,
+                        password_tk = tbPass.Text,
+                        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    };
+
+                    // Lưu ảnh đại diện
+                    //if (btnAvatar.Image != null)
+                    //{
+                    //    using (var ms = new MemoryStream())
+                    //    {
+                    //        btnAvatar.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    //        newUser.picture_user = Convert.ToBase64String(ms.ToArray());
+                    //    }
+                    //}
+
+                    // Thêm người dùng vào Supabase
+                    await supabaseService.InsertUserAsync(newUser);
 
                     S.ShowHome();
                 }

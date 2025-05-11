@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Postgrest.Attributes;
 using System;
+using System.Linq;
 
 namespace SONA
 {
@@ -54,6 +55,31 @@ namespace SONA
         public string nationality { get; set; }
     }
 
+    [Table("userinfo")]
+    public class UserInfo : BaseModel
+    {
+        [PrimaryKey("id_user")]
+        public int id_user { get; set; }
+
+        [Column("name_user")]
+        public string name_user { get; set; }
+
+        [Column("picture_user")]
+        public string picture_user { get; set; }
+
+        [Column("email")]
+        public string email { get; set; }
+
+        [Column("password_tk")]
+        public string password_tk { get; set; }
+
+        [Column("create_at")]
+        public string create_at { get; set; }
+
+        [Column("sdt")]
+        public string sdt { get; set; }
+    }
+
     public class SupabaseService
     {
         private readonly Supabase.Client _client;
@@ -84,7 +110,6 @@ namespace SONA
                 var result = await _client
                     .From<Song>() // Truy vấn View songs_with_singer
                     .Get();
-
                 var songs = result.Models;
                 if (songs == null || songs.Count == 0)
                 {
@@ -96,6 +121,40 @@ namespace SONA
             catch (Exception ex)
             {
                 throw new Exception("Error fetching songs: " + ex.Message);
+            }
+        }
+
+        public async Task<List<UserInfo>> GetUserInfosAsync()
+        {
+            try
+            {
+                var result = await _client
+                    .From<UserInfo>() // Truy vấn bảng userinfo
+                    .Get();
+                var userInfos = result.Models;
+                if (userInfos == null || userInfos.Count == 0)
+                {
+                    throw new Exception("No user information found in the database.");
+                }
+                return userInfos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error fetching user information: " + ex.Message);
+            }
+        }
+
+        public async Task InsertUserAsync(UserInfo user)
+        {
+            try
+            {
+                await _client
+                    .From<UserInfo>()
+                    .Insert(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error inserting user: " + ex.Message);
             }
         }
     }

@@ -14,12 +14,13 @@ namespace SONA
     public partial class SignUp : UserControl
     {
         SONA S;
-        ConnectSQL connectSQL;
+        private SupabaseService supabaseService;
 
-        public SignUp(SONA s )
+        public SignUp(SONA s)
         {
             InitializeComponent();
             S = s;
+            supabaseService = new SupabaseService();
         }
 
         // Hàm để chuyển sang form đăng nhập
@@ -28,7 +29,6 @@ namespace SONA
             Login info = new Login(S);
             S.pnLogin.Controls.Clear();
             S.pnLogin.Controls.Add(info);
-
         }
 
         private void SignUp_Load(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace SONA
         }
 
         // Hàm để kiểm tra xem email đã có trong cơ sở dữ liệu chưa, nếu chưa thì di chuyển đến form đăng ký thông tin
-        private void btnSignUp_Click(object sender, EventArgs e)
+        private async void btnSignUp_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(tbEmail.Text))
             {
@@ -47,11 +47,11 @@ namespace SONA
 
             try
             {
-                connectSQL = new ConnectSQL();
-                string queryEmail = $"SELECT * FROM USERS WHERE EMAIL = '{tbEmail.Text}'"; // thực hiện truy vấn để kiểm tra email đã tồn tại trong cơ sở dữ liệu chưa
-                DataTable dt = connectSQL.Query(queryEmail);
+                await supabaseService.InitializeAsync();
+                var userInfos = await supabaseService.GetUserInfosAsync();
 
-                if (dt.Rows.Count > 0)
+                // Kiểm tra email đã tồn tại chưa
+                if (userInfos.Any(u => u.email == tbEmail.Text))
                 {
                     label5.Text = "Email đã tồn tại!";
                     return;

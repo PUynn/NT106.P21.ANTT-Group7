@@ -89,7 +89,7 @@ namespace SONA
         {
             try
             {
-                // Khởi tạo SupabaseService và lấy dữ liệu từ View songs_with_singer
+                // Khởi tạo SupabaseService và lấy dữ liệu từ View songswithsinger
                 await supabaseService.InitializeAsync();
                 var allSongs = await supabaseService.GetSongsAsync();
 

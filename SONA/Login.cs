@@ -26,6 +26,7 @@ namespace SONA
         private const string AppSecret = "1f3490111b9ddddbf4010a67954a1522";
         private const string RedirectUri = "http://localhost:8000/facebook-signin";
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
+        private SupabaseService supabaseService;
         SONA S;
         ConnectSQL connectSQL;
 
@@ -34,6 +35,7 @@ namespace SONA
         public Login(SONA s)
         {
             InitializeComponent();
+            supabaseService = new SupabaseService();
             S = s;
         }
 
@@ -223,7 +225,7 @@ namespace SONA
             }
         }
 
-        private void btnDangNhap_Click(object sender, EventArgs e)
+        private async void btnDangNhap_Click(object sender, EventArgs e)
         {
             lblCheck.Text = "";
 
@@ -235,23 +237,28 @@ namespace SONA
 
             try
             {
-                connectSQL = new ConnectSQL();
-                string queryEmail = $"SELECT * FROM USERS WHERE EMAIL = '{tbEmail.Text}'";
-                DataTable dt = connectSQL.Query(queryEmail);
+                await supabaseService.InitializeAsync();
+                var userInfos = await supabaseService.GetUserInfosAsync();
 
-                if (dt.Rows.Count > 0)
+                // Tìm người dùng theo email
+                var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text);
+
+                if (user != null)
                 {
-                    string password = dt.Rows[0]["PASSWORD_TK"].ToString();
-                    if (password == tbPass.Text)
+                    if (user.password_tk == tbPass.Text)
                     {
                         S.Activate();
                         OpenHomeForm();
                     }
                     else
+                    {
                         lblCheck.Text = "Mật khẩu không chính xác!";
+                    }
                 }
                 else
+                {
                     lblCheck.Text = "Email không tồn tại!";
+                }
             }
             catch (Exception ex)
             {
