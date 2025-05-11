@@ -54,7 +54,7 @@ namespace SONA
             }
         }
 
-        // Hàm bật lại nhạc khi nhạc dừng
+        // Hàm bật nhạc lại từ đầu khi nhạc kết thúc
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (isAutoReplay)
@@ -91,7 +91,7 @@ namespace SONA
                 isPlaying = false;
                 isAutoReplay = false;
 
-                // Load ảnh từ URL
+                // Load ảnh bài hát từ URL của thuộc tính PICTURE_SONG
                 try
                 {
                     using (var wc = new System.Net.WebClient())
@@ -107,6 +107,7 @@ namespace SONA
                     return false;
                 }
 
+                // Load ảnh nghệ sĩ từ URL của thuộc tính PICTURE_SINGER
                 try
                 {
                     using (var wc = new System.Net.WebClient())
@@ -123,10 +124,10 @@ namespace SONA
                 }
 
                 // Phát nhạc từ URL (tải về tạm thời)
-                string tempFile = System.IO.Path.GetTempFileName();
-                using (var wc = new System.Net.WebClient())
+                string tempFile = System.IO.Path.GetTempFileName(); // Tạo đối tượng tạm thời để lưu tệp âm thanh
+                using (var wc = new System.Net.WebClient()) // Tạo đối tượng WebClient để tải tệp âm thanh
                 {
-                    await wc.DownloadFileTaskAsync(new Uri(src["AM_THANH"].ToString()), tempFile);
+                    await wc.DownloadFileTaskAsync(new Uri(src["AM_THANH"].ToString()), tempFile); // Tải tệp âm thanh từ URL của thuộc tính AM_THANH
                 }
 
                 if (afr == null)
@@ -152,9 +153,6 @@ namespace SONA
                 lblNameSinger.Text = src["NAME_SINGER"].ToString();
                 lblSince.Text = ConvertDate(src["BIRTHDATE"].ToString());
 
-                //pbPictureSong.Image = Image.FromFile(src["PICTURE_SONG"].ToString());
-                //pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage; ;
-
                 return true;
             }
             catch (Exception ex)
@@ -173,8 +171,8 @@ namespace SONA
                 if (await InitializeAudio())
                 {
                     woe.Play(); // Phát nhạc
-                    isPlaying = true;
-                    btnPlayMusic.Image = Properties.Resources.PauseAni;
+                    isPlaying = true; // Đánh dấu là đang phát nhạc
+                    btnPlayMusic.Image = Properties.Resources.PauseAni; // Đổi hình ảnh nút phát nhạc thành hình tạm dừng
                     timer1.Start(); // Bắt đầu bộ đếm thời gian
                 }
                 else

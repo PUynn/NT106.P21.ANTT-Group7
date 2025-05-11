@@ -26,16 +26,14 @@ namespace SONA
         private const string AppSecret = "1f3490111b9ddddbf4010a67954a1522";
         private const string RedirectUri = "http://localhost:8000/facebook-signin";
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
-        private SupabaseService supabaseService;
+        private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
         SONA S;
-        ConnectSQL connectSQL;
 
         private HttpListener httpListener;
 
         public Login(SONA s)
         {
             InitializeComponent();
-            supabaseService = new SupabaseService();
             S = s;
         }
 
@@ -227,7 +225,7 @@ namespace SONA
 
         private async void btnDangNhap_Click(object sender, EventArgs e)
         {
-            lblCheck.Text = "";
+            lblCheck.Text = ""; // Xóa thông báo lỗi trước khi kiểm tra
 
             if (string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPass.Text))
             {
@@ -237,25 +235,25 @@ namespace SONA
 
             try
             {
-                await supabaseService.InitializeAsync();
-                var userInfos = await supabaseService.GetUserInfosAsync();
+                supabaseService = new SupabaseService();
+                await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
+                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
 
-                // Tìm người dùng theo email
-                var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text);
+                var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text); // Tìm người dùng theo email
 
-                if (user != null)
+                if (user != null) // Nếu tìm thấy người dùng
                 {
-                    if (user.password_tk == tbPass.Text)
+                    if (user.password_tk == tbPass.Text) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
                     {
-                        S.Activate();
-                        OpenHomeForm();
+                        S.Activate(); // Kích hoạt form chính
+                        OpenHomeForm(); // Mở form chính
                     }
                     else
                     {
                         lblCheck.Text = "Mật khẩu không chính xác!";
                     }
                 }
-                else
+                else // Thông báo người dùng không tồn tại nếu không tìm thấy
                 {
                     lblCheck.Text = "Email không tồn tại!";
                 }

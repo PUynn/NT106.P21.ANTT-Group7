@@ -26,6 +26,7 @@ namespace SONA
             supabaseService = new SupabaseService();
         }
 
+        // Hàm chuyển đổi định dạng ngày tháng
         private string ConvertDate(string date)
         {
             try
@@ -42,7 +43,7 @@ namespace SONA
             }
         }
 
-        // Hàm chuyển đổi List<Song> thành DataTable để tương thích với SongSearch
+        // Hàm chuyển đổi List<Song> thành DataTable
         private DataTable ConvertSongsToDataTable(List<Song> songs)
         {
             DataTable dt = new DataTable();
@@ -85,6 +86,7 @@ namespace SONA
             return dt;
         }
 
+        // Hàm in ra danh sách bài hát của nghệ sĩ
         private async void ArtistInfor_Load(object sender, EventArgs e)
         {
             try
@@ -93,13 +95,13 @@ namespace SONA
                 await supabaseService.InitializeAsync();
                 var allSongs = await supabaseService.GetSongsAsync();
 
-                // Lọc bài hát theo ID_SINGER từ src
+                // Lọc bài hát theo ID_SINGER
                 int singerId = Convert.ToInt32(src["ID_SINGER"]);
                 var artistSongs = allSongs
                     .Where(s => s.id_singer == singerId)
                     .ToList();
 
-                // Chuyển đổi List<Song> thành DataTable và hiển thị
+                // Chuyển đổi List<Song> thành DataTable và hiển thị danh sách bài hát từ form SongSearch
                 DataTable dtb = ConvertSongsToDataTable(artistSongs);
                 flpSongs.Controls.Clear();
                 foreach (DataRow dr in dtb.Rows)
@@ -108,7 +110,7 @@ namespace SONA
                     flpSongs.Controls.Add(songSearch);
                 }
 
-                // Tải hình ảnh từ URL
+                // Tải hình ảnh của nghệ sĩ từ URL trong thuộc tính PICTURE_SINGER của table singer
                 string pictureUrl = src["PICTURE_SINGER"]?.ToString();
                 if (!string.IsNullOrEmpty(pictureUrl))
                 {
@@ -133,6 +135,7 @@ namespace SONA
                     btnAvatar.BackgroundImage = null;
                 }
 
+                // Cập nhật các thông tin cho nghệ sĩ
                 btnAvatar.BackgroundImageLayout = ImageLayout.Stretch;
                 lblNameSinger.Text = src["NAME_SINGER"]?.ToString() ?? "Unknown Artist";
                 lblDate.Text = ConvertDate(src["BIRTHDATE"]?.ToString() ?? string.Empty);

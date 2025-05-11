@@ -23,7 +23,7 @@ namespace SONA
             supabaseService = new SupabaseService();
         }
 
-        // Hàm để chuyển sang form đăng nhập
+        // Hàm để quay lại form đăng nhập
         private void lbDangnhap_Click(object sender, EventArgs e)
         {
             Login info = new Login(S);
@@ -47,16 +47,16 @@ namespace SONA
 
             try
             {
-                await supabaseService.InitializeAsync();
-                var userInfos = await supabaseService.GetUserInfosAsync();
+                await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
+                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
 
-                // Kiểm tra email đã tồn tại chưa
-                if (userInfos.Any(u => u.email == tbEmail.Text))
+                if (userInfos.Any(u => u.email == tbEmail.Text)) // Kiểm tra email đã tồn tại chưa, nếu rồi thì thông báo
                 {
                     label5.Text = "Email đã tồn tại!";
                     return;
                 }
 
+                // Nếu email chưa tồn tại, chuyển sang form đăng ký thông tin SignUpInfor
                 SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
                 S.pnLogin.Controls.Clear();
                 S.pnLogin.Controls.Add(signUpInfor);

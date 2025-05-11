@@ -185,24 +185,24 @@ namespace SONA
             {
                 try
                 {
-                    await supabaseService.InitializeAsync();
-                    var user = await supabaseService.GetUserInfosAsync();
+                    await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
+                    var user = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
 
-                    // Kiểm tra số điện thoại đã tồn tại chưa
-                    if (user.Any(u => u.sdt == tbSdt.Text))
+                    if (user.Any(u => u.sdt == tbSdt.Text)) // Kiểm tra số điện thoại đã tồn tại chưa bằng cách so sánh thuộc tính sdt của user với kết quả đã nhập từ textbox
                     {
                         lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
                         return;
                     }
 
                     // Chuẩn bị đối tượng UserInfo để thêm vào Supabase
-                    var newUser = new UserInfo
+                    var newUser = new UserInfo // Tạo một đối tượng mới của lớp UserInfo
                     {
+                        // Set các thuộc tính của user tương ứng với các thông tin đã nhập ở textbox
                         name_user = tbUser.Text,
                         sdt = tbSdt.Text,
                         email = srcEmail,
                         password_tk = tbPass.Text,
-                        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") // Lưu thời gian hiện tại
                     };
 
                     // Lưu ảnh đại diện
@@ -215,10 +215,8 @@ namespace SONA
                     //    }
                     //}
 
-                    // Thêm người dùng vào Supabase
-                    await supabaseService.InsertUserAsync(newUser);
-
-                    S.ShowHome();
+                    await supabaseService.InsertUserAsync(newUser); // Thêm người dùng vào Supabase bằng cách gọi hàm InsertUserAsync ở trong SupabaseService
+                    S.ShowHome(); // Chuyển sang form Home
                 }
                 catch (Exception ex)
                 {

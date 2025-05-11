@@ -14,7 +14,7 @@ namespace SONA
     public partial class HomeContent : UserControl
     {
         Home H;
-        private List<Song> songs = new List<Song>();
+        private List<Song> songs = new List<Song>(); // Danh sách bài hát được lấy từ Supabase
 
         public HomeContent(Home h)
         {
@@ -44,7 +44,7 @@ namespace SONA
             }
         }
 
-        // Chuyển đổi Song thành DataRow để tương thích với SongForm và ArtistForm
+        // Chuyển đổi Song thành DataRow để dễ dàng đẩy dữ liệu qua các form khác
         private DataRow ConvertSongToDataRow(Song song)
         {
             DataTable dt = new DataTable();
@@ -85,29 +85,29 @@ namespace SONA
         // Hàm liệt kê các bài hát từ danh sách đã lấy từ Supabase
         private void btnRefreshSong_Click(object sender, EventArgs e)
         {
-            int countSong = 0;
-            HashSet<string> songDifferent = new HashSet<string>();
+            int countSong = 0; // Biến đếm số lượng bài hát đã hiển thị
+            HashSet<string> songDifferent = new HashSet<string>(); // Biến dùng để tránh trùng bài hát khi hiển thị
+            
             try
             {
                 flpSongs.Controls.Clear();
-
                 if (songs == null || songs.Count == 0)
                 {
                     MessageBox.Show("No songs available from Supabase.");
                     return;
                 }
+                
+                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList(); // Chọn ngẫu nhiên bài hát từ cơ sở dữ liệu
 
-                // Chọn ngẫu nhiên bài hát
-                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList();
-
-                foreach (var song in randomSongs)
+                foreach (var song in randomSongs) // Duyệt qua mỗi bài hát trong danh sách
                 {
-                    if (countSong >= 8) break;
-                    if (songDifferent.Contains(song.id_song.ToString())) continue;
+                    if (countSong >= 8) break; // Giới hạn số lượng bài hát hiển thị là 8
+                    if (songDifferent.Contains(song.id_song.ToString())) continue; // Kiểm tra xem bài hát đã xuất hiện chưa, nếu rồi thì bỏ qua
 
-                    songDifferent.Add(song.id_song.ToString());
+                    songDifferent.Add(song.id_song.ToString()); // Thêm bài hát vào danh sách đã hiển thị
                     countSong++;
 
+                    // Gọi form SongForm để hiển thị các thông tin của mỗi bài hát (tên, hình ảnh)
                     DataRow dr = ConvertSongToDataRow(song);
                     SongForm songForm = new SongForm(H, dr);
                     flpSongs.Controls.Add(songForm);
@@ -124,6 +124,7 @@ namespace SONA
         {
             int countArtist = 0;
             HashSet<string> artistDifferent = new HashSet<string>();
+            
             try
             {
                 flpArtists.Controls.Clear();
@@ -134,7 +135,6 @@ namespace SONA
                     return;
                 }
 
-                // Chọn ngẫu nhiên nghệ sĩ
                 var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList();
 
                 foreach (var song in randomSongs)

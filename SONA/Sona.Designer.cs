@@ -52,7 +52,6 @@
             this.pnMain.Name = "pnMain";
             this.pnMain.Size = new System.Drawing.Size(1771, 1012);
             this.pnMain.TabIndex = 0;
-            this.pnMain.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // SONA
             // 

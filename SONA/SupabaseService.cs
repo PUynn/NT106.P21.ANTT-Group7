@@ -8,9 +8,11 @@ using System.Linq;
 
 namespace SONA
 {
-    [Table("songswithsinger")] // Thay đổi ánh xạ sang View
+    // View songswithsinger chứa các thuộc tính của table song và table singer bằng cách kết chúng lại bằng id_singer
+    [Table("songswithsinger")] // Ánh xạ class Song thành view songswithsinger trong cơ sở dữ liệu
     public class Song : BaseModel
     {
+        // Các thuộc tính của table song
         [PrimaryKey("id_song")]
         public int id_song { get; set; }
 
@@ -41,7 +43,7 @@ namespace SONA
         [Column("volume")]
         public int volume { get; set; }
 
-        // Thuộc tính từ singer
+        // Các thuộc tính của table singer
         [Column("name_singer")]
         public string name_singer { get; set; }
 
@@ -55,6 +57,7 @@ namespace SONA
         public string nationality { get; set; }
     }
 
+    // View userinfo chứa các thuộc tính của table user trong cơ sở dữ liệu
     [Table("userinfo")]
     public class UserInfo : BaseModel
     {
@@ -82,54 +85,56 @@ namespace SONA
 
     public class SupabaseService
     {
-        private readonly Supabase.Client _client;
+        private readonly Supabase.Client _client; // Đối tượng client để kết nối với Supabase
 
-        public SupabaseService()
+        public SupabaseService() // Khởi tạo client Supabase với URL và AnonKey
         {
             var url = "https://lgnvhovprubrxohnhwph.supabase.co";
             var anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnbnZob3ZwcnVicnhvaG5od3BoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3MTMzMDcsImV4cCI6MjA2MjI4OTMwN30.Z4EPI8SlTDuUwsXspxtfzTUTUR8Bo5JvzbdD64CuK68";
             _client = new Supabase.Client(url, anonKey);
         }
 
-        public async Task InitializeAsync()
+        public async Task InitializeAsync() // Phương thức khởi kết nối với Supabase bất đồng bộ
         {
             try
             {
-                await _client.InitializeAsync();
+                await _client.InitializeAsync(); // Gọi phương thức Supabase để thiết lập kết nối
             }
-            catch (Exception ex)
+            catch (Exception ex) // Xử lý ngoại lệ nếu có lỗi xảy ra trong quá trình khởi tạo (ví dụ API key không hợp lệ)
             {
                 throw new Exception("Failed to initialize Supabase client: " + ex.Message);
             }
         }
 
-        public async Task<List<Song>> GetSongsAsync()
+        // Phương thức lấy danh sách bài hát từ view songswithsinger trong cơ sở dữ liệu
+        public async Task<List<Song>> GetSongsAsync() 
         {
             try
             {
                 var result = await _client
-                    .From<Song>() // Truy vấn View songs_with_singer
-                    .Get();
-                var songs = result.Models;
-                if (songs == null || songs.Count == 0)
+                    .From<Song>()
+                    .Get(); // Truy vấn tất cả bản ghi từ view songswithsinger
+                var songs = result.Models; // Lấy danh sách các bài hát từ kết quả truy vấn
+                
+                if (songs == null || songs.Count == 0) // Kiểm tra xem có bài hát không, nếu không thì ném ngoại lệ với thông báo lỗi
                 {
                     throw new Exception("No songs found in the database.");
                 }
-
                 return songs;
             }
-            catch (Exception ex)
+            catch (Exception ex) // Xử lý ngoại lệ nếu có lỗi xảy ra trong quá trình truy vấn
             {
                 throw new Exception("Error fetching songs: " + ex.Message);
             }
         }
 
+        // Phương thức lấy thông tin người dùng từ bảng userinfo trong cơ sở dữ liệu
         public async Task<List<UserInfo>> GetUserInfosAsync()
         {
             try
             {
                 var result = await _client
-                    .From<UserInfo>() // Truy vấn bảng userinfo
+                    .From<UserInfo>() // Truy vấn bảng userinfor
                     .Get();
                 var userInfos = result.Models;
                 if (userInfos == null || userInfos.Count == 0)
@@ -144,13 +149,14 @@ namespace SONA
             }
         }
 
+        // Phương thức insert thông tin người dùng vào bảng userinfo trong cơ sở dữ liệu
         public async Task InsertUserAsync(UserInfo user)
         {
             try
             {
                 await _client
                     .From<UserInfo>()
-                    .Insert(user);
+                    .Insert(user); // Chèn thông tin người dùng vào bảng userinfo
             }
             catch (Exception ex)
             {

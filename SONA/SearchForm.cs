@@ -76,6 +76,7 @@ namespace SONA
                 // Chuyển đổi List<Song> thành DataTable
                 DataTable dtb = ConvertSongsToDataTable(songs);
 
+                // Duyệt qua các bài hát trong DataTable và truyền dữ liệu cúa chúng đến form SongSearch
                 flpResult.Controls.Clear();
                 foreach (DataRow dr in dtb.Rows)
                 {

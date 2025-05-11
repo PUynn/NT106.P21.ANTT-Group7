@@ -21,11 +21,6 @@ namespace SONA
             pnLogin.Controls.Add(login);
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void SONA_Deactivate(object sender, EventArgs e)
         {
             //if (home != null && this.WindowState != FormWindowState.Minimized)

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Http; // Thêm để tải hình ảnh từ URL
+using System.Net.Http;
 using System.IO;
 
 namespace SONA
@@ -24,13 +24,14 @@ namespace SONA
             src = dr;
         }
 
+        // Hàm ghi các nội dung cần thiết cho 1 nghệ sĩ
         private async void ArtistForm_Load(object sender, EventArgs e)
         {
             try
             {
                 lblNameSinger.Text = src["NAME_SINGER"].ToString();
 
-                // Tải hình ảnh từ URL
+                // Tải hình ảnh nghệ sĩ từ URL của thuộc tính PICTURE_SINGER trong table SINGER
                 string pictureUrl = src["PICTURE_SINGER"].ToString();
                 if (!string.IsNullOrEmpty(pictureUrl))
                 {
@@ -52,6 +53,7 @@ namespace SONA
             }
         }
 
+        // Hàm gọi form ArtistInfor để xem thông tin của nghệ sĩ bài hát
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
             ArtistInfor artistInfor = new ArtistInfor(H, src);
