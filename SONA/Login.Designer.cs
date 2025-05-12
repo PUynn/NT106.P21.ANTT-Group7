@@ -40,14 +40,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lbQuenmatkhau = new System.Windows.Forms.Label();
             this.btnDangNhap = new Guna.UI2.WinForms.Guna2Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbViewPassword = new System.Windows.Forms.Label();
             this.lbDangky = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.lblCheck = new System.Windows.Forms.Label();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnViewPass = new Guna.UI2.WinForms.Guna2Panel();
             this.btnLoginGoogle = new Guna.UI2.WinForms.Guna2Button();
             this.btnFacebookLogin = new Guna.UI2.WinForms.Guna2Button();
-            this.lblCheck = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label2
@@ -148,11 +148,11 @@
             this.tbPass.Location = new System.Drawing.Point(65, 505);
             this.tbPass.Margin = new System.Windows.Forms.Padding(4);
             this.tbPass.Name = "tbPass";
-            this.tbPass.PasswordChar = '*';
             this.tbPass.PlaceholderText = "";
             this.tbPass.SelectedText = "";
             this.tbPass.Size = new System.Drawing.Size(580, 58);
             this.tbPass.TabIndex = 9;
+            this.tbPass.UseSystemPasswordChar = true;
             this.tbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPass_KeyDown);
             // 
             // label5
@@ -196,17 +196,18 @@
             this.btnDangNhap.Text = "Đăng nhập";
             this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
             // 
-            // label7
+            // lbViewPassword
             // 
-            this.label7.AutoSize = true;
-            this.label7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.label7.Location = new System.Drawing.Point(605, 481);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 20);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Hiện";
+            this.lbViewPassword.AutoSize = true;
+            this.lbViewPassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbViewPassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbViewPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.lbViewPassword.Location = new System.Drawing.Point(605, 481);
+            this.lbViewPassword.Name = "lbViewPassword";
+            this.lbViewPassword.Size = new System.Drawing.Size(40, 20);
+            this.lbViewPassword.TabIndex = 12;
+            this.lbViewPassword.Text = "Hiện";
+            this.lbViewPassword.Click += new System.EventHandler(this.lbViewPassword_Click);
             // 
             // lbDangky
             // 
@@ -226,6 +227,17 @@
             this.guna2Elipse1.BorderRadius = 24;
             this.guna2Elipse1.TargetControl = this;
             // 
+            // lblCheck
+            // 
+            this.lblCheck.AutoSize = true;
+            this.lblCheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheck.ForeColor = System.Drawing.Color.Red;
+            this.lblCheck.Location = new System.Drawing.Point(61, 570);
+            this.lblCheck.Name = "lblCheck";
+            this.lblCheck.Size = new System.Drawing.Size(277, 20);
+            this.lblCheck.TabIndex = 16;
+            this.lblCheck.Text = "Tài khoản hoặc mật khẩu chưa chính xác!";
+            // 
             // guna2Button3
             // 
             this.guna2Button3.BackColor = System.Drawing.Color.Transparent;
@@ -240,16 +252,17 @@
             this.guna2Button3.TabIndex = 15;
             this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
             // 
-            // guna2Panel1
+            // pnViewPass
             // 
-            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.BackgroundImage = global::SONA.Properties.Resources.icons8_hide_30;
-            this.guna2Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2Panel1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.guna2Panel1.Location = new System.Drawing.Point(582, 477);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(24, 24);
-            this.guna2Panel1.TabIndex = 13;
+            this.pnViewPass.BackColor = System.Drawing.Color.Transparent;
+            this.pnViewPass.BackgroundImage = global::SONA.Properties.Resources.icons8_hide_30;
+            this.pnViewPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnViewPass.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnViewPass.Location = new System.Drawing.Point(582, 477);
+            this.pnViewPass.Name = "pnViewPass";
+            this.pnViewPass.Size = new System.Drawing.Size(24, 24);
+            this.pnViewPass.TabIndex = 13;
+            this.pnViewPass.Click += new System.EventHandler(this.pnViewPass_Click);
             // 
             // btnLoginGoogle
             // 
@@ -287,17 +300,6 @@
             this.btnFacebookLogin.Text = "Đăng nhập bằng Facebook";
             this.btnFacebookLogin.Click += new System.EventHandler(this.btnFacebookLogin_Click);
             // 
-            // lblCheck
-            // 
-            this.lblCheck.AutoSize = true;
-            this.lblCheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheck.ForeColor = System.Drawing.Color.Red;
-            this.lblCheck.Location = new System.Drawing.Point(61, 570);
-            this.lblCheck.Name = "lblCheck";
-            this.lblCheck.Size = new System.Drawing.Size(277, 20);
-            this.lblCheck.TabIndex = 16;
-            this.lblCheck.Text = "Tài khoản hoặc mật khẩu chưa chính xác!";
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -306,8 +308,8 @@
             this.Controls.Add(this.lblCheck);
             this.Controls.Add(this.guna2Button3);
             this.Controls.Add(this.lbDangky);
-            this.Controls.Add(this.guna2Panel1);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.pnViewPass);
+            this.Controls.Add(this.lbViewPassword);
             this.Controls.Add(this.btnDangNhap);
             this.Controls.Add(this.lbQuenmatkhau);
             this.Controls.Add(this.tbPass);
@@ -343,8 +345,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lbQuenmatkhau;
         private Guna.UI2.WinForms.Guna2Button btnDangNhap;
-        private System.Windows.Forms.Label label7;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private System.Windows.Forms.Label lbViewPassword;
+        private Guna.UI2.WinForms.Guna2Panel pnViewPass;
         private System.Windows.Forms.Label lbDangky;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private Guna.UI2.WinForms.Guna2Button guna2Button3;

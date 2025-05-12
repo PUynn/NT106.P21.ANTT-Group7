@@ -33,8 +33,9 @@ namespace SONA
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
         
         private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
-        private string serverIP = "127.0.0.1";
-        string connString = "Host=db.bzjfiynoyelxlpowlhty.supabase.co;Database=postgres;Username=postgres;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        //private string serverIP = "127.0.0.1";
+        //string connString = "Host=db.bzjfiynoyelxlpowlhty.supabase.co;Database=postgres;Username=postgres;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        private bool isPasswordVisible = false; // Biến trạng thái để theo dõi mật khẩu đang hiển thị hay không
 
         private HttpListener httpListener;
 
@@ -42,24 +43,23 @@ namespace SONA
         {
             InitializeComponent();
             S = s;
-            GetIP();
         }
 
-        private void GetIP()
-        {
-            using (var conn = new NpgsqlConnection(connString))
-            {
-                conn.Open();
-                using (var selectCmd = new NpgsqlCommand("SELECT address FROM IP LIMIT 1", conn))
-                {
-                    var result = selectCmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        serverIP = result.ToString();
-                    }
-                }
-            }
-        }
+        //private void GetIP()
+        //{
+        //    using (var conn = new NpgsqlConnection(connString))
+        //    {
+        //        conn.Open();
+        //        using (var selectCmd = new NpgsqlCommand("SELECT address FROM IP LIMIT 1", conn))
+        //        {
+        //            var result = selectCmd.ExecuteScalar();
+        //            if (result != null)
+        //            {
+        //                serverIP = result.ToString();
+        //            }
+        //        }
+        //    }
+        //}
 
         private void lbDangky_Click(object sender, EventArgs e)
         {
@@ -278,7 +278,7 @@ namespace SONA
 
             try
             {
-                using (TcpClient client = new TcpClient(serverIP, 5000))
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
@@ -363,6 +363,24 @@ namespace SONA
             {
                 btnDangNhap_Click(sender, e);
             }
+        }
+
+        private void lbViewPassword_Click(object sender, EventArgs e)
+        {
+            pnViewPass_Click(sender, e);
+        }
+
+        private void pnViewPass_Click(object sender, EventArgs e)
+        {
+            // Đảo ngược trạng thái hiển thị mật khẩu
+            isPasswordVisible = !isPasswordVisible;
+
+            // Cập nhật thuộc tính UseSystemPasswordChar của tbPass
+            tbPass.UseSystemPasswordChar = !isPasswordVisible;
+
+            // Thay đổi nội dung của lbViewPassword để phản ánh trạng thái
+            lbViewPassword.Text = isPasswordVisible ? "Ẩn" : "Hiện";
+            pnViewPass.BackgroundImage = isPasswordVisible ? Properties.Resources.icons8_hide_30 : Properties.Resources.Show;
         }
     }
 }

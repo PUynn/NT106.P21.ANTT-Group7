@@ -65,11 +65,11 @@
             this.tbPass.Location = new System.Drawing.Point(64, 498);
             this.tbPass.Margin = new System.Windows.Forms.Padding(4);
             this.tbPass.Name = "tbPass";
-            this.tbPass.PasswordChar = '*';
             this.tbPass.PlaceholderText = "";
             this.tbPass.SelectedText = "";
             this.tbPass.Size = new System.Drawing.Size(268, 58);
             this.tbPass.TabIndex = 18;
+            this.tbPass.UseSystemPasswordChar = true;
             this.tbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPass_KeyDown);
             // 
             // label3
@@ -259,11 +259,11 @@
             this.tbConfirm.Location = new System.Drawing.Point(376, 498);
             this.tbConfirm.Margin = new System.Windows.Forms.Padding(4);
             this.tbConfirm.Name = "tbConfirm";
-            this.tbConfirm.PasswordChar = '*';
             this.tbConfirm.PlaceholderText = "";
             this.tbConfirm.SelectedText = "";
             this.tbConfirm.Size = new System.Drawing.Size(268, 58);
             this.tbConfirm.TabIndex = 18;
+            this.tbConfirm.UseSystemPasswordChar = true;
             this.tbConfirm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbConfirm_KeyDown);
             // 
             // label6

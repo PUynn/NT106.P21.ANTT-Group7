@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1F0E48C-237E-4F37-A925-6878B2BC9EB0}</ProjectGuid>
+    <ProjectGuid>{87E5237F-ED94-4061-8299-7F2F216A9389}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SONA</RootNamespace>
-    <AssemblyName>SONA</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <RootNamespace>SONA_Server</RootNamespace>
+    <AssemblyName>SONA-Server</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -34,30 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>SONALogo.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis, Version=1.69.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.69.0\lib\net462\Google.Apis.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.69.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.69.0\lib\net462\Google.Apis.Auth.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.69.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.69.0\lib\net462\Google.Apis.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.Oauth2.v2, Version=1.68.0.1869, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.68.0.1869\lib\net462\Google.Apis.Oauth2.v2.dll</HintPath>
-    </Reference>
     <Reference Include="Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net48\Guna.UI2.dll</HintPath>
+      <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -77,33 +56,8 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="MimeMapping, Version=2.0.0.0, Culture=neutral, PublicKeyToken=680e2d5f226b327b, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeMapping.2.0.0\lib\net461\MimeMapping.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.2.2.1\lib\net472\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Asio, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Asio.2.2.1\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Core.2.2.1\lib\netstandard2.0\NAudio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Midi, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Midi.2.2.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Wasapi, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Wasapi.2.2.1\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinForms, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.WinForms.2.2.1\lib\net472\NAudio.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinMM, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.WinMM.2.2.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -161,12 +115,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.6.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -199,144 +147,27 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArtistForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ArtistForm.Designer.cs">
-      <DependentUpon>ArtistForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ArtistInfor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ArtistInfor.Designer.cs">
-      <DependentUpon>ArtistInfor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ConnectSQL.cs" />
-    <Compile Include="HistoryForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HistoryForm.Designer.cs">
-      <DependentUpon>HistoryForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Home.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Home.Designer.cs">
-      <DependentUpon>Home.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HomeContent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HomeContent.Designer.cs">
-      <DependentUpon>HomeContent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListenMusic.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ListenMusic.Designer.cs">
-      <DependentUpon>ListenMusic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Login.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MusicBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MusicBar.Designer.cs">
-      <DependentUpon>MusicBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SearchForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SignUpInfor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SignUpInfor.Designer.cs">
-      <DependentUpon>SignUpInfor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sona.cs">
+    <Compile Include="ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sona.Designer.cs">
-      <DependentUpon>Sona.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SignUp.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SignUp.Designer.cs">
-      <DependentUpon>SignUp.cs</DependentUpon>
+    <Compile Include="ServerForm.Designer.cs">
+      <DependentUpon>ServerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SongForm.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SongForm.Designer.cs">
-      <DependentUpon>SongForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SongSearch.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SongSearch.Designer.cs">
-      <DependentUpon>SongSearch.cs</DependentUpon>
-    </Compile>
     <Compile Include="SupabaseService.cs" />
-    <EmbeddedResource Include="ArtistForm.resx">
-      <DependentUpon>ArtistForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ArtistInfor.resx">
-      <DependentUpon>ArtistInfor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Home.resx">
-      <DependentUpon>Home.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HomeContent.resx">
-      <DependentUpon>HomeContent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListenMusic.resx">
-      <DependentUpon>ListenMusic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MusicBar.resx">
-      <DependentUpon>MusicBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SearchForm.resx">
-      <DependentUpon>SearchForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SignUpInfor.resx">
-      <DependentUpon>SignUpInfor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sona.resx">
-      <DependentUpon>Sona.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SignUp.resx">
-      <DependentUpon>SignUp.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SongForm.resx">
-      <DependentUpon>SongForm.cs</DependentUpon>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ServerForm.resx">
+      <DependentUpon>ServerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SongSearch.resx">
-      <DependentUpon>SongSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -350,77 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LoginBGR.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LoginBGR3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-add-user-male-50 %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon_of_Zalo.svg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Facebook.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-facebook-24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-facebook-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Google.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Minimize.png" />
-    <None Include="Resources\ReplayOff.png" />
-    <None Include="Resources\RecoreOn.png" />
-    <None Include="Resources\Refresh.png" />
-    <None Include="Resources\Show.png" />
-    <Content Include="SONALogo.ico" />
-    <None Include="Resources\icons8-hide-30.png" />
-    <None Include="Resources\SONA2.png" />
-    <None Include="Resources\4PointStarOFF.png" />
-    <None Include="Resources\4PointStar.png" />
-    <None Include="Resources\Discover.png" />
-    <None Include="Resources\SearchOFF.png" />
-    <None Include="Resources\Pins.png" />
-    <None Include="Resources\Playlist.png" />
-    <None Include="Resources\Favourites.png" />
-    <None Include="Resources\Saves.png" />
-    <None Include="Resources\Albums.png" />
-    <None Include="Resources\Chat.png" />
-    <None Include="Resources\Folder.png" />
-    <None Include="Resources\Artists.png" />
-    <None Include="Resources\homeOn.png" />
-    <None Include="Resources\homeOff.png" />
-    <None Include="Resources\Search.png" />
-    <None Include="Resources\discoverOn.png" />
-    <None Include="Resources\discoverOff.png" />
-    <None Include="Resources\Library.png" />
-    <None Include="Resources\Top-cac-bo-phim-va-chuong-trinh-truyen-hinh-an-khach-nhat-tren-Netflix-tu-truoc-den-nay-theo-Netflix.png" />
-    <None Include="Resources\Close.png" />
-    <None Include="Resources\Notification.png" />
-    <None Include="Resources\User.png" />
-    <None Include="Resources\Setting.png" />
-    <None Include="Resources\LikeOn.png" />
-    <None Include="Resources\background.jpg" />
-    <None Include="Resources\Right.png" />
-    <None Include="Resources\SONA2Logo.png" />
-    <None Include="Resources\SearchOFF1.png" />
-    <None Include="Resources\MyLibraryON.png" />
-    <None Include="Resources\Search1.png" />
-    <None Include="Resources\Search2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />

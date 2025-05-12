@@ -11,6 +11,7 @@ using NAudio.Wave;
 using NAudio.Dsp;
 using System.Net.Http;
 using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
@@ -183,45 +184,66 @@ namespace SONA
         {
             if (checkSignUpInfor())
             {
-                try
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
-                    var user = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
-
-                    if (user.Any(u => u.sdt == tbSdt.Text)) // Kiểm tra số điện thoại đã tồn tại chưa bằng cách so sánh thuộc tính sdt của user với kết quả đã nhập từ textbox
+                    writer.Write("signup");
+                    writer.Write(tbUser.Text); // Ghi tên người dùng vào luồng
+                    writer.Write(tbPass.Text);
+                    writer.Write(tbSdt.Text);
+                    writer.Write(srcEmail);
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
-                        return;
+                        S.ShowHome();
                     }
-
-                    // Chuẩn bị đối tượng UserInfo để thêm vào Supabase
-                    var newUser = new UserInfo // Tạo một đối tượng mới của lớp UserInfo
+                    else
                     {
-                        // Set các thuộc tính của user tương ứng với các thông tin đã nhập ở textbox
-                        name_user = tbUser.Text,
-                        sdt = tbSdt.Text,
-                        email = srcEmail,
-                        password_tk = tbPass.Text,
-                        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") // Lưu thời gian hiện tại
-                    };
-
-                    // Lưu ảnh đại diện
-                    //if (btnAvatar.Image != null)
-                    //{
-                    //    using (var ms = new MemoryStream())
-                    //    {
-                    //        btnAvatar.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    //        newUser.picture_user = Convert.ToBase64String(ms.ToArray());
-                    //    }
-                    //}
-
-                    await supabaseService.InsertUserAsync(newUser); // Thêm người dùng vào Supabase bằng cách gọi hàm InsertUserAsync ở trong SupabaseService
-                    S.ShowHome(); // Chuyển sang form Home
+                        lblCheckSdt.Text = response;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
+
+                //try
+                //{
+                //    await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
+                //    var user = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
+
+                //    if (user.Any(u => u.sdt == tbSdt.Text)) // Kiểm tra số điện thoại đã tồn tại chưa bằng cách so sánh thuộc tính sdt của user với kết quả đã nhập từ textbox
+                //    {
+                //        lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
+                //        return;
+                //    }
+
+                //    // Chuẩn bị đối tượng UserInfo để thêm vào Supabase
+                //    var newUser = new UserInfo // Tạo một đối tượng mới của lớp UserInfo
+                //    {
+                //        // Set các thuộc tính của user tương ứng với các thông tin đã nhập ở textbox
+                //        name_user = tbUser.Text,
+                //        sdt = tbSdt.Text,
+                //        email = srcEmail,
+                //        password_tk = tbPass.Text,
+                //        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") // Lưu thời gian hiện tại
+                //    };
+
+                //    // Lưu ảnh đại diện
+                //    //if (btnAvatar.Image != null)
+                //    //{
+                //    //    using (var ms = new MemoryStream())
+                //    //    {
+                //    //        btnAvatar.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                //    //        newUser.picture_user = Convert.ToBase64String(ms.ToArray());
+                //    //    }
+                //    //}
+
+                //    await supabaseService.InsertUserAsync(newUser); // Thêm người dùng vào Supabase bằng cách gọi hàm InsertUserAsync ở trong SupabaseService
+                //    S.ShowHome(); // Chuyển sang form Home
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show("Error: " + ex.Message);
+                //}
             }
         }
     }

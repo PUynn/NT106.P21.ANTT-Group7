@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Server___SONA.Properties
+namespace SONA_Server.Properties
 {
 
 

@@ -483,9 +483,9 @@ namespace SONA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Shuffle {
+        internal static System.Drawing.Bitmap Show {
             get {
-                object obj = ResourceManager.GetObject("Shuffle", resourceCulture);
+                object obj = ResourceManager.GetObject("Show", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -493,9 +493,9 @@ namespace SONA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SONA2 {
+        internal static System.Drawing.Bitmap Shuffle {
             get {
-                object obj = ResourceManager.GetObject("SONA2", resourceCulture);
+                object obj = ResourceManager.GetObject("Shuffle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
