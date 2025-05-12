@@ -387,6 +387,7 @@
     <None Include="Resources\RecoreOn.png" />
     <None Include="Resources\Refresh.png" />
     <None Include="Resources\Show.png" />
+    <None Include="Resources\DisON.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

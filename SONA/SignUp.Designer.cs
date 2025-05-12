@@ -130,7 +130,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label4.ForeColor = System.Drawing.Color.Gray;
-            this.label4.Location = new System.Drawing.Point(229, 478);
+            this.label4.Location = new System.Drawing.Point(229, 465);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 29);
             this.label4.TabIndex = 4;
@@ -139,7 +139,7 @@
             // guna2Separator2
             // 
             this.guna2Separator2.FillThickness = 2;
-            this.guna2Separator2.Location = new System.Drawing.Point(323, 487);
+            this.guna2Separator2.Location = new System.Drawing.Point(323, 474);
             this.guna2Separator2.Name = "guna2Separator2";
             this.guna2Separator2.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator2.TabIndex = 3;
@@ -172,14 +172,14 @@
             this.tbOTP.Name = "tbOTP";
             this.tbOTP.PlaceholderText = "";
             this.tbOTP.SelectedText = "";
-            this.tbOTP.Size = new System.Drawing.Size(528, 58);
+            this.tbOTP.Size = new System.Drawing.Size(443, 58);
             this.tbOTP.TabIndex = 1;
             this.tbOTP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbOTP_KeyDown);
             // 
             // guna2Separator1
             // 
             this.guna2Separator1.FillThickness = 2;
-            this.guna2Separator1.Location = new System.Drawing.Point(-2, 487);
+            this.guna2Separator1.Location = new System.Drawing.Point(-2, 474);
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator1.TabIndex = 2;
@@ -207,7 +207,11 @@
             // 
             // btnRefreshOTP
             // 
-            this.btnRefreshOTP.BorderRadius = 17;
+            this.btnRefreshOTP.Animated = true;
+            this.btnRefreshOTP.AnimatedGIF = true;
+            this.btnRefreshOTP.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(218)))), ((int)(((byte)(223)))));
+            this.btnRefreshOTP.BorderRadius = 12;
+            this.btnRefreshOTP.BorderThickness = 1;
             this.btnRefreshOTP.CheckedState.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefreshOTP.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefreshOTP.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -215,14 +219,15 @@
             this.btnRefreshOTP.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnRefreshOTP.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnRefreshOTP.FillColor = System.Drawing.Color.Transparent;
-            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnRefreshOTP.ForeColor = System.Drawing.Color.Transparent;
-            this.btnRefreshOTP.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefreshOTP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
             this.btnRefreshOTP.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnRefreshOTP.Location = new System.Drawing.Point(490, 379);
+            this.btnRefreshOTP.Location = new System.Drawing.Point(449, 368);
             this.btnRefreshOTP.Name = "btnRefreshOTP";
-            this.btnRefreshOTP.Size = new System.Drawing.Size(35, 35);
+            this.btnRefreshOTP.PressedColor = System.Drawing.Color.PaleGreen;
+            this.btnRefreshOTP.Size = new System.Drawing.Size(73, 58);
             this.btnRefreshOTP.TabIndex = 8;
+            this.btnRefreshOTP.Text = "Nhận mã";
             this.btnRefreshOTP.Click += new System.EventHandler(this.btnRefreshOTP_Click);
             // 
             // btnSignUpGoogle
@@ -236,7 +241,7 @@
             this.btnSignUpGoogle.Image = global::SONA.Properties.Resources.Google;
             this.btnSignUpGoogle.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnSignUpGoogle.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 531);
+            this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 518);
             this.btnSignUpGoogle.Name = "btnSignUpGoogle";
             this.btnSignUpGoogle.Size = new System.Drawing.Size(528, 72);
             this.btnSignUpGoogle.TabIndex = 7;
@@ -256,7 +261,7 @@
             this.btnSignUpFb.Image = global::SONA.Properties.Resources.icons8_facebook_50;
             this.btnSignUpFb.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnSignUpFb.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnSignUpFb.Location = new System.Drawing.Point(0, 623);
+            this.btnSignUpFb.Location = new System.Drawing.Point(0, 610);
             this.btnSignUpFb.Name = "btnSignUpFb";
             this.btnSignUpFb.Size = new System.Drawing.Size(528, 72);
             this.btnSignUpFb.TabIndex = 6;

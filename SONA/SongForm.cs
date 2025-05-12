@@ -63,8 +63,8 @@ namespace SONA
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
             ListenMusic listenMusic = new ListenMusic(H, src);
-            H.panel1.Controls.Clear();
-            H.panel1.Controls.Add(listenMusic);
+            H.pnMain.Controls.Clear();
+            H.pnMain.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);
         }
     }

@@ -267,8 +267,8 @@ namespace SONA
         private void btnSinger_Click(object sender, EventArgs e)
         {
             StopMusicAndDispose();
-            H.panel1.Controls.Clear();
-            H.panel1.Controls.Add(new ArtistInfor(H, src));
+            H.pnMain.Controls.Clear();
+            H.pnMain.Controls.Add(new ArtistInfor(H, src));
         }
 
     }

@@ -37,12 +37,12 @@ namespace SONA
         // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
-            if (panel1.Controls.Count == 0 || panel1.Controls[0].GetType() != typeof(HomeContent))
+            if (pnMain.Controls.Count == 0 || pnMain.Controls[0].GetType() != typeof(HomeContent))
             {
                 HomeContent homeContent = new HomeContent(this);
                 homeContent.Dock = DockStyle.Fill;
-                panel1.Controls.Clear();
-                panel1.Controls.Add(homeContent);
+                pnMain.Controls.Clear();
+                pnMain.Controls.Add(homeContent);
             }
         }
         
@@ -71,6 +71,7 @@ namespace SONA
             MenuClick();
             txtSearch.Visible = true;
             btnSearch.Visible = false;
+            txtSearch.Focus();
         }
 
         private void MenuClick()
@@ -96,10 +97,9 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            Home home = new Home(S);
-            S.pnMain.Controls.Clear();
-            S.pnMain.Controls.Add(home);
-            home.Dock = DockStyle.Fill;
+            HomeContent home = new HomeContent(this);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(home);
         }
 
         private void btnDiscover_Click(object sender, EventArgs e)
@@ -141,8 +141,8 @@ namespace SONA
                 }
 
                 SearchForm searchForm = new SearchForm(this);
-                panel1.Controls.Clear();
-                panel1.Controls.Add(searchForm);
+                pnMain.Controls.Clear();
+                pnMain.Controls.Add(searchForm);
             }
         }
 

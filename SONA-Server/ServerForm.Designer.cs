@@ -1,4 +1,4 @@
-﻿namespace Server
+﻿namespace SONA_Server
 {
     partial class ServerForm
     {

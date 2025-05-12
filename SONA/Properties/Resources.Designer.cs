@@ -143,6 +143,16 @@ namespace SONA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DisON {
+            get {
+                object obj = ResourceManager.GetObject("DisON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Favourites {
             get {
                 object obj = ResourceManager.GetObject("Favourites", resourceCulture);
