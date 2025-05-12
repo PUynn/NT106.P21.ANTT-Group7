@@ -385,6 +385,7 @@
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\ReplayOff.png" />
     <None Include="Resources\RecoreOn.png" />
+    <None Include="Resources\Refresh.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

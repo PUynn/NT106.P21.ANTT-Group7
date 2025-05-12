@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Mail;
+using System.Net;
 
 namespace SONA
 {
@@ -22,12 +24,56 @@ namespace SONA
     {
         SONA S;
         private SupabaseService supabaseService;
+        private string generatedOTP; // Lưu mã OTP đã gửi
+        private DateTime lastOTPSentTime; // Lưu thời gian gửi OTP cuối cùng
+        private DateTime otpCreatedTime; // Lưu thời gian tạo OTP
+        private const int OTPResendCooldown = 60; // Giới hạn 60 giây
+        private const int OTPExpirationMinutes = 5; // OTP hết hạn sau 5 phút
 
         public SignUp(SONA s)
         {
             InitializeComponent();
             S = s;
             supabaseService = new SupabaseService();
+            lastOTPSentTime = DateTime.MinValue;
+        }
+
+        // Hàm tạo mã OTP ngẫu nhiên (6 chữ số)
+        private string GenerateOTP()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        // Hàm gửi email chứa mã OTP
+        private async Task SendOTPEmail(string email, string otp)
+        {
+            try
+            {
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("sona.feelthemusic@gmail.com", "sxiz nqtc ddko izzj"),
+                    EnableSsl = true,
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("sona.feelthemusic@gmail.com"), // Phải khớp với email trong Credentials
+                    Subject = "Mã OTP xác nhận đăng ký tài khoản SONA",
+                    Body = $"Mã OTP của bạn là: <strong>{otp}</strong><br>Vui lòng nhập mã này để hoàn tất đăng ký. Mã có hiệu lực trong {OTPExpirationMinutes} phút.",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
+
+                await smtpClient.SendMailAsync(mailMessage);
+                lastOTPSentTime = DateTime.Now;
+                otpCreatedTime = DateTime.Now; // Lưu thời gian tạo OTP
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // Hàm để quay lại form đăng nhập
@@ -43,8 +89,8 @@ namespace SONA
             lblCheck.Text = "";
         }
 
-        // Hàm để kiểm tra xem email đã có trong cơ sở dữ liệu chưa, nếu chưa thì di chuyển đến form đăng ký thông tin
-        private async void btnSignUp_Click(object sender, EventArgs e)
+        // Hàm kiểm tra và xử lý đăng ký
+        private async void SignUpEnter()
         {
             if (string.IsNullOrEmpty(tbEmail.Text))
             {
@@ -54,19 +100,52 @@ namespace SONA
 
             try
             {
-                await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
-                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
+                // Kiểm tra email trên Supabase
+                await supabaseService.InitializeAsync();
+                var userInfos = await supabaseService.GetUserInfosAsync();
 
-                if (userInfos.Any(u => u.email == tbEmail.Text)) // Kiểm tra email đã tồn tại chưa, nếu rồi thì thông báo
+                if (userInfos.Any(u => u.email == tbEmail.Text))
                 {
                     lblCheck.Text = "Email đã tồn tại!";
                     return;
                 }
 
-                // Nếu email chưa tồn tại, chuyển sang form đăng ký thông tin SignUpInfor
+                // Nếu chưa gửi OTP lần nào, gửi OTP
+                if (generatedOTP == null)
+                {
+                    generatedOTP = GenerateOTP();
+                    await SendOTPEmail(tbEmail.Text, generatedOTP);
+                    lblCheck.Text = "Mã OTP đã được gửi tới email của bạn!";
+                    return;
+                }
+
+                // Kiểm tra mã OTP
+                if (string.IsNullOrEmpty(tbOTP.Text))
+                {
+                    lblCheck.Text = "Vui lòng nhập mã OTP của bạn!";
+                    return;
+                }
+
+                // Kiểm tra thời gian hiệu lực OTP
+                if ((DateTime.Now - otpCreatedTime).TotalMinutes > OTPExpirationMinutes)
+                {
+                    lblCheck.Text = "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
+                    generatedOTP = null; // Reset để yêu cầu gửi lại
+                    return;
+                }
+
+                // Kiểm tra mã OTP có khớp không
+                if (tbOTP.Text != generatedOTP)
+                {
+                    lblCheck.Text = "Mã OTP không chính xác!";
+                    return;
+                }
+
+                // Nếu OTP hợp lệ, chuyển sang form SignUpInfor
                 SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
                 S.pnLogin.Controls.Clear();
                 S.pnLogin.Controls.Add(signUpInfor);
+                generatedOTP = null; // Reset OTP sau khi đăng ký thành công
             }
             catch (Exception ex)
             {
@@ -74,16 +153,51 @@ namespace SONA
             }
         }
 
-        // Gọi hàm btnSignUp_Click khi nhấn phím Enter trong textbox tbEmail
         private void tbEmail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnSignUp_Click(sender, e);
+                SignUpEnter();
             }
         }
 
-        // Hàm để đóng form đăng ký
+        private void tbOTP_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SignUpEnter();
+            }
+        }
+
+        private async void btnRefreshOTP_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbEmail.Text))
+            {
+                lblCheck.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+                return;
+            }
+
+            try
+            {
+                // Kiểm tra thời gian gửi lại
+                TimeSpan timeSinceLastSent = DateTime.Now - lastOTPSentTime;
+                if (timeSinceLastSent.TotalSeconds < OTPResendCooldown)
+                {
+                    lblCheck.Text = $"Vui lòng chờ {Math.Ceiling(OTPResendCooldown - timeSinceLastSent.TotalSeconds)} giây trước khi gửi lại!";
+                    return;
+                }
+
+                // Tạo và gửi mã OTP mới
+                generatedOTP = GenerateOTP();
+                await SendOTPEmail(tbEmail.Text, generatedOTP);
+                lblCheck.Text = "Mã OTP mới đã được gửi tới email của bạn!";
+            }
+            catch (Exception ex)
+            {
+                lblCheck.Text = "Lỗi: " + ex.Message;
+            }
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             S.Close();
@@ -122,28 +236,24 @@ namespace SONA
                     Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
                     string email = userInfo.Email;
 
-                    // Khởi tạo kết nối Supabase
                     await supabaseService.InitializeAsync();
                     var userInfos = await supabaseService.GetUserInfosAsync();
 
-                    // Kiểm tra email đã tồn tại chưa
                     if (userInfos.Any(u => u.email == email))
                     {
                         this.Invoke(new Action(() =>
                         {
                             lblCheck.Text = "Email đã tồn tại!";
-                            S.BringToFront(); // Đảm bảo form chính hiển thị lại
-                            S.Activate();     // Kích hoạt form
+                            S.BringToFront();
+                            S.Activate();
                         }));
                         return;
                     }
 
-                    // Nếu email chưa tồn tại, chuyển sang form SignUpInfor để nhập thêm thông tin
                     SignUpInfor signUpInfor = new SignUpInfor(S, email);
                     S.pnLogin.Controls.Clear();
                     S.pnLogin.Controls.Add(signUpInfor);
 
-                    // Đảm bảo form chính hiển thị lại
                     this.Invoke(new Action(() =>
                     {
                         S.BringToFront();
