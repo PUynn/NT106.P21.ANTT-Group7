@@ -22,7 +22,7 @@ namespace SONA
             InitializeComponent();
             SignUp signUp = new SignUp(this);
             pnLogin.Controls.Add(signUp);
-            GetIP();
+            //GetIP();
         }
         private void GetIP()
         {
@@ -38,14 +38,6 @@ namespace SONA
                     }
                 }
             }
-        }
-
-        private void SONA_Deactivate(object sender, EventArgs e)
-        {
-            //if (home != null && this.WindowState != FormWindowState.Minimized)
-            //{
-            //    home.btnMinimize_Click(this, EventArgs.Empty);
-            //}
         }
 
         public void ShowHome()

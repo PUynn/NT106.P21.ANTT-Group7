@@ -31,7 +31,7 @@ namespace SONA
         private const string AppSecret = "1f3490111b9ddddbf4010a67954a1522";
         private const string RedirectUri = "http://localhost:8000/facebook-signin";
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
-        
+
         private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
         //private string serverIP = "127.0.0.1";
         //string connString = "Host=db.bzjfiynoyelxlpowlhty.supabase.co;Database=postgres;Username=postgres;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
@@ -117,12 +117,12 @@ namespace SONA
                     {
                         this.Invoke(new Action(() =>
                         {
-                            OpenHomeForm();
                             S.Activate();
+                            OpenHomeForm();
                         }));
                     }
                     else
-                    {    
+                    {
                         this.Invoke(new Action(() =>
                         {
                             lblCheck.Text = "Email chưa tồn tại, vui lòng đăng kí tài khoản!";
@@ -270,6 +270,33 @@ namespace SONA
         {
             lblCheck.Text = ""; // Xóa thông báo lỗi trước khi kiểm tra
 
+            //try
+            //{
+            //    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+            //    using (NetworkStream stream = client.GetStream())
+            //    using (BinaryWriter writer = new BinaryWriter(stream))
+            //    using (BinaryReader reader = new BinaryReader(stream))
+            //    {
+            //        writer.Write("login");
+            //        writer.Write(tbEmail.Text);
+            //        writer.Write(tbPass.Text);
+            //        string response = reader.ReadString();
+            //        if (response == "OK")
+            //        {
+            //            OpenHomeForm();
+            //            S.Activate();
+            //        }
+            //        else
+            //        {
+            //            lblCheck.Text = "Đăng nhập thất bại!";
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblCheck.Text = "Lỗi: " + ex.Message;
+            //}
+
             if (string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPass.Text))
             {
                 lblCheck.Text = "Vui lòng nhập đầy đủ email và mật khẩu!";
@@ -278,65 +305,40 @@ namespace SONA
 
             try
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                supabaseService = new SupabaseService();
+                await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
+
+                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
+                var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text); // Tìm người dùng theo email
+
+                if (user != null) // Nếu tìm thấy người dùng
                 {
-                    writer.Write("login");
-                    writer.Write(tbEmail.Text);
-                    writer.Write(tbPass.Text);
-                    string response = reader.ReadString();
-                    if (response == "OK")
+                    if (user.password_tk == tbPass.Text) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
                     {
-                        OpenHomeForm();
-                        S.Activate();
+                        OpenHomeForm(); // Mở form chính
+                        S.Activate(); // Kích hoạt form chính
                     }
                     else
                     {
-                        lblCheck.Text = "Đăng nhập thất bại!";
+                        lblCheck.Text = "Mật khẩu không chính xác!";
                     }
+                }
+                else // Thông báo người dùng không tồn tại nếu không tìm thấy
+                {
+                    lblCheck.Text = "Email không tồn tại!";
                 }
             }
             catch (Exception ex)
             {
-                lblCheck.Text = "Lỗi: " + ex.Message;
+                lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
             }
-
-            //try
-            //{
-            //    supabaseService = new SupabaseService();
-            //    await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
-            //    var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
-
-            //    var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text); // Tìm người dùng theo email
-
-            //    if (user != null) // Nếu tìm thấy người dùng
-            //    {
-            //        if (user.password_tk == tbPass.Text) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
-            //        {
-            //            S.Activate(); // Kích hoạt form chính
-            //            OpenHomeForm(); // Mở form chính
-            //        }
-            //        else
-            //        {
-            //            lblCheck.Text = "Mật khẩu không chính xác!";
-            //        }
-            //    }
-            //    else // Thông báo người dùng không tồn tại nếu không tìm thấy
-            //    {
-            //        lblCheck.Text = "Email không tồn tại!";
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
-            //}
         }
 
         private void lbQuenmatkhau_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.facebook.com/viethoang.trannguyen.35");
+            ForgetPassword forgetPassword = new ForgetPassword(S);
+            S.pnLogin.Controls.Clear();
+            S.pnLogin.Controls.Add(forgetPassword);
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
@@ -379,8 +381,8 @@ namespace SONA
             tbPass.UseSystemPasswordChar = !isPasswordVisible;
 
             // Thay đổi nội dung của lbViewPassword để phản ánh trạng thái
-            lbViewPassword.Text = isPasswordVisible ? "Ẩn" : "Hiện";
-            pnViewPass.BackgroundImage = isPasswordVisible ? Properties.Resources.icons8_hide_30 : Properties.Resources.Show;
+            lbViewPassword.Text = !isPasswordVisible ? "Ẩn" : "Hiện";
+            pnViewPass.BackgroundImage = !isPasswordVisible ? Properties.Resources.icons8_hide_30 : Properties.Resources.Show;
         }
     }
 }

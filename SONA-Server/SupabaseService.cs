@@ -6,7 +6,7 @@ using Postgrest.Attributes;
 using System;
 using System.Linq;
 
-namespace SONA_Server
+namespace SONA
 {
     // View songswithsinger chứa các thuộc tính của table song và table singer bằng cách kết chúng lại bằng id_singer
     [Table("songswithsinger")] // Ánh xạ class Song thành view songswithsinger trong cơ sở dữ liệu
@@ -161,6 +161,36 @@ namespace SONA_Server
             catch (Exception ex)
             {
                 throw new Exception("Error inserting user: " + ex.Message);
+            }
+        }
+
+        // Phương thức cập nhật mật khẩu mới cho người dùng dựa trên email
+        public async Task UpdateUserPasswordAsync(string email, string newPassword)
+        {
+            try
+            {
+                // Tìm bản ghi người dùng dựa trên email
+                var user = await _client
+                    .From<UserInfo>()
+                    .Where(u => u.email == email)
+                    .Single();
+
+                if (user == null)
+                {
+                    throw new Exception("User with the provided email not found.");
+                }
+
+                // Cập nhật mật khẩu mới
+                user.password_tk = newPassword;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                await _client
+                    .From<UserInfo>()
+                    .Update(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating user password: " + ex.Message);
             }
         }
     }

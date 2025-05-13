@@ -43,6 +43,8 @@
             this.tbOTP = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnSignUp = new Guna.UI2.WinForms.Guna2Button();
+            this.btnNext = new Guna.UI2.WinForms.Guna2Button();
             this.btnRefreshOTP = new Guna.UI2.WinForms.Guna2Button();
             this.btnSignUpGoogle = new Guna.UI2.WinForms.Guna2Button();
             this.btnSignUpFb = new Guna.UI2.WinForms.Guna2Button();
@@ -62,7 +64,7 @@
             this.guna2Panel2.Controls.Add(this.lbDangnhap);
             this.guna2Panel2.Controls.Add(this.label2);
             this.guna2Panel2.Controls.Add(this.label1);
-            this.guna2Panel2.Location = new System.Drawing.Point(92, 57);
+            this.guna2Panel2.Location = new System.Drawing.Point(92, 27);
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(341, 169);
             this.guna2Panel2.TabIndex = 0;
@@ -130,7 +132,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label4.ForeColor = System.Drawing.Color.Gray;
-            this.label4.Location = new System.Drawing.Point(229, 465);
+            this.label4.Location = new System.Drawing.Point(229, 525);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 29);
             this.label4.TabIndex = 4;
@@ -139,7 +141,7 @@
             // guna2Separator2
             // 
             this.guna2Separator2.FillThickness = 2;
-            this.guna2Separator2.Location = new System.Drawing.Point(323, 474);
+            this.guna2Separator2.Location = new System.Drawing.Point(323, 534);
             this.guna2Separator2.Name = "guna2Separator2";
             this.guna2Separator2.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator2.TabIndex = 3;
@@ -149,7 +151,7 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblEmail.Location = new System.Drawing.Point(-4, 247);
+            this.lblEmail.Location = new System.Drawing.Point(3, 207);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(96, 20);
             this.lblEmail.TabIndex = 0;
@@ -167,19 +169,19 @@
             this.tbOTP.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbOTP.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tbOTP.Location = new System.Drawing.Point(0, 368);
+            this.tbOTP.Location = new System.Drawing.Point(0, 328);
             this.tbOTP.Margin = new System.Windows.Forms.Padding(4);
             this.tbOTP.Name = "tbOTP";
             this.tbOTP.PlaceholderText = "";
             this.tbOTP.SelectedText = "";
-            this.tbOTP.Size = new System.Drawing.Size(443, 58);
+            this.tbOTP.Size = new System.Drawing.Size(528, 58);
             this.tbOTP.TabIndex = 1;
             this.tbOTP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbOTP_KeyDown);
             // 
             // guna2Separator1
             // 
             this.guna2Separator1.FillThickness = 2;
-            this.guna2Separator1.Location = new System.Drawing.Point(-2, 474);
+            this.guna2Separator1.Location = new System.Drawing.Point(-2, 534);
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator1.TabIndex = 2;
@@ -187,6 +189,8 @@
             // guna2Panel1
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Panel1.Controls.Add(this.btnSignUp);
+            this.guna2Panel1.Controls.Add(this.btnNext);
             this.guna2Panel1.Controls.Add(this.btnRefreshOTP);
             this.guna2Panel1.Controls.Add(this.guna2Panel2);
             this.guna2Panel1.Controls.Add(this.btnSignUpGoogle);
@@ -202,16 +206,49 @@
             this.guna2Panel1.ForeColor = System.Drawing.Color.DarkGray;
             this.guna2Panel1.Location = new System.Drawing.Point(88, 33);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(528, 731);
+            this.guna2Panel1.Size = new System.Drawing.Size(528, 779);
             this.guna2Panel1.TabIndex = 0;
+            // 
+            // btnSignUp
+            // 
+            this.btnSignUp.Animated = true;
+            this.btnSignUp.BackColor = System.Drawing.Color.Transparent;
+            this.btnSignUp.BorderRadius = 33;
+            this.btnSignUp.FillColor = System.Drawing.Color.DarkGray;
+            this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignUp.ForeColor = System.Drawing.Color.White;
+            this.btnSignUp.HoverState.FillColor = System.Drawing.Color.LightBlue;
+            this.btnSignUp.ImageSize = new System.Drawing.Size(28, 28);
+            this.btnSignUp.Location = new System.Drawing.Point(0, 432);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(528, 64);
+            this.btnSignUp.TabIndex = 22;
+            this.btnSignUp.Text = "Đăng kí";
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.BorderRadius = 17;
+            this.btnNext.CheckedState.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNext.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNext.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNext.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNext.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNext.FillColor = System.Drawing.Color.Transparent;
+            this.btnNext.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnNext.ForeColor = System.Drawing.Color.Transparent;
+            this.btnNext.Image = global::SONA.Properties.Resources.Right;
+            this.btnNext.ImageSize = new System.Drawing.Size(50, 50);
+            this.btnNext.Location = new System.Drawing.Point(490, 245);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(35, 35);
+            this.btnNext.TabIndex = 8;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnRefreshOTP
             // 
-            this.btnRefreshOTP.Animated = true;
-            this.btnRefreshOTP.AnimatedGIF = true;
-            this.btnRefreshOTP.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(218)))), ((int)(((byte)(223)))));
-            this.btnRefreshOTP.BorderRadius = 12;
-            this.btnRefreshOTP.BorderThickness = 1;
+            this.btnRefreshOTP.BorderRadius = 17;
             this.btnRefreshOTP.CheckedState.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefreshOTP.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefreshOTP.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -219,15 +256,14 @@
             this.btnRefreshOTP.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnRefreshOTP.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnRefreshOTP.FillColor = System.Drawing.Color.Transparent;
-            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefreshOTP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRefreshOTP.ForeColor = System.Drawing.Color.Transparent;
+            this.btnRefreshOTP.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefreshOTP.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnRefreshOTP.Location = new System.Drawing.Point(449, 368);
+            this.btnRefreshOTP.Location = new System.Drawing.Point(490, 339);
             this.btnRefreshOTP.Name = "btnRefreshOTP";
-            this.btnRefreshOTP.PressedColor = System.Drawing.Color.PaleGreen;
-            this.btnRefreshOTP.Size = new System.Drawing.Size(73, 58);
+            this.btnRefreshOTP.Size = new System.Drawing.Size(35, 35);
             this.btnRefreshOTP.TabIndex = 8;
-            this.btnRefreshOTP.Text = "Nhận mã";
             this.btnRefreshOTP.Click += new System.EventHandler(this.btnRefreshOTP_Click);
             // 
             // btnSignUpGoogle
@@ -241,7 +277,7 @@
             this.btnSignUpGoogle.Image = global::SONA.Properties.Resources.Google;
             this.btnSignUpGoogle.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnSignUpGoogle.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 518);
+            this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 582);
             this.btnSignUpGoogle.Name = "btnSignUpGoogle";
             this.btnSignUpGoogle.Size = new System.Drawing.Size(528, 72);
             this.btnSignUpGoogle.TabIndex = 7;
@@ -261,7 +297,7 @@
             this.btnSignUpFb.Image = global::SONA.Properties.Resources.icons8_facebook_50;
             this.btnSignUpFb.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnSignUpFb.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnSignUpFb.Location = new System.Drawing.Point(0, 610);
+            this.btnSignUpFb.Location = new System.Drawing.Point(0, 672);
             this.btnSignUpFb.Name = "btnSignUpFb";
             this.btnSignUpFb.Size = new System.Drawing.Size(528, 72);
             this.btnSignUpFb.TabIndex = 6;
@@ -279,7 +315,7 @@
             this.tbEmail.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbEmail.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tbEmail.Location = new System.Drawing.Point(0, 271);
+            this.tbEmail.Location = new System.Drawing.Point(0, 231);
             this.tbEmail.Margin = new System.Windows.Forms.Padding(4);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.PlaceholderText = "";
@@ -293,7 +329,7 @@
             this.lblCheck.AutoSize = true;
             this.lblCheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheck.ForeColor = System.Drawing.Color.Red;
-            this.lblCheck.Location = new System.Drawing.Point(3, 430);
+            this.lblCheck.Location = new System.Drawing.Point(3, 390);
             this.lblCheck.Name = "lblCheck";
             this.lblCheck.Size = new System.Drawing.Size(250, 20);
             this.lblCheck.TabIndex = 0;
@@ -304,7 +340,7 @@
             this.lblOTP.AutoSize = true;
             this.lblOTP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOTP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblOTP.Location = new System.Drawing.Point(-4, 344);
+            this.lblOTP.Location = new System.Drawing.Point(3, 304);
             this.lblOTP.Name = "lblOTP";
             this.lblOTP.Size = new System.Drawing.Size(60, 20);
             this.lblOTP.TabIndex = 0;
@@ -370,5 +406,7 @@
         private System.Windows.Forms.Label lblCheck;
         private Guna.UI2.WinForms.Guna2TextBox tbEmail;
         private System.Windows.Forms.Label lblOTP;
+        private Guna.UI2.WinForms.Guna2Button btnNext;
+        private Guna.UI2.WinForms.Guna2Button btnSignUp;
     }
 }
