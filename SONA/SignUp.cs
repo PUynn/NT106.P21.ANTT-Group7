@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mail;
 using System.Net;
+using System.Net.Sockets;
 
 namespace SONA
 {
@@ -92,65 +93,95 @@ namespace SONA
         // Hàm kiểm tra và xử lý đăng ký
         private async void SignUpEnter()
         {
-            if (string.IsNullOrEmpty(tbEmail.Text))
-            {
-                lblCheck.Text = "Vui lòng nhập địa chỉ Email của bạn!";
-                return;
-            }
-
             try
             {
-                // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
-                await supabaseService.InitializeAsync();
-                var userInfos = await supabaseService.GetUserInfosAsync();
-
-                if (userInfos.Any(u => u.email == tbEmail.Text))
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    lblCheck.Text = "Email đã tồn tại!";
-                    return;
+                    writer.Write("signupUser");
+                    writer.Write(tbEmail.Text);
+                    writer.Write(tbOTP.Text);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        S.Activate();
+                        SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
+                        S.pnLogin.Controls.Clear();
+                        S.pnLogin.Controls.Add(signUpInfor);
+                    }
+                    else
+                    {
+                        lblCheck.Text = response;
+                        S.Activate();
+                    }
                 }
-
-                // Nếu chưa gửi OTP lần nào thì thực hiện gửi OTP
-                if (generatedOTP == null)
-                {
-                    generatedOTP = GenerateOTP();
-                    await SendOTPEmail(tbEmail.Text, generatedOTP);
-                    lblCheck.Text = "Mã OTP đã được gửi tới email của bạn!";
-                    return;
-                }
-
-                // Kiểm tra mã OTP có được nhập không
-                if (string.IsNullOrEmpty(tbOTP.Text))
-                {
-                    lblCheck.Text = "Vui lòng nhập mã OTP của bạn!";
-                    return;
-                }
-
-                // Kiểm tra thời gian hiệu lực OTP bằng cách so sánh thời gian hiện tại với thời gian tạo OTP có lớn hơn 5 phút không
-                if ((DateTime.Now - otpCreatedTime).TotalMinutes > OTPExpirationMinutes)
-                {
-                    lblCheck.Text = "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
-                    generatedOTP = null; // Reset để yêu cầu gửi lại
-                    return;
-                }
-
-                // Kiểm tra mã OTP có khớp không
-                if (tbOTP.Text != generatedOTP)
-                {
-                    lblCheck.Text = "Mã OTP không chính xác!";
-                    return;
-                }
-
-                // Nếu OTP hợp lệ, chuyển sang form SignUpInfor
-                SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
-                S.pnLogin.Controls.Clear();
-                S.pnLogin.Controls.Add(signUpInfor);
-                generatedOTP = null; // Reset OTP sau khi đăng ký thành công
             }
             catch (Exception ex)
             {
                 lblCheck.Text = "Lỗi: " + ex.Message;
             }
+
+            //if (string.IsNullOrEmpty(tbEmail.Text))
+            //{
+            //    lblCheck.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+            //    return;
+            //}
+
+            //try
+            //{
+            //    // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
+            //    await supabaseService.InitializeAsync();
+            //    var userInfos = await supabaseService.GetUserInfosAsync();
+
+            //    if (userInfos.Any(u => u.email == tbEmail.Text))
+            //    {
+            //        lblCheck.Text = "Email đã tồn tại!";
+            //        return;
+            //    }
+
+            //    // Nếu chưa gửi OTP lần nào thì thực hiện gửi OTP
+            //    if (generatedOTP == null)
+            //    {
+            //        generatedOTP = GenerateOTP();
+            //        await SendOTPEmail(tbEmail.Text, generatedOTP);
+            //        lblCheck.Text = "Mã OTP đã được gửi tới email của bạn!";
+            //        return;
+            //    }
+
+            //    // Kiểm tra mã OTP có được nhập không
+            //    if (string.IsNullOrEmpty(tbOTP.Text))
+            //    {
+            //        lblCheck.Text = "Vui lòng nhập mã OTP của bạn!";
+            //        return;
+            //    }
+
+            //    // Kiểm tra thời gian hiệu lực OTP bằng cách so sánh thời gian hiện tại với thời gian tạo OTP có lớn hơn 5 phút không
+            //    if ((DateTime.Now - otpCreatedTime).TotalMinutes > OTPExpirationMinutes)
+            //    {
+            //        lblCheck.Text = "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
+            //        generatedOTP = null; // Reset để yêu cầu gửi lại
+            //        return;
+            //    }
+
+            //    // Kiểm tra mã OTP có khớp không
+            //    if (tbOTP.Text != generatedOTP)
+            //    {
+            //        lblCheck.Text = "Mã OTP không chính xác!";
+            //        return;
+            //    }
+
+            //    // Nếu OTP hợp lệ, chuyển sang form SignUpInfor
+            //    SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
+            //    S.pnLogin.Controls.Clear();
+            //    S.pnLogin.Controls.Add(signUpInfor);
+            //    generatedOTP = null; // Reset OTP sau khi đăng ký thành công
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblCheck.Text = "Lỗi: " + ex.Message;
+            //}
         }
 
         private void tbEmail_KeyDown(object sender, KeyEventArgs e)
@@ -206,67 +237,95 @@ namespace SONA
         {
             try
             {
-                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); // Đường dẫn thư mục tạm thời để lưu trữ thông tin xác thực
-                Directory.CreateDirectory(credPath); // Tạo thư mục tạm nếu chưa tồn tại
-
-                var clientSecrets = new ClientSecrets // Thông tin xác thực của tài khoản Google Cloud Console
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
-                    ClientSecret = "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"
-                };
-
-                var scopes = new[] { "profile", "email" }; // Lấy quyền truy cập thông tin người dùng gồm profile và email
-
-                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync( // Xác thực người dùng
-                    clientSecrets, // Thông tin xác thực
-                    scopes, // Quyền truy cập
-                    "user", // Tên người dùng
-                    CancellationToken.None, // Không hủy quá trình xác thực
-                    new FileDataStore(credPath, true) // Lưu trữ thông tin xác thực vào thư mục tạm
-                );
-
-                if (credential != null && credential.Token != null) // Kiểm tra xem xác thực có thành công hay không bằng cách kiểm tra token
-                {
-                    var oauthService = new Oauth2Service(new BaseClientService.Initializer() // Gọi dịch vụ Oauth2 để lấy thông tin người dùng
+                    writer.Write("singupGoogle");
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        HttpClientInitializer = credential // Thông tin xác thực đã được cấp quyền
-                    });
-
-                    Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync(); // Lấy thông tin người dùng từ Google
-                    string email = userInfo.Email; // Lấy địa chỉ email của người dùng
-
-                    // Khởi tạo kết nối Supabase
-                    await supabaseService.InitializeAsync();
-                    var userInfos = await supabaseService.GetUserInfosAsync();
-
-                    // Kiểm tra email đã tồn tại chưa
-                    if (userInfos.Any(u => u.email == email))
-                    {
-                        this.Invoke(new Action(() => // Cập nhật giao diện người dùng từ luồng khác
-                        {
-                            lblCheck.Text = "Email đã tồn tại!";
-                            S.BringToFront(); // Đưa form SONA lên trên cùng
-                            S.Activate(); // Kích hoạt form SONA
-                        }));
-                        return;
-                    }
-
-                    // Nếu email chưa tồn tại, chuyển sang form SignUpInfor để nhập thêm thông tin
-                    SignUpInfor signUpInfor = new SignUpInfor(S, email);
-                    S.pnLogin.Controls.Clear();
-                    S.pnLogin.Controls.Add(signUpInfor);
-
-                    this.Invoke(new Action(() =>
-                    {
-                        S.BringToFront();
                         S.Activate();
-                    }));
+                        SignUpInfor signUpInfor = new SignUpInfor(S, tbEmail.Text);
+                        S.pnLogin.Controls.Clear();
+                        S.pnLogin.Controls.Add(signUpInfor);      
+                    }
+                    else
+                    {
+                        S.Activate();
+                        lblCheck.Text = response;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                lblCheck.Text = "Lỗi đăng ký Google: " + ex.Message;
+                lblCheck.Text = "Lỗi: " + ex.Message;
             }
+
+            //try
+            //{
+            //    string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); // Đường dẫn thư mục tạm thời để lưu trữ thông tin xác thực
+            //    Directory.CreateDirectory(credPath); // Tạo thư mục tạm nếu chưa tồn tại
+
+            //    var clientSecrets = new ClientSecrets // Thông tin xác thực của tài khoản Google Cloud Console
+            //    {
+            //        ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
+            //        ClientSecret = "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"
+            //    };
+
+            //    var scopes = new[] { "profile", "email" }; // Lấy quyền truy cập thông tin người dùng gồm profile và email
+
+            //    var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync( // Xác thực người dùng
+            //        clientSecrets, // Thông tin xác thực
+            //        scopes, // Quyền truy cập
+            //        "user", // Tên người dùng
+            //        CancellationToken.None, // Không hủy quá trình xác thực
+            //        new FileDataStore(credPath, true) // Lưu trữ thông tin xác thực vào thư mục tạm
+            //    );
+
+            //    if (credential != null && credential.Token != null) // Kiểm tra xem xác thực có thành công hay không bằng cách kiểm tra token
+            //    {
+            //        var oauthService = new Oauth2Service(new BaseClientService.Initializer() // Gọi dịch vụ Oauth2 để lấy thông tin người dùng
+            //        {
+            //            HttpClientInitializer = credential // Thông tin xác thực đã được cấp quyền
+            //        });
+
+            //        Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync(); // Lấy thông tin người dùng từ Google
+            //        string email = userInfo.Email; // Lấy địa chỉ email của người dùng
+
+            //        // Khởi tạo kết nối Supabase
+            //        await supabaseService.InitializeAsync();
+            //        var userInfos = await supabaseService.GetUserInfosAsync();
+
+            //        // Kiểm tra email đã tồn tại chưa
+            //        if (userInfos.Any(u => u.email == email))
+            //        {
+            //            this.Invoke(new Action(() => // Cập nhật giao diện người dùng từ luồng khác
+            //            {
+            //                lblCheck.Text = "Email đã tồn tại!";
+            //                S.BringToFront(); // Đưa form SONA lên trên cùng
+            //                S.Activate(); // Kích hoạt form SONA
+            //            }));
+            //            return;
+            //        }
+
+            //        // Nếu email chưa tồn tại, chuyển sang form SignUpInfor để nhập thêm thông tin
+            //        SignUpInfor signUpInfor = new SignUpInfor(S, email);
+            //        S.pnLogin.Controls.Clear();
+            //        S.pnLogin.Controls.Add(signUpInfor);
+
+            //        this.Invoke(new Action(() =>
+            //        {
+            //            S.BringToFront();
+            //            S.Activate();
+            //        }));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblCheck.Text = "Lỗi đăng ký Google: " + ex.Message;
+            //}
         }
 
         private void btnNext_Click(object sender, EventArgs e)

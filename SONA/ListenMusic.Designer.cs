@@ -56,6 +56,7 @@ namespace SONA
             this.btReplay = new Guna.UI2.WinForms.Guna2Button();
             this.btnMore = new Guna.UI2.WinForms.Guna2Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPictureSong)).BeginInit();
             this.guna2Panel2.SuspendLayout();
@@ -388,6 +389,11 @@ namespace SONA
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // guna2Elipse1
+            // 
+            this.guna2Elipse1.BorderRadius = 80;
+            this.guna2Elipse1.TargetControl = this.btnPictureSinger;
+            // 
             // ListenMusic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -437,6 +443,7 @@ namespace SONA
         private Guna.UI2.WinForms.Guna2Panel guna2Panel6;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblSince;
+        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
 
         public FormBorderStyle FormBorderStyle { get; private set; }
     }

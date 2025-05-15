@@ -211,6 +211,18 @@
     <Compile Include="ArtistInfor.Designer.cs">
       <DependentUpon>ArtistInfor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChatForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChatRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatRoom.Designer.cs">
+      <DependentUpon>ChatRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectSQL.cs" />
     <Compile Include="ForgetPassword.cs">
       <SubType>UserControl</SubType>
@@ -303,6 +315,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ArtistInfor.resx">
       <DependentUpon>ArtistInfor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatRoom.resx">
+      <DependentUpon>ChatRoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ForgetPassword.resx">
       <DependentUpon>ForgetPassword.cs</DependentUpon>
@@ -397,6 +415,8 @@
     <None Include="Resources\Refresh.png" />
     <None Include="Resources\Show.png" />
     <None Include="Resources\DisON.png" />
+    <None Include="Resources\Avatar.jpg" />
+    <None Include="Resources\Send.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />
