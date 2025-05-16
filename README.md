@@ -1,5 +1,5 @@
 # SONA 
-![SONA Logo](https://github.com/PUynn/NT106.P21.ANTT-Group7/blob/main/Logo%20Sona.png)
+![SONA Logo](https://github.com/user-attachments/assets/55346e50-44ca-476e-a531-e64e0adb21d7)
 
 ## Tổng quan
 
