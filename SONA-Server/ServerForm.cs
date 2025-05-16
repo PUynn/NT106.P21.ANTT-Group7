@@ -37,6 +37,10 @@ namespace SONA_Server
         private object chatLock = new object(); // Khóa để đồng bộ hóa truy cập vào danh sách client
         bool isRunning = false; // Biến kiểm tra trạng thái server
 
+        private Dictionary<string, (string otp, DateTime createdTime)> otpStore;
+        bool isForgetPassword = false;
+
+        private string srcEmail = "";
         private string generatedOTP; // Lưu mã OTP đã gửi
         private DateTime lastOTPSentTime; // Lưu thời gian gửi OTP cuối cùng
         private DateTime otpCreatedTime; // Lưu thời gian tạo OTP
@@ -47,6 +51,7 @@ namespace SONA_Server
         {
             InitializeComponent();
             chatClients = new List<ClientInfor>();
+            otpStore = new Dictionary<string, (string otp, DateTime createdTime)>();
 
             lvManageMess.Columns.Add("Activity", -2);
             AddToListView($"Server khởi động với IP là {GetLocalIPAddress()}:5000"); // Thêm thông tin server khi khởi tạo
@@ -132,8 +137,7 @@ namespace SONA_Server
                         return await CheckUserLogin(usernameLogin, password); // Gọi phương thức CheckUserLogin để kiểm tra thông tin đăng nhập
                     }).Result;
 
-                    // Ghi kết quả đăng nhập về client
-                    writer.Write(loginSuccess);
+                    writer.Write(loginSuccess); // Ghi kết quả đăng nhập về client
                 }
                 else if (requestType == "loginGoogle")
                 {
@@ -143,15 +147,72 @@ namespace SONA_Server
                     }).Result;
                     writer.Write(result); // Ghi kết quả đăng nhập về client
                 }
+                else if (requestType == "forgetPassword")
+                {
+                    isForgetPassword = true;
+                    string type = reader.ReadString();
+                    if (type == "email")
+                    {
+                        string email = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await GetOTPfromEmail(email);
+                        }).Result;
+                        writer.Write(result);
+                    }
+                    else if (type == "refreshOTP")
+                    {
+                        string email = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await RefreshOTP(email);
+                        }).Result;
+                        writer.Write(result);
+                    }
+                    else if (type == "setpass")
+                    {
+                        string email = reader.ReadString();
+                        string otp = reader.ReadString();
+                        string newPassword = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await SetNewPassword(email, otp, newPassword);
+                        }).Result;
+                        writer.Write(result);
+                    }
+                    isForgetPassword = false;
+                }
                 else if (requestType == "signupUser")
                 {
-                    string email = reader.ReadString();
-                    string otp = reader.ReadString();
-                    string result = Task.Run(async () =>
+                    string type = reader.ReadString();
+                    if (type == "email")
                     {
-                        return await CheckSignUpUser(email, otp); // Gọi phương thức CheckSignUpUser để kiểm tra thông tin đăng ký
-                    }).Result;
-                    writer.Write(result); // Ghi kết quả đăng ký về client
+                        string email = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await GetOTPfromEmail(email);
+                        }).Result;
+                        writer.Write(result);
+                    }
+                    else if (type == "otp")
+                    {
+                        string email = reader.ReadString();
+                        string otp = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await CheckOTP(email, otp);
+                        }).Result;
+                        writer.Write(result);
+                    }
+                    else if (type == "refreshOTP")
+                    {
+                        string email = reader.ReadString();
+                        string result = Task.Run(async () =>
+                        {
+                            return await RefreshOTP(email); // Gọi phương thức RefreshOTP để gửi lại mã OTP
+                        }).Result;
+                        writer.Write(result);
+                    }
                 }
                 else if (requestType == "singupGoogle")
                 {
@@ -160,6 +221,7 @@ namespace SONA_Server
                         return await CheckSignUpGoogle(); // Gọi phương thức CheckSignUpGoogle để kiểm tra thông tin đăng ký Google
                     }).Result;
                     writer.Write(result); // Ghi kết quả đăng ký về client
+                    writer.Write(srcEmail);
                 }
 
                 else if (requestType == "signupInfo")
@@ -198,7 +260,7 @@ namespace SONA_Server
                     }
                     catch (Exception ex)
                     {
-                        writer.Write("Lỗi: " + ex.Message);
+                        writer.Write("Lỗi tạo người dùng: " + ex.Message);
                     }
                 }
                 else if (requestType == "getSongs")
@@ -238,7 +300,7 @@ namespace SONA_Server
                     }
                     catch (Exception ex)
                     {
-                        writer.Write("Error: " + ex.Message);
+                        writer.Write("Lỗi lấy bài hát: " + ex.Message);
                     }
                 }
 
@@ -276,7 +338,7 @@ namespace SONA_Server
 
                 else
                 {
-                    writer.Write("Yêu cầu không hợp lệ");
+                    writer.Write("Yêu cầu không hợp lệ!");
                 }
             }
             catch (Exception ex)
@@ -333,7 +395,7 @@ namespace SONA_Server
         }
 
         // Hàm gửi email chứa mã OTP
-        private async Task SendOTPEmail(string email, string otp)
+        private async Task<bool> SendOTPEmail(string email, string otp)
         {
             try
             {
@@ -356,64 +418,199 @@ namespace SONA_Server
                 await smtpClient.SendMailAsync(mailMessage); // Gửi email bất đồng bộ
                 lastOTPSentTime = DateTime.Now; // Lưu thời gian gửi OTP
                 otpCreatedTime = DateTime.Now; // Lưu thời gian tạo OTP
+                return true;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return false;
             }
         }
 
         // Hàm kiểm tra và xử lý đăng ký
-        private async Task<string> CheckSignUpUser(string email, string OTP)
+        private async Task<string> GetOTPfromEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return "Vui lòng nhập địa chỉ Email của bạn!";
-            }
-
             try
             {
                 // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
                 await supabaseService.InitializeAsync();
                 var userInfos = await supabaseService.GetUserInfosAsync();
+                var userFind = userInfos.FirstOrDefault(u => u.email == email);
 
-                if (userInfos.Any(u => u.email == email))
+                if (!isForgetPassword)
                 {
-                    return "Email đã tồn tại!";
+                    if (userFind != null)
+                        return "Tài khoản Email đã tồn tại!";
+                }
+                else
+                {
+                    if (userFind == null)
+                        return "Tài khoản Email không tồn tại!";
                 }
 
-                // Nếu chưa gửi OTP lần nào thì thực hiện gửi OTP
-                if (generatedOTP == null)
+                if (otpStore.ContainsKey(email))
                 {
-                    generatedOTP = GenerateOTP();
-                    await SendOTPEmail(email, generatedOTP);
-                    return "Mã OTP đã được gửi tới email của bạn!";
+                    var otpData = otpStore[email];
+                    if ((DateTime.Now - otpData.createdTime).TotalSeconds < OTPResendCooldown)
+                    {
+                        return $"Vui lòng chờ {Math.Ceiling(OTPResendCooldown - (DateTime.Now - otpData.createdTime).TotalSeconds)} giây trước khi gửi lại!";
+                    }
                 }
 
-                // Kiểm tra mã OTP có được nhập không
-                if (string.IsNullOrEmpty(OTP))
+                string newOTP = GenerateOTP();
+                if (await SendOTPEmail(email, newOTP))
                 {
-                    return "Vui lòng nhập mã OTP của bạn!";
+                    otpStore[email] = (newOTP, DateTime.Now);
+                    return "OK";
+                }
+                else
+                {
+                    return "Lỗi gửi mã OTP. Địa chỉ Email không hợp lệ!";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Lỗi gửi mã OTP: " + ex.Message;
+            }
+        }
+
+        private async Task<string> CheckOTP(string email, string otp)
+        {
+            try
+            {
+                if (!otpStore.ContainsKey(email))
+                {
+                    return "Mã OTP không tồn tại! Vui lòng yêu cầu mã mới.";
                 }
 
-                // Kiểm tra thời gian hiệu lực OTP bằng cách so sánh thời gian hiện tại với thời gian tạo OTP có lớn hơn 5 phút không
-                if ((DateTime.Now - otpCreatedTime).TotalMinutes > OTPExpirationMinutes)
+                var otpData = otpStore[email];
+                if ((DateTime.Now - otpData.createdTime).TotalMinutes > OTPExpirationMinutes)
                 {
-                    generatedOTP = null; // Reset để yêu cầu gửi lại
+                    otpStore.Remove(email);
                     return "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
                 }
 
-                // Kiểm tra mã OTP có khớp không
-                if (OTP != generatedOTP)
+                if (otp != otpData.otp)
                 {
                     return "Mã OTP không chính xác!";
                 }
 
+                otpStore.Remove(email); // Xóa OTP sau khi kiểm tra thành công
                 return "OK";
             }
             catch (Exception ex)
             {
-                return "Lỗi: " + ex.Message;
+                return "Lỗi kiểm tra OTP: " + ex.Message;
+            }
+        }
+
+        private async Task<string> RefreshOTP(string email)
+        {
+            // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
+            await supabaseService.InitializeAsync();
+            var userInfos = await supabaseService.GetUserInfosAsync();
+            var userFind = userInfos.FirstOrDefault(u => u.email == email);
+            if (!isForgetPassword)
+            {
+                if (userFind != null)
+                    return "Tài khoản Email đã tồn tại!";
+            }
+            else
+            {
+                if (userFind == null)
+                    return "Tài khoản Email không tồn tại!";
+            }
+
+            try
+            {
+                if (otpStore.ContainsKey(email))
+                {
+                    var otpData = otpStore[email];
+                    if ((DateTime.Now - otpData.createdTime).TotalSeconds < OTPResendCooldown)
+                    {
+                        return $"Vui lòng chờ {Math.Ceiling(OTPResendCooldown - (DateTime.Now - otpData.createdTime).TotalSeconds)} giây trước khi gửi lại!";
+                    }
+                }
+
+                string newOTP = GenerateOTP();
+                if (await SendOTPEmail(email, newOTP))
+                {
+                    otpStore[email] = (newOTP, DateTime.Now);
+                    return "Mã OTP mới đã được gửi tới Email của bạn!";
+                }
+                else
+                {
+                    return "Lỗi gửi mã OTP mới. Địa chỉ Email không hợp lệ!";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Lỗi gửi lại OTP: " + ex.Message;
+            }
+        }
+
+        private async Task<string> SetNewPassword(string email, string otp, string newPassword)
+        {
+            try
+            {
+                // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
+                await supabaseService.InitializeAsync();
+                var userInfos = await supabaseService.GetUserInfosAsync();
+                var userFind = userInfos.FirstOrDefault(u => u.email == email);
+                if (!isForgetPassword)
+                {
+                    if (userFind != null)
+                        return "Tài khoản Email đã tồn tại!";
+                }
+                else
+                {
+                    if (userFind == null)
+                        return "Tài khoản Email không tồn tại!";
+                }
+
+                if (!otpStore.ContainsKey(email))
+                {
+                    return "Mã OTP không tồn tại! Vui lòng yêu cầu mã mới.";
+                }
+
+                var otpData = otpStore[email];
+                if ((DateTime.Now - otpData.createdTime).TotalMinutes > OTPExpirationMinutes)
+                {
+                    otpStore.Remove(email);
+                    return "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
+                }
+
+                if (otp != otpData.otp)
+                {
+                    return "Mã OTP không chính xác!";
+                }
+
+                // Kiểm tra mật khẩu có phù hợp với yêu cầu không
+                bool checkNum = false;
+                bool checkLetter = false;
+                bool checkSpecial = false;
+
+                for (int i = 0; i < newPassword.Length; i++)
+                {
+                    if (char.IsDigit(newPassword[i]))
+                        checkNum = true;
+                    else if (char.IsLetter(newPassword[i]))
+                        checkLetter = true;
+                    else if (newPassword[i] == '@' || newPassword[i] == '#' || newPassword[i] == '!' || newPassword[i] == '?')
+                        checkSpecial = true;
+                }
+
+                if (!checkNum || !checkLetter || !checkSpecial)
+                {
+                    return "Mật khẩu đặt không hợp lệ!";
+                }
+
+                await supabaseService.UpdateUserPasswordAsync(email, newPassword);
+                otpStore.Remove(email); // Xóa OTP sau khi sử dụng thành công
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Lỗi đặt mật khẩu mới: " + ex.Message;
             }
         }
 
@@ -461,6 +658,7 @@ namespace SONA_Server
                         return "Email đã được đăng kí, vui lòng đăng nhập!";
                     }
 
+                    srcEmail = email;
                     return "OK"; // Nếu chưa tồn tại thì trả về OK
                 }
                 return "Lỗi xác thực Google: Không thể lấy thông tin người dùng."; // Nếu không lấy được thông tin người dùng thì trả về lỗi
@@ -499,28 +697,35 @@ namespace SONA_Server
             }
             catch (Exception ex)
             {
-                return $"Có lỗi hệ thống";
+                return "Lỗi thông tin người dùng: " + ex.Message;
             }
         }
 
         // Phương thức kiểm tra thông tin đăng nhập người dùng
         private async Task<string> CheckUserLogin(string username, string password)
         {
-            await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
-            var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
-
-            var user = userInfos.FirstOrDefault(u => u.email == username); // Tìm người dùng theo email
-
-            if (user != null) // Nếu tìm thấy người dùng
+            try
             {
-                if (user.password_tk == password) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
-                    return "OK"; // Nếu trùng thì trả về Ok
-                else
-                    return "Mật khẩu chưa chính xác!";
+                await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
+                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
+
+                var user = userInfos.FirstOrDefault(u => u.email == username); // Tìm người dùng theo email
+
+                if (user != null) // Nếu tìm thấy người dùng
+                {
+                    if (user.password_tk == password) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
+                        return "OK"; // Nếu trùng thì trả về Ok
+                    else
+                        return "Mật khẩu chưa chính xác!";
+                }
+                else // Thông báo người dùng không tồn tại nếu không tìm thấy
+                {
+                    return "Không tồn tại tài khoản Email này!";
+                }
             }
-            else // Thông báo người dùng không tồn tại nếu không tìm thấy
+            catch (Exception ex)
             {
-                return "Không tồn tại tài khoản người dùng này!";
+                return "Lỗi đăng nhập: " + ex.Message;
             }
         }
 
@@ -579,7 +784,7 @@ namespace SONA_Server
             }
             catch (Exception ex)
             {
-                return "Đăng nhập thất bại: " + ex.Message;
+                return "Lỗi đăng nhập bằng Google: " + ex.Message;
             }
         }
 

@@ -30,29 +30,6 @@ namespace SONA
             supabaseService = new SupabaseService();
         }
 
-        private DataRow ConvertToDataRow(UserInfo userInfo)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID_USER", typeof(int));
-            dt.Columns.Add("NAME_USER", typeof(string));
-            dt.Columns.Add("PICTURE_USER", typeof(string));
-            dt.Columns.Add("EMAIL", typeof(string));
-            dt.Columns.Add("PASSWORD_TK", typeof(string));
-            dt.Columns.Add("CREATE_AT", typeof(string));
-            dt.Columns.Add("SDT", typeof(string));
-
-            DataRow row = dt.NewRow();
-            row["ID_USER"] = userInfo.id_user;
-            row["NAME_USER"] = userInfo.name_user;
-            row["PICTURE_USER"] = userInfo.picture_user;
-            row["EMAIL"] = userInfo.email;
-            row["PASSWORD_TK"] = userInfo.password_tk;
-            row["CREATE_AT"] = userInfo.create_at;
-            row["SDT"] = userInfo.sdt;
-
-            return row;
-        }
-
         // Hàm kiểm tra thông tin đăng nhập và báo lỗi nếu không hợp lệ
         private bool checkSignUpInfor()
         {
@@ -168,6 +145,7 @@ namespace SONA
         private void SignUpInfor_Load(object sender, EventArgs e)
         {
             lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
+            lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
         }
 
         // Các hàm gọi hàm btnSignUp_Click khi nhấn phím Enter trong các textbox
@@ -204,7 +182,7 @@ namespace SONA
         }
 
         // Hàm để kiểm tra thông tin đăng ký và thêm vào cơ sở dữ liệu
-        private async void btnSignUp_Click(object sender, EventArgs e)
+        private void btnSignUp_Click(object sender, EventArgs e)
         {
             if (checkSignUpInfor())
             {
@@ -228,47 +206,6 @@ namespace SONA
                         lblCheckSdt.Text = response;
                     }
                 }
-
-                //try
-                //{
-                //    await supabaseService.InitializeAsync(); // Khởi tạo kết nối tới Supabase
-                //    var user = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ Supabase
-
-                //    if (user.Any(u => u.sdt == tbSdt.Text)) // Kiểm tra số điện thoại đã tồn tại chưa bằng cách so sánh thuộc tính sdt của user với kết quả đã nhập từ textbox
-                //    {
-                //        lblCheckSdt.Text = "Số điện thoại đã tồn tại!";
-                //        return;
-                //    }
-
-                //    // Chuẩn bị đối tượng UserInfo để thêm vào Supabase
-                //    var newUser = new UserInfo // Tạo một đối tượng mới của lớp UserInfo
-                //    {
-                //        // Set các thuộc tính của user tương ứng với các thông tin đã nhập ở textbox
-                //        name_user = tbUser.Text,
-                //        sdt = tbSdt.Text,
-                //        email = srcEmail,
-                //        password_tk = tbPass.Text,
-                //        create_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") // Lưu thời gian hiện tại
-                //    };
-
-                //    // Lưu ảnh đại diện
-                //    //if (btnAvatar.Image != null)
-                //    //{
-                //    //    using (var ms = new MemoryStream())
-                //    //    {
-                //    //        btnAvatar.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                //    //        newUser.picture_user = Convert.ToBase64String(ms.ToArray());
-                //    //    }
-                //    //}
-
-                //    await supabaseService.InsertUserAsync(newUser); // Thêm người dùng vào Supabase bằng cách gọi hàm InsertUserAsync ở trong SupabaseService
-                //    dr = ConvertToDataRow(newUser); // Chuyển đổi đối tượng UserInfo thành DataRow để sử dụng trong các hàm khác
-                //    S.ShowHome(dr); // Chuyển sang form Home
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("Error: " + ex.Message);
-                //}
             }
         }
     }

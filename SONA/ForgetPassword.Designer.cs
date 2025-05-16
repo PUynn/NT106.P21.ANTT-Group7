@@ -291,7 +291,7 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(20, 20);
             this.btnClose.TabIndex = 33;
-            this.btnClose.Click += new System.EventHandler(this.guna2Button3_Click);
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnNext
             // 
