@@ -1,5 +1,5 @@
 # SONA 
-![SONA Logo](Logo Sona.png)
+![SONA Logo](https://github.com/user-attachments/assets/55346e50-44ca-476e-a531-e64e0adb21d7)
 
 ## Tổng quan
 
