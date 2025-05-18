@@ -16,13 +16,13 @@ namespace SONA
     {
         private Home home;
 
-        string connString = "Host=db.bzjfiynoyelxlpowlhty.supabase.co;Database=postgres;Username=postgres;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        string connString = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.bzjfiynoyelxlpowlhty;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true"; // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         public SONA()
         {
             InitializeComponent();
             SignUp signUp = new SignUp(this);
             pnLogin.Controls.Add(signUp);
-            //GetIP();
+            GetIP();
         }
         private void GetIP()
         {
@@ -40,11 +40,11 @@ namespace SONA
             }
         }
 
-        public void ShowHome()
+        public void ShowHome(string s)
         {
             if (home == null)
             {
-                home = new Home(this);
+                home = new Home(this, s);
                 home.Dock = DockStyle.Fill;
             }
 

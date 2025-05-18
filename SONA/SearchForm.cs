@@ -14,11 +14,14 @@ namespace SONA
     {
         Home H;
         private SupabaseService supabaseService;
-        public SearchForm(Home h)
+        private string searchKeyword;
+
+        public SearchForm(Home h, string keyword)
         {
             InitializeComponent();
             H = h;
             supabaseService = new SupabaseService();
+            searchKeyword = keyword.Trim().ToLower(); // lưu từ khóa tìm kiếm
         }
 
         // Hàm chuyển đổi List<Song> thành DataTable để tương thích với SongSearch
@@ -69,24 +72,38 @@ namespace SONA
         {
             try
             {
-                // Khởi tạo SupabaseService và lấy dữ liệu từ View songs_with_singer
                 await supabaseService.InitializeAsync();
                 var songs = await supabaseService.GetSongsAsync();
 
-                // Chuyển đổi List<Song> thành DataTable
-                DataTable dtb = ConvertSongsToDataTable(songs);
+                // Lọc theo tên bài hát hoặc tên ca sĩ (không phân biệt chữ hoa/thường)
+                var filteredSongs = songs
+                    .Where(song =>
+                        (!string.IsNullOrEmpty(song.name_song) && song.name_song.ToLower().Contains(searchKeyword)) ||
+                        (!string.IsNullOrEmpty(song.name_singer) && song.name_singer.ToLower().Contains(searchKeyword)))
+                    .ToList();
 
-                // Duyệt qua các bài hát trong DataTable và truyền dữ liệu cúa chúng đến form SongSearch
+                DataTable dtb = ConvertSongsToDataTable(filteredSongs);
+
                 flpResult.Controls.Clear();
                 foreach (DataRow dr in dtb.Rows)
                 {
                     SongSearch songSearch = new SongSearch(H, dr);
                     flpResult.Controls.Add(songSearch);
                 }
+
+                if (filteredSongs.Count == 0)
+                {
+                    Label notFoundLabel = new Label();
+                    notFoundLabel.Text = "Không tìm thấy bài hát nào.";
+                    notFoundLabel.Font = new Font("Segoe UI", 12, FontStyle.Italic);
+                    notFoundLabel.ForeColor = Color.Gray;
+                    notFoundLabel.AutoSize = true;
+                    flpResult.Controls.Add(notFoundLabel);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading song data: " + ex.Message);
+                MessageBox.Show("Lỗi khi tải dữ liệu bài hát: " + ex.Message);
             }
         }
     }

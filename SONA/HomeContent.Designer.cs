@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnHomeContent = new Guna.UI2.WinForms.Guna2Panel();
             this.flpArtists = new System.Windows.Forms.FlowLayoutPanel();
             this.flpHistory = new System.Windows.Forms.FlowLayoutPanel();
             this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
@@ -45,32 +45,32 @@
             this.lblArtists = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.btnRefreshArtist = new Guna.UI2.WinForms.Guna2Button();
             this.btnRefreshSong = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Panel2.SuspendLayout();
+            this.pnHomeContent.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).BeginInit();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // guna2Panel2
+            // pnHomeContent
             // 
-            this.guna2Panel2.AutoScroll = true;
-            this.guna2Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
-            this.guna2Panel2.Controls.Add(this.flpArtists);
-            this.guna2Panel2.Controls.Add(this.flpHistory);
-            this.guna2Panel2.Controls.Add(this.flpSongs);
-            this.guna2Panel2.Controls.Add(this.lblHistory);
-            this.guna2Panel2.Controls.Add(this.guna2Panel6);
-            this.guna2Panel2.Controls.Add(this.guna2Panel3);
-            this.guna2Panel2.Controls.Add(this.btnRefresh3);
-            this.guna2Panel2.Controls.Add(this.lblForYou);
-            this.guna2Panel2.Controls.Add(this.lblArtists);
-            this.guna2Panel2.Controls.Add(this.btnRefreshArtist);
-            this.guna2Panel2.Controls.Add(this.btnRefreshSong);
-            this.guna2Panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.guna2Panel2.Location = new System.Drawing.Point(0, 0);
-            this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(1485, 919);
-            this.guna2Panel2.TabIndex = 2;
+            this.pnHomeContent.AutoScroll = true;
+            this.pnHomeContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
+            this.pnHomeContent.Controls.Add(this.flpArtists);
+            this.pnHomeContent.Controls.Add(this.flpHistory);
+            this.pnHomeContent.Controls.Add(this.flpSongs);
+            this.pnHomeContent.Controls.Add(this.lblHistory);
+            this.pnHomeContent.Controls.Add(this.guna2Panel6);
+            this.pnHomeContent.Controls.Add(this.guna2Panel3);
+            this.pnHomeContent.Controls.Add(this.btnRefresh3);
+            this.pnHomeContent.Controls.Add(this.lblForYou);
+            this.pnHomeContent.Controls.Add(this.lblArtists);
+            this.pnHomeContent.Controls.Add(this.btnRefreshArtist);
+            this.pnHomeContent.Controls.Add(this.btnRefreshSong);
+            this.pnHomeContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnHomeContent.Location = new System.Drawing.Point(0, 0);
+            this.pnHomeContent.Name = "pnHomeContent";
+            this.pnHomeContent.Size = new System.Drawing.Size(1485, 919);
+            this.pnHomeContent.TabIndex = 2;
             // 
             // flpArtists
             // 
@@ -303,12 +303,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.Controls.Add(this.guna2Panel2);
+            this.Controls.Add(this.pnHomeContent);
             this.Name = "HomeContent";
             this.Size = new System.Drawing.Size(1485, 919);
             this.Load += new System.EventHandler(this.HomeContent_Load);
-            this.guna2Panel2.ResumeLayout(false);
-            this.guna2Panel2.PerformLayout();
+            this.pnHomeContent.ResumeLayout(false);
+            this.pnHomeContent.PerformLayout();
             this.guna2Panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).EndInit();
             this.guna2Panel3.ResumeLayout(false);
@@ -318,7 +318,7 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
+        private Guna.UI2.WinForms.Guna2Panel pnHomeContent;
         private System.Windows.Forms.FlowLayoutPanel flpSongs;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblHistory;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel6;

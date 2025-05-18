@@ -50,7 +50,7 @@ namespace SONA
                 {
                     From = new MailAddress("sona.feelthemusic@gmail.com"), // Địa chỉ email gửi đi
                     Subject = "Mã OTP xác nhận đổi mật khẩu tài khoản SONA", // Tiêu đề email
-                    Body = $"Mã OTP của bạn là: <strong>{otp}</strong><br>Vui lòng nhập mã này để hoàn tất đăng ký. Mã có hiệu lực trong {OTPExpirationMinutes} phút.", // Nội dung email chứa mã OTP
+                    Body = $"Mã OTP của bạn là: <strong>{otp}</strong><br>Vui lòng nhập mã này để hoàn tất việc đổi mật khẩu. Mã có hiệu lực trong {OTPExpirationMinutes} phút.", // Nội dung email chứa mã OTP
                     IsBodyHtml = true, // Cho phép định dạng HTML
                 };
                 mailMessage.To.Add(email); // Địa chỉ email nhận

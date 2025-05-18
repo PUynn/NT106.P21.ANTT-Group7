@@ -33,33 +33,15 @@ namespace SONA
         private const string AuthUrl = "https://www.facebook.com/v20.0/dialog/oauth?client_id={0}&redirect_uri={1}&response_type=code&scope=public_profile";
 
         private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
-        //private string serverIP = "127.0.0.1";
-        //string connString = "Host=db.bzjfiynoyelxlpowlhty.supabase.co;Database=postgres;Username=postgres;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
         private bool isPasswordVisible = false; // Biến trạng thái để theo dõi mật khẩu đang hiển thị hay không
 
         private HttpListener httpListener;
-
+        DataRow dr;
         public Login(SONA s)
         {
             InitializeComponent();
             S = s;
         }
-
-        //private void GetIP()
-        //{
-        //    using (var conn = new NpgsqlConnection(connString))
-        //    {
-        //        conn.Open();
-        //        using (var selectCmd = new NpgsqlCommand("SELECT address FROM IP LIMIT 1", conn))
-        //        {
-        //            var result = selectCmd.ExecuteScalar();
-        //            if (result != null)
-        //            {
-        //                serverIP = result.ToString();
-        //            }
-        //        }
-        //    }
-        //}
 
         private void lbDangky_Click(object sender, EventArgs e)
         {
@@ -69,91 +51,116 @@ namespace SONA
             httpListener?.Stop();
         }
 
-        private void OpenHomeForm()
-        {
-            S.ShowHome();
-        }
-
         private async void btnLoginGoogle_Click(object sender, EventArgs e)
         {
             try
             {
-                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                Directory.CreateDirectory(credPath);
-
-                var clientSecrets = new ClientSecrets
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
-                    ClientSecret = "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"
-                };
-
-                var scopes = new[] { "profile", "email" };
-
-                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    clientSecrets,
-                    scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)
-                );
-
-                if (credential != null && credential.Token != null)
-                {
-                    var oauthService = new Oauth2Service(new BaseClientService.Initializer()
+                    writer.Write("loginGoogle");
+                    writer.Write(tbEmail.Text);
+                    writer.Write(tbPass.Text);
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        HttpClientInitializer = credential
-                    });
-
-                    Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
-                    string email = userInfo.Email;
-
-                    // Khởi tạo kết nối Supabase
-                    supabaseService = new SupabaseService();
-                    await supabaseService.InitializeAsync();
-                    var userInfos = await supabaseService.GetUserInfosAsync();
-
-                    // Kiểm tra email đã tồn tại chưa
-                    if (userInfos.Any(u => u.email == email))
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            S.Activate();
-                            OpenHomeForm();
-                        }));
+                        S.ShowHome(tbEmail.Text);
+                        S.Activate();
                     }
                     else
                     {
-                        this.Invoke(new Action(() =>
-                        {
-                            lblCheck.Text = "Email chưa tồn tại, vui lòng đăng kí tài khoản!";
-                            S.Activate();
-                        }));
+                        lblCheck.Text = response;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi đăng nhập: " + ex.Message);
+                lblCheck.Text = "Lỗi: " + ex.Message;
             }
+
+            //try
+            //{
+            //    string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            //    Directory.CreateDirectory(credPath);
+
+            //    var clientSecrets = new ClientSecrets
+            //    {
+            //        ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
+            //        ClientSecret = "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"
+            //    };
+
+            //    var scopes = new[] { "profile", "email" };
+
+            //    var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+            //        clientSecrets,
+            //        scopes,
+            //        "user",
+            //        CancellationToken.None,
+            //        new FileDataStore(credPath, true)
+            //    );
+
+            //    if (credential != null && credential.Token != null)
+            //    {
+            //        var oauthService = new Oauth2Service(new BaseClientService.Initializer()
+            //        {
+            //            HttpClientInitializer = credential
+            //        });
+
+            //        Userinfo userGoogle = await oauthService.Userinfo.Get().ExecuteAsync();
+            //        string email = userGoogle.Email;
+
+            //        // Khởi tạo kết nối Supabase
+            //        supabaseService = new SupabaseService();
+            //        await supabaseService.InitializeAsync();
+                    
+            //        var userSupa = await supabaseService.GetUserInfosAsync();
+            //        var userInfo = userSupa.FirstOrDefault(u => u.email == email); // Tìm người dùng theo email
+
+            //        // Kiểm tra email đã tồn tại chưa
+            //        if (userInfo != null)
+            //        {
+            //            this.Invoke(new Action(() =>
+            //            {
+            //                S.Activate();
+            //                dr = ConvertToDataRow(userInfo);
+            //                S.ShowHome(dr);
+            //            }));
+            //        }
+            //        else
+            //        {
+            //            this.Invoke(new Action(() =>
+            //            {
+            //                lblCheck.Text = "Email chưa tồn tại, vui lòng đăng kí tài khoản!";
+            //                S.Activate();
+            //            }));
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Lỗi đăng nhập: " + ex.Message);
+            //}
         }
 
         private void btnFacebookLogin_Click(object sender, EventArgs e)
         {
-            string loginUrl = string.Format(AuthUrl, AppId, Uri.EscapeDataString(RedirectUri));
+            //string loginUrl = string.Format(AuthUrl, AppId, Uri.EscapeDataString(RedirectUri));
 
-            try
-            {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = loginUrl,
-                    UseShellExecute = true
-                });
-                StartHttpListener();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi mở trình duyệt: " + ex.Message);
-            }
+            //try
+            //{
+            //    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            //    {
+            //        FileName = loginUrl,
+            //        UseShellExecute = true
+            //    });
+            //    StartHttpListener();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Lỗi khi mở trình duyệt: " + ex.Message);
+            //}
         }
 
         private async void StartHttpListener()
@@ -260,8 +267,8 @@ namespace SONA
                 string name = json["name"]?.ToString();
                 this.Invoke(new Action(() =>
                 {
-                    OpenHomeForm();
-                    S.Activate();
+                    S.Activate();             
+                    //S.ShowHome(userInfo);
                 }));
             }
         }
@@ -269,33 +276,6 @@ namespace SONA
         private async void btnDangNhap_Click(object sender, EventArgs e)
         {
             lblCheck.Text = ""; // Xóa thông báo lỗi trước khi kiểm tra
-
-            //try
-            //{
-            //    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-            //    using (NetworkStream stream = client.GetStream())
-            //    using (BinaryWriter writer = new BinaryWriter(stream))
-            //    using (BinaryReader reader = new BinaryReader(stream))
-            //    {
-            //        writer.Write("login");
-            //        writer.Write(tbEmail.Text);
-            //        writer.Write(tbPass.Text);
-            //        string response = reader.ReadString();
-            //        if (response == "OK")
-            //        {
-            //            OpenHomeForm();
-            //            S.Activate();
-            //        }
-            //        else
-            //        {
-            //            lblCheck.Text = "Đăng nhập thất bại!";
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    lblCheck.Text = "Lỗi: " + ex.Message;
-            //}
 
             if (string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPass.Text))
             {
@@ -305,33 +285,61 @@ namespace SONA
 
             try
             {
-                supabaseService = new SupabaseService();
-                await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
-
-                var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
-                var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text); // Tìm người dùng theo email
-
-                if (user != null) // Nếu tìm thấy người dùng
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    if (user.password_tk == tbPass.Text) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
+                    writer.Write("loginUser");
+                    writer.Write(tbEmail.Text);
+                    writer.Write(tbPass.Text);
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        OpenHomeForm(); // Mở form chính
-                        S.Activate(); // Kích hoạt form chính
+                        S.ShowHome(tbEmail.Text);
+                        S.Activate();
                     }
                     else
                     {
-                        lblCheck.Text = "Mật khẩu không chính xác!";
+                        lblCheck.Text = response;
                     }
-                }
-                else // Thông báo người dùng không tồn tại nếu không tìm thấy
-                {
-                    lblCheck.Text = "Email không tồn tại!";
                 }
             }
             catch (Exception ex)
             {
-                lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
+                lblCheck.Text = "Lỗi: " + ex.Message;
             }
+
+            //try
+            //{
+            //    supabaseService = new SupabaseService();
+            //    await supabaseService.InitializeAsync(); // Khởi tạo kết nối với Supabase
+
+            //    var userInfos = await supabaseService.GetUserInfosAsync(); // Lấy danh sách người dùng từ bảng table user trên Supabase
+            //    var user = userInfos.FirstOrDefault(u => u.email == tbEmail.Text); // Tìm người dùng theo email
+
+            //    if (user != null) // Nếu tìm thấy người dùng
+            //    {
+            //        if (user.password_tk == tbPass.Text) // Kiểm tra thuộc tính mật khẩu của user đó có trùng với mật khẩu đã nhập không
+            //        {
+            //            S.Activate(); // Kích hoạt form chính
+            //            dr = ConvertToDataRow(user); // Chuyển đổi thông tin người dùng thành DataRow
+            //            S.ShowHome(dr); // Mở form chính
+            //        }
+            //        else
+            //        {
+            //            lblCheck.Text = "Mật khẩu không chính xác!";
+            //        }
+            //    }
+            //    else // Thông báo người dùng không tồn tại nếu không tìm thấy
+            //    {
+            //        lblCheck.Text = "Email không tồn tại!";
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
+            //}
         }
 
         private void lbQuenmatkhau_Click(object sender, EventArgs e)

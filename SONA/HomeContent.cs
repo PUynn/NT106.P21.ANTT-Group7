@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +22,65 @@ namespace SONA
         {
             InitializeComponent();
             H = h;
+        }
+
+        // Hàm lấy danh sách bài hát từ server
+        private async Task GetSongsFromServer()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getSongs"); // Gửi yêu cầu lấy bài hát
+
+                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    if (response == "NoSongs")
+                    {
+                        songs = new List<Song>(); // Không có bài hát
+                        MessageBox.Show("No songs available from server.");
+                    }
+                    else if (response == "SongsFound")
+                    {
+                        songs.Clear(); // Xóa danh sách hiện tại
+                        int songCount = reader.ReadInt32(); // Đọc số lượng bài hát
+
+                        for (int i = 0; i < songCount; i++)
+                        {
+                            // Đọc từng bài hát từ server
+                            Song song = new Song
+                            {
+                                id_song = int.Parse(reader.ReadString()),
+                                picture_song = reader.ReadString(),
+                                name_song = reader.ReadString(),
+                                am_thanh = reader.ReadString(),
+                                id_singer = int.Parse(reader.ReadString()),
+                                name_singer = reader.ReadString(),
+                                picture_singer = reader.ReadString(),
+                                the_loai = reader.ReadString(),
+                                duration = int.Parse(reader.ReadString()),
+                                luot_nghe = int.Parse(reader.ReadString()),
+                                danh_gia = int.Parse(reader.ReadString()),
+                                volume = int.Parse(reader.ReadString()),
+                                birthdate = reader.ReadString(),
+                                nationality = reader.ReadString()
+                            };
+                            songs.Add(song);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+                songs = new List<Song>(); // Đảm bảo danh sách rỗng nếu có lỗi
+            }
         }
 
         // Hàm liệt kê các danh sách bài hát và nghệ sĩ ngẫu nhiên vào trong panel tương ứng
@@ -82,32 +143,39 @@ namespace SONA
             return row;
         }
 
-        // Hàm liệt kê các bài hát từ danh sách đã lấy từ Supabase
-        private void btnRefreshSong_Click(object sender, EventArgs e)
+        // Hàm liệt kê các bài hát từ danh sách đã nhận từ server
+        private async void btnRefreshSong_Click(object sender, EventArgs e)
         {
-            int countSong = 0; // Biến đếm số lượng bài hát đã hiển thị
-            HashSet<string> songDifferent = new HashSet<string>(); // Biến dùng để tránh trùng bài hát khi hiển thị
-            
+            int countSong = 0;
+            HashSet<string> songDifferent = new HashSet<string>();
+
             try
             {
+                // Làm mới danh sách bài hát từ server
+                await GetSongsFromServer();
+
+                // Xóa các control hiện tại trên panel flpSongs
                 flpSongs.Controls.Clear();
+
+                // Kiểm tra xem có bài hát nào không
                 if (songs == null || songs.Count == 0)
                 {
-                    MessageBox.Show("No songs available from Supabase.");
+                    MessageBox.Show("No songs available from server.");
                     return;
                 }
-                
-                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList(); // Chọn ngẫu nhiên bài hát từ cơ sở dữ liệu
 
-                foreach (var song in randomSongs) // Duyệt qua mỗi bài hát trong danh sách
+                // Chọn ngẫu nhiên bài hát từ danh sách
+                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList();
+
+                foreach (var song in randomSongs)
                 {
                     if (countSong >= 8) break; // Giới hạn số lượng bài hát hiển thị là 8
-                    if (songDifferent.Contains(song.id_song.ToString())) continue; // Kiểm tra xem bài hát đã xuất hiện chưa, nếu rồi thì bỏ qua
+                    if (songDifferent.Contains(song.id_song.ToString())) continue; // Tránh trùng lặp
 
-                    songDifferent.Add(song.id_song.ToString()); // Thêm bài hát vào danh sách đã hiển thị
+                    songDifferent.Add(song.id_song.ToString());
                     countSong++;
 
-                    // Gọi form SongForm để hiển thị các thông tin của mỗi bài hát (tên, hình ảnh)
+                    // Chuyển đổi bài hát thành DataRow và hiển thị trên SongForm
                     DataRow dr = ConvertSongToDataRow(song);
                     SongForm songForm = new SongForm(H, dr);
                     flpSongs.Controls.Add(songForm);
@@ -120,18 +188,19 @@ namespace SONA
         }
 
         // Hàm liệt kê các nghệ sĩ từ danh sách đã lấy từ Supabase
-        private void btnRefreshArtist_Click(object sender, EventArgs e)
+        private async void btnRefreshArtist_Click(object sender, EventArgs e)
         {
             int countArtist = 0;
             HashSet<string> artistDifferent = new HashSet<string>();
-            
+
             try
             {
+                await GetSongsFromServer(); // Làm mới danh sách từ server
                 flpArtists.Controls.Clear();
 
                 if (songs == null || songs.Count == 0)
                 {
-                    MessageBox.Show("No artists available from Supabase.");
+                    MessageBox.Show("No artists available from server.");
                     return;
                 }
 
@@ -154,6 +223,11 @@ namespace SONA
             {
                 MessageBox.Show("Error refreshing artists: " + ex.Message);
             }
+        }
+
+        private void guna2VScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
         }
     }
 }

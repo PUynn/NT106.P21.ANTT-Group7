@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,10 +20,12 @@ namespace SONA
         SONA S;
         private ListenMusic currentListenMusic;
 
-        public Home(SONA s)
+        string emailUser;
+        public Home(SONA s, string srcEmail)
         {
             InitializeComponent();
             S = s;
+            emailUser = srcEmail;
         }
         
         private void MyClick()
@@ -44,6 +48,7 @@ namespace SONA
                 pnMain.Controls.Clear();
                 pnMain.Controls.Add(homeContent);
             }
+
         }
         
         private void btnLibrary_Click(object sender, EventArgs e)
@@ -112,6 +117,9 @@ namespace SONA
         private void btnChat_Click(object sender, EventArgs e)
         {
             MyClick();
+            ChatForm chatForm = new ChatForm(emailUser);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(chatForm);
         }
 
         private void btnArtists_Click(object sender, EventArgs e)
@@ -140,9 +148,13 @@ namespace SONA
                     currentListenMusic = null;
                 }
 
-                SearchForm searchForm = new SearchForm(this);
-                pnMain.Controls.Clear();
-                pnMain.Controls.Add(searchForm);
+                string keyword = txtSearch.Text.Trim();
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    SearchForm searchForm = new SearchForm(this, keyword);
+                    pnMain.Controls.Clear();
+                    pnMain.Controls.Add(searchForm);
+                }
             }
         }
 

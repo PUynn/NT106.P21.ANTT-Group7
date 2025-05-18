@@ -43,7 +43,7 @@
             this.guna2Panel1.ForeColor = System.Drawing.Color.White;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(250, 254);
+            this.guna2Panel1.Size = new System.Drawing.Size(260, 260);
             this.guna2Panel1.TabIndex = 0;
             // 
             // lbNameSong
@@ -51,7 +51,7 @@
             this.lbNameSong.BackColor = System.Drawing.Color.Transparent;
             this.lbNameSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNameSong.ForeColor = System.Drawing.Color.White;
-            this.lbNameSong.Location = new System.Drawing.Point(13, 214);
+            this.lbNameSong.Location = new System.Drawing.Point(13, 233);
             this.lbNameSong.Name = "lbNameSong";
             this.lbNameSong.Size = new System.Drawing.Size(15, 24);
             this.lbNameSong.TabIndex = 8;
@@ -71,7 +71,7 @@
             this.btnPictureSong.ImageSize = new System.Drawing.Size(50, 50);
             this.btnPictureSong.Location = new System.Drawing.Point(13, 0);
             this.btnPictureSong.Name = "btnPictureSong";
-            this.btnPictureSong.Size = new System.Drawing.Size(224, 208);
+            this.btnPictureSong.Size = new System.Drawing.Size(224, 224);
             this.btnPictureSong.TabIndex = 7;
             this.btnPictureSong.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
@@ -81,7 +81,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.guna2Panel1);
             this.Name = "SongForm";
-            this.Size = new System.Drawing.Size(250, 254);
+            this.Size = new System.Drawing.Size(260, 260);
             this.Load += new System.EventHandler(this.SongForm_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();

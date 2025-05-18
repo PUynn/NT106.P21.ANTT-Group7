@@ -6,7 +6,7 @@ using Postgrest.Attributes;
 using System;
 using System.Linq;
 
-namespace SONA
+namespace SONA_Server
 {
     // View songswithsinger chứa các thuộc tính của table song và table singer bằng cách kết chúng lại bằng id_singer
     [Table("songswithsinger")] // Ánh xạ class Song thành view songswithsinger trong cơ sở dữ liệu

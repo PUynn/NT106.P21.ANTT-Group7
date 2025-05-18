@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnPictureSinger = new Guna.UI2.WinForms.Guna2Button();
             this.lblNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,7 +43,7 @@
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(250, 254);
+            this.guna2Panel1.Size = new System.Drawing.Size(260, 260);
             this.guna2Panel1.TabIndex = 0;
             // 
             // btnPictureSinger
@@ -58,7 +60,7 @@
             this.btnPictureSinger.ImageSize = new System.Drawing.Size(50, 50);
             this.btnPictureSinger.Location = new System.Drawing.Point(13, 0);
             this.btnPictureSinger.Name = "btnPictureSinger";
-            this.btnPictureSinger.Size = new System.Drawing.Size(224, 208);
+            this.btnPictureSinger.Size = new System.Drawing.Size(224, 224);
             this.btnPictureSinger.TabIndex = 11;
             this.btnPictureSinger.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
@@ -67,11 +69,16 @@
             this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
             this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSinger.ForeColor = System.Drawing.Color.White;
-            this.lblNameSinger.Location = new System.Drawing.Point(13, 214);
+            this.lblNameSinger.Location = new System.Drawing.Point(13, 233);
             this.lblNameSinger.Name = "lblNameSinger";
             this.lblNameSinger.Size = new System.Drawing.Size(15, 24);
             this.lblNameSinger.TabIndex = 10;
             this.lblNameSinger.Text = "A";
+            // 
+            // guna2Elipse1
+            // 
+            this.guna2Elipse1.BorderRadius = 224;
+            this.guna2Elipse1.TargetControl = this.btnPictureSinger;
             // 
             // ArtistForm
             // 
@@ -80,7 +87,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "ArtistForm";
-            this.Size = new System.Drawing.Size(250, 254);
+            this.Size = new System.Drawing.Size(260, 260);
             this.Load += new System.EventHandler(this.ArtistForm_Load);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
@@ -93,5 +100,6 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
         private Guna.UI2.WinForms.Guna2Button btnPictureSinger;
+        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
     }
 }

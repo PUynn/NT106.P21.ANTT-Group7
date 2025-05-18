@@ -30,76 +30,104 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerForm));
             this.btnStart = new Guna.UI2.WinForms.Guna2Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnStop = new Guna.UI2.WinForms.Guna2Button();
+            this.btnNone = new Guna.UI2.WinForms.Guna2Button();
+            this.btnMinimize = new Guna.UI2.WinForms.Guna2Button();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.lvManageMess = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.CheckedState.Parent = this.btnStart;
-            this.btnStart.CustomImages.Parent = this.btnStart;
+            this.btnStart.BorderRadius = 25;
             this.btnStart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             resources.ApplyResources(this.btnStart, "btnStart");
             this.btnStart.ForeColor = System.Drawing.Color.White;
-            this.btnStart.HoverState.Parent = this.btnStart;
             this.btnStart.Name = "btnStart";
-            this.btnStart.ShadowDecoration.Parent = this.btnStart;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight;
-            resources.ApplyResources(this.dataGridView1, "dataGridView1");
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
             // 
             // btnStop
             // 
-            this.btnStop.CheckedState.Parent = this.btnStop;
-            this.btnStop.CustomImages.Parent = this.btnStop;
+            this.btnStop.BorderRadius = 25;
             this.btnStop.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             resources.ApplyResources(this.btnStop, "btnStop");
             this.btnStop.ForeColor = System.Drawing.Color.White;
-            this.btnStop.HoverState.Parent = this.btnStop;
             this.btnStop.Name = "btnStop";
-            this.btnStop.ShadowDecoration.Parent = this.btnStop;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnNone
+            // 
+            this.btnNone.BorderRadius = 25;
+            this.btnNone.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            resources.ApplyResources(this.btnNone, "btnNone");
+            this.btnNone.ForeColor = System.Drawing.Color.White;
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnMinimize
+            // 
+            this.btnMinimize.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.btnMinimize, "btnMinimize");
+            this.btnMinimize.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnMinimize.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnMinimize.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnMinimize.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnMinimize.FillColor = System.Drawing.Color.Transparent;
+            this.btnMinimize.ForeColor = System.Drawing.Color.Transparent;
+            this.btnMinimize.Image = global::SONA_Server.Properties.Resources.Minimize;
+            this.btnMinimize.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnMinimize.ImageSize = new System.Drawing.Size(25, 25);
+            this.btnMinimize.Name = "btnMinimize";
+            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
             // btnClose
             // 
-            this.btnClose.CheckedState.Parent = this.btnClose;
-            this.btnClose.CustomImages.Parent = this.btnClose;
-            this.btnClose.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.btnClose, "btnClose");
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.HoverState.Parent = this.btnClose;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.ForeColor = System.Drawing.Color.Transparent;
+            this.btnClose.Image = global::SONA_Server.Properties.Resources.Close;
+            this.btnClose.ImageOffset = new System.Drawing.Point(0, -3);
+            this.btnClose.ImageSize = new System.Drawing.Size(50, 50);
             this.btnClose.Name = "btnClose";
-            this.btnClose.ShadowDecoration.Parent = this.btnClose;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // lvManageMess
+            // 
+            this.lvManageMess.FullRowSelect = true;
+            this.lvManageMess.HideSelection = false;
+            resources.ApplyResources(this.lvManageMess, "lvManageMess");
+            this.lvManageMess.Name = "lvManageMess";
+            this.lvManageMess.UseCompatibleStateImageBehavior = false;
+            this.lvManageMess.View = System.Windows.Forms.View.List;
             // 
             // ServerForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lvManageMess);
+            this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnNone);
             this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ServerForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private Guna.UI2.WinForms.Guna2Button btnStart;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private Guna.UI2.WinForms.Guna2Button btnStop;
+        private Guna.UI2.WinForms.Guna2Button btnNone;
         private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Guna.UI2.WinForms.Guna2Button btnMinimize;
+        private System.Windows.Forms.ListView lvManageMess;
     }
 }
 
