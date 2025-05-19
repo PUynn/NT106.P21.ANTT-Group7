@@ -39,7 +39,7 @@
             this.btnSignUp = new Guna.UI2.WinForms.Guna2Button();
             this.lblcheckPass = new System.Windows.Forms.Label();
             this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSdt = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbConfirm = new Guna.UI2.WinForms.Guna2TextBox();
@@ -198,19 +198,19 @@
             this.btnAvatar.TabIndex = 19;
             this.btnAvatar.Click += new System.EventHandler(this.btnAvatar_Click);
             // 
-            // guna2Button3
+            // btnClose
             // 
-            this.guna2Button3.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button3.BackgroundImage = global::SONA.Properties.Resources.x;
-            this.guna2Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2Button3.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold);
-            this.guna2Button3.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button3.Location = new System.Drawing.Point(641, 33);
-            this.guna2Button3.Name = "guna2Button3";
-            this.guna2Button3.Size = new System.Drawing.Size(20, 20);
-            this.guna2Button3.TabIndex = 16;
-            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click);
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::SONA.Properties.Resources.x;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold);
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Location = new System.Drawing.Point(641, 33);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(20, 20);
+            this.btnClose.TabIndex = 16;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // label5
             // 
@@ -337,7 +337,7 @@
             this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.lblcheckPass);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.guna2Button3);
+            this.Controls.Add(this.btnClose);
             this.Name = "SignUpInfor";
             this.Size = new System.Drawing.Size(704, 853);
             this.Load += new System.EventHandler(this.SignUpInfor_Load);
@@ -348,7 +348,7 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
         private Guna.UI2.WinForms.Guna2TextBox tbPass;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblLogin;

@@ -101,13 +101,35 @@ namespace SONA
             return true;
         }
 
-        // Hàm đóng cửa sổ
-        private void guna2Button3_Click(object sender, EventArgs e)
+        // Hàm để yêu cầu Server thêm người dùng mới đăng kí vào cơ sở dữ liệu
+        private void btnSignUp_Click(object sender, EventArgs e)
         {
-            S.Close();
+            if (checkSignUpInfor())
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("signupInfo");
+                    writer.Write(tbUser.Text);
+                    writer.Write(tbPass.Text);
+                    writer.Write(tbSdt.Text);
+                    writer.Write(srcEmail);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        S.ShowHome(srcEmail);
+                    }
+                    else
+                    {
+                        lblCheckSdt.Text = response;
+                    }
+                }
+            }
         }
 
-        // Hàm chuyển sang form đăng nhập
+        // Hàm quay lại form đăng nhập
         private void lblLogin_Click(object sender, EventArgs e)
         {
             SignUp signUp = new SignUp(S);
@@ -132,6 +154,12 @@ namespace SONA
             //}
         }
 
+        private void SignUpInfor_Load(object sender, EventArgs e)
+        {
+            lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
+            lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
+        }
+
         private void btnAvatar_Click(object sender, EventArgs e)
         {
             setAvatar();
@@ -142,13 +170,6 @@ namespace SONA
             setAvatar();
         }
 
-        private void SignUpInfor_Load(object sender, EventArgs e)
-        {
-            lblCheckName.Text = lblCheckSdt.Text = lblCheckConfirm.Text = "";
-            lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
-        }
-
-        // Các hàm gọi hàm btnSignUp_Click khi nhấn phím Enter trong các textbox
         private void tbUser_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -181,32 +202,9 @@ namespace SONA
             }
         }
 
-        // Hàm để kiểm tra thông tin đăng ký và thêm vào cơ sở dữ liệu
-        private void btnSignUp_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            if (checkSignUpInfor())
-            {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("signupInfo");
-                    writer.Write(tbUser.Text); // Ghi tên người dùng vào luồng
-                    writer.Write(tbPass.Text);
-                    writer.Write(tbSdt.Text);
-                    writer.Write(srcEmail);
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        S.ShowHome(srcEmail);
-                    }
-                    else
-                    {
-                        lblCheckSdt.Text = response;
-                    }
-                }
-            }
+            S.Close();
         }
     }
 }

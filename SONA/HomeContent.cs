@@ -24,8 +24,46 @@ namespace SONA
             H = h;
         }
 
-        // Hàm lấy danh sách bài hát từ server
-        private async Task GetSongsFromServer()
+        // Chuyển đổi Song thành DataRow để dễ dàng đẩy dữ liệu qua các form khác
+        private DataRow ConvertSongToDataRow(Song song)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID_SONG", typeof(int));
+            dt.Columns.Add("PICTURE_SONG", typeof(string));
+            dt.Columns.Add("NAME_SONG", typeof(string));
+            dt.Columns.Add("AM_THANH", typeof(string));
+            dt.Columns.Add("ID_SINGER", typeof(int));
+            dt.Columns.Add("NAME_SINGER", typeof(string));
+            dt.Columns.Add("PICTURE_SINGER", typeof(string));
+            dt.Columns.Add("THE_LOAI", typeof(string));
+            dt.Columns.Add("DURATION", typeof(int));
+            dt.Columns.Add("LUOT_NGHE", typeof(int));
+            dt.Columns.Add("DANH_GIA", typeof(int));
+            dt.Columns.Add("VOLUME", typeof(int));
+            dt.Columns.Add("BIRTHDATE", typeof(string));
+            dt.Columns.Add("NATIONALITY", typeof(string));
+
+            DataRow row = dt.NewRow();
+            row["ID_SONG"] = song.id_song;
+            row["PICTURE_SONG"] = song.picture_song;
+            row["NAME_SONG"] = song.name_song;
+            row["AM_THANH"] = song.am_thanh;
+            row["ID_SINGER"] = song.id_singer;
+            row["NAME_SINGER"] = song.name_singer;
+            row["PICTURE_SINGER"] = song.picture_singer;
+            row["THE_LOAI"] = song.the_loai;
+            row["DURATION"] = song.duration;
+            row["LUOT_NGHE"] = song.luot_nghe;
+            row["DANH_GIA"] = song.danh_gia;
+            row["VOLUME"] = song.volume;
+            row["BIRTHDATE"] = song.birthdate;
+            row["NATIONALITY"] = song.nationality;
+
+            return row;
+        }
+
+        // Phương thức lấy danh sách bài hát từ Server
+        private void GetSongsFromServer()
         {
             try
             {
@@ -105,67 +143,24 @@ namespace SONA
             }
         }
 
-        // Chuyển đổi Song thành DataRow để dễ dàng đẩy dữ liệu qua các form khác
-        private DataRow ConvertSongToDataRow(Song song)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID_SONG", typeof(int));
-            dt.Columns.Add("PICTURE_SONG", typeof(string));
-            dt.Columns.Add("NAME_SONG", typeof(string));
-            dt.Columns.Add("AM_THANH", typeof(string));
-            dt.Columns.Add("ID_SINGER", typeof(int));
-            dt.Columns.Add("NAME_SINGER", typeof(string));
-            dt.Columns.Add("PICTURE_SINGER", typeof(string));
-            dt.Columns.Add("THE_LOAI", typeof(string));
-            dt.Columns.Add("DURATION", typeof(int));
-            dt.Columns.Add("LUOT_NGHE", typeof(int));
-            dt.Columns.Add("DANH_GIA", typeof(int));
-            dt.Columns.Add("VOLUME", typeof(int));
-            dt.Columns.Add("BIRTHDATE", typeof(string));
-            dt.Columns.Add("NATIONALITY", typeof(string));
-
-            DataRow row = dt.NewRow();
-            row["ID_SONG"] = song.id_song;
-            row["PICTURE_SONG"] = song.picture_song;
-            row["NAME_SONG"] = song.name_song;
-            row["AM_THANH"] = song.am_thanh;
-            row["ID_SINGER"] = song.id_singer;
-            row["NAME_SINGER"] = song.name_singer;
-            row["PICTURE_SINGER"] = song.picture_singer;
-            row["THE_LOAI"] = song.the_loai;
-            row["DURATION"] = song.duration;
-            row["LUOT_NGHE"] = song.luot_nghe;
-            row["DANH_GIA"] = song.danh_gia;
-            row["VOLUME"] = song.volume;
-            row["BIRTHDATE"] = song.birthdate;
-            row["NATIONALITY"] = song.nationality;
-
-            return row;
-        }
-
         // Hàm liệt kê các bài hát từ danh sách đã nhận từ server
-        private async void btnRefreshSong_Click(object sender, EventArgs e)
+        private void btnRefreshSong_Click(object sender, EventArgs e)
         {
             int countSong = 0;
             HashSet<string> songDifferent = new HashSet<string>();
 
             try
             {
-                // Làm mới danh sách bài hát từ server
-                await GetSongsFromServer();
-
-                // Xóa các control hiện tại trên panel flpSongs
+                GetSongsFromServer();
                 flpSongs.Controls.Clear();
 
-                // Kiểm tra xem có bài hát nào không
-                if (songs == null || songs.Count == 0)
+                if (songs == null || songs.Count == 0) // Kiểm tra xem có bài hát nào không
                 {
                     MessageBox.Show("No songs available from server.");
                     return;
                 }
 
-                // Chọn ngẫu nhiên bài hát từ danh sách
-                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList();
+                var randomSongs = songs.OrderBy(x => Guid.NewGuid()).ToList(); // Chọn ngẫu nhiên bài hát từ danh sách
 
                 foreach (var song in randomSongs)
                 {
@@ -188,14 +183,14 @@ namespace SONA
         }
 
         // Hàm liệt kê các nghệ sĩ từ danh sách đã lấy từ Supabase
-        private async void btnRefreshArtist_Click(object sender, EventArgs e)
+        private void btnRefreshArtist_Click(object sender, EventArgs e)
         {
             int countArtist = 0;
             HashSet<string> artistDifferent = new HashSet<string>();
 
             try
             {
-                await GetSongsFromServer(); // Làm mới danh sách từ server
+                GetSongsFromServer();
                 flpArtists.Controls.Clear();
 
                 if (songs == null || songs.Count == 0)
@@ -223,11 +218,6 @@ namespace SONA
             {
                 MessageBox.Show("Error refreshing artists: " + ex.Message);
             }
-        }
-
-        private void guna2VScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-
         }
     }
 }

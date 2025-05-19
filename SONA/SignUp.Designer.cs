@@ -47,7 +47,6 @@
             this.btnNext = new Guna.UI2.WinForms.Guna2Button();
             this.btnRefreshOTP = new Guna.UI2.WinForms.Guna2Button();
             this.btnSignUpGoogle = new Guna.UI2.WinForms.Guna2Button();
-            this.btnSignUpFb = new Guna.UI2.WinForms.Guna2Button();
             this.tbEmail = new Guna.UI2.WinForms.Guna2TextBox();
             this.lblCheck = new System.Windows.Forms.Label();
             this.lblOTP = new System.Windows.Forms.Label();
@@ -64,7 +63,8 @@
             this.guna2Panel2.Controls.Add(this.lbDangnhap);
             this.guna2Panel2.Controls.Add(this.label2);
             this.guna2Panel2.Controls.Add(this.label1);
-            this.guna2Panel2.Location = new System.Drawing.Point(92, 27);
+            this.guna2Panel2.Location = new System.Drawing.Point(91, 27);
+            this.guna2Panel2.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(341, 169);
             this.guna2Panel2.TabIndex = 0;
@@ -81,9 +81,10 @@
             this.guna2CircleButton1.Image = global::SONA.Properties.Resources.SONA2Logo;
             this.guna2CircleButton1.ImageSize = new System.Drawing.Size(40, 40);
             this.guna2CircleButton1.Location = new System.Drawing.Point(142, 3);
+            this.guna2CircleButton1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(60, 60);
+            this.guna2CircleButton1.Size = new System.Drawing.Size(59, 60);
             this.guna2CircleButton1.TabIndex = 20;
             // 
             // lbDangnhap
@@ -93,6 +94,7 @@
             this.lbDangnhap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbDangnhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbDangnhap.Location = new System.Drawing.Point(220, 114);
+            this.lbDangnhap.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbDangnhap.Name = "lbDangnhap";
             this.lbDangnhap.Size = new System.Drawing.Size(108, 25);
             this.lbDangnhap.TabIndex = 3;
@@ -105,6 +107,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(26, 114);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(301, 25);
             this.label2.TabIndex = 2;
@@ -116,7 +119,8 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.label1.Location = new System.Drawing.Point(89, 63);
+            this.label1.Location = new System.Drawing.Point(88, 63);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(168, 48);
             this.label1.TabIndex = 1;
@@ -133,6 +137,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label4.ForeColor = System.Drawing.Color.Gray;
             this.label4.Location = new System.Drawing.Point(229, 525);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 29);
             this.label4.TabIndex = 4;
@@ -141,7 +146,8 @@
             // guna2Separator2
             // 
             this.guna2Separator2.FillThickness = 2;
-            this.guna2Separator2.Location = new System.Drawing.Point(323, 534);
+            this.guna2Separator2.Location = new System.Drawing.Point(325, 534);
+            this.guna2Separator2.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.guna2Separator2.Name = "guna2Separator2";
             this.guna2Separator2.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator2.TabIndex = 3;
@@ -151,7 +157,8 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblEmail.Location = new System.Drawing.Point(3, 207);
+            this.lblEmail.Location = new System.Drawing.Point(5, 207);
+            this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(96, 20);
             this.lblEmail.TabIndex = 0;
@@ -170,7 +177,7 @@
             this.tbOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbOTP.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbOTP.Location = new System.Drawing.Point(0, 328);
-            this.tbOTP.Margin = new System.Windows.Forms.Padding(4);
+            this.tbOTP.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.tbOTP.Name = "tbOTP";
             this.tbOTP.PlaceholderText = "";
             this.tbOTP.SelectedText = "";
@@ -182,6 +189,7 @@
             // 
             this.guna2Separator1.FillThickness = 2;
             this.guna2Separator1.Location = new System.Drawing.Point(-2, 534);
+            this.guna2Separator1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.guna2Separator1.Name = "guna2Separator1";
             this.guna2Separator1.Size = new System.Drawing.Size(213, 10);
             this.guna2Separator1.TabIndex = 2;
@@ -194,7 +202,6 @@
             this.guna2Panel1.Controls.Add(this.btnRefreshOTP);
             this.guna2Panel1.Controls.Add(this.guna2Panel2);
             this.guna2Panel1.Controls.Add(this.btnSignUpGoogle);
-            this.guna2Panel1.Controls.Add(this.btnSignUpFb);
             this.guna2Panel1.Controls.Add(this.label4);
             this.guna2Panel1.Controls.Add(this.guna2Separator2);
             this.guna2Panel1.Controls.Add(this.guna2Separator1);
@@ -204,9 +211,10 @@
             this.guna2Panel1.Controls.Add(this.lblOTP);
             this.guna2Panel1.Controls.Add(this.lblEmail);
             this.guna2Panel1.ForeColor = System.Drawing.Color.DarkGray;
-            this.guna2Panel1.Location = new System.Drawing.Point(88, 33);
+            this.guna2Panel1.Location = new System.Drawing.Point(88, 71);
+            this.guna2Panel1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(528, 779);
+            this.guna2Panel1.Size = new System.Drawing.Size(528, 708);
             this.guna2Panel1.TabIndex = 0;
             // 
             // btnSignUp
@@ -220,6 +228,7 @@
             this.btnSignUp.HoverState.FillColor = System.Drawing.Color.LightBlue;
             this.btnSignUp.ImageSize = new System.Drawing.Size(28, 28);
             this.btnSignUp.Location = new System.Drawing.Point(0, 432);
+            this.btnSignUp.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(528, 64);
             this.btnSignUp.TabIndex = 22;
@@ -241,8 +250,9 @@
             this.btnNext.Image = global::SONA.Properties.Resources.Right;
             this.btnNext.ImageSize = new System.Drawing.Size(50, 50);
             this.btnNext.Location = new System.Drawing.Point(490, 245);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(35, 35);
+            this.btnNext.Size = new System.Drawing.Size(37, 35);
             this.btnNext.TabIndex = 8;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
@@ -261,8 +271,9 @@
             this.btnRefreshOTP.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefreshOTP.ImageSize = new System.Drawing.Size(25, 25);
             this.btnRefreshOTP.Location = new System.Drawing.Point(490, 339);
+            this.btnRefreshOTP.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnRefreshOTP.Name = "btnRefreshOTP";
-            this.btnRefreshOTP.Size = new System.Drawing.Size(35, 35);
+            this.btnRefreshOTP.Size = new System.Drawing.Size(37, 35);
             this.btnRefreshOTP.TabIndex = 8;
             this.btnRefreshOTP.Click += new System.EventHandler(this.btnRefreshOTP_Click);
             // 
@@ -278,30 +289,12 @@
             this.btnSignUpGoogle.ImageOffset = new System.Drawing.Point(0, -1);
             this.btnSignUpGoogle.ImageSize = new System.Drawing.Size(30, 30);
             this.btnSignUpGoogle.Location = new System.Drawing.Point(0, 582);
+            this.btnSignUpGoogle.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnSignUpGoogle.Name = "btnSignUpGoogle";
             this.btnSignUpGoogle.Size = new System.Drawing.Size(528, 72);
             this.btnSignUpGoogle.TabIndex = 7;
             this.btnSignUpGoogle.Text = "Đăng kí bằng Google";
             this.btnSignUpGoogle.Click += new System.EventHandler(this.btnSignUpGoogle_Click);
-            // 
-            // btnSignUpFb
-            // 
-            this.btnSignUpFb.Animated = true;
-            this.btnSignUpFb.BorderRadius = 35;
-            this.btnSignUpFb.BorderThickness = 1;
-            this.btnSignUpFb.CheckedState.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSignUpFb.CheckedState.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.btnSignUpFb.FillColor = System.Drawing.Color.Transparent;
-            this.btnSignUpFb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignUpFb.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnSignUpFb.Image = global::SONA.Properties.Resources.icons8_facebook_50;
-            this.btnSignUpFb.ImageOffset = new System.Drawing.Point(0, -1);
-            this.btnSignUpFb.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnSignUpFb.Location = new System.Drawing.Point(0, 672);
-            this.btnSignUpFb.Name = "btnSignUpFb";
-            this.btnSignUpFb.Size = new System.Drawing.Size(528, 72);
-            this.btnSignUpFb.TabIndex = 6;
-            this.btnSignUpFb.Text = "Đăng kí bằng Facebook";
             // 
             // tbEmail
             // 
@@ -316,7 +309,7 @@
             this.tbEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbEmail.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbEmail.Location = new System.Drawing.Point(0, 231);
-            this.tbEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.tbEmail.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.PlaceholderText = "";
             this.tbEmail.SelectedText = "";
@@ -329,7 +322,8 @@
             this.lblCheck.AutoSize = true;
             this.lblCheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCheck.ForeColor = System.Drawing.Color.Red;
-            this.lblCheck.Location = new System.Drawing.Point(3, 390);
+            this.lblCheck.Location = new System.Drawing.Point(5, 390);
+            this.lblCheck.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblCheck.Name = "lblCheck";
             this.lblCheck.Size = new System.Drawing.Size(250, 20);
             this.lblCheck.TabIndex = 0;
@@ -340,7 +334,8 @@
             this.lblOTP.AutoSize = true;
             this.lblOTP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOTP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.lblOTP.Location = new System.Drawing.Point(3, 304);
+            this.lblOTP.Location = new System.Drawing.Point(5, 304);
+            this.lblOTP.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblOTP.Name = "lblOTP";
             this.lblOTP.Size = new System.Drawing.Size(60, 20);
             this.lblOTP.TabIndex = 0;
@@ -359,9 +354,10 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(641, 33);
+            this.btnClose.Location = new System.Drawing.Point(640, 33);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
+            this.btnClose.Size = new System.Drawing.Size(21, 20);
             this.btnClose.TabIndex = 8;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -372,6 +368,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.guna2Panel1);
+            this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.Name = "SignUp";
             this.Size = new System.Drawing.Size(704, 853);
             this.Load += new System.EventHandler(this.SignUp_Load);
@@ -392,7 +389,6 @@
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse3;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Button btnSignUpGoogle;
-        private Guna.UI2.WinForms.Guna2Button btnSignUpFb;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;

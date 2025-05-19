@@ -37,11 +37,10 @@ namespace SONA_Server
         private object chatLock = new object(); // Khóa để đồng bộ hóa truy cập vào danh sách client
         bool isRunning = false; // Biến kiểm tra trạng thái server
 
-        private Dictionary<string, (string otp, DateTime createdTime)> otpStore;
+        private Dictionary<string, (string otp, DateTime createdTime)> otpStore; // Lưu trữ mã OTP và thời gian tạo mã của người dùng tương ứng
         bool isForgetPassword = false;
 
         private string srcEmail = "";
-        private string generatedOTP; // Lưu mã OTP đã gửi
         private DateTime lastOTPSentTime; // Lưu thời gian gửi OTP cuối cùng
         private DateTime otpCreatedTime; // Lưu thời gian tạo OTP
         private const int OTPResendCooldown = 60; // Giới hạn thời gian gửi là 60 giây
@@ -141,11 +140,11 @@ namespace SONA_Server
                 }
                 else if (requestType == "loginGoogle")
                 {
-                    string result = Task.Run(async () => // Sử dụng Task.Run để thực hiện phương thức bất đồng bộ CheckLoginGoogle
+                    string result = Task.Run(async () =>
                     {
-                        return await CheckLoginGoogle(); // Gọi phương thức CheckLoginGoogle để kiểm tra thông tin đăng nhập Google
+                        return await CheckLoginGoogle();
                     }).Result;
-                    writer.Write(result); // Ghi kết quả đăng nhập về client
+                    writer.Write(result);
                 }
                 else if (requestType == "forgetPassword")
                 {
@@ -209,18 +208,18 @@ namespace SONA_Server
                         string email = reader.ReadString();
                         string result = Task.Run(async () =>
                         {
-                            return await RefreshOTP(email); // Gọi phương thức RefreshOTP để gửi lại mã OTP
+                            return await RefreshOTP(email);
                         }).Result;
                         writer.Write(result);
                     }
                 }
                 else if (requestType == "singupGoogle")
                 {
-                    string result = Task.Run(async () => // Sử dụng Task.Run để thực hiện phương thức bất đồng bộ CheckSignUpGoogle
+                    string result = Task.Run(async () =>
                     {
-                        return await CheckSignUpGoogle(); // Gọi phương thức CheckSignUpGoogle để kiểm tra thông tin đăng ký Google
+                        return await CheckSignUpGoogle();
                     }).Result;
-                    writer.Write(result); // Ghi kết quả đăng ký về client
+                    writer.Write(result);
                     writer.Write(srcEmail);
                 }
 
@@ -233,14 +232,14 @@ namespace SONA_Server
 
                     string result = Task.Run(async () =>
                     {
-                        return await CheckSignUpInfo(usernameSignup, password, phone, email); // Gọi phương thức CheckSignUp để kiểm tra thông tin đăng ký
+                        return await CheckSignUpInfo(usernameSignup, password, phone, email);
                     }).Result;
 
-                    writer.Write(result); // Ghi kết quả đăng ký về client
+                    writer.Write(result);
                 }
                 else if (requestType == "userInfo")
                 {
-                    string email = reader.ReadString(); // Đọc địa chỉ email từ client
+                    string email = reader.ReadString();
                     try
                     {
                         // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
@@ -406,11 +405,13 @@ namespace SONA_Server
                     EnableSsl = true, // Bật SSL
                 };
 
+                string content = isForgetPassword ? "đổi mật khẩu" : "đăng ký";
+
                 var mailMessage = new MailMessage // Tạo đối tượng MailMessage để gửi email với nội dung
                 {
                     From = new MailAddress("sona.feelthemusic@gmail.com"), // Địa chỉ email gửi đi
-                    Subject = "Mã OTP xác nhận đăng ký tài khoản SONA", // Tiêu đề email
-                    Body = $"Mã OTP của bạn là: <strong>{otp}</strong><br>Vui lòng nhập mã này để hoàn tất đăng ký. Mã có hiệu lực trong {OTPExpirationMinutes} phút.", // Nội dung email chứa mã OTP
+                    Subject = $"Mã OTP xác nhận {content} tài khoản SONA", // Tiêu đề email
+                    Body = $"Mã OTP của bạn là: <strong>{otp}</strong><br>Vui lòng nhập mã này để hoàn tất {content}. Mã có hiệu lực trong {OTPExpirationMinutes} phút.", // Nội dung email chứa mã OTP
                     IsBodyHtml = true, // Cho phép định dạng HTML
                 };
                 mailMessage.To.Add(email); // Địa chỉ email nhận
@@ -505,10 +506,10 @@ namespace SONA_Server
 
         private async Task<string> RefreshOTP(string email)
         {
-            // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
             await supabaseService.InitializeAsync();
             var userInfos = await supabaseService.GetUserInfosAsync();
             var userFind = userInfos.FirstOrDefault(u => u.email == email);
+
             if (!isForgetPassword)
             {
                 if (userFind != null)
@@ -552,10 +553,10 @@ namespace SONA_Server
         {
             try
             {
-                // Kiểm tra email trên Supabase bằng cách lấy đối tượng email từ table users và so sánh
                 await supabaseService.InitializeAsync();
                 var userInfos = await supabaseService.GetUserInfosAsync();
                 var userFind = userInfos.FirstOrDefault(u => u.email == email);
+
                 if (!isForgetPassword)
                 {
                     if (userFind != null)
@@ -582,26 +583,6 @@ namespace SONA_Server
                 if (otp != otpData.otp)
                 {
                     return "Mã OTP không chính xác!";
-                }
-
-                // Kiểm tra mật khẩu có phù hợp với yêu cầu không
-                bool checkNum = false;
-                bool checkLetter = false;
-                bool checkSpecial = false;
-
-                for (int i = 0; i < newPassword.Length; i++)
-                {
-                    if (char.IsDigit(newPassword[i]))
-                        checkNum = true;
-                    else if (char.IsLetter(newPassword[i]))
-                        checkLetter = true;
-                    else if (newPassword[i] == '@' || newPassword[i] == '#' || newPassword[i] == '!' || newPassword[i] == '?')
-                        checkSpecial = true;
-                }
-
-                if (!checkNum || !checkLetter || !checkSpecial)
-                {
-                    return "Mật khẩu đặt không hợp lệ!";
                 }
 
                 await supabaseService.UpdateUserPasswordAsync(email, newPassword);

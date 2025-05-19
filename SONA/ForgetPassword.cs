@@ -23,12 +23,12 @@ namespace SONA
             S = s;
         }
 
+        // Hàm kiểm tra mật khẩu có hợp lệ hay không
         private bool CheckPassword(string password)
         {
             if (string.IsNullOrEmpty(password))
                 return false;
 
-            // Kiểm tra mật khẩu có phù hợp với yêu cầu không
             bool checkNum = false;
             bool checkLetter = false;
             bool checkSpecial = false;
@@ -51,57 +51,7 @@ namespace SONA
             return true;
         }
 
-        private void btnRefreshOTP_Click(object sender, EventArgs e)
-        {
-            lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
-            lblCheckPass.ForeColor = Color.FromArgb(102, 102, 102);
-            
-            if (string.IsNullOrEmpty(tbEmail.Text))
-            {
-                lblCheckEmail.Text = "Vui lòng nhập địa chỉ Email của bạn!";
-                return;
-            }
-
-            try
-            {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("forgetPassword");
-                    writer.Write("refreshOTP");
-                    writer.Write(tbEmail.Text);
-                    
-                    string response = reader.ReadString();
-                    lblCheckOTP.Text = response;
-                    S.Activate();
-                }
-            }
-            catch (Exception ex)
-            {
-                lblCheckEmail.Text = "Lỗi: " + ex.Message;
-            }
-        }
-
-        private void lblLogin_Click(object sender, EventArgs e)
-        {
-            Login login = new Login(S);
-            S.pnLogin.Controls.Clear();
-            S.pnLogin.Controls.Add(login);
-        }
-
-        private void ForgetPassword_Load(object sender, EventArgs e)
-        {
-            lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
-            lblCheckPass.ForeColor = Color.FromArgb(102, 102, 102);
-        }
-
-        private void btnConfirm_Click(object sender, EventArgs e)
-        {
-            setNewPassword();
-        }
-
+        // Phương thức yêu cầu mã OTP từ Server
         private void getOTP()
         {
             lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
@@ -141,6 +91,41 @@ namespace SONA
             }
         }
 
+        // Phương thức yêu cầu mã OTP mới từ Server
+        private void btnRefreshOTP_Click(object sender, EventArgs e)
+        {
+            lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
+            lblCheckPass.ForeColor = Color.FromArgb(102, 102, 102);
+            
+            if (string.IsNullOrEmpty(tbEmail.Text))
+            {
+                lblCheckEmail.Text = "Vui lòng nhập địa chỉ Email của bạn!";
+                return;
+            }
+
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("forgetPassword");
+                    writer.Write("refreshOTP");
+                    writer.Write(tbEmail.Text);
+                    
+                    string response = reader.ReadString();
+                    lblCheckOTP.Text = response;
+                    S.Activate();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblCheckEmail.Text = "Lỗi: " + ex.Message;
+            }
+        }
+
+        // Phương thức đặt mật khẩu mới cho người dùng và cập nhật cho Server
         private void setNewPassword()
         {
             lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
@@ -156,13 +141,13 @@ namespace SONA
             {
                 lblCheckOTP.Text = "Vui lòng nhập mã OTP!";
                 return;
-            } 
+            }
 
             if (!CheckPassword(tbPass.Text))
             {
                 lblCheckPass.ForeColor = Color.Red;
                 return;
-            }    
+            }
 
             if (string.IsNullOrEmpty(tbConfirmPass.Text))
             {
@@ -188,6 +173,7 @@ namespace SONA
                     writer.Write(tbEmail.Text);
                     writer.Write(tbOTP.Text);
                     writer.Write(tbPass.Text);
+                    
                     string response = reader.ReadString();
                     if (response == "OK")
                     {
@@ -206,6 +192,25 @@ namespace SONA
             {
                 lblCheckOTP.Text = "Lỗi: " + ex.Message;
             }
+        }
+
+        // Hàm quay lại form đăng nhập Login
+        private void lblLogin_Click(object sender, EventArgs e)
+        {
+            Login login = new Login(S);
+            S.pnLogin.Controls.Clear();
+            S.pnLogin.Controls.Add(login);
+        }
+
+        private void ForgetPassword_Load(object sender, EventArgs e)
+        {
+            lblCheckEmail.Text = lblCheckOTP.Text = lblCheckConfirmPass.Text = "";
+            lblCheckPass.ForeColor = Color.FromArgb(102, 102, 102);
+        }
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            setNewPassword();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
