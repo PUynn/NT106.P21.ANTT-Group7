@@ -777,15 +777,37 @@ namespace SONA_Server
             {
                 foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    // Chỉ lấy giao diện đang hoạt động và không phải loopback
-                    if (ni.OperationalStatus == OperationalStatus.Up && ni.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                    // Chỉ lấy adapter đang hoạt động, không phải loopback, và có tên gợi ý là WiFi
+                    if (ni.OperationalStatus == OperationalStatus.Up &&
+                        ni.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                        (ni.Name.ToLower().Contains("wi-fi") || ni.Description.ToLower().Contains("wireless")))
                     {
-                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                        var ipProps = ni.GetIPProperties();
+                        foreach (UnicastIPAddressInformation ip in ipProps.UnicastAddresses)
                         {
                             if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                localIP = ip.Address.ToString();
-                                return localIP; // Trả về IP đầu tiên tìm thấy (không phải loopback)
+                                return ip.Address.ToString(); // Trả về IPv4 của adapter WiFi
+                            }
+                        }
+                    }
+                }
+
+                // Nếu không tìm thấy theo tên, thì thử tìm adapter có Gateway IPv4
+                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+                {
+                    if (ni.OperationalStatus == OperationalStatus.Up &&
+                        ni.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                    {
+                        var ipProps = ni.GetIPProperties();
+                        if (ipProps.GatewayAddresses.Any(g => g.Address.AddressFamily == AddressFamily.InterNetwork))
+                        {
+                            foreach (UnicastIPAddressInformation ip in ipProps.UnicastAddresses)
+                            {
+                                if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                                {
+                                    return ip.Address.ToString(); // Trả về IPv4 của adapter có Gateway
+                                }
                             }
                         }
                     }
