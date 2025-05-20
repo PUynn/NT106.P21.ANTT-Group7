@@ -12,7 +12,7 @@ namespace SONA
 {
     public partial class Favourite : UserControl
     {
-        public Favourite()
+        public Favourite(Home h)
         {
             InitializeComponent();
         }

@@ -64,11 +64,19 @@ namespace SONA
         private void btnFavorited_Click(object sender, EventArgs e)
         {
             MyClick();
+            Favourite a = new Favourite(this);
+            a.Dock = DockStyle.Fill;
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(a);
         }
 
         private void btnAlbums_Click(object sender, EventArgs e)
         {
             MyClick();
+            Album album = new Album(this);
+            album.Dock = DockStyle.Fill;
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(album);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

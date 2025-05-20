@@ -14,9 +14,14 @@ namespace SONA
 {
     public partial class Album : UserControl
     {
-        public Album()
+        DataRow dr;
+        public Album(Home h)
         {
             InitializeComponent();
+            SongSearch songsearch = new SongSearch(h, dr);
+            songsearch.Dock = DockStyle.Fill;
+            songsearch.Controls.Clear();
+            songsearch.Controls.Add(songsearch);
         }
 
         private void Album_Paint(object sender, PaintEventArgs e)
