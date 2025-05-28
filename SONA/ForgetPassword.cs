@@ -169,7 +169,7 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("forgetPassword");
-                    writer.Write("setpass");
+                    writer.Write("setPassword");
                     writer.Write(tbEmail.Text);
                     writer.Write(tbOTP.Text);
                     writer.Write(tbPass.Text);

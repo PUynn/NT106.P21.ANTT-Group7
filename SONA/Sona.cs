@@ -59,6 +59,6 @@ namespace SONA
     }
     public static class IPAddressServer
     {
-        public static string serverIP = "null";
+        public static string serverIP;
     }
 }

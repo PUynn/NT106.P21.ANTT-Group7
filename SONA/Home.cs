@@ -19,8 +19,8 @@ namespace SONA
     {
         SONA S;
         private ListenMusic currentListenMusic;
-
         string emailUser;
+
         public Home(SONA s, string srcEmail)
         {
             InitializeComponent();
@@ -41,13 +41,9 @@ namespace SONA
         // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
-            if (pnMain.Controls.Count == 0 || pnMain.Controls[0].GetType() != typeof(HomeContent))
-            {
-                HomeContent homeContent = new HomeContent(this);
-                homeContent.Dock = DockStyle.Fill;
-                pnMain.Controls.Clear();
-                pnMain.Controls.Add(homeContent);
-            }
+            HomeContent homeContent = new HomeContent(this);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(homeContent);
 
         }
         

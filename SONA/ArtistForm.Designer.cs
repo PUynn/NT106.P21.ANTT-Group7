@@ -66,14 +66,16 @@
             // 
             // lblNameSinger
             // 
+            this.lblNameSinger.AutoSize = false;
             this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
             this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSinger.ForeColor = System.Drawing.Color.White;
-            this.lblNameSinger.Location = new System.Drawing.Point(13, 233);
+            this.lblNameSinger.Location = new System.Drawing.Point(13, 230);
             this.lblNameSinger.Name = "lblNameSinger";
-            this.lblNameSinger.Size = new System.Drawing.Size(15, 24);
+            this.lblNameSinger.Size = new System.Drawing.Size(224, 24);
             this.lblNameSinger.TabIndex = 10;
             this.lblNameSinger.Text = "A";
+            this.lblNameSinger.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
             // 
             // guna2Elipse1
             // 
@@ -90,7 +92,6 @@
             this.Size = new System.Drawing.Size(260, 260);
             this.Load += new System.EventHandler(this.ArtistForm_Load);
             this.guna2Panel1.ResumeLayout(false);
-            this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

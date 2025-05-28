@@ -63,7 +63,8 @@ namespace SONA
                     else if (messageType == "Message")
                     {
                         string message = reader.ReadString();
-                        AddMessageToListView(message);
+                        if (!string.IsNullOrEmpty(message))
+                            AddMessageToListView(message);
                     }
                     else
                     {

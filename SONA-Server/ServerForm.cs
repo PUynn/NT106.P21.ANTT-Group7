@@ -29,7 +29,6 @@ namespace SONA_Server
 
         string connString = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.bzjfiynoyelxlpowlhty;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true"; // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
-        DataRow dr; // Biến lưu thông tin người dùng đăng nhập
 
         private TcpListener server; // Đối tượng TcpListener để lắng nghe kết nối từ client
         private List<ClientInfor> chatClients; // Lưu danh sách client trong nhóm chat
@@ -41,8 +40,6 @@ namespace SONA_Server
         bool isForgetPassword = false;
 
         private string srcEmail = "";
-        private DateTime lastOTPSentTime; // Lưu thời gian gửi OTP cuối cùng
-        private DateTime otpCreatedTime; // Lưu thời gian tạo OTP
         private const int OTPResendCooldown = 60; // Giới hạn thời gian gửi là 60 giây
         private const int OTPExpirationMinutes = 5; // OTP hết hạn sau 5 phút
 
@@ -56,6 +53,7 @@ namespace SONA_Server
             AddToListView($"Server khởi động với IP là {GetLocalIPAddress()}:5000"); // Thêm thông tin server khi khởi tạo
         }
 
+        // Phương thức hiển thị thông tin lên giao diện List View
         private void AddToListView(string message)
         {
             if (lvManageMess.InvokeRequired)
@@ -103,6 +101,7 @@ namespace SONA_Server
             }
         }
 
+        // Phương thức nhận và xử lý kết nối từ client
         private async void HandleClient(object obj)
         {
             TcpClient client = obj as TcpClient; // Chuyển đổi đối tượng obj thành TcpClient
@@ -124,7 +123,8 @@ namespace SONA_Server
                 writer = new BinaryWriter(stream); // Tạo đối tượng BinaryWriter để ghi dữ liệu vào luồng
 
                 string requestType = reader.ReadString(); // Đọc loại yêu cầu từ client (login, signup, chat)
-
+                
+                #region Login
                 if (requestType == "loginUser")
                 {
                     // Đọc thông tin username và password nhập từ client
@@ -168,7 +168,7 @@ namespace SONA_Server
                         }).Result;
                         writer.Write(result);
                     }
-                    else if (type == "setpass")
+                    else if (type == "setPassword")
                     {
                         string email = reader.ReadString();
                         string otp = reader.ReadString();
@@ -181,6 +181,9 @@ namespace SONA_Server
                     }
                     isForgetPassword = false;
                 }
+                #endregion
+
+                #region SignUp
                 else if (requestType == "signupUser")
                 {
                     string type = reader.ReadString();
@@ -237,6 +240,8 @@ namespace SONA_Server
 
                     writer.Write(result);
                 }
+                #endregion
+
                 else if (requestType == "userInfo")
                 {
                     string email = reader.ReadString();
@@ -249,8 +254,8 @@ namespace SONA_Server
 
                         if (userFind != null)
                         {
-                            writer.Write("OK"); // Nếu email tồn tại thì trả về OK
-                            writer.Write(userFind.id_user.ToString());
+                            writer.Write("OK");
+                            writer.Write(userFind.id_user);
                             writer.Write(userFind.name_user);
                             writer.Write(userFind.password_tk);
                             writer.Write(userFind.create_at);
@@ -361,6 +366,7 @@ namespace SONA_Server
             }
         }
 
+        #region Chat
         // Phương thức gửi tin nhắn đến tất cả client trong nhóm chat
         private void BroadcastMessage(string message)
         {
@@ -385,7 +391,9 @@ namespace SONA_Server
                 }
             }
         }
+        #endregion
 
+        #region SignUp
         // Hàm tạo mã OTP ngẫu nhiên (6 chữ số)
         private string GenerateOTP()
         {
@@ -417,8 +425,6 @@ namespace SONA_Server
                 mailMessage.To.Add(email); // Địa chỉ email nhận
 
                 await smtpClient.SendMailAsync(mailMessage); // Gửi email bất đồng bộ
-                lastOTPSentTime = DateTime.Now; // Lưu thời gian gửi OTP
-                otpCreatedTime = DateTime.Now; // Lưu thời gian tạo OTP
                 return true;
             }
             catch (Exception ex)
@@ -427,7 +433,6 @@ namespace SONA_Server
             }
         }
 
-        // Hàm kiểm tra và xử lý đăng ký
         private async Task<string> GetOTPfromEmail(string email)
         {
             try
@@ -549,52 +554,6 @@ namespace SONA_Server
             }
         }
 
-        private async Task<string> SetNewPassword(string email, string otp, string newPassword)
-        {
-            try
-            {
-                await supabaseService.InitializeAsync();
-                var userInfos = await supabaseService.GetUserInfosAsync();
-                var userFind = userInfos.FirstOrDefault(u => u.email == email);
-
-                if (!isForgetPassword)
-                {
-                    if (userFind != null)
-                        return "Tài khoản Email đã tồn tại!";
-                }
-                else
-                {
-                    if (userFind == null)
-                        return "Tài khoản Email không tồn tại!";
-                }
-
-                if (!otpStore.ContainsKey(email))
-                {
-                    return "Mã OTP không tồn tại! Vui lòng yêu cầu mã mới.";
-                }
-
-                var otpData = otpStore[email];
-                if ((DateTime.Now - otpData.createdTime).TotalMinutes > OTPExpirationMinutes)
-                {
-                    otpStore.Remove(email);
-                    return "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
-                }
-
-                if (otp != otpData.otp)
-                {
-                    return "Mã OTP không chính xác!";
-                }
-
-                await supabaseService.UpdateUserPasswordAsync(email, newPassword);
-                otpStore.Remove(email); // Xóa OTP sau khi sử dụng thành công
-                return "OK";
-            }
-            catch (Exception ex)
-            {
-                return "Lỗi đặt mật khẩu mới: " + ex.Message;
-            }
-        }
-
         // Phương thức đăng kí bằng tải khoản Google
         private async Task<string> CheckSignUpGoogle()
         {
@@ -681,7 +640,9 @@ namespace SONA_Server
                 return "Lỗi thông tin người dùng: " + ex.Message;
             }
         }
+        #endregion
 
+        #region Login
         // Phương thức kiểm tra thông tin đăng nhập người dùng
         private async Task<string> CheckUserLogin(string username, string password)
         {
@@ -768,6 +729,53 @@ namespace SONA_Server
                 return "Lỗi đăng nhập bằng Google: " + ex.Message;
             }
         }
+
+        private async Task<string> SetNewPassword(string email, string otp, string newPassword)
+        {
+            try
+            {
+                await supabaseService.InitializeAsync();
+                var userInfos = await supabaseService.GetUserInfosAsync();
+                var userFind = userInfos.FirstOrDefault(u => u.email == email);
+
+                if (!isForgetPassword)
+                {
+                    if (userFind != null)
+                        return "Tài khoản Email đã tồn tại!";
+                }
+                else
+                {
+                    if (userFind == null)
+                        return "Tài khoản Email không tồn tại!";
+                }
+
+                if (!otpStore.ContainsKey(email))
+                {
+                    return "Mã OTP không tồn tại! Vui lòng yêu cầu mã mới.";
+                }
+
+                var otpData = otpStore[email];
+                if ((DateTime.Now - otpData.createdTime).TotalMinutes > OTPExpirationMinutes)
+                {
+                    otpStore.Remove(email);
+                    return "Mã OTP đã hết hạn! Vui lòng yêu cầu mã mới.";
+                }
+
+                if (otp != otpData.otp)
+                {
+                    return "Mã OTP không chính xác!";
+                }
+
+                await supabaseService.UpdateUserPasswordAsync(email, newPassword);
+                otpStore.Remove(email); // Xóa OTP sau khi sử dụng thành công
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Lỗi đặt mật khẩu mới: " + ex.Message;
+            }
+        }
+        #endregion
 
         // Phương thức lấy địa chỉ IP cục bộ
         private string GetLocalIPAddress()

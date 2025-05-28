@@ -44,7 +44,6 @@
             // pnMain
             // 
             this.pnMain.BackColor = System.Drawing.Color.Transparent;
-            this.pnMain.BackgroundImage = global::SONA.Properties.Resources.LoginBGR;
             this.pnMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pnMain.Controls.Add(this.pnLogin);
             this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -57,13 +56,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1771, 1012);
             this.Controls.Add(this.pnMain);
+            this.ForeColor = System.Drawing.Color.Transparent;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SONA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SONA";
+            this.TransparencyKey = System.Drawing.Color.Gray;
             this.pnMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

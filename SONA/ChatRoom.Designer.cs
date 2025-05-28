@@ -49,6 +49,7 @@
             // lvMessages
             // 
             this.lvMessages.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lvMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvMessages.ForeColor = System.Drawing.Color.Black;
             this.lvMessages.FullRowSelect = true;
             this.lvMessages.HideSelection = false;
