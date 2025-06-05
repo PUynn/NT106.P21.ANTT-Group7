@@ -10,19 +10,20 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using System.Net.Http; // Thư viện dùng để tải hình ảnh từ URL
 using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
     public partial class SongForm : UserControl
     {
-        Home H;
-        DataRow src;
+        private Home H;
+        private string id_song;
 
-        public SongForm(Home h, DataRow dr)
+        public SongForm(Home h, string id_song)
         {
             InitializeComponent();
             H = h;
-            src = dr;
+            this.id_song = id_song;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 bài hát
@@ -30,27 +31,42 @@ namespace SONA
         {
             try
             {
-                lbNameSong.Text = src["NAME_SONG"].ToString();
-
-                // Tải hình ảnh từ URL
-                string pictureUrl = src["PICTURE_SONG"].ToString(); // Lấy đường dẫn URL của hình ảnh trên supabase
-                if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    using (var client = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                    writer.Write("songForm");
+                    writer.Write(id_song);
+
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        var imageData = await client.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
-                        using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                        lbNameSong.Text = reader.ReadString();
+
+                        // Tải hình ảnh từ URL
+                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
+                        if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
                         {
-                            btnPictureSong.BackgroundImage = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                            using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                            {
+                                var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
+                                using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                                {
+                                    btnPictureSong.BackgroundImage = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                }
+                            }
+                        }
+                        else
+                        {
+                            btnPictureSong.BackgroundImage = null; // Nếu không có hình ảnh từ đường dẫn thì set thành hình ảnh mặc định
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                    }
                 }
-                else
-                {
-                    btnPictureSong.BackgroundImage = null; // Nếu không có hình ảnh từ đường dẫn thì set thành hình ảnh mặc định
-                }
-
-                btnPictureSong.BackgroundImageLayout = ImageLayout.Stretch;
             }
             catch (Exception ex)
             {
@@ -62,7 +78,7 @@ namespace SONA
         // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, src);
+            ListenMusic listenMusic = new ListenMusic(H, id_song);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);

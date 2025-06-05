@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnPictureSinger = new Guna.UI2.WinForms.Guna2Button();
-            this.lblNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lbNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -39,7 +39,7 @@
             // guna2Panel1
             // 
             this.guna2Panel1.Controls.Add(this.btnPictureSinger);
-            this.guna2Panel1.Controls.Add(this.lblNameSinger);
+            this.guna2Panel1.Controls.Add(this.lbNameSinger);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
@@ -48,6 +48,7 @@
             // 
             // btnPictureSinger
             // 
+            this.btnPictureSinger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnPictureSinger.BorderRadius = 10;
             this.btnPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPictureSinger.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -64,18 +65,18 @@
             this.btnPictureSinger.TabIndex = 11;
             this.btnPictureSinger.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
-            // lblNameSinger
+            // lbNameSinger
             // 
-            this.lblNameSinger.AutoSize = false;
-            this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
-            this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameSinger.ForeColor = System.Drawing.Color.White;
-            this.lblNameSinger.Location = new System.Drawing.Point(13, 230);
-            this.lblNameSinger.Name = "lblNameSinger";
-            this.lblNameSinger.Size = new System.Drawing.Size(224, 24);
-            this.lblNameSinger.TabIndex = 10;
-            this.lblNameSinger.Text = "A";
-            this.lblNameSinger.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
+            this.lbNameSinger.AutoSize = false;
+            this.lbNameSinger.BackColor = System.Drawing.Color.Transparent;
+            this.lbNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNameSinger.ForeColor = System.Drawing.Color.White;
+            this.lbNameSinger.Location = new System.Drawing.Point(13, 230);
+            this.lbNameSinger.Name = "lbNameSinger";
+            this.lbNameSinger.Size = new System.Drawing.Size(224, 24);
+            this.lbNameSinger.TabIndex = 10;
+            this.lbNameSinger.Text = "A";
+            this.lbNameSinger.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
             // 
             // guna2Elipse1
             // 
@@ -99,7 +100,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lbNameSinger;
         private Guna.UI2.WinForms.Guna2Button btnPictureSinger;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
     }

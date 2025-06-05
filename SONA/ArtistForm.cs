@@ -9,19 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
     public partial class ArtistForm : UserControl
     {
-        Home H;
-        DataRow src;
+        private Home H;
+        private string id_singer;
 
-        public ArtistForm(Home h, DataRow dr)
+        public ArtistForm(Home h, string id_singer)
         {
             InitializeComponent();
             H = h;
-            src = dr;
+            this.id_singer = id_singer;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 nghệ sĩ
@@ -29,34 +30,54 @@ namespace SONA
         {
             try
             {
-                lblNameSinger.Text = src["NAME_SINGER"].ToString();
-
-                // Tải hình ảnh nghệ sĩ từ URL của thuộc tính PICTURE_SINGER trong table SINGER
-                string pictureUrl = src["PICTURE_SINGER"].ToString();
-                if (!string.IsNullOrEmpty(pictureUrl))
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    using (var client = new HttpClient())
+                    writer.Write("artistForm");
+                    writer.Write(id_singer);
+
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        var imageData = await client.GetByteArrayAsync(pictureUrl);
-                        using (var ms = new MemoryStream(imageData))
+                        lbNameSinger.Text = reader.ReadString();
+
+                        // Tải hình ảnh từ URL
+                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
+                        if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
                         {
-                            btnPictureSinger.BackgroundImage = Image.FromStream(ms);
+                            using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                            {
+                                var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
+                                using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                                {
+                                    btnPictureSinger.BackgroundImage = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                }
+                            }
+                        }
+                        else
+                        {
+                            btnPictureSinger.BackgroundImage = null; // Nếu không có hình ảnh từ đường dẫn thì set thành hình ảnh mặc định
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                    }
                 }
-
-                btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading artist image: {ex.Message}");
+                MessageBox.Show($"Error loading singer image: {ex.Message}");
+                btnPictureSinger.BackgroundImage = null; // Xử lý lỗi bằng cách không hiển thị hình
             }
         }
 
         // Hàm gọi form ArtistInfor để xem thông tin của nghệ sĩ bài hát
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(H, src);
+            ArtistInfor artistInfor = new ArtistInfor(H, id_singer);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(artistInfor);
         }

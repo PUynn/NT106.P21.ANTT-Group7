@@ -107,6 +107,7 @@
             // 
             // btnPictureSong
             // 
+            this.btnPictureSong.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnPictureSong.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPictureSong.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSong.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;

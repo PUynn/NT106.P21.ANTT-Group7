@@ -11,28 +11,64 @@ using System.Data.SqlClient;
 using NAudio.Wave;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Guna.UI2.WinForms;
+using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
     public partial class ListenMusic : UserControl
     {
-        Home H;
-        WaveOutEvent woe; // Đối tượng phát nhạc
-        AudioFileReader afr; // Đối tượng đọc tệp âm thanh
+        private Home H;
+        private WaveOutEvent woe; // Đối tượng phát nhạc
+        private AudioFileReader afr; // Đối tượng đọc tệp âm thanh
 
-        bool isPlaying;
-        bool isAutoReplay;
+        private bool isPlaying;
+        private bool isAutoReplay;
+        private TimeSpan lastPosition;
 
-        DataRow src;
-        TimeSpan lastPosition;
-
-        public ListenMusic(Home h, DataRow dr)
+        private string id_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
+        public ListenMusic(Home h, string id_song)
         {
             H = h;
-            src = dr;
+            this.id_song = id_song;
 
             InitializeComponent();
+            GetData();
             this.Disposed += (s, e) => StopMusicAndDispose(); // Giải phóng tài nguyên khi điều khiển bị hủy
+        }
+
+        private void GetData()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("listenMusic");
+                    writer.Write(id_song);
+                    string response = reader.ReadString();
+
+                    if (response == "OK")
+                    {
+                        id_singer = reader.ReadString();
+                        name_singer = reader.ReadString();
+                        picture_singer = reader.ReadString();
+                        birthdate = reader.ReadString();
+                        picture_song = reader.ReadString();
+                        am_thanh = reader.ReadString();
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
         }
 
         // Hàm chuyển đổi định dạng ngày tháng
@@ -95,10 +131,9 @@ namespace SONA
                 try
                 {
                     using (var wc = new System.Net.WebClient())
-                    using (var stream = wc.OpenRead(src["PICTURE_SONG"].ToString()))
+                    using (var stream = wc.OpenRead(picture_song))
                     {
-                        pbPictureSong.Image = Image.FromStream(stream);
-                        pbPictureSong.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pbPictureSong.BackgroundImage = Image.FromStream(stream);
                     }
                 }
                 catch (Exception ex)
@@ -111,10 +146,9 @@ namespace SONA
                 try
                 {
                     using (var wc = new System.Net.WebClient())
-                    using (var stream = wc.OpenRead(src["PICTURE_SINGER"].ToString()))
+                    using (var stream = wc.OpenRead(picture_singer))
                     {
                         btnPictureSinger.BackgroundImage = Image.FromStream(stream);
-                        btnPictureSinger.BackgroundImageLayout = ImageLayout.Stretch;
                     }
                 }
                 catch (Exception ex)
@@ -124,10 +158,10 @@ namespace SONA
                 }
 
                 // Phát nhạc từ URL (tải về tạm thời)
-                string tempFile = System.IO.Path.GetTempFileName(); // Tạo đối tượng tạm thời để lưu tệp âm thanh
+                string tempFile = Path.GetTempFileName(); // Tạo đối tượng tạm thời để lưu tệp âm thanh
                 using (var wc = new System.Net.WebClient()) // Tạo đối tượng WebClient để tải tệp âm thanh
                 {
-                    await wc.DownloadFileTaskAsync(new Uri(src["AM_THANH"].ToString()), tempFile); // Tải tệp âm thanh từ URL của thuộc tính AM_THANH
+                    await wc.DownloadFileTaskAsync(new Uri(am_thanh), tempFile); // Tải tệp âm thanh từ URL của thuộc tính AM_THANH
                 }
 
                 if (afr == null)
@@ -150,8 +184,8 @@ namespace SONA
 
                 lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss"); // Lấy thời gian tổng của bài hát
 
-                lblNameSinger.Text = src["NAME_SINGER"].ToString();
-                lblSince.Text = ConvertDate(src["BIRTHDATE"].ToString());
+                lblNameSinger.Text = name_singer;
+                lblSince.Text = ConvertDate(birthdate);
 
                 return true;
             }
@@ -268,8 +302,7 @@ namespace SONA
         {
             StopMusicAndDispose();
             H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(new ArtistInfor(H, src));
+            H.pnMain.Controls.Add(new ArtistInfor(H, id_singer));
         }
-
     }
 }

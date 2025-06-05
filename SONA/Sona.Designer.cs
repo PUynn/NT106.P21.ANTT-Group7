@@ -56,7 +56,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.Lime;
             this.ClientSize = new System.Drawing.Size(1771, 1012);
             this.Controls.Add(this.pnMain);
             this.ForeColor = System.Drawing.Color.Transparent;
@@ -65,7 +65,7 @@
             this.Name = "SONA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SONA";
-            this.TransparencyKey = System.Drawing.Color.Gray;
+            this.TransparencyKey = System.Drawing.Color.Lime;
             this.pnMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

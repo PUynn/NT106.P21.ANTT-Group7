@@ -98,12 +98,11 @@
             // 
             // lvManageMess
             // 
-            this.lvManageMess.FullRowSelect = true;
             this.lvManageMess.HideSelection = false;
             resources.ApplyResources(this.lvManageMess, "lvManageMess");
             this.lvManageMess.Name = "lvManageMess";
             this.lvManageMess.UseCompatibleStateImageBehavior = false;
-            this.lvManageMess.View = System.Windows.Forms.View.List;
+            this.lvManageMess.View = System.Windows.Forms.View.Details;
             // 
             // ServerForm
             // 

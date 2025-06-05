@@ -9,21 +9,63 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
     public partial class ArtistInfor : UserControl
     {
-        Home H;
-        DataRow src;
-        private SupabaseService supabaseService;
+        private Home H;
+        private string id_singer, name_singer, picture_singer, birthdate, nationality;
+        private List<string> id_song;
 
-        public ArtistInfor(Home h, DataRow dr)
+        public ArtistInfor(Home h, string id_singer)
         {
-            InitializeComponent();
-            src = dr;
             H = h;
-            supabaseService = new SupabaseService();
+            this.id_singer = id_singer;
+            id_song = new List<string>();
+
+            InitializeComponent();
+            GetData();
+        }
+
+        private void GetData()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("artistInfor");
+                    writer.Write(id_singer);
+                    string response = reader.ReadString();
+
+                    if (response == "OK")
+                    {
+                        id_singer = reader.ReadString();
+                        name_singer = reader.ReadString();
+                        picture_singer = reader.ReadString();
+                        birthdate = reader.ReadString();
+                        nationality = reader.ReadString();
+
+                        int songCount = reader.ReadInt32();
+                        for (int i = 0; i < songCount; i++)
+                        {
+                            id_song.Add(reader.ReadString());
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
         }
 
         // Hàm chuyển đổi định dạng ngày tháng
@@ -43,75 +85,20 @@ namespace SONA
             }
         }
 
-        // Hàm chuyển đổi List<Song> thành DataTable
-        private DataTable ConvertSongsToDataTable(List<Song> songs)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID_SONG", typeof(int));
-            dt.Columns.Add("PICTURE_SONG", typeof(string));
-            dt.Columns.Add("NAME_SONG", typeof(string));
-            dt.Columns.Add("AM_THANH", typeof(string));
-            dt.Columns.Add("ID_SINGER", typeof(int));
-            dt.Columns.Add("NAME_SINGER", typeof(string));
-            dt.Columns.Add("PICTURE_SINGER", typeof(string));
-            dt.Columns.Add("THE_LOAI", typeof(string));
-            dt.Columns.Add("DURATION", typeof(int));
-            dt.Columns.Add("LUOT_NGHE", typeof(int));
-            dt.Columns.Add("DANH_GIA", typeof(int));
-            dt.Columns.Add("VOLUME", typeof(int));
-            dt.Columns.Add("BIRTHDATE", typeof(string));
-            dt.Columns.Add("NATIONALITY", typeof(string));
-
-            foreach (var song in songs)
-            {
-                DataRow row = dt.NewRow();
-                row["ID_SONG"] = song.id_song;
-                row["PICTURE_SONG"] = song.picture_song ?? string.Empty;
-                row["NAME_SONG"] = song.name_song ?? string.Empty;
-                row["AM_THANH"] = song.am_thanh ?? string.Empty;
-                row["ID_SINGER"] = song.id_singer;
-                row["NAME_SINGER"] = song.name_singer ?? string.Empty;
-                row["PICTURE_SINGER"] = song.picture_singer ?? string.Empty;
-                row["THE_LOAI"] = song.the_loai ?? string.Empty;
-                row["DURATION"] = song.duration;
-                row["LUOT_NGHE"] = song.luot_nghe;
-                row["DANH_GIA"] = song.danh_gia;
-                row["VOLUME"] = song.volume;
-                row["BIRTHDATE"] = song.birthdate ?? string.Empty;
-                row["NATIONALITY"] = song.nationality ?? string.Empty;
-
-                dt.Rows.Add(row);
-            }
-
-            return dt;
-        }
-
         // Hàm in ra danh sách bài hát của nghệ sĩ
         private async void ArtistInfor_Load(object sender, EventArgs e)
         {
             try
             {
-                // Khởi tạo SupabaseService và lấy dữ liệu từ View songswithsinger
-                await supabaseService.InitializeAsync();
-                var allSongs = await supabaseService.GetSongsAsync();
-
-                // Lọc bài hát theo ID_SINGER
-                int singerId = Convert.ToInt32(src["ID_SINGER"]);
-                var artistSongs = allSongs
-                    .Where(s => s.id_singer == singerId)
-                    .ToList();
-
-                // Chuyển đổi List<Song> thành DataTable và hiển thị danh sách bài hát từ form SongSearch
-                DataTable dtb = ConvertSongsToDataTable(artistSongs);
                 flpSongs.Controls.Clear();
-                foreach (DataRow dr in dtb.Rows)
+                foreach (string id in id_song)
                 {
-                    SongSearch songSearch = new SongSearch(H, dr);
+                    SongSearch songSearch = new SongSearch(H, id);
                     flpSongs.Controls.Add(songSearch);
                 }
 
-                // Tải hình ảnh của nghệ sĩ từ URL trong thuộc tính PICTURE_SINGER của table singer
-                string pictureUrl = src["PICTURE_SINGER"]?.ToString();
+                // Tải hình ảnh của nghệ sĩ từ URL
+                string pictureUrl = picture_singer;
                 if (!string.IsNullOrEmpty(pictureUrl))
                 {
                     using (var client = new HttpClient())
@@ -135,11 +122,9 @@ namespace SONA
                     btnAvatar.BackgroundImage = null;
                 }
 
-                // Cập nhật các thông tin cho nghệ sĩ
-                btnAvatar.BackgroundImageLayout = ImageLayout.Stretch;
-                lblNameSinger.Text = src["NAME_SINGER"]?.ToString() ?? "Unknown Artist";
-                lblDate.Text = ConvertDate(src["BIRTHDATE"]?.ToString() ?? string.Empty);
-                lblCountry.Text = src["NATIONALITY"]?.ToString() ?? "Unknown Nationality";
+                lblNameSinger.Text = name_singer;
+                lblDate.Text = ConvertDate(birthdate);
+                lblCountry.Text = nationality;
             }
             catch (Exception ex)
             {

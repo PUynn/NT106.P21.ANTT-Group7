@@ -76,6 +76,8 @@ namespace SONA
             // 
             // pbPictureSong
             // 
+            this.pbPictureSong.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbPictureSong.FillColor = System.Drawing.Color.Transparent;
             this.pbPictureSong.ImageRotate = 0F;
             this.pbPictureSong.Location = new System.Drawing.Point(400, 30);
             this.pbPictureSong.Name = "pbPictureSong";
@@ -133,6 +135,7 @@ namespace SONA
             // 
             // btnPictureSinger
             // 
+            this.btnPictureSinger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPictureSinger.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPictureSinger.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
