@@ -18,16 +18,13 @@ namespace SONA
     public partial class SignUpInfor : UserControl
     {
         SONA S;
-        DataRow dr;
-        private SupabaseService supabaseService;
-        string srcEmail;
+        string emailUser;
 
         public SignUpInfor(SONA s, string email)
         {
             InitializeComponent();
             S = s;
-            srcEmail = email;
-            supabaseService = new SupabaseService();
+            emailUser = email;
         }
 
         // Hàm kiểm tra thông tin đăng nhập và báo lỗi nếu không hợp lệ
@@ -115,11 +112,11 @@ namespace SONA
                     writer.Write(tbUser.Text);
                     writer.Write(tbPass.Text);
                     writer.Write(tbSdt.Text);
-                    writer.Write(srcEmail);
+                    writer.Write(emailUser);
                     string response = reader.ReadString();
                     if (response == "OK")
                     {
-                        S.ShowHome(srcEmail);
+                        S.ShowHome(emailUser);
                     }
                     else
                     {

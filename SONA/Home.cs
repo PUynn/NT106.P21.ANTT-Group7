@@ -4,6 +4,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -19,15 +20,46 @@ namespace SONA
     {
         SONA S;
         private ListenMusic currentListenMusic;
-        string emailUser;
+        private string emailUser;
+        private string idUser;
 
-        public Home(SONA s, string srcEmail)
+        public Home(SONA s, string email)
         {
-            InitializeComponent();
             S = s;
-            emailUser = srcEmail;
+            emailUser = email;
+            InitializeComponent();
+            getIdUser();
         }
         
+        private void getIdUser()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getIDUser");
+                    writer.Write(emailUser);
+                    string response = reader.ReadString();
+
+                    if (response == "OK")
+                    {
+                        idUser = reader.ReadString();
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
         private void MyClick()
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
@@ -41,7 +73,7 @@ namespace SONA
         // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
-            HomeContent homeContent = new HomeContent(this);
+            HomeContent homeContent = new HomeContent(this, idUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(homeContent);
 
@@ -60,11 +92,31 @@ namespace SONA
         private void btnFavorited_Click(object sender, EventArgs e)
         {
             MyClick();
+
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            Favourite favourite = new Favourite(this, idUser);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(favourite);
         }
 
         private void btnAlbums_Click(object sender, EventArgs e)
         {
             MyClick();
+
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            Album album = new Album(this);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(album);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -98,7 +150,7 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            HomeContent home = new HomeContent(this);
+            HomeContent home = new HomeContent(this, idUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(home);
         }
@@ -144,7 +196,7 @@ namespace SONA
                     currentListenMusic = null;
                 }
 
-                SearchForm searchForm = new SearchForm(this);
+                SearchForm searchForm = new SearchForm(this, idUser);
                 pnMain.Controls.Clear();
                 pnMain.Controls.Add(searchForm);
             }
@@ -164,6 +216,5 @@ namespace SONA
             }
             currentListenMusic = listenMusic;
         }
-
     }
 }

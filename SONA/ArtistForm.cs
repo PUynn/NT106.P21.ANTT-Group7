@@ -16,13 +16,14 @@ namespace SONA
     public partial class ArtistForm : UserControl
     {
         private Home H;
-        private string id_singer;
+        private string id_singer, idUser;
 
-        public ArtistForm(Home h, string id_singer)
+        public ArtistForm(Home h, string id_singer, string idUser)
         {
             InitializeComponent();
             H = h;
             this.id_singer = id_singer;
+            this.idUser = idUser;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 nghệ sĩ
@@ -77,7 +78,7 @@ namespace SONA
         // Hàm gọi form ArtistInfor để xem thông tin của nghệ sĩ bài hát
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(H, id_singer);
+            ArtistInfor artistInfor = new ArtistInfor(H, id_singer, idUser);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(artistInfor);
         }

@@ -102,11 +102,11 @@
             // lblHistory
             // 
             this.lblHistory.BackColor = System.Drawing.Color.Transparent;
-            this.lblHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHistory.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHistory.ForeColor = System.Drawing.Color.White;
             this.lblHistory.Location = new System.Drawing.Point(14, 1411);
             this.lblHistory.Name = "lblHistory";
-            this.lblHistory.Size = new System.Drawing.Size(135, 27);
+            this.lblHistory.Size = new System.Drawing.Size(143, 32);
             this.lblHistory.TabIndex = 5;
             this.lblHistory.Text = "Songs history";
             // 
@@ -144,6 +144,7 @@
             // 
             // btnAudio
             // 
+            this.btnAudio.Animated = true;
             this.btnAudio.BackColor = System.Drawing.Color.Transparent;
             this.btnAudio.BorderRadius = 8;
             this.btnAudio.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
@@ -154,8 +155,9 @@
             this.btnAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnAudio.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnAudio.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAudio.ForeColor = System.Drawing.Color.White;
+            this.btnAudio.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAudio.Location = new System.Drawing.Point(305, 15);
             this.btnAudio.Name = "btnAudio";
             this.btnAudio.Size = new System.Drawing.Size(135, 33);
@@ -164,6 +166,7 @@
             // 
             // btnPodcasts
             // 
+            this.btnPodcasts.Animated = true;
             this.btnPodcasts.BackColor = System.Drawing.Color.Transparent;
             this.btnPodcasts.BorderRadius = 8;
             this.btnPodcasts.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
@@ -174,8 +177,9 @@
             this.btnPodcasts.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnPodcasts.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnPodcasts.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnPodcasts.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnPodcasts.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPodcasts.ForeColor = System.Drawing.Color.White;
+            this.btnPodcasts.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnPodcasts.Location = new System.Drawing.Point(171, 15);
             this.btnPodcasts.Name = "btnPodcasts";
             this.btnPodcasts.Size = new System.Drawing.Size(128, 33);
@@ -184,6 +188,7 @@
             // 
             // btnMusic
             // 
+            this.btnMusic.Animated = true;
             this.btnMusic.BackColor = System.Drawing.Color.Transparent;
             this.btnMusic.BorderRadius = 8;
             this.btnMusic.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
@@ -194,8 +199,9 @@
             this.btnMusic.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnMusic.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnMusic.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnMusic.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMusic.ForeColor = System.Drawing.Color.White;
+            this.btnMusic.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMusic.Location = new System.Drawing.Point(75, 15);
             this.btnMusic.Name = "btnMusic";
             this.btnMusic.Size = new System.Drawing.Size(90, 33);
@@ -204,6 +210,7 @@
             // 
             // btnAll
             // 
+            this.btnAll.Animated = true;
             this.btnAll.BackColor = System.Drawing.Color.Transparent;
             this.btnAll.BorderRadius = 8;
             this.btnAll.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
@@ -215,8 +222,9 @@
             this.btnAll.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnAll.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnAll.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnAll.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAll.ForeColor = System.Drawing.Color.White;
+            this.btnAll.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAll.Location = new System.Drawing.Point(14, 15);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(55, 33);
@@ -225,6 +233,7 @@
             // 
             // btnRefresh3
             // 
+            this.btnRefresh3.Animated = true;
             this.btnRefresh3.BorderRadius = 5;
             this.btnRefresh3.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefresh3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -234,36 +243,40 @@
             this.btnRefresh3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnRefresh3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnRefresh3.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh3.Location = new System.Drawing.Point(1338, 1411);
+            this.btnRefresh3.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnRefresh3.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefresh3.ImageOffset = new System.Drawing.Point(-3, 0);
+            this.btnRefresh3.Location = new System.Drawing.Point(1348, 1411);
             this.btnRefresh3.Name = "btnRefresh3";
-            this.btnRefresh3.Size = new System.Drawing.Size(118, 27);
+            this.btnRefresh3.Size = new System.Drawing.Size(108, 27);
             this.btnRefresh3.TabIndex = 5;
             this.btnRefresh3.Text = "Refresh";
             // 
             // lblForYou
             // 
             this.lblForYou.BackColor = System.Drawing.Color.Transparent;
-            this.lblForYou.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblForYou.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblForYou.ForeColor = System.Drawing.Color.White;
             this.lblForYou.Location = new System.Drawing.Point(14, 608);
             this.lblForYou.Name = "lblForYou";
-            this.lblForYou.Size = new System.Drawing.Size(139, 27);
+            this.lblForYou.Size = new System.Drawing.Size(146, 32);
             this.lblForYou.TabIndex = 5;
             this.lblForYou.Text = "Made For You";
             // 
             // lblArtists
             // 
             this.lblArtists.BackColor = System.Drawing.Color.Transparent;
-            this.lblArtists.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblArtists.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblArtists.ForeColor = System.Drawing.Color.White;
             this.lblArtists.Location = new System.Drawing.Point(14, 1005);
             this.lblArtists.Name = "lblArtists";
-            this.lblArtists.Size = new System.Drawing.Size(189, 27);
+            this.lblArtists.Size = new System.Drawing.Size(209, 32);
             this.lblArtists.TabIndex = 5;
             this.lblArtists.Text = "Your favorite artists";
             // 
             // btnRefreshArtist
             // 
+            this.btnRefreshArtist.Animated = true;
             this.btnRefreshArtist.BorderRadius = 5;
             this.btnRefreshArtist.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefreshArtist.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -273,15 +286,19 @@
             this.btnRefreshArtist.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnRefreshArtist.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnRefreshArtist.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshArtist.Location = new System.Drawing.Point(1338, 1005);
+            this.btnRefreshArtist.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnRefreshArtist.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefreshArtist.ImageOffset = new System.Drawing.Point(-3, 0);
+            this.btnRefreshArtist.Location = new System.Drawing.Point(1348, 1005);
             this.btnRefreshArtist.Name = "btnRefreshArtist";
-            this.btnRefreshArtist.Size = new System.Drawing.Size(118, 27);
+            this.btnRefreshArtist.Size = new System.Drawing.Size(108, 27);
             this.btnRefreshArtist.TabIndex = 5;
             this.btnRefreshArtist.Text = "Refresh";
             this.btnRefreshArtist.Click += new System.EventHandler(this.btnRefreshArtist_Click);
             // 
             // btnRefreshSong
             // 
+            this.btnRefreshSong.Animated = true;
             this.btnRefreshSong.BorderRadius = 5;
             this.btnRefreshSong.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefreshSong.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -291,9 +308,12 @@
             this.btnRefreshSong.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnRefreshSong.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnRefreshSong.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshSong.Location = new System.Drawing.Point(1338, 608);
+            this.btnRefreshSong.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnRefreshSong.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefreshSong.ImageOffset = new System.Drawing.Point(-3, 0);
+            this.btnRefreshSong.Location = new System.Drawing.Point(1348, 608);
             this.btnRefreshSong.Name = "btnRefreshSong";
-            this.btnRefreshSong.Size = new System.Drawing.Size(118, 27);
+            this.btnRefreshSong.Size = new System.Drawing.Size(108, 27);
             this.btnRefreshSong.TabIndex = 5;
             this.btnRefreshSong.Text = "Refresh";
             this.btnRefreshSong.Click += new System.EventHandler(this.btnRefreshSong_Click);

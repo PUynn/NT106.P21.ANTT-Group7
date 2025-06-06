@@ -37,7 +37,6 @@
             this.lblCheckPass = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblLogin = new System.Windows.Forms.Label();
-            this.btnRefreshOTP = new Guna.UI2.WinForms.Guna2Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.lblCheckOTP = new System.Windows.Forms.Label();
@@ -45,8 +44,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblCheckEmail = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.btnNext = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRefreshOTP = new Guna.UI2.WinForms.Guna2Button();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // tbOTP
@@ -178,26 +178,6 @@
             this.lblLogin.Text = "Bạn đã có tài khoản? Đăng nhập";
             this.lblLogin.Click += new System.EventHandler(this.lblLogin_Click);
             // 
-            // btnRefreshOTP
-            // 
-            this.btnRefreshOTP.BorderRadius = 17;
-            this.btnRefreshOTP.CheckedState.Image = global::SONA.Properties.Resources.Refresh;
-            this.btnRefreshOTP.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRefreshOTP.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefreshOTP.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnRefreshOTP.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnRefreshOTP.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnRefreshOTP.FillColor = System.Drawing.Color.Transparent;
-            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnRefreshOTP.ForeColor = System.Drawing.Color.Transparent;
-            this.btnRefreshOTP.Image = global::SONA.Properties.Resources.Refresh;
-            this.btnRefreshOTP.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnRefreshOTP.Location = new System.Drawing.Point(594, 341);
-            this.btnRefreshOTP.Name = "btnRefreshOTP";
-            this.btnRefreshOTP.Size = new System.Drawing.Size(35, 35);
-            this.btnRefreshOTP.TabIndex = 27;
-            this.btnRefreshOTP.Click += new System.EventHandler(this.btnRefreshOTP_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -279,20 +259,6 @@
             this.guna2Elipse1.BorderRadius = 24;
             this.guna2Elipse1.TargetControl = this;
             // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::SONA.Properties.Resources.x;
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClose.FillColor = System.Drawing.Color.Transparent;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(641, 33);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 33;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // btnNext
             // 
             this.btnNext.BorderRadius = 17;
@@ -313,13 +279,49 @@
             this.btnNext.TabIndex = 34;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
+            // btnRefreshOTP
+            // 
+            this.btnRefreshOTP.BorderRadius = 17;
+            this.btnRefreshOTP.CheckedState.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefreshOTP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefreshOTP.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshOTP.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRefreshOTP.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRefreshOTP.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRefreshOTP.FillColor = System.Drawing.Color.Transparent;
+            this.btnRefreshOTP.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRefreshOTP.ForeColor = System.Drawing.Color.Transparent;
+            this.btnRefreshOTP.Image = global::SONA.Properties.Resources.Refresh;
+            this.btnRefreshOTP.ImageSize = new System.Drawing.Size(25, 25);
+            this.btnRefreshOTP.Location = new System.Drawing.Point(594, 341);
+            this.btnRefreshOTP.Name = "btnRefreshOTP";
+            this.btnRefreshOTP.Size = new System.Drawing.Size(35, 35);
+            this.btnRefreshOTP.TabIndex = 27;
+            this.btnRefreshOTP.Click += new System.EventHandler(this.btnRefreshOTP_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderRadius = 15;
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Image = global::SONA.Properties.Resources.x;
+            this.btnClose.Location = new System.Drawing.Point(640, 33);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 35;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // ForgetPassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbEmail);
             this.Controls.Add(this.lblCheckEmail);
@@ -361,7 +363,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCheckEmail;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
-        private Guna.UI2.WinForms.Guna2Button btnClose;
         private Guna.UI2.WinForms.Guna2Button btnNext;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
     }
 }

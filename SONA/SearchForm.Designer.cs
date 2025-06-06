@@ -53,11 +53,11 @@
             // lblResultFound
             // 
             this.lblResultFound.BackColor = System.Drawing.Color.Transparent;
-            this.lblResultFound.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResultFound.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResultFound.ForeColor = System.Drawing.Color.White;
             this.lblResultFound.Location = new System.Drawing.Point(16, 68);
             this.lblResultFound.Name = "lblResultFound";
-            this.lblResultFound.Size = new System.Drawing.Size(180, 38);
+            this.lblResultFound.Size = new System.Drawing.Size(178, 43);
             this.lblResultFound.TabIndex = 9;
             this.lblResultFound.Text = "Result found:";
             // 
@@ -92,7 +92,7 @@
             this.btnArtists.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnArtists.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnArtists.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnArtists.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnArtists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnArtists.ForeColor = System.Drawing.Color.White;
             this.btnArtists.Location = new System.Drawing.Point(173, 13);
             this.btnArtists.Name = "btnArtists";
@@ -113,7 +113,7 @@
             this.btnAll.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnAll.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnAll.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnAll.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAll.ForeColor = System.Drawing.Color.White;
             this.btnAll.Location = new System.Drawing.Point(16, 13);
             this.btnAll.Name = "btnAll";
@@ -133,7 +133,7 @@
             this.btnSongs.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnSongs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnSongs.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.btnSongs.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSongs.ForeColor = System.Drawing.Color.White;
             this.btnSongs.Location = new System.Drawing.Point(77, 13);
             this.btnSongs.Name = "btnSongs";

@@ -32,8 +32,8 @@
             this.lvMessages = new System.Windows.Forms.ListView();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnSend = new Guna.UI2.WinForms.Guna2Button();
             this.tbMessage = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnSend = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,7 @@
             // lvMessages
             // 
             this.lvMessages.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.lvMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvMessages.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvMessages.ForeColor = System.Drawing.Color.Black;
             this.lvMessages.FullRowSelect = true;
             this.lvMessages.HideSelection = false;
@@ -77,25 +77,9 @@
             this.guna2Panel3.Size = new System.Drawing.Size(1027, 119);
             this.guna2Panel3.TabIndex = 1;
             // 
-            // btnSend
-            // 
-            this.btnSend.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnSend.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnSend.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnSend.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnSend.FillColor = System.Drawing.Color.Transparent;
-            this.btnSend.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Image = global::SONA.Properties.Resources.Send;
-            this.btnSend.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnSend.Location = new System.Drawing.Point(926, 37);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(50, 50);
-            this.btnSend.TabIndex = 1;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
             // tbMessage
             // 
+            this.tbMessage.AutoScroll = true;
             this.tbMessage.BorderColor = System.Drawing.Color.White;
             this.tbMessage.BorderRadius = 15;
             this.tbMessage.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -115,6 +99,24 @@
             this.tbMessage.SelectedText = "";
             this.tbMessage.Size = new System.Drawing.Size(866, 50);
             this.tbMessage.TabIndex = 0;
+            this.tbMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbMessage_KeyDown);
+            // 
+            // btnSend
+            // 
+            this.btnSend.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSend.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSend.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSend.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSend.FillColor = System.Drawing.Color.Transparent;
+            this.btnSend.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnSend.ForeColor = System.Drawing.Color.White;
+            this.btnSend.Image = global::SONA.Properties.Resources.Send;
+            this.btnSend.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnSend.Location = new System.Drawing.Point(926, 37);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(50, 50);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // ChatRoom
             // 

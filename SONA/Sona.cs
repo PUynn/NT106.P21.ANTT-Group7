@@ -20,8 +20,7 @@ namespace SONA
         public SONA()
         {
             InitializeComponent();
-            SignUp signUp = new SignUp(this);
-            pnLogin.Controls.Add(signUp);
+            ShowLogin();
             GetIP();
         }
         private void GetIP()
@@ -38,6 +37,20 @@ namespace SONA
                     }
                 }
             }
+        }
+
+        public void ShowLogin()
+        {
+            Login login = new Login(this);
+
+            pnMain.Controls.Clear();
+            pnMain.Visible = false;
+
+            pnLogin.Controls.Clear();
+            pnLogin.Controls.Add(login);
+            pnLogin.Visible = true;
+            login.Visible = true;
+            this.Activate();
         }
 
         public void ShowHome(string s)

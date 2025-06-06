@@ -56,7 +56,6 @@ namespace SONA
             this.btReplay = new Guna.UI2.WinForms.Guna2Button();
             this.btnMore = new Guna.UI2.WinForms.Guna2Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPictureSong)).BeginInit();
             this.guna2Panel2.SuspendLayout();
@@ -114,22 +113,22 @@ namespace SONA
             // lblSince
             // 
             this.lblSince.BackColor = System.Drawing.Color.Transparent;
-            this.lblSince.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSince.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSince.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
             this.lblSince.Location = new System.Drawing.Point(98, 44);
             this.lblSince.Name = "lblSince";
-            this.lblSince.Size = new System.Drawing.Size(173, 20);
+            this.lblSince.Size = new System.Drawing.Size(170, 22);
             this.lblSince.TabIndex = 1;
             this.lblSince.Text = "Since 1991, December 02";
             // 
             // lblNameSinger
             // 
             this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
-            this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSinger.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSinger.ForeColor = System.Drawing.Color.Gainsboro;
             this.lblNameSinger.Location = new System.Drawing.Point(98, 17);
             this.lblNameSinger.Name = "lblNameSinger";
-            this.lblNameSinger.Size = new System.Drawing.Size(110, 27);
+            this.lblNameSinger.Size = new System.Drawing.Size(108, 30);
             this.lblNameSinger.TabIndex = 1;
             this.lblNameSinger.Text = "Charlie Puth";
             // 
@@ -177,6 +176,7 @@ namespace SONA
             // 
             // tbsVolume
             // 
+            this.tbsVolume.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tbsVolume.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.tbsVolume.Location = new System.Drawing.Point(59, 19);
             this.tbsVolume.Name = "tbsVolume";
@@ -187,6 +187,7 @@ namespace SONA
             // 
             // tbsTimeSong
             // 
+            this.tbsTimeSong.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tbsTimeSong.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.tbsTimeSong.Location = new System.Drawing.Point(431, 43);
             this.tbsTimeSong.Name = "tbsTimeSong";
@@ -198,22 +199,22 @@ namespace SONA
             // lblEnd
             // 
             this.lblEnd.BackColor = System.Drawing.Color.Transparent;
-            this.lblEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEnd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEnd.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblEnd.Location = new System.Drawing.Point(942, 80);
+            this.lblEnd.Location = new System.Drawing.Point(943, 73);
             this.lblEnd.Name = "lblEnd";
-            this.lblEnd.Size = new System.Drawing.Size(31, 20);
+            this.lblEnd.Size = new System.Drawing.Size(30, 22);
             this.lblEnd.TabIndex = 3;
             this.lblEnd.Text = "4:45";
             // 
             // lblProcess
             // 
             this.lblProcess.BackColor = System.Drawing.Color.Transparent;
-            this.lblProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProcess.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProcess.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblProcess.Location = new System.Drawing.Point(431, 80);
+            this.lblProcess.Location = new System.Drawing.Point(431, 73);
             this.lblProcess.Name = "lblProcess";
-            this.lblProcess.Size = new System.Drawing.Size(31, 20);
+            this.lblProcess.Size = new System.Drawing.Size(30, 22);
             this.lblProcess.TabIndex = 3;
             this.lblProcess.Text = "2:23";
             // 
@@ -229,6 +230,8 @@ namespace SONA
             // 
             // btnLyrics
             // 
+            this.btnLyrics.Animated = true;
+            this.btnLyrics.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLyrics.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnLyrics.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnLyrics.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -236,6 +239,7 @@ namespace SONA
             this.btnLyrics.FillColor = System.Drawing.Color.Transparent;
             this.btnLyrics.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnLyrics.ForeColor = System.Drawing.Color.White;
+            this.btnLyrics.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnLyrics.Image = global::SONA.Properties.Resources.Lyrics;
             this.btnLyrics.ImageSize = new System.Drawing.Size(45, 45);
             this.btnLyrics.Location = new System.Drawing.Point(115, 2);
@@ -245,7 +249,10 @@ namespace SONA
             // 
             // btnFavourite
             // 
-            this.btnFavourite.CheckedState.Image = global::SONA.Properties.Resources.LikeOn;
+            this.btnFavourite.Animated = true;
+            this.btnFavourite.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnFavourite.CheckedState.Image = global::SONA.Properties.Resources.FavouriteOn;
+            this.btnFavourite.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFavourite.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnFavourite.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnFavourite.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -253,15 +260,19 @@ namespace SONA
             this.btnFavourite.FillColor = System.Drawing.Color.Transparent;
             this.btnFavourite.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnFavourite.ForeColor = System.Drawing.Color.White;
-            this.btnFavourite.Image = global::SONA.Properties.Resources.Favourites1;
+            this.btnFavourite.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFavourite.Image = global::SONA.Properties.Resources.Favourites;
             this.btnFavourite.ImageSize = new System.Drawing.Size(45, 45);
             this.btnFavourite.Location = new System.Drawing.Point(3, 3);
             this.btnFavourite.Name = "btnFavourite";
             this.btnFavourite.Size = new System.Drawing.Size(50, 68);
             this.btnFavourite.TabIndex = 0;
+            this.btnFavourite.Click += new System.EventHandler(this.btnFavourite_Click);
             // 
             // btnAlbums
             // 
+            this.btnAlbums.Animated = true;
+            this.btnAlbums.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAlbums.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnAlbums.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnAlbums.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -269,6 +280,7 @@ namespace SONA
             this.btnAlbums.FillColor = System.Drawing.Color.Transparent;
             this.btnAlbums.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnAlbums.ForeColor = System.Drawing.Color.White;
+            this.btnAlbums.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAlbums.Image = global::SONA.Properties.Resources.Add;
             this.btnAlbums.ImageSize = new System.Drawing.Size(45, 45);
             this.btnAlbums.Location = new System.Drawing.Point(59, 3);
@@ -290,7 +302,8 @@ namespace SONA
             // 
             // btnPlayMusic
             // 
-            this.btnPlayMusic.CheckedState.Image = global::SONA.Properties.Resources.PlayAni1;
+            this.btnPlayMusic.Animated = true;
+            this.btnPlayMusic.CheckedState.Image = global::SONA.Properties.Resources.PlayAni;
             this.btnPlayMusic.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPlayMusic.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPlayMusic.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -299,6 +312,7 @@ namespace SONA
             this.btnPlayMusic.FillColor = System.Drawing.Color.Transparent;
             this.btnPlayMusic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnPlayMusic.ForeColor = System.Drawing.Color.White;
+            this.btnPlayMusic.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnPlayMusic.Image = global::SONA.Properties.Resources.PauseAni;
             this.btnPlayMusic.ImageSize = new System.Drawing.Size(50, 50);
             this.btnPlayMusic.Location = new System.Drawing.Point(111, 3);
@@ -309,6 +323,8 @@ namespace SONA
             // 
             // btnPrev
             // 
+            this.btnPrev.Animated = true;
+            this.btnPrev.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrev.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnPrev.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnPrev.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -316,6 +332,7 @@ namespace SONA
             this.btnPrev.FillColor = System.Drawing.Color.Transparent;
             this.btnPrev.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnPrev.ForeColor = System.Drawing.Color.White;
+            this.btnPrev.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnPrev.Image = global::SONA.Properties.Resources.Prev;
             this.btnPrev.ImageSize = new System.Drawing.Size(50, 50);
             this.btnPrev.Location = new System.Drawing.Point(56, 3);
@@ -325,6 +342,8 @@ namespace SONA
             // 
             // btShuffle
             // 
+            this.btShuffle.Animated = true;
+            this.btShuffle.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShuffle.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btShuffle.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btShuffle.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -332,6 +351,7 @@ namespace SONA
             this.btShuffle.FillColor = System.Drawing.Color.Transparent;
             this.btShuffle.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btShuffle.ForeColor = System.Drawing.Color.White;
+            this.btShuffle.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btShuffle.Image = global::SONA.Properties.Resources.Shuffle;
             this.btShuffle.ImageSize = new System.Drawing.Size(40, 40);
             this.btShuffle.Location = new System.Drawing.Point(1, 3);
@@ -341,6 +361,8 @@ namespace SONA
             // 
             // btnNext
             // 
+            this.btnNext.Animated = true;
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNext.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnNext.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnNext.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -348,6 +370,7 @@ namespace SONA
             this.btnNext.FillColor = System.Drawing.Color.Transparent;
             this.btnNext.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnNext.ForeColor = System.Drawing.Color.White;
+            this.btnNext.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnNext.Image = global::SONA.Properties.Resources.Next;
             this.btnNext.ImageSize = new System.Drawing.Size(50, 50);
             this.btnNext.Location = new System.Drawing.Point(188, 3);
@@ -357,6 +380,8 @@ namespace SONA
             // 
             // btReplay
             // 
+            this.btReplay.Animated = true;
+            this.btReplay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btReplay.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btReplay.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btReplay.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -364,6 +389,7 @@ namespace SONA
             this.btReplay.FillColor = System.Drawing.Color.Transparent;
             this.btReplay.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btReplay.ForeColor = System.Drawing.Color.White;
+            this.btReplay.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btReplay.Image = global::SONA.Properties.Resources.Record;
             this.btReplay.ImageSize = new System.Drawing.Size(45, 45);
             this.btReplay.Location = new System.Drawing.Point(245, 3);
@@ -374,6 +400,8 @@ namespace SONA
             // 
             // btnMore
             // 
+            this.btnMore.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnMore.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMore.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnMore.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnMore.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -381,6 +409,7 @@ namespace SONA
             this.btnMore.FillColor = System.Drawing.Color.Transparent;
             this.btnMore.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnMore.ForeColor = System.Drawing.Color.White;
+            this.btnMore.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMore.Image = global::SONA.Properties.Resources.More;
             this.btnMore.ImageSize = new System.Drawing.Size(45, 45);
             this.btnMore.Location = new System.Drawing.Point(1416, 59);
@@ -391,11 +420,6 @@ namespace SONA
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 80;
-            this.guna2Elipse1.TargetControl = this.btnPictureSinger;
             // 
             // ListenMusic
             // 
@@ -446,7 +470,6 @@ namespace SONA
         private Guna.UI2.WinForms.Guna2Panel guna2Panel6;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblSince;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
 
         public FormBorderStyle FormBorderStyle { get; private set; }
     }

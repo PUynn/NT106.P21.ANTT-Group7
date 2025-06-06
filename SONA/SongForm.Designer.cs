@@ -49,11 +49,11 @@
             // lbNameSong
             // 
             this.lbNameSong.BackColor = System.Drawing.Color.Transparent;
-            this.lbNameSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNameSong.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNameSong.ForeColor = System.Drawing.Color.White;
             this.lbNameSong.Location = new System.Drawing.Point(13, 233);
             this.lbNameSong.Name = "lbNameSong";
-            this.lbNameSong.Size = new System.Drawing.Size(15, 24);
+            this.lbNameSong.Size = new System.Drawing.Size(15, 27);
             this.lbNameSong.TabIndex = 8;
             this.lbNameSong.Text = "A";
             // 

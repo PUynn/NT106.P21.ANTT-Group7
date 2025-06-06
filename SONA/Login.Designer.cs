@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -41,24 +40,14 @@
             this.lbQuenmatkhau = new System.Windows.Forms.Label();
             this.btnDangNhap = new Guna.UI2.WinForms.Guna2Button();
             this.lbViewPassword = new System.Windows.Forms.Label();
-            this.lbDangky = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.lblCheck = new System.Windows.Forms.Label();
-            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            this.lbDangki = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.pnViewPass = new Guna.UI2.WinForms.Guna2Panel();
             this.btnLoginGoogle = new Guna.UI2.WinForms.Guna2Button();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(236, 704);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(221, 18);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Bạn chưa có tài khoản? Đăng kí ";
             // 
             // label4
             // 
@@ -126,7 +115,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.label1.Location = new System.Drawing.Point(241, 95);
+            this.label1.Location = new System.Drawing.Point(231, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(231, 48);
             this.label1.TabIndex = 1;
@@ -184,7 +173,7 @@
             this.btnDangNhap.BackColor = System.Drawing.Color.Transparent;
             this.btnDangNhap.BorderRadius = 33;
             this.btnDangNhap.FillColor = System.Drawing.Color.DarkGray;
-            this.btnDangNhap.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDangNhap.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.btnDangNhap.ForeColor = System.Drawing.Color.White;
             this.btnDangNhap.HoverState.FillColor = System.Drawing.Color.LightBlue;
             this.btnDangNhap.ImageSize = new System.Drawing.Size(28, 28);
@@ -208,19 +197,6 @@
             this.lbViewPassword.Text = "Hiện";
             this.lbViewPassword.Click += new System.EventHandler(this.lbViewPassword_Click);
             // 
-            // lbDangky
-            // 
-            this.lbDangky.AutoSize = true;
-            this.lbDangky.BackColor = System.Drawing.Color.Transparent;
-            this.lbDangky.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbDangky.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDangky.Location = new System.Drawing.Point(396, 704);
-            this.lbDangky.Name = "lbDangky";
-            this.lbDangky.Size = new System.Drawing.Size(62, 18);
-            this.lbDangky.TabIndex = 14;
-            this.lbDangky.Text = "Đăng kí ";
-            this.lbDangky.Click += new System.EventHandler(this.lbDangky_Click);
-            // 
             // guna2Elipse1
             // 
             this.guna2Elipse1.BorderRadius = 24;
@@ -237,19 +213,30 @@
             this.lblCheck.TabIndex = 16;
             this.lblCheck.Text = "Tài khoản hoặc mật khẩu chưa chính xác!";
             // 
-            // btnClose
+            // lbDangki
             // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::SONA.Properties.Resources.x;
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClose.FillColor = System.Drawing.Color.Transparent;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(641, 33);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 15;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.lbDangki.AutoSize = true;
+            this.lbDangki.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbDangki.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDangki.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.lbDangki.Location = new System.Drawing.Point(395, 692);
+            this.lbDangki.Name = "lbDangki";
+            this.lbDangki.Size = new System.Drawing.Size(60, 20);
+            this.lbDangki.TabIndex = 10;
+            this.lbDangki.Text = "Đăng kí";
+            this.lbDangki.Click += new System.EventHandler(this.lbDangky_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.label2.Location = new System.Drawing.Point(235, 692);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(162, 20);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Bạn chưa có tài khoản?";
             // 
             // pnViewPass
             // 
@@ -281,22 +268,38 @@
             this.btnLoginGoogle.Text = "Đăng nhập bằng Google";
             this.btnLoginGoogle.Click += new System.EventHandler(this.btnLoginGoogle_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderRadius = 15;
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Image = global::SONA.Properties.Resources.x;
+            this.btnClose.Location = new System.Drawing.Point(640, 33);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 17;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.lblCheck);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.lbDangky);
+            this.Controls.Add(this.lblCheck);
             this.Controls.Add(this.pnViewPass);
             this.Controls.Add(this.lbViewPassword);
             this.Controls.Add(this.btnDangNhap);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lbDangki);
             this.Controls.Add(this.lbQuenmatkhau);
             this.Controls.Add(this.tbPass);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbEmail);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLoginGoogle);
             this.Controls.Add(this.label4);
@@ -312,7 +315,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2Button btnLoginGoogle;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
@@ -326,9 +328,10 @@
         private Guna.UI2.WinForms.Guna2Button btnDangNhap;
         private System.Windows.Forms.Label lbViewPassword;
         private Guna.UI2.WinForms.Guna2Panel pnViewPass;
-        private System.Windows.Forms.Label lbDangky;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
-        private Guna.UI2.WinForms.Guna2Button btnClose;
         private System.Windows.Forms.Label lblCheck;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbDangki;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
     }
 }

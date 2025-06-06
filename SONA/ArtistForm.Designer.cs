@@ -69,7 +69,7 @@
             // 
             this.lbNameSinger.AutoSize = false;
             this.lbNameSinger.BackColor = System.Drawing.Color.Transparent;
-            this.lbNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNameSinger.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNameSinger.ForeColor = System.Drawing.Color.White;
             this.lbNameSinger.Location = new System.Drawing.Point(13, 230);
             this.lbNameSinger.Name = "lbNameSinger";

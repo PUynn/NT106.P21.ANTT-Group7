@@ -61,33 +61,33 @@
             // lblCountry
             // 
             this.lblCountry.BackColor = System.Drawing.Color.Transparent;
-            this.lblCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCountry.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCountry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
             this.lblCountry.Location = new System.Drawing.Point(343, 180);
             this.lblCountry.Name = "lblCountry";
-            this.lblCountry.Size = new System.Drawing.Size(40, 24);
+            this.lblCountry.Size = new System.Drawing.Size(37, 27);
             this.lblCountry.TabIndex = 1;
             this.lblCountry.Text = "USA";
             // 
             // lblDate
             // 
             this.lblDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
             this.lblDate.Location = new System.Drawing.Point(343, 155);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(210, 24);
+            this.lblDate.Size = new System.Drawing.Size(204, 27);
             this.lblDate.TabIndex = 1;
             this.lblDate.Text = "Since 1991, December 02";
             // 
             // lblNameSinger
             // 
             this.lblNameSinger.BackColor = System.Drawing.Color.Transparent;
-            this.lblNameSinger.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSinger.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNameSinger.ForeColor = System.Drawing.Color.White;
             this.lblNameSinger.Location = new System.Drawing.Point(341, 105);
             this.lblNameSinger.Name = "lblNameSinger";
-            this.lblNameSinger.Size = new System.Drawing.Size(222, 48);
+            this.lblNameSinger.Size = new System.Drawing.Size(219, 56);
             this.lblNameSinger.TabIndex = 1;
             this.lblNameSinger.Text = "Charlie Puth";
             // 
@@ -105,11 +105,11 @@
             // guna2HtmlLabel1
             // 
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.White;
             this.guna2HtmlLabel1.Location = new System.Drawing.Point(16, 342);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(132, 38);
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(128, 43);
             this.guna2HtmlLabel1.TabIndex = 13;
             this.guna2HtmlLabel1.Text = "List song:";
             // 

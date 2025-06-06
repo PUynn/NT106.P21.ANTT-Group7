@@ -27,14 +27,18 @@ namespace SONA
         private TimeSpan lastPosition;
 
         private string id_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
-        public ListenMusic(Home h, string id_song)
+        private string idUser;
+        private bool isFavorited = false;
+        public ListenMusic(Home h, string id_song, string idUser)
         {
             H = h;
             this.id_song = id_song;
+            this.idUser = idUser;
 
             InitializeComponent();
             GetData();
-            this.Disposed += (s, e) => StopMusicAndDispose(); // Giải phóng tài nguyên khi điều khiển bị hủy
+            showSongsFavourite();
+            this.Disposed += (s, e) => StopMusicAndDispose(); // Giải phóng tài nguyên khi điều khiển bị hủy        
         }
 
         private void GetData()
@@ -58,6 +62,42 @@ namespace SONA
                         birthdate = reader.ReadString();
                         picture_song = reader.ReadString();
                         am_thanh = reader.ReadString();
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void showSongsFavourite()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("songFavurite");
+                    writer.Write(idUser);
+                    writer.Write(id_song);
+
+                    string response = reader.ReadString();
+                    if (response == "Exists")
+                    {
+                        isFavorited = true;
+                        btnFavourite.Checked = true;
+                    }
+                    else if (response == "Nothing")
+                    {
+                        isFavorited = false;
+                        btnFavourite.Checked = false;
                     }
                     else
                     {
@@ -223,6 +263,61 @@ namespace SONA
             }
         }
 
+        private void btnFavourite_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    if (!isFavorited)
+                    {
+                        writer.Write("addFavourite");
+                        writer.Write(idUser);
+                        writer.Write(id_song);
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            isFavorited = true;
+                            btnFavourite.Checked = true;
+                        }
+                        else
+                        {
+                            isFavorited = false;
+                            btnFavourite.Checked = false;
+                            MessageBox.Show(response);
+                        }
+                    }
+                    else
+                    {
+                        writer.Write("removeFavourite");
+                        writer.Write(idUser);
+                        writer.Write(id_song);
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            isFavorited = false;
+                            btnFavourite.Checked = false;
+                        }
+                        else
+                        {
+                            isFavorited = true;
+                            btnFavourite.Checked = true;
+                            MessageBox.Show(response);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
         // Hàm tạm dừng hoặc phát nhạc
         private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
@@ -302,7 +397,7 @@ namespace SONA
         {
             StopMusicAndDispose();
             H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(new ArtistInfor(H, id_singer));
+            H.pnMain.Controls.Add(new ArtistInfor(H, id_singer, idUser));
         }
     }
 }

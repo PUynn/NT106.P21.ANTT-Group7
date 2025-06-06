@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,20 +8,15 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using Npgsql;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Services;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Util.Store;
-using System.Data;
 using System.Net.Mail;
-using Supabase.Gotrue;
+using System.Security.Cryptography;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
-using System.Reflection;
 
 namespace SONA_Server
 {
@@ -31,8 +25,6 @@ namespace SONA_Server
         // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         string connIP = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.bzjfiynoyelxlpowlhty;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
         string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
-        
-        private SupabaseService supabaseService; // Đối tượng kết nối với Supabase
 
         private TcpListener server; // Đối tượng TcpListener để lắng nghe kết nối từ client
         private List<ClientInfor> chatClients; // Lưu danh sách client trong nhóm chat
@@ -62,7 +54,7 @@ namespace SONA_Server
         {
             if (lvManageMess.InvokeRequired)
             {
-                lvManageMess.Invoke(new Action<string>(msg => lvManageMess.Items.Add(msg)), message);
+                lvManageMess.Invoke(new Action<string>(AddToListView), message);
             }
             else
             {
@@ -106,7 +98,7 @@ namespace SONA_Server
         }
 
         // Phương thức nhận và xử lý kết nối từ client
-        private async void HandleClient(object obj)
+        private void HandleClient(object obj)
         {
             TcpClient client = obj as TcpClient; // Chuyển đổi đối tượng obj thành TcpClient
 
@@ -127,7 +119,7 @@ namespace SONA_Server
                 writer = new BinaryWriter(stream); // Tạo đối tượng BinaryWriter để ghi dữ liệu vào luồng
 
                 string requestType = reader.ReadString(); // Đọc loại yêu cầu từ client (login, signup, chat)
-                
+
                 #region Login
                 if (requestType == "loginUser")
                 {
@@ -145,6 +137,7 @@ namespace SONA_Server
                         return await CheckLoginGoogle();
                     }).Result;
                     writer.Write(result);
+                    writer.Write(userEmail);
                 }
                 else if (requestType == "forgetPassword")
                 {
@@ -199,7 +192,7 @@ namespace SONA_Server
                         string email = reader.ReadString();
                         string otp = reader.ReadString();
                         string result = CheckOTP(email, otp);
-                        
+
                         writer.Write(result);
                     }
                     else if (type == "refreshOTP")
@@ -234,37 +227,6 @@ namespace SONA_Server
                 }
                 #endregion
 
-                else if (requestType == "userInfo")
-                {
-                    string email = reader.ReadString();
-                    try
-                    {
-                        using (var conn = new NpgsqlConnection(connSona))
-                        {
-                            conn.Open();
-                            string query = "SELECT * FROM users WHERE email = @email";
-                            using (var cmd = new NpgsqlCommand(query, conn))
-                            {
-                                using (var readerdb = cmd.ExecuteReader())
-                                {
-                                    cmd.Parameters.AddWithValue("@email", email);
-
-                                    if (readerdb.Read())
-                                    {
-                                        writer.Write("OK");
-                                        writer.Write(readerdb["name_user"].ToString());
-                                        writer.Write(readerdb["password"].ToString());
-                                        writer.Write(readerdb["phone_number"].ToString());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
-                    }
-                }
                 else if (requestType == "getIDSong")
                 {
                     try
@@ -278,7 +240,7 @@ namespace SONA_Server
                                 using (var readerdb = cmd.ExecuteReader())
                                 {
                                     List<string> songIds = new List<string>();
-                                    
+
                                     while (readerdb.Read())
                                     {
                                         songIds.Add(readerdb["id_song"].ToString());
@@ -344,6 +306,34 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy id nghệ sĩ: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getIDUser")
+                {
+                    string email = reader.ReadString();
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_user FROM users WHERE email = @email";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@email", email);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["id_user"].ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
                     }
                 }
                 else if (requestType == "songForm")
@@ -429,10 +419,10 @@ namespace SONA_Server
                                         writer.Write(readerdb["name_singer"].ToString());
                                         writer.Write(readerdb["picture_singer"].ToString());
                                         writer.Write(readerdb["birthdate"].ToString());
-                                        
+
                                         writer.Write(readerdb["picture_song"].ToString());
                                         writer.Write(readerdb["am_thanh"].ToString());
-                                        
+
                                     }
                                     else
                                         writer.Write("Không tìm thấy bài hát với ID: " + id_song);
@@ -511,38 +501,6 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy nghệ sĩ: " + ex.Message);
                     }
                 }
-
-                else if (requestType == "chat")
-                {
-                    username = reader.ReadString();
-
-                    lock (chatLock) // Lock đảm bảo rằng chỉ một luồng có thể thêm client vào chatClients tại một thời điểm
-                    {
-                        clientInfor = new ClientInfor(username, clientIP, client); // Đối tượng để lưu thông tin client bao gồm tên, địa chỉ IP và đối tượng TcpClient
-                        chatClients.Add(clientInfor);
-                        AddToListView($"{clientIP}: Người dùng {username} vào nhóm chat"); // Thông báo người dùng đã vào nhóm chat trong ListView
-                    }
-
-                    // Ghi danh sách các client trong nhóm chat cho client
-                    writer.Write("ClientList");
-                    writer.Write(chatClients.Count);
-                    foreach (var c in chatClients)
-                    {
-                        writer.Write($"{c.Username} ({c.IPAddress})");
-                    }
-
-                    while (true)
-                    {
-                        string message = reader.ReadString(); // Đọc tin nhắn từ client
-                        if (string.IsNullOrEmpty(message))
-                            break;
-
-                        // Ghi tin nhắn vào ListView và gửi cho tất cả client khác
-                        string fullMessage = $"{clientIP}: {username}: {message}";
-                        AddToListView(fullMessage);
-                        BroadcastMessage(fullMessage);
-                    }
-                }
                 else if (requestType == "songSearch")
                 {
                     try
@@ -574,6 +532,162 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy bài hát: " + ex.Message);
+                    }
+                }
+                else if (requestType == "chatForm")
+                {
+                    string email = reader.ReadString();
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT name_user FROM users WHERE email = @email";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@email", email);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["name_user"].ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
+                    }
+                }
+                else if (requestType == "chatRoom")
+                {
+                    username = reader.ReadString();
+
+                    lock (chatLock) // Lock đảm bảo rằng chỉ một luồng có thể thêm client vào chatClients tại một thời điểm
+                    {
+                        clientInfor = new ClientInfor(username, clientIP, client); // Đối tượng để lưu thông tin client bao gồm tên, địa chỉ IP và đối tượng TcpClient
+                        chatClients.Add(clientInfor);
+                        AddToListView($"{clientIP}: Người dùng {username} vào nhóm chat"); // Thông báo người dùng đã vào nhóm chat trong ListView
+                    }
+
+                    // Ghi danh sách các client trong nhóm chat cho client
+                    writer.Write("ClientList");
+                    writer.Write(chatClients.Count);
+                    foreach (var c in chatClients)
+                    {
+                        writer.Write($"{c.Username} ({c.IPAddress})");
+                    }
+
+                    while (true)
+                    {
+                        string message = reader.ReadString(); // Đọc tin nhắn từ client
+                        if (string.IsNullOrEmpty(message) || message == "disconnect")
+                            break;
+
+                        // Ghi tin nhắn vào ListView và gửi cho tất cả client khác
+                        string fullMessage = $"{clientIP}: {username}: {message}";
+                        AddToListView(fullMessage);
+                        BroadcastMessage(fullMessage);
+                    }
+                }
+                else if (requestType == "addFavourite")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    int id_song = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "INSERT INTO favourites (id_user, id_song) VALUES (@id_user, @id_song)";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@id_song", id_song);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        writer.Write("OK");
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi thêm bài hát vào yêu thích: " + ex.Message);
+                    }
+                }
+                else if (requestType == "removeFavourite")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    int id_song = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "DELETE FROM favourites WHERE id_user = @id_user AND id_song = @id_song";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@id_song", id_song);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        writer.Write("OK");
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi xóa bài hát khỏi yêu thích: " + ex.Message);
+                    }
+                }
+                else if (requestType == "songFavurite")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    int id_song = int.Parse(reader.ReadString());
+                    try
+                    {
+                        if (!isSongFavouriteExsits(id_user, id_song))
+                            writer.Write("Nothing");
+                        else writer.Write("Exists");
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi kiểm tra bài hát yêu thích: " + ex.Message);
+                    }
+                }
+                else if (requestType == "Favourite")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_song FROM favourites WHERE id_user = @id_user";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> favouriteSongs = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        favouriteSongs.Add(readerdb["id_song"].ToString());
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(favouriteSongs.Count);
+                                    foreach (var songId in favouriteSongs)
+                                    {
+                                        writer.Write(songId);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy danh sách yêu thích: " + ex.Message);
                     }
                 }
                 else
@@ -981,7 +1095,10 @@ namespace SONA_Server
                     string email = userGoogle.Email;
 
                     if (IsEmailExists(email))
+                    {
+                        userEmail = email;
                         return "OK";
+                    }
                     else
                         return "Email chưa tồn tại. Vui lòng đăng kí tài khoản!";
                 }
@@ -1051,6 +1168,29 @@ namespace SONA_Server
             }
         }
         #endregion
+
+        private bool isSongFavouriteExsits(int id_user, int id_song)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(connSona))
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM favourites WHERE id_user = @id_user AND id_song = @id_song";
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id_user", id_user);
+                        cmd.Parameters.AddWithValue("@id_song", id_song);
+                        long count = (long)cmd.ExecuteScalar();
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         // Phương thức lấy địa chỉ IP cục bộ
         private string GetLocalIPAddress()
@@ -1140,8 +1280,6 @@ namespace SONA_Server
         {
             try
             {
-                // Khởi tạo đối tượng SupabaseService
-                supabaseService = new SupabaseService();
                 ClearAndInsertIP();
 
                 // Khởi tạo đối tượng TcpListener để lắng nghe kết nối từ client

@@ -15,12 +15,13 @@ namespace SONA
 {
     public partial class HomeContent : UserControl
     {
-        Home H;
-
-        public HomeContent(Home h)
+        private Home H;
+        private string idUser;
+        public HomeContent(Home h, string idUser)
         {
             InitializeComponent();
             H = h;
+            this.idUser = idUser;
         }
 
         // Hàm liệt kê các danh sách bài hát và nghệ sĩ ngẫu nhiên vào trong panel tương ứng
@@ -52,7 +53,7 @@ namespace SONA
                         for (int i = 0; i < songCount; i++)
                         {
                             string id_song = reader.ReadString();
-                            SongForm songForm = new SongForm(H, id_song);
+                            SongForm songForm = new SongForm(H, id_song, idUser);
                             flpSongs.Controls.Add(songForm);
                         }
                     }
@@ -90,7 +91,7 @@ namespace SONA
                         for (int i = 0; i < singerCount; i++)
                         {
                             string id_singer = reader.ReadString();
-                            ArtistForm artistForm = new ArtistForm(H, id_singer);
+                            ArtistForm artistForm = new ArtistForm(H, id_singer, idUser);
                             flpArtists.Controls.Add(artistForm);
                         }
                     }

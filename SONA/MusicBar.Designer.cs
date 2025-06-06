@@ -173,7 +173,7 @@
             this.guna2Button7.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button7.ForeColor = System.Drawing.Color.White;
-            this.guna2Button7.Image = global::SONA.Properties.Resources.Favourites1;
+            this.guna2Button7.Image = global::SONA.Properties.Resources.Favourites;
             this.guna2Button7.ImageSize = new System.Drawing.Size(45, 45);
             this.guna2Button7.Location = new System.Drawing.Point(3, 3);
             this.guna2Button7.Name = "guna2Button7";
@@ -210,7 +210,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.CheckedState.Image = global::SONA.Properties.Resources.PlayAni1;
+            this.btnStart.CheckedState.Image = global::SONA.Properties.Resources.PlayAni;
             this.btnStart.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnStart.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnStart.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));

@@ -19,13 +19,17 @@ namespace SONA
         private Home H;
         private AudioFileReader afr;
         private string id_song, name_song, picture_song, am_thanh, name_singer;
+        private string idUser;
+        bool isFavorited = false;
 
-        public SongSearch(Home h, string id_song)
+        public SongSearch(Home h, string id_song, string idUser)
         {
             H = h;
             this.id_song = id_song;
+            this.idUser = idUser;
             InitializeComponent();
             GetData();
+            showSongsFavourite();
         }
 
         private void GetData()
@@ -63,10 +67,101 @@ namespace SONA
         // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, id_song);
+            ListenMusic listenMusic = new ListenMusic(H, id_song, idUser);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);
+        }
+
+        private void showSongsFavourite()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("songFavurite");
+                    writer.Write(idUser);
+                    writer.Write(id_song);
+
+                    string response = reader.ReadString();
+                    if (response == "Exists")
+                    {
+                        isFavorited = true;
+                        btnFavourite.Checked = true;
+                    }
+                    else if (response == "Nothing")
+                    {
+                        isFavorited = false;
+                        btnFavourite.Checked = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void btnFavorited_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    if (!isFavorited)
+                    {
+                        writer.Write("addFavourite");
+                        writer.Write(idUser);
+                        writer.Write(id_song);
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            isFavorited = true;
+                            btnFavourite.Checked = true;
+                        }
+                        else
+                        {
+                            isFavorited = false;
+                            btnFavourite.Checked = false;
+                            MessageBox.Show(response);
+                        }
+                    }
+                    else
+                    {
+                        writer.Write("removeFavourite");
+                        writer.Write(idUser);
+                        writer.Write(id_song);
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            isFavorited = false;
+                            btnFavourite.Checked = false;
+                        }
+                        else
+                        {
+                            isFavorited = true;
+                            btnFavourite.Checked = true;
+                            MessageBox.Show(response);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 bài hát

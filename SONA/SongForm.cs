@@ -17,13 +17,14 @@ namespace SONA
     public partial class SongForm : UserControl
     {
         private Home H;
-        private string id_song;
+        private string id_song, idUser;
 
-        public SongForm(Home h, string id_song)
+        public SongForm(Home h, string id_song, string idUser)
         {
             InitializeComponent();
             H = h;
             this.id_song = id_song;
+            this.idUser = idUser;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 bài hát
@@ -78,7 +79,7 @@ namespace SONA
         // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, id_song);
+            ListenMusic listenMusic = new ListenMusic(H, id_song, idUser);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);

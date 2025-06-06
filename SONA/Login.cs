@@ -12,7 +12,6 @@ namespace SONA
     public partial class Login : UserControl
     {
         SONA S;
-
         private bool isPasswordVisible = false; // Biến trạng thái để theo dõi mật khẩu đang hiển thị hay không
         
         public Login(SONA s)
@@ -40,12 +39,11 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("loginGoogle");
-                    writer.Write(tbEmail.Text);
-                    writer.Write(tbPass.Text);
                     string response = reader.ReadString();
                     if (response == "OK")
                     {
-                        S.ShowHome(tbEmail.Text);
+                        string email = reader.ReadString();
+                        S.ShowHome(email);
                         S.Activate();
                     }
                     else

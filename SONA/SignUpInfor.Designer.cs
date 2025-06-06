@@ -38,8 +38,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnSignUp = new Guna.UI2.WinForms.Guna2Button();
             this.lblcheckPass = new System.Windows.Forms.Label();
-            this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSdt = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbConfirm = new Guna.UI2.WinForms.Guna2TextBox();
@@ -48,6 +46,8 @@
             this.lblCheckName = new System.Windows.Forms.Label();
             this.lblCheckConfirm = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // tbPass
@@ -180,38 +180,6 @@
             this.lblcheckPass.Text = "Mật khẩu của bạn phải có ít nhất\r\n- 1 chữ cái\r\n- 1 chữ số hoặc ký tự đặc biệt (ví" +
     " dụ @, !, ?. #)\r\n- 8 ký tự";
             // 
-            // btnAvatar
-            // 
-            this.btnAvatar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnAvatar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnAvatar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnAvatar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnAvatar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAvatar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAvatar.ForeColor = System.Drawing.Color.White;
-            this.btnAvatar.Image = global::SONA.Properties.Resources.icons8_add_user_male_50__1_;
-            this.btnAvatar.ImageSize = new System.Drawing.Size(35, 35);
-            this.btnAvatar.Location = new System.Drawing.Point(64, 87);
-            this.btnAvatar.Name = "btnAvatar";
-            this.btnAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.btnAvatar.Size = new System.Drawing.Size(60, 60);
-            this.btnAvatar.TabIndex = 19;
-            this.btnAvatar.Click += new System.EventHandler(this.btnAvatar_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::SONA.Properties.Resources.x;
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClose.FillColor = System.Drawing.Color.Transparent;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(641, 33);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 16;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -315,11 +283,46 @@
             this.guna2Elipse1.BorderRadius = 24;
             this.guna2Elipse1.TargetControl = this;
             // 
+            // btnAvatar
+            // 
+            this.btnAvatar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAvatar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAvatar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAvatar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAvatar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAvatar.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnAvatar.ForeColor = System.Drawing.Color.White;
+            this.btnAvatar.Image = global::SONA.Properties.Resources.icons8_add_user_male_50__1_;
+            this.btnAvatar.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnAvatar.Location = new System.Drawing.Point(64, 87);
+            this.btnAvatar.Name = "btnAvatar";
+            this.btnAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.btnAvatar.Size = new System.Drawing.Size(60, 60);
+            this.btnAvatar.TabIndex = 19;
+            this.btnAvatar.Click += new System.EventHandler(this.btnAvatar_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderRadius = 15;
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Image = global::SONA.Properties.Resources.x;
+            this.btnClose.Location = new System.Drawing.Point(640, 33);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 23;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // SignUpInfor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblCheckConfirm);
             this.Controls.Add(this.lblCheckName);
             this.Controls.Add(this.lblCheckSdt);
@@ -337,7 +340,6 @@
             this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.lblcheckPass);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnClose);
             this.Name = "SignUpInfor";
             this.Size = new System.Drawing.Size(704, 853);
             this.Load += new System.EventHandler(this.SignUpInfor_Load);
@@ -347,8 +349,6 @@
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2Button btnClose;
         private Guna.UI2.WinForms.Guna2TextBox tbPass;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblLogin;
@@ -367,5 +367,6 @@
         private System.Windows.Forms.Label lblCheckName;
         private System.Windows.Forms.Label lblCheckConfirm;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
     }
 }
