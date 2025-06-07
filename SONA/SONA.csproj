@@ -320,6 +320,12 @@
     <Compile Include="SongSearch.Designer.cs">
       <DependentUpon>SongSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="User_Profile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User_Profile.Designer.cs">
+      <DependentUpon>User_Profile.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Album.resx">
       <DependentUpon>Album.cs</DependentUpon>
     </EmbeddedResource>
@@ -378,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SongSearch.resx">
       <DependentUpon>SongSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User_Profile.resx">
+      <DependentUpon>User_Profile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />

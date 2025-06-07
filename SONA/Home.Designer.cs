@@ -30,13 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pnMyLibrary = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnArtists = new Guna.UI2.WinForms.Guna2Button();
-            this.btnChat = new Guna.UI2.WinForms.Guna2Button();
-            this.btnAlbums = new Guna.UI2.WinForms.Guna2Button();
-            this.btnFavorited = new Guna.UI2.WinForms.Guna2Button();
-            this.btnPlaylists = new Guna.UI2.WinForms.Guna2Button();
-            this.btnLibrary = new Guna.UI2.WinForms.Guna2Button();
             this.pnMenu = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnMain = new System.Windows.Forms.Panel();
+            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.btnDiscover = new Guna.UI2.WinForms.Guna2Button();
             this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
@@ -46,8 +42,12 @@
             this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
             this.btnHome = new Guna.UI2.WinForms.Guna2Button();
             this.btnNotification = new Guna.UI2.WinForms.Guna2Button();
-            this.pnMain = new System.Windows.Forms.Panel();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.btnArtists = new Guna.UI2.WinForms.Guna2Button();
+            this.btnChat = new Guna.UI2.WinForms.Guna2Button();
+            this.btnAlbums = new Guna.UI2.WinForms.Guna2Button();
+            this.btnFavorited = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPlaylists = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLibrary = new Guna.UI2.WinForms.Guna2Button();
             this.pnMyLibrary.SuspendLayout();
             this.pnMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
@@ -66,162 +66,6 @@
             this.pnMyLibrary.Size = new System.Drawing.Size(259, 997);
             this.pnMyLibrary.TabIndex = 0;
             // 
-            // btnArtists
-            // 
-            this.btnArtists.Animated = true;
-            this.btnArtists.BackColor = System.Drawing.Color.Transparent;
-            this.btnArtists.BorderColor = System.Drawing.Color.Transparent;
-            this.btnArtists.BorderRadius = 7;
-            this.btnArtists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnArtists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnArtists.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnArtists.FillColor = System.Drawing.Color.Transparent;
-            this.btnArtists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnArtists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnArtists.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnArtists.Image = global::SONA.Properties.Resources.Artists;
-            this.btnArtists.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnArtists.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnArtists.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnArtists.Location = new System.Drawing.Point(0, 281);
-            this.btnArtists.Name = "btnArtists";
-            this.btnArtists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnArtists.Size = new System.Drawing.Size(248, 41);
-            this.btnArtists.TabIndex = 1;
-            this.btnArtists.Text = "Artists";
-            this.btnArtists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnArtists.Click += new System.EventHandler(this.btnArtists_Click);
-            // 
-            // btnChat
-            // 
-            this.btnChat.Animated = true;
-            this.btnChat.BackColor = System.Drawing.Color.Transparent;
-            this.btnChat.BorderColor = System.Drawing.Color.Transparent;
-            this.btnChat.BorderRadius = 7;
-            this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnChat.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnChat.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnChat.FillColor = System.Drawing.Color.Transparent;
-            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnChat.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnChat.Image = global::SONA.Properties.Resources.Chat;
-            this.btnChat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnChat.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnChat.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnChat.Location = new System.Drawing.Point(0, 234);
-            this.btnChat.Name = "btnChat";
-            this.btnChat.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnChat.Size = new System.Drawing.Size(248, 41);
-            this.btnChat.TabIndex = 1;
-            this.btnChat.Text = "Chat";
-            this.btnChat.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
-            // 
-            // btnAlbums
-            // 
-            this.btnAlbums.Animated = true;
-            this.btnAlbums.BackColor = System.Drawing.Color.Transparent;
-            this.btnAlbums.BorderColor = System.Drawing.Color.Transparent;
-            this.btnAlbums.BorderRadius = 7;
-            this.btnAlbums.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnAlbums.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnAlbums.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnAlbums.FillColor = System.Drawing.Color.Transparent;
-            this.btnAlbums.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAlbums.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnAlbums.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnAlbums.Image = global::SONA.Properties.Resources.Albums;
-            this.btnAlbums.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnAlbums.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnAlbums.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnAlbums.Location = new System.Drawing.Point(0, 187);
-            this.btnAlbums.Name = "btnAlbums";
-            this.btnAlbums.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnAlbums.Size = new System.Drawing.Size(248, 41);
-            this.btnAlbums.TabIndex = 1;
-            this.btnAlbums.Text = "Albums";
-            this.btnAlbums.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnAlbums.Click += new System.EventHandler(this.btnAlbums_Click);
-            // 
-            // btnFavorited
-            // 
-            this.btnFavorited.Animated = true;
-            this.btnFavorited.BackColor = System.Drawing.Color.Transparent;
-            this.btnFavorited.BorderColor = System.Drawing.Color.Transparent;
-            this.btnFavorited.BorderRadius = 7;
-            this.btnFavorited.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnFavorited.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnFavorited.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnFavorited.FillColor = System.Drawing.Color.Transparent;
-            this.btnFavorited.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFavorited.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnFavorited.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnFavorited.Image = global::SONA.Properties.Resources.Favourites;
-            this.btnFavorited.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnFavorited.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnFavorited.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnFavorited.Location = new System.Drawing.Point(0, 140);
-            this.btnFavorited.Name = "btnFavorited";
-            this.btnFavorited.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnFavorited.Size = new System.Drawing.Size(248, 41);
-            this.btnFavorited.TabIndex = 1;
-            this.btnFavorited.Text = "Favorited";
-            this.btnFavorited.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnFavorited.Click += new System.EventHandler(this.btnFavorited_Click);
-            // 
-            // btnPlaylists
-            // 
-            this.btnPlaylists.Animated = true;
-            this.btnPlaylists.BackColor = System.Drawing.Color.Transparent;
-            this.btnPlaylists.BorderColor = System.Drawing.Color.Transparent;
-            this.btnPlaylists.BorderRadius = 7;
-            this.btnPlaylists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnPlaylists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnPlaylists.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnPlaylists.FillColor = System.Drawing.Color.Transparent;
-            this.btnPlaylists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPlaylists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnPlaylists.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnPlaylists.Image = global::SONA.Properties.Resources.Playlist;
-            this.btnPlaylists.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnPlaylists.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnPlaylists.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnPlaylists.Location = new System.Drawing.Point(0, 93);
-            this.btnPlaylists.Name = "btnPlaylists";
-            this.btnPlaylists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnPlaylists.Size = new System.Drawing.Size(248, 41);
-            this.btnPlaylists.TabIndex = 1;
-            this.btnPlaylists.Text = "Playlists";
-            this.btnPlaylists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnPlaylists.Click += new System.EventHandler(this.btnPlaylists_Click);
-            // 
-            // btnLibrary
-            // 
-            this.btnLibrary.Animated = true;
-            this.btnLibrary.BackColor = System.Drawing.Color.Transparent;
-            this.btnLibrary.BorderColor = System.Drawing.Color.Transparent;
-            this.btnLibrary.BorderRadius = 7;
-            this.btnLibrary.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnLibrary.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnLibrary.CheckedState.Image = global::SONA.Properties.Resources.MyLibraryON;
-            this.btnLibrary.FillColor = System.Drawing.Color.Transparent;
-            this.btnLibrary.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLibrary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnLibrary.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnLibrary.Image = global::SONA.Properties.Resources.Library;
-            this.btnLibrary.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnLibrary.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnLibrary.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnLibrary.Location = new System.Drawing.Point(3, 3);
-            this.btnLibrary.Name = "btnLibrary";
-            this.btnLibrary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnLibrary.Size = new System.Drawing.Size(210, 54);
-            this.btnLibrary.TabIndex = 1;
-            this.btnLibrary.Text = "My Library";
-            this.btnLibrary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnLibrary.Click += new System.EventHandler(this.btnLibrary_Click);
-            // 
             // pnMenu
             // 
             this.pnMenu.Controls.Add(this.guna2CirclePictureBox1);
@@ -238,6 +82,17 @@
             this.pnMenu.Size = new System.Drawing.Size(1485, 63);
             this.pnMenu.TabIndex = 1;
             // 
+            // pnMain
+            // 
+            this.pnMain.Location = new System.Drawing.Point(286, 83);
+            this.pnMain.Name = "pnMain";
+            this.pnMain.Size = new System.Drawing.Size(1482, 919);
+            this.pnMain.TabIndex = 2;
+            // 
+            // guna2Elipse1
+            // 
+            this.guna2Elipse1.BorderRadius = 50;
+            // 
             // guna2CirclePictureBox1
             // 
             this.guna2CirclePictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -250,6 +105,7 @@
             this.guna2CirclePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.guna2CirclePictureBox1.TabIndex = 1;
             this.guna2CirclePictureBox1.TabStop = false;
+            this.guna2CirclePictureBox1.Click += new System.EventHandler(this.guna2CirclePictureBox1_Click);
             // 
             // btnDiscover
             // 
@@ -441,16 +297,161 @@
             this.btnNotification.Size = new System.Drawing.Size(63, 63);
             this.btnNotification.TabIndex = 1;
             // 
-            // pnMain
+            // btnArtists
             // 
-            this.pnMain.Location = new System.Drawing.Point(286, 83);
-            this.pnMain.Name = "pnMain";
-            this.pnMain.Size = new System.Drawing.Size(1482, 919);
-            this.pnMain.TabIndex = 2;
+            this.btnArtists.Animated = true;
+            this.btnArtists.BackColor = System.Drawing.Color.Transparent;
+            this.btnArtists.BorderColor = System.Drawing.Color.Transparent;
+            this.btnArtists.BorderRadius = 7;
+            this.btnArtists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnArtists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnArtists.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnArtists.FillColor = System.Drawing.Color.Transparent;
+            this.btnArtists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnArtists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnArtists.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnArtists.Image = global::SONA.Properties.Resources.Artists;
+            this.btnArtists.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnArtists.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnArtists.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnArtists.Location = new System.Drawing.Point(0, 281);
+            this.btnArtists.Name = "btnArtists";
+            this.btnArtists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnArtists.Size = new System.Drawing.Size(248, 41);
+            this.btnArtists.TabIndex = 1;
+            this.btnArtists.Text = "Artists";
+            this.btnArtists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnArtists.Click += new System.EventHandler(this.btnArtists_Click);
             // 
-            // guna2Elipse1
+            // btnChat
             // 
-            this.guna2Elipse1.BorderRadius = 50;
+            this.btnChat.Animated = true;
+            this.btnChat.BackColor = System.Drawing.Color.Transparent;
+            this.btnChat.BorderColor = System.Drawing.Color.Transparent;
+            this.btnChat.BorderRadius = 7;
+            this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnChat.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnChat.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnChat.FillColor = System.Drawing.Color.Transparent;
+            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnChat.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnChat.Image = global::SONA.Properties.Resources.Chat;
+            this.btnChat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnChat.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnChat.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnChat.Location = new System.Drawing.Point(0, 234);
+            this.btnChat.Name = "btnChat";
+            this.btnChat.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnChat.Size = new System.Drawing.Size(248, 41);
+            this.btnChat.TabIndex = 1;
+            this.btnChat.Text = "Chat";
+            this.btnChat.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
+            // 
+            // btnAlbums
+            // 
+            this.btnAlbums.Animated = true;
+            this.btnAlbums.BackColor = System.Drawing.Color.Transparent;
+            this.btnAlbums.BorderColor = System.Drawing.Color.Transparent;
+            this.btnAlbums.BorderRadius = 7;
+            this.btnAlbums.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnAlbums.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnAlbums.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnAlbums.FillColor = System.Drawing.Color.Transparent;
+            this.btnAlbums.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlbums.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnAlbums.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnAlbums.Image = global::SONA.Properties.Resources.Albums;
+            this.btnAlbums.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnAlbums.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnAlbums.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnAlbums.Location = new System.Drawing.Point(0, 187);
+            this.btnAlbums.Name = "btnAlbums";
+            this.btnAlbums.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnAlbums.Size = new System.Drawing.Size(248, 41);
+            this.btnAlbums.TabIndex = 1;
+            this.btnAlbums.Text = "Albums";
+            this.btnAlbums.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnAlbums.Click += new System.EventHandler(this.btnAlbums_Click);
+            // 
+            // btnFavorited
+            // 
+            this.btnFavorited.Animated = true;
+            this.btnFavorited.BackColor = System.Drawing.Color.Transparent;
+            this.btnFavorited.BorderColor = System.Drawing.Color.Transparent;
+            this.btnFavorited.BorderRadius = 7;
+            this.btnFavorited.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnFavorited.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnFavorited.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnFavorited.FillColor = System.Drawing.Color.Transparent;
+            this.btnFavorited.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFavorited.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnFavorited.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnFavorited.Image = global::SONA.Properties.Resources.Favourites;
+            this.btnFavorited.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnFavorited.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnFavorited.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnFavorited.Location = new System.Drawing.Point(0, 140);
+            this.btnFavorited.Name = "btnFavorited";
+            this.btnFavorited.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnFavorited.Size = new System.Drawing.Size(248, 41);
+            this.btnFavorited.TabIndex = 1;
+            this.btnFavorited.Text = "Favorited";
+            this.btnFavorited.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnFavorited.Click += new System.EventHandler(this.btnFavorited_Click);
+            // 
+            // btnPlaylists
+            // 
+            this.btnPlaylists.Animated = true;
+            this.btnPlaylists.BackColor = System.Drawing.Color.Transparent;
+            this.btnPlaylists.BorderColor = System.Drawing.Color.Transparent;
+            this.btnPlaylists.BorderRadius = 7;
+            this.btnPlaylists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnPlaylists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnPlaylists.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnPlaylists.FillColor = System.Drawing.Color.Transparent;
+            this.btnPlaylists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaylists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnPlaylists.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnPlaylists.Image = global::SONA.Properties.Resources.Playlist;
+            this.btnPlaylists.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnPlaylists.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnPlaylists.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnPlaylists.Location = new System.Drawing.Point(0, 93);
+            this.btnPlaylists.Name = "btnPlaylists";
+            this.btnPlaylists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnPlaylists.Size = new System.Drawing.Size(248, 41);
+            this.btnPlaylists.TabIndex = 1;
+            this.btnPlaylists.Text = "Playlists";
+            this.btnPlaylists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnPlaylists.Click += new System.EventHandler(this.btnPlaylists_Click);
+            // 
+            // btnLibrary
+            // 
+            this.btnLibrary.Animated = true;
+            this.btnLibrary.BackColor = System.Drawing.Color.Transparent;
+            this.btnLibrary.BorderColor = System.Drawing.Color.Transparent;
+            this.btnLibrary.BorderRadius = 7;
+            this.btnLibrary.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnLibrary.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnLibrary.CheckedState.Image = global::SONA.Properties.Resources.MyLibraryON;
+            this.btnLibrary.FillColor = System.Drawing.Color.Transparent;
+            this.btnLibrary.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLibrary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnLibrary.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnLibrary.Image = global::SONA.Properties.Resources.Library;
+            this.btnLibrary.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLibrary.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnLibrary.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnLibrary.Location = new System.Drawing.Point(3, 3);
+            this.btnLibrary.Name = "btnLibrary";
+            this.btnLibrary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnLibrary.Size = new System.Drawing.Size(210, 54);
+            this.btnLibrary.TabIndex = 1;
+            this.btnLibrary.Text = "My Library";
+            this.btnLibrary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLibrary.Click += new System.EventHandler(this.btnLibrary_Click);
             // 
             // Home
             // 

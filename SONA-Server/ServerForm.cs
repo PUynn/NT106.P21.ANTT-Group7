@@ -327,6 +327,10 @@ namespace SONA_Server
                                         writer.Write("OK");
                                         writer.Write(readerdb["id_user"].ToString());
                                     }
+                                    else
+                                    {
+                                        writer.Write("Không tìm thấy người dùng với email này.");
+                                    }
                                 }
                             }
                         }
@@ -688,6 +692,74 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy danh sách yêu thích: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getUserProfile")
+                {
+                    int idUser = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT name_user, email, phone_number, password, create_at FROM users WHERE id_user = @idUser";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@idUser", idUser);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["name_user"].ToString());
+                                        writer.Write(readerdb["email"].ToString());
+                                        writer.Write(readerdb["phone_number"].ToString());
+                                        writer.Write(readerdb["password"].ToString());
+                                        writer.Write(readerdb["create_at"].ToString());
+                                    }
+                                    else
+                                    {
+                                        writer.Write("Không tìm thấy hồ sơ người dùng.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi kết nối khi truy vấn hồ sơ: " + ex.Message);
+                    }
+                }
+                else if (requestType == "updateUserProfile")
+                {
+                    int idUser = int.Parse(reader.ReadString());
+                    string newName = reader.ReadString();
+                    string newPassword = reader.ReadString();
+
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "UPDATE users SET name_user = @name, password = @password WHERE id_user = @idUser";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@idUser", idUser);
+                                cmd.Parameters.AddWithValue("@name", newName);
+                                cmd.Parameters.AddWithValue("@password", newPassword);
+                                
+                                int affected = cmd.ExecuteNonQuery();
+
+                                if (affected > 0)
+                                    writer.Write("OK");
+                                else
+                                    writer.Write("Không tìm thấy người dùng để cập nhật.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi khi cập nhật người dùng: " + ex.Message);
                     }
                 }
                 else

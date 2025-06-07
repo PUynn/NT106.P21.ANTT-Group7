@@ -30,7 +30,7 @@ namespace SONA
             InitializeComponent();
             getIdUser();
         }
-        
+
         private void getIdUser()
         {
             try
@@ -215,6 +215,20 @@ namespace SONA
                 currentListenMusic.StopMusicAndDispose();
             }
             currentListenMusic = listenMusic;
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(idUser))
+            {
+                User_Profile user = new User_Profile(S, idUser);
+                pnMain.Controls.Clear();
+                pnMain.Controls.Add(user);
+            }
+            else
+            {
+                MessageBox.Show("User ID is not set. Please log in first.");
+            }
         }
     }
 }
