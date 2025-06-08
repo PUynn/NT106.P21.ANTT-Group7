@@ -37,7 +37,7 @@
             this.btnPlaylists = new Guna.UI2.WinForms.Guna2Button();
             this.btnLibrary = new Guna.UI2.WinForms.Guna2Button();
             this.pnMenu = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            this.cpbUserInfor = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.btnDiscover = new Guna.UI2.WinForms.Guna2Button();
             this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
             this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
@@ -50,7 +50,7 @@
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.pnMyLibrary.SuspendLayout();
             this.pnMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbUserInfor)).BeginInit();
             this.SuspendLayout();
             // 
             // pnMyLibrary
@@ -61,9 +61,9 @@
             this.pnMyLibrary.Controls.Add(this.btnFavorited);
             this.pnMyLibrary.Controls.Add(this.btnPlaylists);
             this.pnMyLibrary.Controls.Add(this.btnLibrary);
-            this.pnMyLibrary.Location = new System.Drawing.Point(7, 7);
+            this.pnMyLibrary.Location = new System.Drawing.Point(7, 3);
             this.pnMyLibrary.Name = "pnMyLibrary";
-            this.pnMyLibrary.Size = new System.Drawing.Size(259, 997);
+            this.pnMyLibrary.Size = new System.Drawing.Size(273, 1001);
             this.pnMyLibrary.TabIndex = 0;
             // 
             // btnArtists
@@ -213,10 +213,10 @@
             this.btnLibrary.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnLibrary.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnLibrary.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnLibrary.Location = new System.Drawing.Point(3, 3);
+            this.btnLibrary.Location = new System.Drawing.Point(0, 7);
             this.btnLibrary.Name = "btnLibrary";
             this.btnLibrary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnLibrary.Size = new System.Drawing.Size(210, 54);
+            this.btnLibrary.Size = new System.Drawing.Size(248, 54);
             this.btnLibrary.TabIndex = 1;
             this.btnLibrary.Text = "My Library";
             this.btnLibrary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -224,7 +224,7 @@
             // 
             // pnMenu
             // 
-            this.pnMenu.Controls.Add(this.guna2CirclePictureBox1);
+            this.pnMenu.Controls.Add(this.cpbUserInfor);
             this.pnMenu.Controls.Add(this.btnDiscover);
             this.pnMenu.Controls.Add(this.btnSetting);
             this.pnMenu.Controls.Add(this.txtSearch);
@@ -235,21 +235,22 @@
             this.pnMenu.Controls.Add(this.btnNotification);
             this.pnMenu.Location = new System.Drawing.Point(286, 3);
             this.pnMenu.Name = "pnMenu";
-            this.pnMenu.Size = new System.Drawing.Size(1485, 63);
+            this.pnMenu.Size = new System.Drawing.Size(1485, 74);
             this.pnMenu.TabIndex = 1;
             // 
-            // guna2CirclePictureBox1
+            // cpbUserInfor
             // 
-            this.guna2CirclePictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.guna2CirclePictureBox1.Image = global::SONA.Properties.Resources.Avatar;
-            this.guna2CirclePictureBox1.ImageRotate = 0F;
-            this.guna2CirclePictureBox1.Location = new System.Drawing.Point(1258, 7);
-            this.guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
-            this.guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CirclePictureBox1.Size = new System.Drawing.Size(54, 54);
-            this.guna2CirclePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.guna2CirclePictureBox1.TabIndex = 1;
-            this.guna2CirclePictureBox1.TabStop = false;
+            this.cpbUserInfor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbUserInfor.Image = global::SONA.Properties.Resources.Avatar;
+            this.cpbUserInfor.ImageRotate = 0F;
+            this.cpbUserInfor.Location = new System.Drawing.Point(1258, 7);
+            this.cpbUserInfor.Name = "cpbUserInfor";
+            this.cpbUserInfor.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbUserInfor.Size = new System.Drawing.Size(54, 54);
+            this.cpbUserInfor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbUserInfor.TabIndex = 1;
+            this.cpbUserInfor.TabStop = false;
+            this.cpbUserInfor.Click += new System.EventHandler(this.cpbUserInfor_Click);
             // 
             // btnDiscover
             // 
@@ -465,7 +466,7 @@
             this.Load += new System.EventHandler(this.Home_Load);
             this.pnMyLibrary.ResumeLayout(false);
             this.pnMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbUserInfor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,6 +491,6 @@
         public System.Windows.Forms.Panel pnMain;
         private Guna.UI2.WinForms.Guna2Button btnMinimize;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
-        private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox cpbUserInfor;
     }
 }

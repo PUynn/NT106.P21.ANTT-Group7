@@ -114,9 +114,9 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            Album album = new Album(this);
+            AlbumList albumList = new AlbumList(this, idUser);
             pnMain.Controls.Clear();
-            pnMain.Controls.Add(album);
+            pnMain.Controls.Add(albumList);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -215,6 +215,13 @@ namespace SONA
                 currentListenMusic.StopMusicAndDispose();
             }
             currentListenMusic = listenMusic;
+        }
+
+        private void cpbUserInfor_Click(object sender, EventArgs e)
+        {
+            UserInfor userInfor = new UserInfor(S, idUser);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(userInfor);
         }
     }
 }

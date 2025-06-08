@@ -49,6 +49,7 @@
             // 
             // guna2Panel1
             // 
+            this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.guna2Panel1.Controls.Add(this.lblCountry);
             this.guna2Panel1.Controls.Add(this.lblDate);
             this.guna2Panel1.Controls.Add(this.lblNameSinger);

@@ -14,10 +14,13 @@ namespace SONA
 {
     public partial class Album : UserControl
     {
-        DataRow dr;
-        public Album(Home h)
+        private Home h;
+        private string idAlbum;
+        public Album(Home h, string idAlbum)
         {
             InitializeComponent();
+            this.h = h;
+            this.idAlbum = idAlbum;
         }
 
         private void Album_Paint(object sender, PaintEventArgs e)

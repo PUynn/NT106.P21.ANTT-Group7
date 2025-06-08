@@ -17,16 +17,19 @@ namespace SONA
     public partial class SongSearch : UserControl
     {
         private Home H;
-        private AudioFileReader afr;
-        private string id_song, name_song, picture_song, am_thanh, name_singer;
+        private bool isFavorited = false;
+        
+        private List<string> songIds;
+        private string id_song, name_song, picture_song, id_singer, name_singer;
         private string idUser;
-        bool isFavorited = false;
 
-        public SongSearch(Home h, string id_song, string idUser)
+        public SongSearch(Home h, string id_song, string idUser, List<string> songIds)
         {
             H = h;
             this.id_song = id_song;
             this.idUser = idUser;
+            this.songIds = new List<string>(songIds);
+            
             InitializeComponent();
             GetData();
             showSongsFavourite();
@@ -49,7 +52,7 @@ namespace SONA
                     {
                         name_song = reader.ReadString();
                         picture_song = reader.ReadString();
-                        am_thanh = reader.ReadString();
+                        id_singer = reader.ReadString();
                         name_singer = reader.ReadString();
                     }
                     else
@@ -67,10 +70,17 @@ namespace SONA
         // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, id_song, idUser);
+            ListenMusic listenMusic = new ListenMusic(H, id_song, idUser, songIds);
             H.pnMain.Controls.Clear();
             H.pnMain.Controls.Add(listenMusic);
             H.SetCurrentListenMusic(listenMusic);
+        }
+
+        private void lblNameSinger_Click(object sender, EventArgs e)
+        {
+            ArtistInfor artistInfor = new ArtistInfor(H, id_singer, idUser);
+            H.pnMain.Controls.Clear();
+            H.pnMain.Controls.Add(artistInfor);
         }
 
         private void showSongsFavourite()
@@ -167,9 +177,6 @@ namespace SONA
         // Hàm ghi các nội dung cần thiết cho 1 bài hát
         private void SongSearch_Load(object sender, EventArgs e)
         {
-            //afr = new AudioFileReader(am_thanh);
-            //lblTimeSong.Text = afr.TotalTime.ToString(@"mm\:ss");
-
             lblNameSong.Text = name_song;
             lblNameSinger.Text = name_singer;
 

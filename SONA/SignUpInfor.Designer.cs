@@ -46,8 +46,9 @@
             this.lblCheckName = new System.Windows.Forms.Label();
             this.lblCheckConfirm = new System.Windows.Forms.Label();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.btnAvatar = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.cpbAvatar = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // tbPass
@@ -131,7 +132,7 @@
             // 
             this.lblAvatar.AutoSize = true;
             this.lblAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblAvatar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvatar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAvatar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblAvatar.Location = new System.Drawing.Point(130, 106);
             this.lblAvatar.Name = "lblAvatar";
@@ -283,23 +284,19 @@
             this.guna2Elipse1.BorderRadius = 24;
             this.guna2Elipse1.TargetControl = this;
             // 
-            // btnAvatar
+            // cpbAvatar
             // 
-            this.btnAvatar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnAvatar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnAvatar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnAvatar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnAvatar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAvatar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAvatar.ForeColor = System.Drawing.Color.White;
-            this.btnAvatar.Image = global::SONA.Properties.Resources.icons8_add_user_male_50__1_;
-            this.btnAvatar.ImageSize = new System.Drawing.Size(35, 35);
-            this.btnAvatar.Location = new System.Drawing.Point(64, 87);
-            this.btnAvatar.Name = "btnAvatar";
-            this.btnAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.btnAvatar.Size = new System.Drawing.Size(60, 60);
-            this.btnAvatar.TabIndex = 19;
-            this.btnAvatar.Click += new System.EventHandler(this.btnAvatar_Click);
+            this.cpbAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbAvatar.Image = global::SONA.Properties.Resources.BaseAvatar;
+            this.cpbAvatar.ImageRotate = 0F;
+            this.cpbAvatar.Location = new System.Drawing.Point(64, 87);
+            this.cpbAvatar.Name = "cpbAvatar";
+            this.cpbAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbAvatar.Size = new System.Drawing.Size(60, 60);
+            this.cpbAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbAvatar.TabIndex = 24;
+            this.cpbAvatar.TabStop = false;
+            this.cpbAvatar.Click += new System.EventHandler(this.cpbAvatar_Click);
             // 
             // btnClose
             // 
@@ -322,12 +319,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.cpbAvatar);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblCheckConfirm);
             this.Controls.Add(this.lblCheckName);
             this.Controls.Add(this.lblCheckSdt);
             this.Controls.Add(this.btnSignUp);
-            this.Controls.Add(this.btnAvatar);
             this.Controls.Add(this.tbSdt);
             this.Controls.Add(this.tbUser);
             this.Controls.Add(this.tbConfirm);
@@ -343,6 +340,7 @@
             this.Name = "SignUpInfor";
             this.Size = new System.Drawing.Size(704, 853);
             this.Load += new System.EventHandler(this.SignUpInfor_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,7 +351,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblLogin;
         private Guna.UI2.WinForms.Guna2TextBox tbUser;
-        private Guna.UI2.WinForms.Guna2CircleButton btnAvatar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblAvatar;
         private System.Windows.Forms.Label label9;
@@ -368,5 +365,6 @@
         private System.Windows.Forms.Label lblCheckConfirm;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox cpbAvatar;
     }
 }

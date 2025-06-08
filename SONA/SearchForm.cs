@@ -15,7 +15,9 @@ namespace SONA
     public partial class SearchForm : UserControl
     {
         Home H;
-        private string id_song, idUser;
+        private string idUser;
+        private List<string> songIds = new List<string>();
+
         public SearchForm(Home h, string idUser)
         {
             InitializeComponent();
@@ -23,12 +25,13 @@ namespace SONA
             this.idUser = idUser;
         }
 
-        // Hàm in ra các bài hát tìm thấy bằng cách gọi form SongSearch và truyền vào các thông tin cần thiết
-        private void SearchForm_Load(object sender, EventArgs e)
+        private void getIDSong()
         {
             try
             {
                 flpResult.Controls.Clear();
+                Title title = new Title("Songs:");
+                flpResult.Controls.Add(title);
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
@@ -41,11 +44,11 @@ namespace SONA
                     if (response == "OK")
                     {
                         int songCount = reader.ReadInt32(); // Đọc số lượng bài hát
-
                         for (int i = 0; i < songCount; i++)
                         {
                             string id_song = reader.ReadString();
-                            SongSearch songSearch = new SongSearch(H, id_song, idUser);
+                            songIds.Add(id_song);
+                            SongSearch songSearch = new SongSearch(H, id_song, idUser, songIds);
                             flpResult.Controls.Add(songSearch);
                         }
                     }
@@ -59,6 +62,59 @@ namespace SONA
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
             }
+        }
+
+        private void getIDSinger()
+        {
+            try
+            {
+                Title title = new Title("Artists:");
+                flpResult.Controls.Add(title);
+
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getIDSinger");
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int singerCount = reader.ReadInt32();
+                        for (int i = 0; i < singerCount; i++)
+                        {
+                            string id_singer = reader.ReadString();
+                            ArtistForm artistForm = new ArtistForm(H, id_singer, idUser);
+                            flpResult.Controls.Add(artistForm);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void SearchForm_Load(object sender, EventArgs e)
+        {
+            getIDSong();
+            getIDSinger();
+        }
+
+        private void btnSongs_Click(object sender, EventArgs e)
+        {
+            getIDSong();
+        }
+
+        private void btnArtists_Click(object sender, EventArgs e)
+        {
+            flpResult.Controls.Clear();
+            getIDSinger();
         }
     }
 }

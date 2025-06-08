@@ -17,6 +17,9 @@ using Google.Apis.Util.Store;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Supabase;
+using Supabase.Storage;
+using System.Runtime.Remoting.Lifetime;
 
 namespace SONA_Server
 {
@@ -124,10 +127,10 @@ namespace SONA_Server
                 if (requestType == "loginUser")
                 {
                     // Đọc thông tin username và password nhập từ client
-                    string usernameLogin = reader.ReadString();
+                    string name = reader.ReadString();
                     string password = reader.ReadString();
 
-                    string loginSuccess = CheckUserLogin(usernameLogin, password); // Gọi phương thức CheckUserLogin để kiểm tra thông tin đăng nhập
+                    string loginSuccess = CheckUserLogin(name, password); // Gọi phương thức CheckUserLogin để kiểm tra thông tin đăng nhập
                     writer.Write(loginSuccess); // Ghi kết quả đăng nhập về client
                 }
                 else if (requestType == "loginGoogle")
@@ -217,13 +220,52 @@ namespace SONA_Server
 
                 else if (requestType == "signupInfo")
                 {
-                    string usernameSignup = reader.ReadString();
+                    string name = reader.ReadString();
                     string password = reader.ReadString();
                     string phone = reader.ReadString();
                     string email = reader.ReadString();
 
-                    string result = CheckSignUpInfo(usernameSignup, password, phone, email);
-                    writer.Write(result);
+                    string pictureUrl = "https://lgnvhovprubrxohnhwph.supabase.co/storage/v1/object/public/picture/Users/BaseAvatar.png";
+                    string hasAvatar = reader.ReadString();
+                    if (hasAvatar == "hasAvatar")
+                    {
+                        int imageLength = reader.ReadInt32();
+                        byte[] imageData = reader.ReadBytes(imageLength);
+                        string result = Task.Run(async () =>
+                        {
+                            return await UploadImageToSupabase(email, imageData);
+                        }).Result;
+                        pictureUrl = result;
+                    }
+
+                    try
+                    {
+                        if (IsPhoneNumberExists(phone))
+                        {
+                            writer.Write("Số điện thoại đã tồn tại");
+                            return;
+                        }
+
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "INSERT INTO users (name_user, email, phone_number, password, picture_user) VALUES (@name_user, @email, @phone_number, @password, @picture_user)";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@name_user", name);
+                                cmd.Parameters.AddWithValue("@email", email);
+                                cmd.Parameters.AddWithValue("@phone_number", phone);
+                                cmd.Parameters.AddWithValue("@password", password);
+                                cmd.Parameters.AddWithValue("@picture_user", pictureUrl);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        writer.Write("OK");
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi thông tin người dùng: " + ex.Message);
+                    }
                 }
                 #endregion
 
@@ -509,7 +551,7 @@ namespace SONA_Server
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT name_song, picture_song, am_thanh, name_singer FROM songs INNER JOIN singer ON songs.id_singer = singer.id_singer WHERE id_song = @id_song";
+                            string query = "SELECT name_song, picture_song, songs.id_singer, name_singer FROM songs INNER JOIN singer ON songs.id_singer = singer.id_singer WHERE id_song = @id_song";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@id_song", id_song);
@@ -520,7 +562,7 @@ namespace SONA_Server
                                         writer.Write("OK");
                                         writer.Write(readerdb["name_song"].ToString());
                                         writer.Write(readerdb["picture_song"].ToString());
-                                        writer.Write(readerdb["am_thanh"].ToString());
+                                        writer.Write(readerdb["id_singer"].ToString());
                                         writer.Write(readerdb["name_singer"].ToString());
                                     }
                                     else
@@ -688,6 +730,86 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy danh sách yêu thích: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getUserInfor")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT name_user, email, phone_number, password FROM users WHERE id_user = @id_user";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["name_user"].ToString());
+                                        writer.Write(readerdb["email"].ToString());
+                                        writer.Write(readerdb["phone_number"].ToString());
+                                        writer.Write(readerdb["password"].ToString());
+                                    }
+                                    else
+                                    {
+                                        writer.Write("Không tìm thấy người dùng với ID: " + id_user);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        if (ex.Message.Contains("duplicate key value violates unique constraint"))
+                        {
+                            if (ex.Message.Contains("phone_number"))
+                                writer.Write("Số điện thoại đã tồn tại!");
+                        }
+                        else
+                        {
+                            writer.Write("Lỗi khi cập nhật dữ liệu: " + ex.Message);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy thông tin người dùng: " + ex.Message);
+                    }
+                }
+                else if (requestType == "updateUserInfor")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    string name_user = reader.ReadString();
+                    string phone_number = reader.ReadString();
+                    string password = reader.ReadString();
+
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "UPDATE users SET name_user = @name_user, phone_number = @phone_number, password = @password WHERE id_user = @id_user";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@name_user", name_user);
+                                cmd.Parameters.AddWithValue("@phone_number", phone_number);
+                                cmd.Parameters.AddWithValue("@password", password);
+
+                                int rowsAffected = cmd.ExecuteNonQuery();
+                                if (rowsAffected > 0)
+                                    writer.Write("OK");
+                                else
+                                    writer.Write("Không tìm thấy người dùng với ID: " + id_user);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi cập nhật thông tin người dùng: " + ex.Message);
                     }
                 }
                 else
@@ -992,35 +1114,36 @@ namespace SONA_Server
             }
         }
 
-        // Phương thức kiểm tra thông tin đăng ký người dùng
-        private string CheckSignUpInfo(string username, string password, string phone, string email)
+        private async Task<string> UploadImageToSupabase(string email, byte[] imageData)
         {
             try
             {
-                if (IsPhoneNumberExists(phone))
-                {
-                    return "Số điện thoại đã tồn tại";
-                }
+                // Khởi tạo client Supabase
+                var supabase = new Supabase.Client(
+                    "https://lgnvhovprubrxohnhwph.supabase.co",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnbnZob3ZwcnVicnhvaG5od3BoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjcxMzMwNywiZXhwIjoyMDYyMjg5MzA3fQ.l4pWH6PRKYHL1BXzsnbN1opJxqlSbR0bPFkysR39e_4"
+                );
 
-                using (var conn = new NpgsqlConnection(connSona))
-                {
-                    conn.Open();
-                    string query = "INSERT INTO users (name_user, email, phone_number, password) VALUES (@name_user, @email, @phone_number, @password)";
-                    using (var cmd = new NpgsqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@name_user", username);
-                        cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@phone_number", phone);
-                        cmd.Parameters.AddWithValue("@password", password);
+                // Tạo tên tệp duy nhất
+                string fileName = $"{email}.jpg";
+                var bucket = supabase.Storage.From("picture/Users"); // Lấy bucket
 
-                        cmd.ExecuteNonQuery();       
-                    }
-                }
-                return "OK";
+                // Upload ảnh (bất đồng bộ)
+                var fileObject = await bucket.Upload(imageData, fileName, new Supabase.Storage.FileOptions
+                {
+                    CacheControl = "3600", // Tuổi thọ bộ nhớ cache (tùy chọn)
+                    ContentType = "image/jpeg", // Định dạng MIME
+                    Upsert = false // Không ghi đè nếu tệp đã tồn tại
+                });
+
+                // Nếu không có ngoại lệ, coi như upload thành công
+                string publicUrl = bucket.GetPublicUrl(fileName);
+                return publicUrl;
             }
             catch (Exception ex)
             {
-                return "Lỗi thông tin người dùng: " + ex.Message;
+                MessageBox.Show("Lỗi tải ảnh lên Supabase: " + ex.Message);
+                return "https://lgnvhovprubrxohnhwph.supabase.co/storage/v1/object/public/picture/Users/BaseAvatar.png";
             }
         }
         #endregion

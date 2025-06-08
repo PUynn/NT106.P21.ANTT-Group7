@@ -17,8 +17,10 @@ namespace SONA
 {
     public partial class SignUpInfor : UserControl
     {
-        SONA S;
-        string emailUser;
+        private SONA S;
+        private string emailUser;
+        private string avatarPath = null; // Lưu đường dẫn ảnh tạm thời
+        private bool hasCustomAvatar = false; // Kiểm tra xem người dùng có chọn ảnh không
 
         public SignUpInfor(SONA s, string email)
         {
@@ -103,25 +105,49 @@ namespace SONA
         {
             if (checkSignUpInfor())
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                try
                 {
-                    writer.Write("signupInfo");
-                    writer.Write(tbUser.Text);
-                    writer.Write(tbPass.Text);
-                    writer.Write(tbSdt.Text);
-                    writer.Write(emailUser);
-                    string response = reader.ReadString();
-                    if (response == "OK")
+                    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                    using (NetworkStream stream = client.GetStream())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        S.ShowHome(emailUser);
+                        writer.Write("signupInfo");
+                        writer.Write(tbUser.Text);
+                        writer.Write(tbPass.Text);
+                        writer.Write(tbSdt.Text);
+                        writer.Write(emailUser);
+
+                        if (hasCustomAvatar && avatarPath != null)
+                        {
+                            writer.Write("hasAvatar");
+                            using (var fs = new FileStream(avatarPath, FileMode.Open, FileAccess.Read))
+                            {
+                                byte[] imageData = new byte[fs.Length];
+                                fs.Read(imageData, 0, imageData.Length);
+                                writer.Write(imageData.Length);
+                                writer.Write(imageData);
+                            }
+                        }
+                        else
+                        {
+                            writer.Write("noAvatar");
+                        }
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            S.ShowHome(emailUser);
+                        }
+                        else
+                        {
+                            lblCheckName.Text = response;
+                        }
                     }
-                    else
-                    {
-                        lblCheckSdt.Text = response;
-                    }
+                }
+                catch (Exception ex)
+                {
+                    lblCheckName.Text = "Lỗi: " + ex.Message;
                 }
             }
         }
@@ -137,18 +163,14 @@ namespace SONA
         // Hàm để chọn ảnh đại diện bằng cách mở file ảnh trong thư mục
         private void setAvatar()
         {
-            //OpenFileDialog openFileDialog = new OpenFileDialog();
-            //openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-            //if (openFileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    // Chuyển đổi ảnh thành base64 để lưu vào Supabase
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        Image.FromFile(openFileDialog.FileName).Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //        string base64Image = Convert.ToBase64String(ms.ToArray());
-            //        btnAvatar.Image = Image.FromFile(openFileDialog.FileName); // Hiển thị ảnh
-            //    }
-            //}
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                cpbAvatar.Image = Image.FromFile(openFileDialog.FileName);
+                avatarPath = openFileDialog.FileName; // Lưu đường dẫn ảnh
+                hasCustomAvatar = true; // Đánh dấu ảnh được chọn
+            }
         }
 
         private void SignUpInfor_Load(object sender, EventArgs e)
@@ -157,12 +179,12 @@ namespace SONA
             lblcheckPass.ForeColor = Color.FromArgb(102, 102, 102);
         }
 
-        private void btnAvatar_Click(object sender, EventArgs e)
+        private void lblAvatar_Click(object sender, EventArgs e)
         {
             setAvatar();
         }
 
-        private void lblAvatar_Click(object sender, EventArgs e)
+        private void cpbAvatar_Click(object sender, EventArgs e)
         {
             setAvatar();
         }

@@ -94,7 +94,7 @@ namespace SONA
                 flpSongs.Controls.Clear();
                 foreach (string id in id_song)
                 {
-                    SongSearch songSearch = new SongSearch(H, id, idUser);
+                    SongSearch songSearch = new SongSearch(H, id, idUser, id_song);
                     flpSongs.Controls.Add(songSearch);
                 }
 

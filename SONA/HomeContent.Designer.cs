@@ -35,7 +35,7 @@
             this.lblHistory = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
             this.pbBackground = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pnHeader = new Guna.UI2.WinForms.Guna2Panel();
             this.btnAudio = new Guna.UI2.WinForms.Guna2Button();
             this.btnPodcasts = new Guna.UI2.WinForms.Guna2Button();
             this.btnMusic = new Guna.UI2.WinForms.Guna2Button();
@@ -48,19 +48,18 @@
             this.pnHomeContent.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).BeginInit();
-            this.guna2Panel3.SuspendLayout();
+            this.pnHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnHomeContent
             // 
             this.pnHomeContent.AutoScroll = true;
-            this.pnHomeContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
             this.pnHomeContent.Controls.Add(this.flpArtists);
             this.pnHomeContent.Controls.Add(this.flpHistory);
             this.pnHomeContent.Controls.Add(this.flpSongs);
             this.pnHomeContent.Controls.Add(this.lblHistory);
             this.pnHomeContent.Controls.Add(this.guna2Panel6);
-            this.pnHomeContent.Controls.Add(this.guna2Panel3);
+            this.pnHomeContent.Controls.Add(this.pnHeader);
             this.pnHomeContent.Controls.Add(this.btnRefresh3);
             this.pnHomeContent.Controls.Add(this.lblForYou);
             this.pnHomeContent.Controls.Add(this.lblArtists);
@@ -106,9 +105,9 @@
             this.lblHistory.ForeColor = System.Drawing.Color.White;
             this.lblHistory.Location = new System.Drawing.Point(14, 1411);
             this.lblHistory.Name = "lblHistory";
-            this.lblHistory.Size = new System.Drawing.Size(143, 32);
+            this.lblHistory.Size = new System.Drawing.Size(81, 32);
             this.lblHistory.TabIndex = 5;
-            this.lblHistory.Text = "Songs history";
+            this.lblHistory.Text = "Albums";
             // 
             // guna2Panel6
             // 
@@ -130,17 +129,17 @@
             this.pbBackground.TabIndex = 0;
             this.pbBackground.TabStop = false;
             // 
-            // guna2Panel3
+            // pnHeader
             // 
-            this.guna2Panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.guna2Panel3.Controls.Add(this.btnAudio);
-            this.guna2Panel3.Controls.Add(this.btnPodcasts);
-            this.guna2Panel3.Controls.Add(this.btnMusic);
-            this.guna2Panel3.Controls.Add(this.btnAll);
-            this.guna2Panel3.Location = new System.Drawing.Point(3, 3);
-            this.guna2Panel3.Name = "guna2Panel3";
-            this.guna2Panel3.Size = new System.Drawing.Size(1453, 59);
-            this.guna2Panel3.TabIndex = 1;
+            this.pnHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.pnHeader.Controls.Add(this.btnAudio);
+            this.pnHeader.Controls.Add(this.btnPodcasts);
+            this.pnHeader.Controls.Add(this.btnMusic);
+            this.pnHeader.Controls.Add(this.btnAll);
+            this.pnHeader.Location = new System.Drawing.Point(3, 3);
+            this.pnHeader.Name = "pnHeader";
+            this.pnHeader.Size = new System.Drawing.Size(1453, 59);
+            this.pnHeader.TabIndex = 1;
             // 
             // btnAudio
             // 
@@ -234,7 +233,7 @@
             // btnRefresh3
             // 
             this.btnRefresh3.Animated = true;
-            this.btnRefresh3.BorderRadius = 5;
+            this.btnRefresh3.BorderRadius = 8;
             this.btnRefresh3.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefresh3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnRefresh3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -246,9 +245,9 @@
             this.btnRefresh3.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnRefresh3.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefresh3.ImageOffset = new System.Drawing.Point(-3, 0);
-            this.btnRefresh3.Location = new System.Drawing.Point(1348, 1411);
+            this.btnRefresh3.Location = new System.Drawing.Point(1345, 1411);
             this.btnRefresh3.Name = "btnRefresh3";
-            this.btnRefresh3.Size = new System.Drawing.Size(108, 27);
+            this.btnRefresh3.Size = new System.Drawing.Size(108, 39);
             this.btnRefresh3.TabIndex = 5;
             this.btnRefresh3.Text = "Refresh";
             // 
@@ -277,7 +276,7 @@
             // btnRefreshArtist
             // 
             this.btnRefreshArtist.Animated = true;
-            this.btnRefreshArtist.BorderRadius = 5;
+            this.btnRefreshArtist.BorderRadius = 8;
             this.btnRefreshArtist.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefreshArtist.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnRefreshArtist.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -289,9 +288,9 @@
             this.btnRefreshArtist.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnRefreshArtist.Image = global::SONA.Properties.Resources.Refresh;
             this.btnRefreshArtist.ImageOffset = new System.Drawing.Point(-3, 0);
-            this.btnRefreshArtist.Location = new System.Drawing.Point(1348, 1005);
+            this.btnRefreshArtist.Location = new System.Drawing.Point(1345, 1005);
             this.btnRefreshArtist.Name = "btnRefreshArtist";
-            this.btnRefreshArtist.Size = new System.Drawing.Size(108, 27);
+            this.btnRefreshArtist.Size = new System.Drawing.Size(108, 39);
             this.btnRefreshArtist.TabIndex = 5;
             this.btnRefreshArtist.Text = "Refresh";
             this.btnRefreshArtist.Click += new System.EventHandler(this.btnRefreshArtist_Click);
@@ -299,7 +298,7 @@
             // btnRefreshSong
             // 
             this.btnRefreshSong.Animated = true;
-            this.btnRefreshSong.BorderRadius = 5;
+            this.btnRefreshSong.BorderRadius = 8;
             this.btnRefreshSong.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnRefreshSong.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnRefreshSong.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -313,7 +312,7 @@
             this.btnRefreshSong.ImageOffset = new System.Drawing.Point(-3, 0);
             this.btnRefreshSong.Location = new System.Drawing.Point(1348, 608);
             this.btnRefreshSong.Name = "btnRefreshSong";
-            this.btnRefreshSong.Size = new System.Drawing.Size(108, 27);
+            this.btnRefreshSong.Size = new System.Drawing.Size(108, 39);
             this.btnRefreshSong.TabIndex = 5;
             this.btnRefreshSong.Text = "Refresh";
             this.btnRefreshSong.Click += new System.EventHandler(this.btnRefreshSong_Click);
@@ -331,7 +330,7 @@
             this.pnHomeContent.PerformLayout();
             this.guna2Panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbBackground)).EndInit();
-            this.guna2Panel3.ResumeLayout(false);
+            this.pnHeader.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -343,7 +342,7 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel lblHistory;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel6;
         private Guna.UI2.WinForms.Guna2PictureBox pbBackground;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
+        private Guna.UI2.WinForms.Guna2Panel pnHeader;
         private Guna.UI2.WinForms.Guna2Button btnAudio;
         private Guna.UI2.WinForms.Guna2Button btnPodcasts;
         private Guna.UI2.WinForms.Guna2Button btnMusic;

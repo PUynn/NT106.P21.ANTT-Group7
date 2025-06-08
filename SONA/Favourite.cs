@@ -15,6 +15,7 @@ namespace SONA
     public partial class Favourite : UserControl
     {
         private string idUser;
+        private List<string> songIds = new List<string>();
         private Home H;
         public Favourite(Home h, string idUser)
         {
@@ -45,8 +46,12 @@ namespace SONA
                         for (int i = 0; i < count; i++)
                         {
                             string id_song = reader.ReadString();
-                            SongSearch songSearch = new SongSearch(H, id_song, idUser);
-                            //flpSongs.Dock = DockStyle.Fill;
+                            songIds.Add(id_song);
+                        }
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            SongSearch songSearch = new SongSearch(H, songIds[i], idUser, songIds);
                             flpSongs.Controls.Add(songSearch);
                         }
                     }

@@ -205,6 +205,18 @@
     <Compile Include="Album.Designer.cs">
       <DependentUpon>Album.cs</DependentUpon>
     </Compile>
+    <Compile Include="AlbumForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlbumForm.Designer.cs">
+      <DependentUpon>AlbumForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlbumList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlbumList.Designer.cs">
+      <DependentUpon>AlbumList.cs</DependentUpon>
+    </Compile>
     <Compile Include="ArtistForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,6 +300,18 @@
     <Compile Include="SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Title.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Title.Designer.cs">
+      <DependentUpon>Title.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInfor.Designer.cs">
+      <DependentUpon>UserInfor.cs</DependentUpon>
+    </Compile>
     <Compile Include="SignUpInfor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -322,6 +346,12 @@
     </Compile>
     <EmbeddedResource Include="Album.resx">
       <DependentUpon>Album.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlbumForm.resx">
+      <DependentUpon>AlbumForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlbumList.resx">
+      <DependentUpon>AlbumList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ArtistForm.resx">
       <DependentUpon>ArtistForm.cs</DependentUpon>
@@ -358,6 +388,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Title.resx">
+      <DependentUpon>Title.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInfor.resx">
+      <DependentUpon>UserInfor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SignUpInfor.resx">
       <DependentUpon>SignUpInfor.cs</DependentUpon>
@@ -444,6 +480,8 @@
     <None Include="Resources\+playlist.png" />
     <None Include="Resources\Download.png" />
     <None Include="Resources\FavouriteOn.png" />
+    <None Include="Resources\ShuffleOn.png" />
+    <None Include="Resources\BaseAvatar.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

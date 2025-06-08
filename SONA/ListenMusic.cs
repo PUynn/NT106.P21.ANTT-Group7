@@ -24,16 +24,23 @@ namespace SONA
 
         private bool isPlaying;
         private bool isAutoReplay;
+        private bool isShuffled = false;
         private TimeSpan lastPosition;
+
+        private List<string> songIds;
+        private List<string> originalSongIds; // Danh sách bài hát gốc để sử dụng khi tắt chế độ xáo trộn
 
         private string id_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
         private string idUser;
         private bool isFavorited = false;
-        public ListenMusic(Home h, string id_song, string idUser)
+
+        public ListenMusic(Home h, string id_song, string idUser, List<string> songIds)
         {
             H = h;
             this.id_song = id_song;
             this.idUser = idUser;
+            this.songIds = new List<string>(songIds);
+            this.originalSongIds = new List<string>(songIds);
 
             InitializeComponent();
             GetData();
@@ -138,6 +145,10 @@ namespace SONA
                 afr.Position = 0; // Đặt lại vị trí phát nhạc về đầu
                 woe.Play();
             }
+            else
+            {
+                btnNext_Click(sender, e); // Tự động chuyển sang bài hát tiếp theo nếu không lặp lại
+            }
         }
 
         // Hàm dừng nhạc và giải phóng tài nguyên
@@ -145,18 +156,18 @@ namespace SONA
         {
             if (woe != null)
             {
-                lastPosition = afr?.CurrentTime ?? TimeSpan.Zero; // Lưu lại vị trí hiện tại
-                woe.PlaybackStopped -= OnPlaybackStopped; // Ngừng theo dõi sự kiện dừng phát
+                lastPosition = TimeSpan.Zero; // Đặt lại vị trí về 0 khi dừng
+                woe.PlaybackStopped -= OnPlaybackStopped;
                 woe.Stop();
-                woe.Dispose(); // Giải phóng tài nguyên cho đối tượng phát nhạc
+                woe.Dispose();
                 woe = null;
             }
             if (afr != null)
             {
-                afr.Dispose(); // Giải phóng tài nguyên cho đối tượng đọc tệp âm thanh
+                afr.Dispose();
                 afr = null;
             }
-            timer1.Stop(); // Dừng bộ đếm thời gian
+            timer1.Stop();
         }
 
         // Hàm khởi tạo âm thanh
@@ -164,6 +175,8 @@ namespace SONA
         {
             try
             {
+                StopMusicAndDispose(); // Đảm bảo tài nguyên cũ được giải phóng
+
                 isPlaying = false;
                 isAutoReplay = false;
 
@@ -182,7 +195,7 @@ namespace SONA
                     return false;
                 }
 
-                // Load ảnh nghệ sĩ từ URL của thuộc tính PICTURE_SINGER
+                // Load ảnh nghệ sĩ từ URL
                 try
                 {
                     using (var wc = new System.Net.WebClient())
@@ -198,32 +211,24 @@ namespace SONA
                 }
 
                 // Phát nhạc từ URL (tải về tạm thời)
-                string tempFile = Path.GetTempFileName(); // Tạo đối tượng tạm thời để lưu tệp âm thanh
-                using (var wc = new System.Net.WebClient()) // Tạo đối tượng WebClient để tải tệp âm thanh
+                string tempFile = Path.GetTempFileName();
+                using (var wc = new System.Net.WebClient())
                 {
-                    await wc.DownloadFileTaskAsync(new Uri(am_thanh), tempFile); // Tải tệp âm thanh từ URL của thuộc tính AM_THANH
+                    await wc.DownloadFileTaskAsync(new Uri(am_thanh), tempFile);
                 }
 
-                if (afr == null)
-                {
-                    afr = new AudioFileReader(tempFile); // Đọc tệp âm thanh từ trong cơ sở dữ liệu
-                    afr.Volume = tbsVolume.Value / 100f; // Đặt giá trị âm lượng ban đầu là 50%
-                }
+                // Tạo mới AudioFileReader để đảm bảo reset vị trí
+                afr = new AudioFileReader(tempFile);
+                afr.Volume = tbsVolume.Value / 100f;
 
                 if (woe == null)
                 {
                     woe = new WaveOutEvent();
-                    woe.Init(afr); // Khởi tạo đối tượng phát nhạc với tệp âm thanh
-                    woe.PlaybackStopped += OnPlaybackStopped; // Theo dõi sự kiện dừng phát
+                    woe.PlaybackStopped += OnPlaybackStopped;
                 }
+                woe.Init(afr);
 
-                if (lastPosition != TimeSpan.Zero) // Kiểm tra xem có vị trí đã lưu không
-                {
-                    afr.CurrentTime = lastPosition; // Đặt lại vị trí phát nhạc về vị trí đã lưu
-                }
-
-                lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss"); // Lấy thời gian tổng của bài hát
-
+                lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss");
                 lblNameSinger.Text = name_singer;
                 lblSince.Text = ConvertDate(birthdate);
 
@@ -241,25 +246,25 @@ namespace SONA
         {
             try
             {
-                StopMusicAndDispose(); // Giải phóng tài nguyên trước khi khởi động lại
                 if (await InitializeAudio())
                 {
-                    woe.Play(); // Phát nhạc
-                    isPlaying = true; // Đánh dấu là đang phát nhạc
-                    btnPlayMusic.Image = Properties.Resources.PauseAni; // Đổi hình ảnh nút phát nhạc thành hình tạm dừng
-                    timer1.Start(); // Bắt đầu bộ đếm thời gian
+                    woe.Play();
+                    isPlaying = true;
+                    btnPlayMusic.Checked = false;
+                    timer1.Start();
+                    tbsTimeSong.Value = 0;
                 }
                 else
                 {
                     isPlaying = false;
-                    btnPlayMusic.Image = Properties.Resources.PlayAni;
+                    btnPlayMusic.Checked = true;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error during initialization: " + ex.Message);
                 isPlaying = false;
-                btnPlayMusic.Image = Properties.Resources.PlayAni;
+                btnPlayMusic.Checked = true;
             }
         }
 
@@ -318,28 +323,120 @@ namespace SONA
             }
         }
 
+        private async void btnNext_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (songIds == null || songIds.Count == 0)
+                {
+                    MessageBox.Show("Không có bài hát nào trong danh sách!");
+                    return;
+                }
+
+                int currentIndex = songIds.IndexOf(id_song);
+                if (currentIndex == -1)
+                {
+                    MessageBox.Show("Bài hát hiện tại không nằm trong danh sách!");
+                    return;
+                }
+
+                int nextIndex = (currentIndex + 1) % songIds.Count;
+                string nextSongId = isShuffled ? songIds[nextIndex] : originalSongIds[nextIndex]; // Sử dụng danh sách xáo trộn nếu bật
+
+                StopMusicAndDispose();
+                id_song = nextSongId;
+
+                GetData();
+                if (await InitializeAudio())
+                {
+                    woe.Play();
+                    isPlaying = true;
+                    btnPlayMusic.Checked = false;
+                    timer1.Start();
+                    tbsTimeSong.Value = 0;
+                }
+                else
+                {
+                    isPlaying = false;
+                    btnPlayMusic.Checked = true;
+                }
+
+                showSongsFavourite();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during next song: " + ex.Message);
+            }
+        }
+
+        private async void btnPrev_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (songIds == null || songIds.Count == 0)
+                {
+                    MessageBox.Show("Không có bài hát nào trong danh sách!");
+                    return;
+                }
+
+                int currentIndex = songIds.IndexOf(id_song);
+                if (currentIndex == -1)
+                {
+                    MessageBox.Show("Bài hát hiện tại không nằm trong danh sách!");
+                    return;
+                }
+
+                int prevIndex = (currentIndex - 1 + songIds.Count) % songIds.Count;
+                string prevSongId = isShuffled ? songIds[prevIndex] : originalSongIds[prevIndex]; // Sử dụng danh sách xáo trộn nếu bật
+
+                StopMusicAndDispose();
+                id_song = prevSongId;
+
+                GetData();
+                if (await InitializeAudio())
+                {
+                    woe.Play();
+                    isPlaying = true;
+                    btnPlayMusic.Checked = false;
+                    timer1.Start();
+                    tbsTimeSong.Value = 0;
+                }
+                else
+                {
+                    isPlaying = false;
+                    btnPlayMusic.Checked = true;
+                }
+
+                showSongsFavourite();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during previous song: " + ex.Message);
+            }
+        }
+
         // Hàm tạm dừng hoặc phát nhạc
         private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
             try
             {
-                if (isPlaying) // Nếu đang phát nhạc
+                if (isPlaying)
                 {
-                    lastPosition = afr.CurrentTime; // Lưu lại vị trí hiện tại
-                    woe.Pause(); // Tạm dừng phát nhạc
-                    btnPlayMusic.Image = Properties.Resources.PlayAni;
+                    lastPosition = afr.CurrentTime;
+                    woe.Pause();
+                    btnPlayMusic.Checked = true;
                     isPlaying = false;
-                    timer1.Stop(); // Dừng bộ đếm thời gian
+                    timer1.Stop();
                 }
                 else
                 {
-                    if (woe == null || afr == null) // Nếu chưa được khởi tạo
+                    if (woe == null || afr == null)
                     {
-                        if (!await InitializeAudio()) return; // Khởi tạo lại âm thanh, nếu không được thì return
+                        if (!await InitializeAudio()) return;
                     }
 
                     woe.Play();
-                    btnPlayMusic.Image = Properties.Resources.PauseAni;
+                    btnPlayMusic.Checked = false;
                     isPlaying = true;
                     timer1.Start();
                 }
@@ -348,7 +445,7 @@ namespace SONA
             {
                 MessageBox.Show("Error: " + ex.Message);
                 isPlaying = false;
-                btnPlayMusic.Image = Properties.Resources.PlayAni;
+                btnPlayMusic.Checked = true;
             }
         }
 
@@ -358,7 +455,7 @@ namespace SONA
             if (afr != null)
             {
                 lblProcess.Text = afr.CurrentTime.ToString(@"mm\:ss");
-                tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100); // Cập nhật thanh thời gian bằng cách lấy thời gian hiện tại chia cho tổng thời gian
+                tbsTimeSong.Value = (int)((afr.CurrentTime.TotalMilliseconds / afr.TotalTime.TotalMilliseconds) * 100);
             }
         }
 
@@ -367,8 +464,8 @@ namespace SONA
         {
             if (afr != null)
             {
-                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * tbsTimeSong.Value / 100); // Tính toán vị trí mới dựa trên giá trị thanh trượt
-                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition); // Đặt lại vị trí phát nhạc
+                int newPosition = (int)(afr.TotalTime.TotalMilliseconds * tbsTimeSong.Value / 100);
+                afr.CurrentTime = TimeSpan.FromMilliseconds(newPosition);
             }
         }
 
@@ -377,19 +474,63 @@ namespace SONA
         {
             if (afr != null)
             {
-                afr.Volume = tbsVolume.Value / 100f; // Đặt lại âm lượng dựa trên giá trị thanh trượt
+                afr.Volume = tbsVolume.Value / 100f;
             }
         }
 
         // Hàm lặp lại bài hát
-        private void btReplay_Click(object sender, EventArgs e)
+        private void btnReplay_Click(object sender, EventArgs e)
         {
-            isAutoReplay = !isAutoReplay; // Đảo ngược trạng thái lặp lại
+            isAutoReplay = !isAutoReplay;
+            btnReplay.Checked = isAutoReplay;
+        }
 
-            if (isAutoReplay)
-                btReplay.Image = Properties.Resources.RecoreOn;
-            else
-                btReplay.Image = Properties.Resources.Record;
+        private void btnShuffle_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (songIds == null || songIds.Count == 0)
+                {
+                    MessageBox.Show("Không có bài hát nào trong danh sách!");
+                    return;
+                }
+
+                int currentIndex = songIds.IndexOf(id_song);
+                if (currentIndex == -1)
+                {
+                    MessageBox.Show("Bài hát hiện tại không nằm trong danh sách!");
+                    return;
+                }
+
+                if (!isShuffled)
+                {
+                    // Xáo trộn danh sách
+                    Random rng = new Random();
+                    int n = songIds.Count;
+                    while (n > 1)
+                    {
+                        n--;
+                        int k = rng.Next(n + 1);
+                        string value = songIds[k];
+                        songIds[k] = songIds[n];
+                        songIds[n] = value;
+                    }
+                }
+                else
+                {
+                    songIds = new List<string>(originalSongIds); // Khôi phục danh sách gốc
+                }
+
+                isShuffled = !isShuffled;
+                btnShuffle.Checked = isShuffled;
+
+                // Không phát lại bài hiện tại, chỉ cập nhật trạng thái
+                showSongsFavourite();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during shuffle: " + ex.Message);
+            }
         }
 
         // Hàm gọi form ArtsitInfor chứa các thông tin về nghệ sĩ

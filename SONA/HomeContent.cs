@@ -17,6 +17,8 @@ namespace SONA
     {
         private Home H;
         private string idUser;
+        private List<string> songIds = new List<string>();
+
         public HomeContent(Home h, string idUser)
         {
             InitializeComponent();
@@ -53,9 +55,14 @@ namespace SONA
                         for (int i = 0; i < songCount; i++)
                         {
                             string id_song = reader.ReadString();
-                            SongForm songForm = new SongForm(H, id_song, idUser);
-                            flpSongs.Controls.Add(songForm);
+                            songIds.Add(id_song);
+                            
                         }
+                        for (int i = 0; i < songCount; i++)
+                        {
+                            SongForm songForm = new SongForm(H, songIds[i], idUser, songIds);
+                            flpSongs.Controls.Add(songForm);
+                        }    
                     }
                     else
                     {
