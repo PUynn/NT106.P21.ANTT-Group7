@@ -19,7 +19,6 @@ namespace SONA
     {
         SONA S;
         private bool isPasswordVisible = false; // Biến trạng thái để theo dõi mật khẩu đang hiển thị hay không
-        private string userEmail;
 
         public Login(SONA s)
         {
@@ -68,7 +67,7 @@ namespace SONA
                     });
 
                     Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
-                    userEmail = userInfo.Email;
+                    string userEmail = userInfo.Email;
 
                     using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                     using (NetworkStream stream = client.GetStream())
@@ -76,6 +75,7 @@ namespace SONA
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
                         writer.Write("loginGoogle");
+                        writer.Write(userEmail);
                         string response = reader.ReadString();
                         if (response == "OK")
                         {

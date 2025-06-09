@@ -14,7 +14,6 @@ namespace SONA
     public partial class SignUp : UserControl
     {
         private SONA S;
-        private string userEmail;
         public SignUp(SONA s)
         {
             InitializeComponent();
@@ -67,7 +66,7 @@ namespace SONA
                     });
 
                     Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
-                    userEmail = userInfo.Email;
+                    string userEmail = userInfo.Email;
 
                     using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                     using (NetworkStream stream = client.GetStream())
@@ -75,11 +74,12 @@ namespace SONA
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
                         writer.Write("signupGoogle");
+                        writer.Write(userEmail);
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            S.ShowHome(userEmail);
                             S.Activate();
+                            S.ShowHome(userEmail);
                         }
                         else
                         {
