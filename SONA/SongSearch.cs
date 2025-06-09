@@ -18,7 +18,7 @@ namespace SONA
     {
         private Home H;
         private bool isFavorited = false;
-        
+
         private List<string> songIds;
         private string id_song, name_song, picture_song, id_singer, name_singer;
         private string idUser;
@@ -29,7 +29,7 @@ namespace SONA
             this.id_song = id_song;
             this.idUser = idUser;
             this.songIds = new List<string>(songIds);
-            
+
             InitializeComponent();
             GetData();
             showSongsFavourite();

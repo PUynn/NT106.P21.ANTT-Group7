@@ -15,12 +15,15 @@ using SONA;
 using System.IO;
 using System.Net.Sockets;
 using NAudio.Wave;
+using System.Net.Http;
 
 namespace SONA
 {
     public partial class UserInfor : UserControl
     {
         private string idUser;
+        private string avatarPath = null; // Lưu đường dẫn ảnh tạm thời
+        private bool hasCustomAvatar = false; // Kiểm tra xem người dùng có chọn ảnh không
         private SONA S;
 
         public UserInfor(SONA s, string idUser)
@@ -29,6 +32,7 @@ namespace SONA
             this.idUser = idUser;
             InitializeComponent();
             getUserInfor();
+            getAvatarUser();
         }
 
         private void getUserInfor()
@@ -63,6 +67,63 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private async void getAvatarUser()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getAvatarUser");
+                    writer.Write(idUser);
+
+                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    if (response == "OK")
+                    {
+                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
+                        if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
+                        {
+                            using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                            {
+                                var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
+                                using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                                {
+                                    cpbAvatar.Image = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cpbAvatar.Image = null;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                        cpbAvatar.Image = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void setAvatar()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                cpbAvatar.Image = Image.FromFile(openFileDialog.FileName);
+                avatarPath = openFileDialog.FileName; // Lưu đường dẫn ảnh
+                hasCustomAvatar = true; // Đánh dấu ảnh được chọn
             }
         }
 
@@ -131,6 +192,11 @@ namespace SONA
             return true;
         }
 
+        private void cpbAvatar_Click(object sender, EventArgs e)
+        {
+            setAvatar();
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (!checkUserInfo()) return;
@@ -143,15 +209,31 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("updateUserInfor");
-                    writer.Write(idUser);
+                    writer.Write(tbEmail.Text);
                     writer.Write(tbNameUser.Text);
                     writer.Write(tbSdt.Text);
                     writer.Write(tbPass.Text);
 
-                    string response = reader.ReadString();
+                    if (hasCustomAvatar && avatarPath != null)
+                    {
+                        writer.Write("hasAvatar");
+                        using (var fs = new FileStream(avatarPath, FileMode.Open, FileAccess.Read))
+                        {
+                            byte[] imageData = new byte[fs.Length];
+                            fs.Read(imageData, 0, imageData.Length);
+                            writer.Write(imageData.Length);
+                            writer.Write(imageData);
+                        }
+                    }
+                    else
+                    {
+                        writer.Write("noAvatar");
+                    }
 
+                    string response = reader.ReadString();
                     if (response == "OK")
                     {
+                        getAvatarUser();
                         getUserInfor();
                         lblStatus.Text = "Cập nhật thông tin thành công!";
                     }

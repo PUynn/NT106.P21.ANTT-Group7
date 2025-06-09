@@ -201,7 +201,7 @@ namespace SONA
                     using (var wc = new System.Net.WebClient())
                     using (var stream = wc.OpenRead(picture_singer))
                     {
-                        btnPictureSinger.BackgroundImage = Image.FromStream(stream);
+                        cpbPictureSinger.Image = Image.FromStream(stream);
                     }
                 }
                 catch (Exception ex)
@@ -534,7 +534,7 @@ namespace SONA
         }
 
         // Hàm gọi form ArtsitInfor chứa các thông tin về nghệ sĩ
-        private void btnSinger_Click(object sender, EventArgs e)
+        private void cpbPictureSinger_Click(object sender, EventArgs e)
         {
             StopMusicAndDispose();
             H.pnMain.Controls.Clear();

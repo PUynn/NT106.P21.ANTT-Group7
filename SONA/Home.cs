@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,9 @@ namespace SONA
             emailUser = email;
             InitializeComponent();
             getIdUser();
+            getAvatarUser();
         }
-        
+
         private void getIdUser()
         {
             try
@@ -60,6 +62,50 @@ namespace SONA
             }
         }
 
+        private async void getAvatarUser()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getAvatarUser");
+                    writer.Write(idUser);
+
+                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    if (response == "OK")
+                    {
+                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
+                        if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
+                        {
+                            using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                            {
+                                var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
+                                using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                                {
+                                    cpbUserInfor.Image = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cpbUserInfor.Image = null;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                        cpbUserInfor.Image = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
         private void MyClick()
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
@@ -78,7 +124,7 @@ namespace SONA
             pnMain.Controls.Add(homeContent);
 
         }
-        
+
         private void btnLibrary_Click(object sender, EventArgs e)
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);

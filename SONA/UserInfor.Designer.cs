@@ -321,7 +321,7 @@
             // cpbAvatar
             // 
             this.cpbAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cpbAvatar.Image = global::SONA.Properties.Resources.Avatar;
+            this.cpbAvatar.FillColor = System.Drawing.Color.Transparent;
             this.cpbAvatar.ImageRotate = 0F;
             this.cpbAvatar.Location = new System.Drawing.Point(56, 68);
             this.cpbAvatar.Name = "cpbAvatar";
@@ -330,6 +330,7 @@
             this.cpbAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cpbAvatar.TabIndex = 0;
             this.cpbAvatar.TabStop = false;
+            this.cpbAvatar.Click += new System.EventHandler(this.cpbAvatar_Click);
             // 
             // lblNameUser
             // 

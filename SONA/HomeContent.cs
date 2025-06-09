@@ -47,7 +47,7 @@ namespace SONA
                 {
                     writer.Write("getIDSong"); // Gửi yêu cầu lấy bài hát
                     string response = reader.ReadString(); // Nhận phản hồi từ server
-                    
+
                     if (response == "OK")
                     {
                         int songCount = reader.ReadInt32(); // Đọc số lượng bài hát
@@ -56,13 +56,13 @@ namespace SONA
                         {
                             string id_song = reader.ReadString();
                             songIds.Add(id_song);
-                            
+
                         }
                         for (int i = 0; i < songCount; i++)
                         {
                             SongForm songForm = new SongForm(H, songIds[i], idUser, songIds);
                             flpSongs.Controls.Add(songForm);
-                        }    
+                        }
                     }
                     else
                     {

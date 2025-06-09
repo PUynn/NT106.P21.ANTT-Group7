@@ -16,7 +16,7 @@ namespace SONA
     {
         private Home home;
 
-        string connString = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.bzjfiynoyelxlpowlhty;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true"; // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
+        string connString = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true"; // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         public SONA()
         {
             InitializeComponent();
@@ -55,17 +55,16 @@ namespace SONA
 
         public void ShowHome(string s)
         {
-            if (home == null)
-            {
-                home = new Home(this, s);
-                home.Dock = DockStyle.Fill;
-            }
+            home = new Home(this, s);
+            home.Dock = DockStyle.Fill;
 
             pnLogin.Controls.Clear();
             pnLogin.Visible = false;
+            
             pnMain.Controls.Clear();
             pnMain.Controls.Add(home);
             pnMain.Visible = true;
+            
             home.Visible = true;
             this.Activate();
         }

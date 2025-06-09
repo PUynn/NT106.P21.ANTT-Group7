@@ -241,7 +241,7 @@
             // cpbUserInfor
             // 
             this.cpbUserInfor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cpbUserInfor.Image = global::SONA.Properties.Resources.Avatar;
+            this.cpbUserInfor.FillColor = System.Drawing.Color.Transparent;
             this.cpbUserInfor.ImageRotate = 0F;
             this.cpbUserInfor.Location = new System.Drawing.Point(1258, 7);
             this.cpbUserInfor.Name = "cpbUserInfor";

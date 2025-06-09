@@ -30,40 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnPictureSinger = new Guna.UI2.WinForms.Guna2Button();
             this.lbNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.cpbArtist = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbArtist)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2Panel1
             // 
-            this.guna2Panel1.Controls.Add(this.btnPictureSinger);
+            this.guna2Panel1.Controls.Add(this.cpbArtist);
             this.guna2Panel1.Controls.Add(this.lbNameSinger);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(260, 260);
             this.guna2Panel1.TabIndex = 0;
-            // 
-            // btnPictureSinger
-            // 
-            this.btnPictureSinger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnPictureSinger.BorderRadius = 10;
-            this.btnPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPictureSinger.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnPictureSinger.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnPictureSinger.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnPictureSinger.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnPictureSinger.FillColor = System.Drawing.Color.Transparent;
-            this.btnPictureSinger.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPictureSinger.ForeColor = System.Drawing.Color.White;
-            this.btnPictureSinger.ImageSize = new System.Drawing.Size(50, 50);
-            this.btnPictureSinger.Location = new System.Drawing.Point(13, 0);
-            this.btnPictureSinger.Name = "btnPictureSinger";
-            this.btnPictureSinger.Size = new System.Drawing.Size(224, 224);
-            this.btnPictureSinger.TabIndex = 11;
-            this.btnPictureSinger.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
             // lbNameSinger
             // 
@@ -81,7 +63,20 @@
             // guna2Elipse1
             // 
             this.guna2Elipse1.BorderRadius = 224;
-            this.guna2Elipse1.TargetControl = this.btnPictureSinger;
+            // 
+            // cpbArtist
+            // 
+            this.cpbArtist.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbArtist.FillColor = System.Drawing.Color.Transparent;
+            this.cpbArtist.ImageRotate = 0F;
+            this.cpbArtist.Location = new System.Drawing.Point(13, 0);
+            this.cpbArtist.Name = "cpbArtist";
+            this.cpbArtist.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbArtist.Size = new System.Drawing.Size(224, 224);
+            this.cpbArtist.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbArtist.TabIndex = 12;
+            this.cpbArtist.TabStop = false;
+            this.cpbArtist.Click += new System.EventHandler(this.cpbArtist_Click);
             // 
             // ArtistForm
             // 
@@ -93,6 +88,7 @@
             this.Size = new System.Drawing.Size(260, 260);
             this.Load += new System.EventHandler(this.ArtistForm_Load);
             this.guna2Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cpbArtist)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -101,7 +97,7 @@
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbNameSinger;
-        private Guna.UI2.WinForms.Guna2Button btnPictureSinger;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox cpbArtist;
     }
 }

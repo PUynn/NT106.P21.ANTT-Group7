@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SONA
 {
-    public partial class AlbumList: UserControl
+    public partial class AlbumList : UserControl
     {
         private Home h;
         private string idUser;
@@ -25,7 +25,7 @@ namespace SONA
         private void getAlbumList()
         {
             flpAlbum.Controls.Clear();
-            for (int i = 0; i < 10; i++) 
+            for (int i = 0; i < 10; i++)
             {
                 AlbumForm albumForm = new AlbumForm(h, idUser);
                 flpAlbum.Controls.Add(albumForm);

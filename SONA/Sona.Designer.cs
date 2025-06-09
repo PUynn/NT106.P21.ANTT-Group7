@@ -45,7 +45,6 @@
             // 
             this.pnMain.BackColor = System.Drawing.Color.Transparent;
             this.pnMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pnMain.Controls.Add(this.pnLogin);
             this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnMain.Location = new System.Drawing.Point(0, 0);
             this.pnMain.Name = "pnMain";
@@ -58,8 +57,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Lime;
             this.ClientSize = new System.Drawing.Size(1771, 1012);
-            this.Controls.Add(this.pnMain);
             this.Controls.Add(this.pnLogin);
+            this.Controls.Add(this.pnMain);
             this.ForeColor = System.Drawing.Color.Transparent;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

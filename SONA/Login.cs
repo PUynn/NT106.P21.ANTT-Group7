@@ -6,6 +6,12 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net.Sockets;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Oauth2.v2;
+using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using System.Threading;
 
 namespace SONA
 {
@@ -13,7 +19,8 @@ namespace SONA
     {
         SONA S;
         private bool isPasswordVisible = false; // Biến trạng thái để theo dõi mật khẩu đang hiển thị hay không
-        
+        private string userEmail;
+
         public Login(SONA s)
         {
             InitializeComponent();
@@ -29,34 +36,63 @@ namespace SONA
         }
 
         // Phương thức yêu cầu đăng nhập bằng Google
-        private void btnLoginGoogle_Click(object sender, EventArgs e)
+        private async void btnLoginGoogle_Click(object sender, EventArgs e)
         {
+            lblCheck.Text = "";
             try
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(credPath);
+
+                var clientSecrets = new ClientSecrets
                 {
-                    writer.Write("loginGoogle");
-                    string response = reader.ReadString();
-                    if (response == "OK")
+                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
+                    ClientSecret = "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"
+                };
+
+                var scopes = new[] { "profile", "email" };
+
+                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    clientSecrets,
+                    scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)
+                );
+
+                if (credential != null && credential.Token != null)
+                {
+                    var oauthService = new Oauth2Service(new BaseClientService.Initializer()
                     {
-                        string email = reader.ReadString();
-                        S.ShowHome(email);
-                        S.Activate();
-                    }
-                    else
+                        HttpClientInitializer = credential
+                    });
+
+                    Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
+                    userEmail = userInfo.Email;
+
+                    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                    using (NetworkStream stream = client.GetStream())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        lblCheck.Text = response;
+                        writer.Write("loginGoogle");
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            S.ShowHome(userEmail);
+                            S.Activate();
+                        }
+                        else
+                        {
+                            lblCheck.Text = response;
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                lblCheck.Text = "Lỗi: " + ex.Message;
+                lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
             }
-
         }
 
         // Phương thức yêu cầu đăng nhập với email và mật khẩu

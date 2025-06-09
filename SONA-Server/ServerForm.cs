@@ -26,7 +26,7 @@ namespace SONA_Server
     public partial class ServerForm : Form
     {
         // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
-        string connIP = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.bzjfiynoyelxlpowlhty;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        string connIP = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
         string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
 
         private TcpListener server; // Đối tượng TcpListener để lắng nghe kết nối từ client
@@ -135,12 +135,9 @@ namespace SONA_Server
                 }
                 else if (requestType == "loginGoogle")
                 {
-                    string result = Task.Run(async () =>
-                    {
-                        return await CheckLoginGoogle();
-                    }).Result;
-                    writer.Write(result);
-                    writer.Write(userEmail);
+                    string email = reader.ReadString();
+                    if (IsEmailExists(email)) writer.Write("OK");
+                    else writer.Write("Tài khoản email chưa tồn tại! Vui lòng đăng kí tài khoản");
                 }
                 else if (requestType == "forgetPassword")
                 {
@@ -208,14 +205,11 @@ namespace SONA_Server
                         writer.Write(result);
                     }
                 }
-                else if (requestType == "singupGoogle")
+                else if (requestType == "signupGoogle")
                 {
-                    string result = Task.Run(async () =>
-                    {
-                        return await CheckSignUpGoogle();
-                    }).Result;
-                    writer.Write(result);
-                    writer.Write(userEmail);
+                    string email = reader.ReadString();
+                    if (!IsEmailExists(email)) writer.Write("OK");
+                    else writer.Write("Tài khoản email đã tồn tại! Vui lòng đăng nhập");
                 }
 
                 else if (requestType == "signupInfo")
@@ -779,31 +773,77 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy thông tin người dùng: " + ex.Message);
                     }
                 }
-                else if (requestType == "updateUserInfor")
+                else if (requestType == "getAvatarUser")
                 {
                     int id_user = int.Parse(reader.ReadString());
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT picture_user FROM users WHERE id_user = @id_user";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["picture_user"].ToString());
+                                    }
+                                    else
+                                    {
+                                        writer.Write("Không tìm thấy người dùng với ID: " + id_user);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy hình ảnh người dùng: " + ex.Message);
+                    }
+                }    
+                else if (requestType == "updateUserInfor")
+                {
+                    string email = reader.ReadString();
                     string name_user = reader.ReadString();
                     string phone_number = reader.ReadString();
                     string password = reader.ReadString();
+
+                    string pictureUrl = "https://lgnvhovprubrxohnhwph.supabase.co/storage/v1/object/public/picture/Users/BaseAvatar.png";
+                    string hasAvatar = reader.ReadString();
+                    if (hasAvatar == "hasAvatar")
+                    {
+                        int imageLength = reader.ReadInt32();
+                        byte[] imageData = reader.ReadBytes(imageLength);
+                        string result = Task.Run(async () =>
+                        {
+                            return await UploadImageToSupabase(email, imageData);
+                        }).Result;
+                        pictureUrl = result;
+                    }
 
                     try
                     {
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "UPDATE users SET name_user = @name_user, phone_number = @phone_number, password = @password WHERE id_user = @id_user";
+                            string query = "UPDATE users SET name_user = @name_user, phone_number = @phone_number, password = @password, picture_user = @pictureUrl WHERE email = @email";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
-                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@email", email);
                                 cmd.Parameters.AddWithValue("@name_user", name_user);
                                 cmd.Parameters.AddWithValue("@phone_number", phone_number);
                                 cmd.Parameters.AddWithValue("@password", password);
+                                cmd.Parameters.AddWithValue("@pictureUrl", pictureUrl);
 
                                 int rowsAffected = cmd.ExecuteNonQuery();
                                 if (rowsAffected > 0)
                                     writer.Write("OK");
                                 else
-                                    writer.Write("Không tìm thấy người dùng với ID: " + id_user);
+                                    writer.Write("Không tìm thấy người dùng với Email: " + email);
                             }
                         }
                     }
@@ -853,7 +893,7 @@ namespace SONA_Server
                         BinaryWriter writer = new BinaryWriter(stream); // Đối tượng BinaryWriter để ghi dữ liệu vào luồng
 
                         // Gửi tín hiệu cho client và ghi nội dung tin nhắn
-                        writer.Write("Message"); 
+                        writer.Write("Message");
                         writer.Write(message);
                     }
                     catch
@@ -1064,56 +1104,6 @@ namespace SONA_Server
             }
         }
 
-        // Phương thức đăng kí bằng tải khoản Google
-        private async Task<string> CheckSignUpGoogle()
-        {
-            try
-            {
-                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); // Đường dẫn thư mục tạm thời để lưu trữ thông tin xác thực
-                Directory.CreateDirectory(credPath); // Tạo thư mục tạm nếu chưa tồn tại
-
-                var clientSecrets = new ClientSecrets // Thông tin xác thực của tài khoản Google Cloud Console
-                {
-                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
-                    ClientSecret = "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"
-                };
-
-                var scopes = new[] { "profile", "email" }; // Lấy quyền truy cập thông tin người dùng gồm profile và email
-
-                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync( // Xác thực người dùng
-                    clientSecrets, // Thông tin xác thực
-                    scopes, // Quyền truy cập
-                    "user", // Tên người dùng
-                    CancellationToken.None, // Không hủy quá trình xác thực
-                    new FileDataStore(credPath, true) // Lưu trữ thông tin xác thực vào thư mục tạm
-                );
-
-                if (credential != null && credential.Token != null) // Kiểm tra xem xác thực có thành công hay không bằng cách kiểm tra token
-                {
-                    var oauthService = new Oauth2Service(new BaseClientService.Initializer() // Gọi dịch vụ Oauth2 để lấy thông tin người dùng
-                    {
-                        HttpClientInitializer = credential // Thông tin xác thực đã được cấp quyền
-                    });
-
-                    Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync(); // Lấy thông tin người dùng từ Google
-                    string email = userInfo.Email; // Lấy địa chỉ email của người dùng
-
-                    if (IsEmailExists(email))
-                    {
-                        return "Email đã được đăng kí, vui lòng đăng nhập!";
-                    }
-
-                    userEmail = email;
-                    return "OK"; // Nếu chưa tồn tại thì trả về OK
-                }
-                return "Lỗi xác thực Google: Không thể lấy thông tin người dùng."; // Nếu không lấy được thông tin người dùng thì trả về lỗi
-            }
-            catch (Exception ex)
-            {
-                return "Lỗi đăng ký Google: " + ex.Message;
-            }
-        }
-
         private async Task<string> UploadImageToSupabase(string email, byte[] imageData)
         {
             try
@@ -1133,7 +1123,7 @@ namespace SONA_Server
                 {
                     CacheControl = "3600", // Tuổi thọ bộ nhớ cache (tùy chọn)
                     ContentType = "image/jpeg", // Định dạng MIME
-                    Upsert = false // Không ghi đè nếu tệp đã tồn tại
+                    Upsert = true // Cho phép ghi đè nếu tệp đã tồn tại
                 });
 
                 // Nếu không có ngoại lệ, coi như upload thành công
@@ -1182,57 +1172,6 @@ namespace SONA_Server
                 return "Lỗi đăng nhập: " + ex.Message;
             }
         }
-
-        // Phương thức kiểm tra thông tin đăng nhập tài khoản Google
-        private async Task<string> CheckLoginGoogle()
-        {
-            try
-            {
-                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                Directory.CreateDirectory(credPath);
-
-                var clientSecrets = new ClientSecrets
-                {
-                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
-                    ClientSecret = "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"
-                };
-
-                var scopes = new[] { "profile", "email" };
-
-                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    clientSecrets,
-                    scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)
-                );
-
-                if (credential != null && credential.Token != null)
-                {
-                    var oauthService = new Oauth2Service(new BaseClientService.Initializer()
-                    {
-                        HttpClientInitializer = credential
-                    });
-
-                    Userinfo userGoogle = await oauthService.Userinfo.Get().ExecuteAsync();
-                    string email = userGoogle.Email;
-
-                    if (IsEmailExists(email))
-                    {
-                        userEmail = email;
-                        return "OK";
-                    }
-                    else
-                        return "Email chưa tồn tại. Vui lòng đăng kí tài khoản!";
-                }
-                return "Lỗi xác thực Google: Không thể lấy thông tin người dùng.";
-            }
-            catch (Exception ex)
-            {
-                return "Lỗi đăng nhập bằng Google: " + ex.Message;
-            }
-        }
-
         private string SetNewPassword(string email, string otp, string newPassword)
         {
             try
@@ -1377,7 +1316,7 @@ namespace SONA_Server
                     conn.Open();
 
                     // Xóa toàn bộ dữ liệu trong bảng IP
-                    using (var deleteCmd = new NpgsqlCommand("DELETE FROM IP", conn))
+                    using (var deleteCmd = new NpgsqlCommand("DELETE FROM ip", conn))
                     {
                         deleteCmd.ExecuteNonQuery();
                     }

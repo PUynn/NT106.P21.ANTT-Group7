@@ -1,14 +1,20 @@
-﻿using Guna.UI2.WinForms;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Oauth2.v2;
+using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using System.Threading;
 
 namespace SONA
 {
     public partial class SignUp : UserControl
     {
-        SONA S;
+        private SONA S;
+        private string userEmail;
         public SignUp(SONA s)
         {
             InitializeComponent();
@@ -29,36 +35,62 @@ namespace SONA
         }
 
         // Phương thức yêu cầu đăng ký bằng Google
-        private void btnSignUpGoogle_Click(object sender, EventArgs e)
+        private async void btnSignUpGoogle_Click(object sender, EventArgs e)
         {
             lblCheck.Text = "";
             try
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("singupGoogle");
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        string email = reader.ReadString();
-                        SignUpInfor signUpInfor = new SignUpInfor(S, email);
-                        S.pnLogin.Controls.Clear();
-                        S.pnLogin.Controls.Add(signUpInfor);
-                    }
-                    else
-                    {
+                string credPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(credPath);
 
-                        lblCheck.Text = response;
+                var clientSecrets = new ClientSecrets
+                {
+                    ClientId = "266768311409-sa0qg8353t75tscss8c71v44usk0cimq.apps.googleusercontent.com",
+                    ClientSecret = "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"
+                };
+
+                var scopes = new[] { "profile", "email" };
+
+                var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    clientSecrets,
+                    scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)
+                );
+
+                if (credential != null && credential.Token != null)
+                {
+                    var oauthService = new Oauth2Service(new BaseClientService.Initializer()
+                    {
+                        HttpClientInitializer = credential
+                    });
+
+                    Userinfo userInfo = await oauthService.Userinfo.Get().ExecuteAsync();
+                    userEmail = userInfo.Email;
+
+                    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                    using (NetworkStream stream = client.GetStream())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        writer.Write("signupGoogle");
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            S.ShowHome(userEmail);
+                            S.Activate();
+                        }
+                        else
+                        {
+                            lblCheck.Text = response;
+                        }
                     }
-                    S.Activate();
                 }
             }
             catch (Exception ex)
             {
-                lblCheck.Text = "Lỗi: " + ex.Message;
+                lblCheck.Text = "Lỗi đăng nhập: " + ex.Message;
             }
         }
 

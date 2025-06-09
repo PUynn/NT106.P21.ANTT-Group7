@@ -53,13 +53,13 @@ namespace SONA
                                 var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
                                 using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
                                 {
-                                    btnPictureSinger.BackgroundImage = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                    cpbArtist.Image = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
                                 }
                             }
                         }
                         else
                         {
-                            btnPictureSinger.BackgroundImage = null; // Nếu không có hình ảnh từ đường dẫn thì set thành hình ảnh mặc định
+                            cpbArtist.Image = null;
                         }
                     }
                     else
@@ -71,12 +71,11 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading singer image: {ex.Message}");
-                btnPictureSinger.BackgroundImage = null; // Xử lý lỗi bằng cách không hiển thị hình
+                cpbArtist.Image = null;
             }
         }
 
-        // Hàm gọi form ArtistInfor để xem thông tin của nghệ sĩ bài hát
-        private void btnPictureSong_Click(object sender, EventArgs e)
+        private void cpbArtist_Click(object sender, EventArgs e)
         {
             ArtistInfor artistInfor = new ArtistInfor(H, id_singer, idUser);
             H.pnMain.Controls.Clear();
