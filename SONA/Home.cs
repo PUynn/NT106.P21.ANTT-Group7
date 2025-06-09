@@ -187,6 +187,8 @@ namespace SONA
         private void btnHome_Click(object sender, EventArgs e)
         {
             MenuClick();
+            getAvatarUser();
+
             txtSearch.Visible = false;
             btnSearch.Visible = true;
 

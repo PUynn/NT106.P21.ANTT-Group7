@@ -56,7 +56,7 @@ namespace SONA
                         tbNameUser.Text = lblNameUser.Text = reader.ReadString();
                         tbEmail.Text = lblEmail.Text = reader.ReadString();
                         tbSdt.Text = reader.ReadString();
-                        tbPass.Text =tbConfirmPass.Text = reader.ReadString();
+                        tbPass.Text = tbConfirmPass.Text = reader.ReadString();
                     }
                     else
                     {

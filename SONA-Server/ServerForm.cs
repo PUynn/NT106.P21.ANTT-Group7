@@ -804,7 +804,7 @@ namespace SONA_Server
                     {
                         writer.Write("Lỗi lấy hình ảnh người dùng: " + ex.Message);
                     }
-                }    
+                }
                 else if (requestType == "updateUserInfor")
                 {
                     string email = reader.ReadString();
@@ -1115,13 +1115,13 @@ namespace SONA_Server
                 );
 
                 // Tạo tên tệp duy nhất
-                string fileName = $"{email}.jpg";
+                string fileName = $"{email}_{DateTime.UtcNow:yyyyMMddHHmmss}.jpg";
                 var bucket = supabase.Storage.From("picture/Users"); // Lấy bucket
 
                 // Upload ảnh (bất đồng bộ)
                 var fileObject = await bucket.Upload(imageData, fileName, new Supabase.Storage.FileOptions
                 {
-                    CacheControl = "3600", // Tuổi thọ bộ nhớ cache (tùy chọn)
+                    CacheControl = "3600", // Tuổi thọ bộ nhớ cache
                     ContentType = "image/jpeg", // Định dạng MIME
                     Upsert = true // Cho phép ghi đè nếu tệp đã tồn tại
                 });

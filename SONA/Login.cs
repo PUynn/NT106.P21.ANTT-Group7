@@ -79,8 +79,8 @@ namespace SONA
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            S.ShowHome(userEmail);
                             S.Activate();
+                            S.ShowHome(userEmail);
                         }
                         else
                         {
