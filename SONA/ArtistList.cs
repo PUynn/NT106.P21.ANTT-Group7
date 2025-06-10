@@ -1,58 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
+using System.Data;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Net.Sockets;
 
 namespace SONA
 {
-    public partial class Favourite : UserControl
+    public partial class ArtistList: UserControl
     {
-        private string idUser;
-        private List<string> songIds = new List<string>();
         private Home h;
-        public Favourite(Home h, string idUser)
+        private string idUser;
+        
+        public ArtistList(Home h, string idUser)
         {
-            InitializeComponent();
             this.h = h;
             this.idUser = idUser;
-            getData();
+            InitializeComponent();
+            getIdArtist();
         }
-
-        private void getData()
+        
+        private void getIdArtist()
         {
             try
             {
-                flpSongs.Controls.Clear();
+                Title title = new Title("Artists:");
+                flpArtists.Controls.Clear();
+                flpArtists.Controls.Add(title);
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("Favourite");
-                    writer.Write(idUser);
+                    writer.Write("getIDSinger");
                     string response = reader.ReadString();
 
                     if (response == "OK")
                     {
-                        int count = reader.ReadInt32();
-                        for (int i = 0; i < count; i++)
-                        {
-                            string id_song = reader.ReadString();
-                            songIds.Add(id_song);
-                        }
+                        int singerCount = reader.ReadInt32();
 
-                        for (int i = 0; i < count; i++)
+                        for (int i = 0; i < singerCount; i++)
                         {
-                            SongSearch songSearch = new SongSearch(h, songIds[i], idUser, songIds);
-                            flpSongs.Controls.Add(songSearch);
+                            string id_singer = reader.ReadString();
+                            ArtistForm artistForm = new ArtistForm(h, id_singer, idUser);
+                            flpArtists.Controls.Add(artistForm);
                         }
                     }
                     else

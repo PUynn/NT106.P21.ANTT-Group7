@@ -18,7 +18,7 @@ namespace SONA
 {
     public partial class ListenMusic : UserControl
     {
-        private Home H;
+        private Home h;
         private WaveOutEvent woe; // Đối tượng phát nhạc
         private AudioFileReader afr; // Đối tượng đọc tệp âm thanh
 
@@ -36,7 +36,7 @@ namespace SONA
 
         public ListenMusic(Home h, string id_song, string idUser, List<string> songIds)
         {
-            H = h;
+            this.h = h;
             this.id_song = id_song;
             this.idUser = idUser;
             this.songIds = new List<string>(songIds);
@@ -537,8 +537,8 @@ namespace SONA
         private void cpbPictureSinger_Click(object sender, EventArgs e)
         {
             StopMusicAndDispose();
-            H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(new ArtistInfor(H, id_singer, idUser));
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(new ArtistInfor(h, id_singer, idUser));
         }
     }
 }

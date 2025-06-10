@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.cpbArtist = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.lbNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.cpbArtist = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cpbArtist)).BeginInit();
             this.SuspendLayout();
@@ -46,6 +46,20 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(260, 260);
             this.guna2Panel1.TabIndex = 0;
+            // 
+            // cpbArtist
+            // 
+            this.cpbArtist.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbArtist.FillColor = System.Drawing.Color.Transparent;
+            this.cpbArtist.ImageRotate = 0F;
+            this.cpbArtist.Location = new System.Drawing.Point(13, 0);
+            this.cpbArtist.Name = "cpbArtist";
+            this.cpbArtist.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbArtist.Size = new System.Drawing.Size(224, 224);
+            this.cpbArtist.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbArtist.TabIndex = 12;
+            this.cpbArtist.TabStop = false;
+            this.cpbArtist.Click += new System.EventHandler(this.cpbArtist_Click);
             // 
             // lbNameSinger
             // 
@@ -64,25 +78,11 @@
             // 
             this.guna2Elipse1.BorderRadius = 224;
             // 
-            // cpbArtist
-            // 
-            this.cpbArtist.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cpbArtist.FillColor = System.Drawing.Color.Transparent;
-            this.cpbArtist.ImageRotate = 0F;
-            this.cpbArtist.Location = new System.Drawing.Point(13, 0);
-            this.cpbArtist.Name = "cpbArtist";
-            this.cpbArtist.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.cpbArtist.Size = new System.Drawing.Size(224, 224);
-            this.cpbArtist.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpbArtist.TabIndex = 12;
-            this.cpbArtist.TabStop = false;
-            this.cpbArtist.Click += new System.EventHandler(this.cpbArtist_Click);
-            // 
             // ArtistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "ArtistForm";
             this.Size = new System.Drawing.Size(260, 260);

@@ -187,7 +187,6 @@ namespace SONA
         private void btnHome_Click(object sender, EventArgs e)
         {
             MenuClick();
-            getAvatarUser();
 
             txtSearch.Visible = false;
             btnSearch.Visible = true;
@@ -213,6 +212,7 @@ namespace SONA
         private void btnChat_Click(object sender, EventArgs e)
         {
             MyClick();
+
             ChatForm chatForm = new ChatForm(emailUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(chatForm);
@@ -221,6 +221,16 @@ namespace SONA
         private void btnArtists_Click(object sender, EventArgs e)
         {
             MyClick();
+
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            ArtistList artistList = new ArtistList(this, idUser);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(artistList);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -267,7 +277,7 @@ namespace SONA
 
         private void cpbUserInfor_Click(object sender, EventArgs e)
         {
-            UserInfor userInfor = new UserInfor(S, idUser);
+            UserInfor userInfor = new UserInfor(this, S, idUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(userInfor);
         }

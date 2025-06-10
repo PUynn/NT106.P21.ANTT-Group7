@@ -62,9 +62,9 @@
             this.pnHeader.Controls.Add(this.btnArtists);
             this.pnHeader.Controls.Add(this.btnAll);
             this.pnHeader.Controls.Add(this.btnSongs);
-            this.pnHeader.Location = new System.Drawing.Point(0, 3);
+            this.pnHeader.Location = new System.Drawing.Point(4, 3);
             this.pnHeader.Name = "pnHeader";
-            this.pnHeader.Size = new System.Drawing.Size(1479, 59);
+            this.pnHeader.Size = new System.Drawing.Size(1475, 59);
             this.pnHeader.TabIndex = 8;
             // 
             // btnArtists
@@ -86,7 +86,7 @@
             this.btnArtists.Name = "btnArtists";
             this.btnArtists.Size = new System.Drawing.Size(106, 33);
             this.btnArtists.TabIndex = 9;
-            this.btnArtists.Text = "Artists";
+            this.btnArtists.Text = "Singers";
             this.btnArtists.Click += new System.EventHandler(this.btnArtists_Click);
             // 
             // btnAll
@@ -110,6 +110,7 @@
             this.btnAll.Size = new System.Drawing.Size(55, 33);
             this.btnAll.TabIndex = 11;
             this.btnAll.Text = "All";
+            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
             // btnSongs
             // 

@@ -1,6 +1,6 @@
 ﻿namespace SONA
 {
-    partial class AlbumList
+    partial class ArtistList
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlbumList));
-            this.flpAlbum = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnFavourite = new Guna.UI2.WinForms.Guna2Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArtistList));
+            this.flpArtists = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnArtistList = new Guna.UI2.WinForms.Guna2Panel();
             this.pnHeader = new Guna.UI2.WinForms.Guna2Panel();
             this.btnAdd = new Guna.UI2.WinForms.Guna2Button();
             this.btnList = new Guna.UI2.WinForms.Guna2Button();
@@ -38,27 +38,28 @@
             this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
             this.btnLarge = new Guna.UI2.WinForms.Guna2Button();
             this.btnRecent = new Guna.UI2.WinForms.Guna2Button();
-            this.pnFavourite.SuspendLayout();
+            this.pnArtistList.SuspendLayout();
             this.pnHeader.SuspendLayout();
             this.SuspendLayout();
             // 
-            // flpAlbum
+            // flpArtists
             // 
-            this.flpAlbum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
-            this.flpAlbum.Location = new System.Drawing.Point(3, 62);
-            this.flpAlbum.Name = "flpAlbum";
-            this.flpAlbum.Size = new System.Drawing.Size(1476, 854);
-            this.flpAlbum.TabIndex = 2;
+            this.flpArtists.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.flpArtists.Location = new System.Drawing.Point(0, 62);
+            this.flpArtists.Name = "flpArtists";
+            this.flpArtists.Size = new System.Drawing.Size(1479, 854);
+            this.flpArtists.TabIndex = 2;
             // 
-            // pnFavourite
+            // pnArtistList
             // 
-            this.pnFavourite.Controls.Add(this.flpAlbum);
-            this.pnFavourite.Controls.Add(this.pnHeader);
-            this.pnFavourite.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pnFavourite.Location = new System.Drawing.Point(8, 8);
-            this.pnFavourite.Name = "pnFavourite";
-            this.pnFavourite.Size = new System.Drawing.Size(1482, 919);
-            this.pnFavourite.TabIndex = 1;
+            this.pnArtistList.Controls.Add(this.flpArtists);
+            this.pnArtistList.Controls.Add(this.pnHeader);
+            this.pnArtistList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnArtistList.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnArtistList.Location = new System.Drawing.Point(0, 0);
+            this.pnArtistList.Name = "pnArtistList";
+            this.pnArtistList.Size = new System.Drawing.Size(1482, 919);
+            this.pnArtistList.TabIndex = 2;
             // 
             // pnHeader
             // 
@@ -195,15 +196,15 @@
             this.btnRecent.TabIndex = 3;
             this.btnRecent.Text = "Recent";
             // 
-            // AlbumList
+            // ArtistList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.Controls.Add(this.pnFavourite);
-            this.Name = "AlbumList";
+            this.Controls.Add(this.pnArtistList);
+            this.Name = "ArtistList";
             this.Size = new System.Drawing.Size(1482, 919);
-            this.pnFavourite.ResumeLayout(false);
+            this.pnArtistList.ResumeLayout(false);
             this.pnHeader.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -211,12 +212,12 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel flpAlbum;
-        private Guna.UI2.WinForms.Guna2Panel pnFavourite;
+        private System.Windows.Forms.FlowLayoutPanel flpArtists;
+        private Guna.UI2.WinForms.Guna2Panel pnArtistList;
         private Guna.UI2.WinForms.Guna2Panel pnHeader;
+        private Guna.UI2.WinForms.Guna2Button btnAdd;
         private Guna.UI2.WinForms.Guna2Button btnList;
         private Guna.UI2.WinForms.Guna2Button btnFilter;
-        private Guna.UI2.WinForms.Guna2Button btnAdd;
         private Guna.UI2.WinForms.Guna2Button btnSearch;
         private Guna.UI2.WinForms.Guna2Button btnLarge;
         private Guna.UI2.WinForms.Guna2Button btnRecent;

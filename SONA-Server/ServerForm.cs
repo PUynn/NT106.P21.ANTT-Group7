@@ -372,6 +372,82 @@ namespace SONA_Server
                         writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
                     }
                 }
+                else if (requestType == "getIDAlbum")
+                {
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_album FROM albums ORDER BY RANDOM()";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> albumIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        albumIds.Add(readerdb["id_album"].ToString());
+                                    }
+                                    if (albumIds.Count == 0)
+                                    {
+                                        writer.Write("Không tìm thấy album nào trong cơ sở dữ liệu.");
+                                        return;
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(albumIds.Count);
+                                    foreach (var id in albumIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy id album: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getIdSongFromAlbum")
+                {
+                    try
+                    {
+                        int id_album = int.Parse(reader.ReadString());
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_song FROM songs WHERE id_album = @id_album";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_album", id_album);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> songIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        songIds.Add(readerdb["id_song"].ToString());
+                                    }
+                                    if (songIds.Count == 0)
+                                    {
+                                        writer.Write("Không tìm thấy bài hát nào trong album với ID: " + id_album);
+                                        return;
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(songIds.Count);
+                                    foreach (var id in songIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy id bài hát từ album: " + ex.Message);
+                    }
+                }    
                 else if (requestType == "songForm")
                 {
                     try
@@ -434,6 +510,37 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy nghệ sĩ: " + ex.Message);
                     }
                 }
+                else if (requestType == "albumForm")
+                {
+                    try
+                    {
+                        int id_album = int.Parse(reader.ReadString());
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT name_album, picture_album FROM albums WHERE id_album = @id_album";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_album", id_album);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    if (readerdb.Read())
+                                    {
+                                        writer.Write("OK");
+                                        writer.Write(readerdb["name_album"].ToString());
+                                        writer.Write(readerdb["picture_album"].ToString());
+                                    }
+                                    else
+                                        writer.Write("Không tìm thấy album với ID: " + id_album);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy album: " + ex.Message);
+                    }
+                }    
                 else if (requestType == "listenMusic")
                 {
                     try
@@ -1115,7 +1222,7 @@ namespace SONA_Server
                 );
 
                 // Tạo tên tệp duy nhất
-                string fileName = $"{email}_{DateTime.UtcNow:yyyyMMddHHmmss}.jpg";
+                string fileName = $"{email}_{DateTime.Now:yyyyMMddHHmmss}.jpg";
                 var bucket = supabase.Storage.From("picture/Users"); // Lấy bucket
 
                 // Upload ảnh (bất đồng bộ)
@@ -1342,6 +1449,7 @@ namespace SONA_Server
         {
             try
             {
+                btnStart.Enabled = false;
                 ClearAndInsertIP();
 
                 // Khởi tạo đối tượng TcpListener để lắng nghe kết nối từ client
@@ -1376,6 +1484,7 @@ namespace SONA_Server
             {
                 // Đặt trạng thái dừng server
                 isRunning = false;
+                btnStart.Enabled = true;
 
                 // Dừng TcpListener
                 if (server != null)

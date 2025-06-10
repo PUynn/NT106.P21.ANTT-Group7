@@ -16,7 +16,7 @@ namespace SONA
 {
     public partial class SongSearch : UserControl
     {
-        private Home H;
+        private Home h;
         private bool isFavorited = false;
 
         private List<string> songIds;
@@ -25,7 +25,7 @@ namespace SONA
 
         public SongSearch(Home h, string id_song, string idUser, List<string> songIds)
         {
-            H = h;
+            this.h = h;
             this.id_song = id_song;
             this.idUser = idUser;
             this.songIds = new List<string>(songIds);
@@ -70,17 +70,17 @@ namespace SONA
         // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(H, id_song, idUser, songIds);
-            H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(listenMusic);
-            H.SetCurrentListenMusic(listenMusic);
+            ListenMusic listenMusic = new ListenMusic(h, id_song, idUser, songIds);
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(listenMusic);
+            h.SetCurrentListenMusic(listenMusic);
         }
 
         private void lblNameSinger_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(H, id_singer, idUser);
-            H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(artistInfor);
+            ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(artistInfor);
         }
 
         private void showSongsFavourite()

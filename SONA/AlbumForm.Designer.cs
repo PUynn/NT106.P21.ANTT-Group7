@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbNameAlbum = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblNameAlbum = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.btnPictureAlbum = new Guna.UI2.WinForms.Guna2Button();
             this.pnAlbumForm = new Guna.UI2.WinForms.Guna2Panel();
             this.pnAlbumForm.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lbNameAlbum
+            // lblNameAlbum
             // 
-            this.lbNameAlbum.BackColor = System.Drawing.Color.Transparent;
-            this.lbNameAlbum.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNameAlbum.ForeColor = System.Drawing.Color.White;
-            this.lbNameAlbum.Location = new System.Drawing.Point(13, 242);
-            this.lbNameAlbum.Name = "lbNameAlbum";
-            this.lbNameAlbum.Size = new System.Drawing.Size(15, 27);
-            this.lbNameAlbum.TabIndex = 8;
-            this.lbNameAlbum.Text = "A";
+            this.lblNameAlbum.BackColor = System.Drawing.Color.Transparent;
+            this.lblNameAlbum.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameAlbum.ForeColor = System.Drawing.Color.White;
+            this.lblNameAlbum.Location = new System.Drawing.Point(13, 242);
+            this.lblNameAlbum.Name = "lblNameAlbum";
+            this.lblNameAlbum.Size = new System.Drawing.Size(15, 27);
+            this.lblNameAlbum.TabIndex = 8;
+            this.lblNameAlbum.Text = "A";
             // 
             // btnPictureAlbum
             // 
@@ -67,8 +67,7 @@
             // 
             // pnAlbumForm
             // 
-            this.pnAlbumForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.pnAlbumForm.Controls.Add(this.lbNameAlbum);
+            this.pnAlbumForm.Controls.Add(this.lblNameAlbum);
             this.pnAlbumForm.Controls.Add(this.btnPictureAlbum);
             this.pnAlbumForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnAlbumForm.ForeColor = System.Drawing.Color.White;
@@ -81,10 +80,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.pnAlbumForm);
             this.Name = "AlbumForm";
             this.Size = new System.Drawing.Size(273, 282);
+            this.Load += new System.EventHandler(this.AlbumForm_Load);
             this.pnAlbumForm.ResumeLayout(false);
             this.pnAlbumForm.PerformLayout();
             this.ResumeLayout(false);
@@ -93,7 +93,7 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2HtmlLabel lbNameAlbum;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblNameAlbum;
         private Guna.UI2.WinForms.Guna2Button btnPictureAlbum;
         private Guna.UI2.WinForms.Guna2Panel pnAlbumForm;
     }

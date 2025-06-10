@@ -271,6 +271,12 @@
     <Compile Include="HomeContent.Designer.cs">
       <DependentUpon>HomeContent.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArtistList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArtistList.Designer.cs">
+      <DependentUpon>ArtistList.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListenMusic.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -358,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ArtistInfor.resx">
       <DependentUpon>ArtistInfor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArtistList.resx">
+      <DependentUpon>ArtistList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>

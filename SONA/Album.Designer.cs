@@ -31,17 +31,17 @@
             this.lblNameAlbum = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnPlay = new Guna.UI2.WinForms.Guna2Button();
             this.btnShuffle = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUpload = new Guna.UI2.WinForms.Guna2Button();
             this.btnAdd = new Guna.UI2.WinForms.Guna2Button();
             this.btnDownload = new Guna.UI2.WinForms.Guna2Button();
-            this.btnUpload = new Guna.UI2.WinForms.Guna2Button();
             this.lblNameUser = new System.Windows.Forms.Label();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
             this.pbPictureAlbum = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnPlay = new Guna.UI2.WinForms.Guna2Button();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.flpSong = new System.Windows.Forms.FlowLayoutPanel();
+            this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
+            this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel5.SuspendLayout();
@@ -62,6 +62,7 @@
             // 
             // guna2Panel1
             // 
+            this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.guna2Panel1.Controls.Add(this.guna2Panel3);
             this.guna2Panel1.Controls.Add(this.lblNameUser);
             this.guna2Panel1.Controls.Add(this.lblNameAlbum);
@@ -82,6 +83,24 @@
             this.guna2Panel3.Size = new System.Drawing.Size(989, 65);
             this.guna2Panel3.TabIndex = 3;
             // 
+            // btnPlay
+            // 
+            this.btnPlay.Animated = true;
+            this.btnPlay.BorderRadius = 5;
+            this.btnPlay.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlay.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPlay.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPlay.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPlay.FillColor = System.Drawing.Color.Transparent;
+            this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnPlay.ForeColor = System.Drawing.Color.White;
+            this.btnPlay.Image = global::SONA.Properties.Resources.PlayAni;
+            this.btnPlay.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnPlay.Location = new System.Drawing.Point(8, 12);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(55, 50);
+            this.btnPlay.TabIndex = 1;
+            // 
             // btnShuffle
             // 
             this.btnShuffle.Animated = true;
@@ -99,6 +118,24 @@
             this.btnShuffle.Name = "btnShuffle";
             this.btnShuffle.Size = new System.Drawing.Size(45, 40);
             this.btnShuffle.TabIndex = 1;
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.Animated = true;
+            this.btnUpload.BorderRadius = 5;
+            this.btnUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUpload.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUpload.FillColor = System.Drawing.Color.Transparent;
+            this.btnUpload.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnUpload.ForeColor = System.Drawing.Color.White;
+            this.btnUpload.Image = global::SONA.Properties.Resources.upload;
+            this.btnUpload.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnUpload.Location = new System.Drawing.Point(222, 15);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(45, 40);
+            this.btnUpload.TabIndex = 5;
             // 
             // btnAdd
             // 
@@ -136,24 +173,6 @@
             this.btnDownload.Size = new System.Drawing.Size(45, 40);
             this.btnDownload.TabIndex = 4;
             // 
-            // btnUpload
-            // 
-            this.btnUpload.Animated = true;
-            this.btnUpload.BorderRadius = 5;
-            this.btnUpload.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnUpload.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnUpload.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnUpload.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnUpload.FillColor = System.Drawing.Color.Transparent;
-            this.btnUpload.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.Image = global::SONA.Properties.Resources.upload;
-            this.btnUpload.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnUpload.Location = new System.Drawing.Point(222, 15);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(45, 40);
-            this.btnUpload.TabIndex = 5;
-            // 
             // lblNameUser
             // 
             this.lblNameUser.AutoSize = true;
@@ -167,6 +186,7 @@
             // 
             // guna2Panel5
             // 
+            this.guna2Panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.guna2Panel5.Controls.Add(this.pbPictureAlbum);
             this.guna2Panel5.Controls.Add(this.lblDescription);
             this.guna2Panel5.Location = new System.Drawing.Point(1041, 22);
@@ -183,34 +203,6 @@
             this.pbPictureAlbum.TabIndex = 0;
             this.pbPictureAlbum.TabStop = false;
             // 
-            // guna2Panel9
-            // 
-            this.guna2Panel9.Controls.Add(this.flpSong);
-            this.guna2Panel9.Controls.Add(this.guna2Panel5);
-            this.guna2Panel9.Controls.Add(this.guna2Panel1);
-            this.guna2Panel9.Location = new System.Drawing.Point(0, 0);
-            this.guna2Panel9.Name = "guna2Panel9";
-            this.guna2Panel9.Size = new System.Drawing.Size(1482, 919);
-            this.guna2Panel9.TabIndex = 4;
-            // 
-            // btnPlay
-            // 
-            this.btnPlay.Animated = true;
-            this.btnPlay.BorderRadius = 5;
-            this.btnPlay.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnPlay.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnPlay.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnPlay.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnPlay.FillColor = System.Drawing.Color.Transparent;
-            this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPlay.ForeColor = System.Drawing.Color.White;
-            this.btnPlay.Image = global::SONA.Properties.Resources.PlayAni;
-            this.btnPlay.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnPlay.Location = new System.Drawing.Point(8, 12);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(55, 50);
-            this.btnPlay.TabIndex = 1;
-            // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
@@ -222,18 +214,28 @@
             this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "Description:";
             // 
-            // flpSong
+            // guna2Panel9
             // 
-            this.flpSong.Location = new System.Drawing.Point(25, 209);
-            this.flpSong.Name = "flpSong";
-            this.flpSong.Size = new System.Drawing.Size(995, 707);
-            this.flpSong.TabIndex = 3;
+            this.guna2Panel9.Controls.Add(this.flpSongs);
+            this.guna2Panel9.Controls.Add(this.guna2Panel5);
+            this.guna2Panel9.Controls.Add(this.guna2Panel1);
+            this.guna2Panel9.Location = new System.Drawing.Point(0, 0);
+            this.guna2Panel9.Name = "guna2Panel9";
+            this.guna2Panel9.Size = new System.Drawing.Size(1482, 919);
+            this.guna2Panel9.TabIndex = 4;
+            // 
+            // flpSongs
+            // 
+            this.flpSongs.Location = new System.Drawing.Point(25, 209);
+            this.flpSongs.Name = "flpSongs";
+            this.flpSongs.Size = new System.Drawing.Size(995, 707);
+            this.flpSongs.TabIndex = 3;
             // 
             // Album
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(56)))), ((int)(((byte)(66)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel9);
             this.Name = "Album";
             this.Size = new System.Drawing.Size(1482, 919);
@@ -263,6 +265,6 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel9;
         private Guna.UI2.WinForms.Guna2Button btnPlay;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.FlowLayoutPanel flpSong;
+        private System.Windows.Forms.FlowLayoutPanel flpSongs;
     }
 }

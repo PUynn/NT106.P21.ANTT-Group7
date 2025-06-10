@@ -491,6 +491,6 @@
         public System.Windows.Forms.Panel pnMain;
         private Guna.UI2.WinForms.Guna2Button btnMinimize;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
-        private Guna.UI2.WinForms.Guna2CirclePictureBox cpbUserInfor;
+        public Guna.UI2.WinForms.Guna2CirclePictureBox cpbUserInfor;
     }
 }

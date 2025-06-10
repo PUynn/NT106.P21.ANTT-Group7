@@ -15,13 +15,13 @@ namespace SONA
 {
     public partial class ArtistForm : UserControl
     {
-        private Home H;
+        private Home h;
         private string id_singer, idUser;
 
         public ArtistForm(Home h, string id_singer, string idUser)
         {
             InitializeComponent();
-            H = h;
+            this.h = h;
             this.id_singer = id_singer;
             this.idUser = idUser;
         }
@@ -77,9 +77,9 @@ namespace SONA
 
         private void cpbArtist_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(H, id_singer, idUser);
-            H.pnMain.Controls.Clear();
-            H.pnMain.Controls.Add(artistInfor);
+            ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(artistInfor);
         }
     }
 }

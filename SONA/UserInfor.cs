@@ -24,12 +24,15 @@ namespace SONA
         private string idUser;
         private string avatarPath = null; // Lưu đường dẫn ảnh tạm thời
         private bool hasCustomAvatar = false; // Kiểm tra xem người dùng có chọn ảnh không
+        private Home h;
         private SONA S;
 
-        public UserInfor(SONA s, string idUser)
+        public UserInfor(Home h, SONA S, string idUser)
         {
-            S = s;
+            this.S = S;
+            this.h = h;
             this.idUser = idUser;
+            
             InitializeComponent();
             getUserInfor();
             getAvatarUser();
@@ -94,6 +97,7 @@ namespace SONA
                                 using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
                                 {
                                     cpbAvatar.Image = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                    h.cpbUserInfor.Image = cpbAvatar.Image;
                                 }
                             }
                         }

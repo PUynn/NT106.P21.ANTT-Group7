@@ -36,7 +36,6 @@
             // 
             // guna2Panel1
             // 
-            this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
             this.guna2Panel1.Controls.Add(this.lbNameSong);
             this.guna2Panel1.Controls.Add(this.btnPictureSong);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -80,6 +79,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "SongForm";
             this.Size = new System.Drawing.Size(260, 260);

@@ -14,14 +14,15 @@ namespace SONA
 {
     public partial class SearchForm : UserControl
     {
-        Home H;
+        private Home h;
         private string idUser;
         private List<string> songIds = new List<string>();
+        private List<string> artistIds = new List<string>();
 
         public SearchForm(Home h, string idUser)
         {
             InitializeComponent();
-            H = h;
+            this.h = h;
             this.idUser = idUser;
         }
 
@@ -38,23 +39,26 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("getIDSong"); // Gửi yêu cầu lấy bài hát
-                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    writer.Write("getIDSong");
+                    string response = reader.ReadString();
 
                     if (response == "OK")
                     {
-                        int songCount = reader.ReadInt32(); // Đọc số lượng bài hát
+                        int songCount = reader.ReadInt32();
                         for (int i = 0; i < songCount; i++)
                         {
                             string id_song = reader.ReadString();
                             songIds.Add(id_song);
-                            SongSearch songSearch = new SongSearch(H, id_song, idUser, songIds);
+                        }
+                        foreach (var songId in songIds)
+                        {
+                            SongSearch songSearch = new SongSearch(h, songId, idUser, songIds);
                             flpResult.Controls.Add(songSearch);
                         }
                     }
                     else
                     {
-                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                        MessageBox.Show(response);
                     }
                 }
             }
@@ -68,7 +72,7 @@ namespace SONA
         {
             try
             {
-                Title title = new Title("Artists:");
+                Title title = new Title("Singers:");
                 flpResult.Controls.Add(title);
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
@@ -84,7 +88,8 @@ namespace SONA
                         for (int i = 0; i < singerCount; i++)
                         {
                             string id_singer = reader.ReadString();
-                            ArtistForm artistForm = new ArtistForm(H, id_singer, idUser);
+                            artistIds.Add(id_singer);
+                            ArtistForm artistForm = new ArtistForm(h, id_singer, idUser);
                             flpResult.Controls.Add(artistForm);
                         }
                     }
@@ -108,13 +113,54 @@ namespace SONA
 
         private void btnSongs_Click(object sender, EventArgs e)
         {
-            getIDSong();
+            Title title = new Title("Songs:");
+
+            flpResult.Controls.Clear();
+            flpResult.Controls.Add(title);
+            
+            foreach (var songId in songIds)
+            {
+                SongSearch songSearch = new SongSearch(h, songId, idUser, songIds);
+                flpResult.Controls.Add(songSearch);
+            }
         }
 
         private void btnArtists_Click(object sender, EventArgs e)
         {
+            Title title = new Title("Singers:");
+
             flpResult.Controls.Clear();
-            getIDSinger();
+            flpResult.Controls.Add(title);
+
+            foreach (var artistId in artistIds)
+            {
+                ArtistForm artistForm = new ArtistForm(h, artistId, idUser);
+                flpResult.Controls.Add(artistForm);
+            }
+        }
+
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            Title title = new Title("Songs:");
+
+            flpResult.Controls.Clear();
+            flpResult.Controls.Add(title);
+
+            foreach (var songId in songIds)
+            {
+                SongSearch songSearch = new SongSearch(h, songId, idUser, songIds);
+                flpResult.Controls.Add(songSearch);
+            }
+
+            title = new Title("Singers:");
+            flpResult.Controls.Add(title);
+
+            foreach (var artistId in artistIds)
+            {
+                ArtistForm artistForm = new ArtistForm(h, artistId, idUser);
+                flpResult.Controls.Add(artistForm);
+
+            }
         }
     }
 }

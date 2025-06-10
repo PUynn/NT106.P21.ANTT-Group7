@@ -39,7 +39,7 @@
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1440, 59);
+            this.guna2Panel1.Size = new System.Drawing.Size(1440, 52);
             this.guna2Panel1.TabIndex = 0;
             // 
             // lblText
@@ -47,7 +47,7 @@
             this.lblText.BackColor = System.Drawing.Color.Transparent;
             this.lblText.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblText.ForeColor = System.Drawing.Color.White;
-            this.lblText.Location = new System.Drawing.Point(14, 8);
+            this.lblText.Location = new System.Drawing.Point(19, 0);
             this.lblText.Name = "lblText";
             this.lblText.Size = new System.Drawing.Size(59, 43);
             this.lblText.TabIndex = 10;
@@ -60,7 +60,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.guna2Panel1);
             this.Name = "Title";
-            this.Size = new System.Drawing.Size(1440, 59);
+            this.Size = new System.Drawing.Size(1440, 52);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);

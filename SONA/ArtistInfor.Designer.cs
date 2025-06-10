@@ -44,7 +44,7 @@
             this.flpSongs.AutoScroll = true;
             this.flpSongs.Location = new System.Drawing.Point(3, 388);
             this.flpSongs.Name = "flpSongs";
-            this.flpSongs.Size = new System.Drawing.Size(1479, 466);
+            this.flpSongs.Size = new System.Drawing.Size(1479, 528);
             this.flpSongs.TabIndex = 11;
             // 
             // guna2Panel1

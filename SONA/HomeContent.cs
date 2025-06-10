@@ -15,14 +15,15 @@ namespace SONA
 {
     public partial class HomeContent : UserControl
     {
-        private Home H;
+        private Home h;
         private string idUser;
         private List<string> songIds = new List<string>();
+        private List<string> artistIds = new List<string>();
 
         public HomeContent(Home h, string idUser)
         {
             InitializeComponent();
-            H = h;
+            this.h = h;
             this.idUser = idUser;
         }
 
@@ -60,7 +61,7 @@ namespace SONA
                         }
                         for (int i = 0; i < songCount; i++)
                         {
-                            SongForm songForm = new SongForm(H, songIds[i], idUser, songIds);
+                            SongForm songForm = new SongForm(h, songIds[i], idUser, songIds);
                             flpSongs.Controls.Add(songForm);
                         }
                     }
@@ -88,17 +89,18 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("getIDSinger"); // Gửi yêu cầu lấy bài hát
-                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    writer.Write("getIDSinger");
+                    string response = reader.ReadString();
 
                     if (response == "OK")
                     {
-                        int singerCount = reader.ReadInt32(); // Đọc số lượng bài hát
+                        int singerCount = reader.ReadInt32();
 
                         for (int i = 0; i < singerCount; i++)
                         {
                             string id_singer = reader.ReadString();
-                            ArtistForm artistForm = new ArtistForm(H, id_singer, idUser);
+                            artistIds.Add(id_singer);
+                            ArtistForm artistForm = new ArtistForm(h, id_singer, idUser);
                             flpArtists.Controls.Add(artistForm);
                         }
                     }
@@ -112,6 +114,44 @@ namespace SONA
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
             }
+        }
+
+        private void btnMusic_Click(object sender, EventArgs e)
+        {
+            pnAll.Visible = false;
+            flpMusic.Visible = true;
+            flpMusic.Controls.Clear();
+            
+            Title title = new Title("Music:");
+            flpMusic.Controls.Add(title);
+
+            foreach (string songId in songIds)
+            {
+                SongForm songForm = new SongForm(h, songId, idUser, songIds);
+                flpMusic.Controls.Add(songForm);
+            }
+        }
+
+        private void btnArtists_Click(object sender, EventArgs e)
+        {
+            pnAll.Visible = false;
+            flpMusic.Visible = true;
+            flpMusic.Controls.Clear();
+
+            Title title = new Title("Artists:");
+            flpMusic.Controls.Add(title);
+
+            foreach (string artistId in artistIds)
+            {
+                ArtistForm artistForm = new ArtistForm(h, artistId, idUser);
+                flpMusic.Controls.Add(artistForm);
+            }
+        }
+
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            flpMusic.Visible = false;
+            pnAll.Visible = true;
         }
     }
 }
