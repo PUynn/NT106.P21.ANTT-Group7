@@ -22,17 +22,36 @@ namespace SONA
         private List<string> songIds;
         private string id_song, name_song, picture_song, id_singer, name_singer;
         private string idUser;
+        private string type; // "song" hoặc "artist"
 
-        public SongSearch(Home h, string id_song, string idUser, List<string> songIds)
+        public SongSearch(Home h, string id, string idUser, List<string> songIds, string type)
         {
             this.h = h;
-            this.id_song = id_song;
             this.idUser = idUser;
-            this.songIds = new List<string>(songIds);
+            this.type = type;
+            this.songIds = songIds != null ? new List<string>(songIds) : new List<string>();
+
+            if (type == "song")
+                this.id_song = id;
+            else
+                this.id_singer = id;
 
             InitializeComponent();
-            GetData();
-            showSongsFavourite();
+            if (type == "song")
+            {
+                GetData();
+                showSongsFavourite();
+            }
+            else if (type == "artist")
+            {
+                GetArtistData();
+                btnFavourite.Visible = false; // Ẩn nút yêu thích với nghệ sĩ
+            }
+        }
+
+        public SongSearch(Home h, string id_song, string idUser, List<string> songIds)
+            : this(h, id_song, idUser, songIds, "song")
+        {
         }
 
         private void GetData()
@@ -67,24 +86,59 @@ namespace SONA
             }
         }
 
-        // Hàm gọi form ListenMusic để phát nhạc
+        private void GetArtistData()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("artistForm");
+                    writer.Write(id_singer);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        name_singer = reader.ReadString();
+                        picture_song = reader.ReadString(); // Tận dụng picture_song để lưu ảnh nghệ sĩ
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading artist: " + ex.Message);
+            }
+        }
+
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            ListenMusic listenMusic = new ListenMusic(h, id_song, idUser, songIds);
-            h.pnMain.Controls.Clear();
-            h.pnMain.Controls.Add(listenMusic);
-            h.SetCurrentListenMusic(listenMusic);
+            if (type == "song")
+            {
+                ListenMusic listenMusic = new ListenMusic(h, id_song, idUser, songIds);
+                h.pnMain.Controls.Clear();
+                h.pnMain.Controls.Add(listenMusic);
+                h.SetCurrentListenMusic(listenMusic);
+            }
         }
 
         private void lblNameSinger_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
-            h.pnMain.Controls.Clear();
-            h.pnMain.Controls.Add(artistInfor);
+            if (type == "song")
+            {
+                ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
+                h.pnMain.Controls.Clear();
+                h.pnMain.Controls.Add(artistInfor);
+            }
         }
 
         private void showSongsFavourite()
         {
+            if (type != "song") return;
             try
             {
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
@@ -121,6 +175,7 @@ namespace SONA
 
         private void btnFavorited_Click(object sender, EventArgs e)
         {
+            if (type != "song") return;
             try
             {
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
@@ -174,23 +229,41 @@ namespace SONA
             }
         }
 
-        // Hàm ghi các nội dung cần thiết cho 1 bài hát
         private void SongSearch_Load(object sender, EventArgs e)
         {
-            lblNameSong.Text = name_song;
-            lblNameSinger.Text = name_singer;
-
-            try
+            if (type == "song")
             {
-                using (var wc = new System.Net.WebClient())
-                using (var stream = wc.OpenRead(picture_song))
+                lblNameSong.Text = name_song;
+                lblNameSinger.Text = name_singer;
+                try
                 {
-                    btnPictureSong.BackgroundImage = Image.FromStream(stream);
+                    using (var wc = new System.Net.WebClient())
+                    using (var stream = wc.OpenRead(picture_song))
+                    {
+                        btnPictureSong.BackgroundImage = Image.FromStream(stream);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message);
                 }
             }
-            catch (Exception ex)
+            else if (type == "artist")
             {
-                MessageBox.Show("Error loading image: " + ex.Message);
+                lblNameSong.Text = name_singer;
+                lblNameSinger.Text = "Artist";
+                try
+                {
+                    using (var wc = new System.Net.WebClient())
+                    using (var stream = wc.OpenRead(picture_song))
+                    {
+                        btnPictureSong.BackgroundImage = Image.FromStream(stream);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading image: " + ex.Message);
+                }
             }
         }
     }

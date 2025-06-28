@@ -344,6 +344,127 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy id nghệ sĩ: " + ex.Message);
                     }
                 }
+                else if (requestType == "searchSongs")
+                {
+                    try
+                    {
+                        string searchTerm = reader.ReadString();
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = @"SELECT DISTINCT s.id_song, s.name_song 
+                                           FROM songs s 
+                                           INNER JOIN singer si ON s.id_singer = si.id_singer 
+                                           WHERE LOWER(s.name_song) LIKE LOWER(@searchTerm) 
+                                              OR LOWER(si.name_singer) LIKE LOWER(@searchTerm)
+                                           ORDER BY s.name_song";
+                            
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> songIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        songIds.Add(readerdb["id_song"].ToString());
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(songIds.Count);
+                                    foreach (var id in songIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi tìm kiếm bài hát: " + ex.Message);
+                    }
+                }
+                else if (requestType == "searchArtists")
+                {
+                    try
+                    {
+                        string searchTerm = reader.ReadString();
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_singer FROM singer WHERE LOWER(name_singer) LIKE LOWER(@searchTerm) ORDER BY name_singer";
+                            
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> artistIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        artistIds.Add(readerdb["id_singer"].ToString());
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(artistIds.Count);
+                                    foreach (var id in artistIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi tìm kiếm nghệ sĩ: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getSearchSuggestions")
+                {
+                    try
+                    {
+                        string searchTerm = reader.ReadString();
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = @"SELECT DISTINCT name_song, 'song' as type FROM songs 
+                                           WHERE LOWER(name_song) LIKE LOWER(@searchTerm) 
+                                           UNION ALL
+                                           SELECT DISTINCT name_singer, 'artist' as type FROM singer 
+                                           WHERE LOWER(name_singer) LIKE LOWER(@searchTerm)
+                                           ORDER BY type, name_song
+                                           LIMIT 10";
+                            
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> suggestions = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        string name = readerdb["name_song"].ToString();
+                                        string type = readerdb["type"].ToString();
+                                        suggestions.Add($"{name} ({type})");
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(suggestions.Count);
+                                    foreach (var suggestion in suggestions)
+                                    {
+                                        writer.Write(suggestion);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy gợi ý tìm kiếm: " + ex.Message);
+                    }
+                }
                 else if (requestType == "getIDUser")
                 {
                     string email = reader.ReadString();
@@ -1364,53 +1485,29 @@ namespace SONA_Server
         // Phương thức lấy địa chỉ IP cục bộ
         private string GetLocalIPAddress()
         {
-            string localIP = "Unknown";
             try
             {
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+                // Kết nối đến Google DNS (chỉ để xác định adapter đang dùng), không gửi dữ liệu thật
+                using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
                 {
-                    // Chỉ lấy adapter đang hoạt động, không phải loopback, và có tên gợi ý là WiFi
-                    if (ni.OperationalStatus == OperationalStatus.Up &&
-                        ni.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                        (ni.Name.ToLower().Contains("wi-fi") || ni.Description.ToLower().Contains("wireless")))
-                    {
-                        var ipProps = ni.GetIPProperties();
-                        foreach (UnicastIPAddressInformation ip in ipProps.UnicastAddresses)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            {
-                                return ip.Address.ToString(); // Trả về IPv4 của adapter WiFi
-                            }
-                        }
-                    }
-                }
-
-                // Nếu không tìm thấy theo tên, thì thử tìm adapter có Gateway IPv4
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if (ni.OperationalStatus == OperationalStatus.Up &&
-                        ni.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                    {
-                        var ipProps = ni.GetIPProperties();
-                        if (ipProps.GatewayAddresses.Any(g => g.Address.AddressFamily == AddressFamily.InterNetwork))
-                        {
-                            foreach (UnicastIPAddressInformation ip in ipProps.UnicastAddresses)
-                            {
-                                if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                                {
-                                    return ip.Address.ToString(); // Trả về IPv4 của adapter có Gateway
-                                }
-                            }
-                        }
-                    }
+                    socket.Connect("8.8.8.8", 65530);
+                    var endPoint = socket.LocalEndPoint as IPEndPoint;
+                    return endPoint.Address.ToString();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Lỗi khi lấy địa chỉ IP: " + ex.Message);
+                // fallback: lục list adapter
+                var host = Dns.GetHostName();
+                var ips = Dns.GetHostEntry(host).AddressList;
+                var ipv4 = ips.FirstOrDefault(ip =>
+                    ip.AddressFamily == AddressFamily.InterNetwork &&
+                    !IPAddress.IsLoopback(ip) &&
+                    !ip.ToString().StartsWith("169."));
+                return ipv4?.ToString() ?? "127.0.0.1";
             }
-            return localIP;
         }
+
 
         // Phương thức xóa toàn bộ dữ liệu trong bảng IP và thêm địa chỉ IP mới vào bảng
         private void ClearAndInsertIP()
@@ -1526,5 +1623,8 @@ namespace SONA_Server
                 MessageBox.Show("Lỗi khi dừng server: " + ex.Message);
             }
         }
+
+        
+       
     }
 }

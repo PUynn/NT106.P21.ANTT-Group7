@@ -24,6 +24,11 @@ namespace SONA
         private string emailUser;
         private string idUser;
 
+        // Biến cho tìm kiếm real-time và gợi ý
+        private string currentSearchTerm = "";
+        private System.Windows.Forms.Timer searchTimer;
+        private List<(string id, string type)> searchResults = new List<(string, string)>();
+
         public Home(SONA s, string email)
         {
             S = s;
@@ -31,6 +36,15 @@ namespace SONA
             InitializeComponent();
             getIdUser();
             getAvatarUser();
+
+            // Khởi tạo timer
+            searchTimer = new System.Windows.Forms.Timer();
+            searchTimer.Interval = 500;
+            searchTimer.Tick += SearchTimer_Tick;
+
+            // Đăng ký event cho txtSearch
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.KeyDown += txtSearch_KeyDown;
         }
 
         private void getIdUser()
@@ -243,26 +257,124 @@ namespace SONA
             S.WindowState = FormWindowState.Minimized;
         }
 
-        // Hàm tìm kiếm bài hát khi nhấn enter vào ô tìm kiếm
+        // Event handler cho textbox tìm kiếm
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            currentSearchTerm = txtSearch.Text.Trim();
+            searchTimer.Stop();
+            searchTimer.Start();
+           
+        }
+
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (currentListenMusic != null)
-                {
-                    currentListenMusic.StopMusicAndDispose();
-                    currentListenMusic = null;
-                }
+                searchTimer.Stop();
+
+                string searchTerm = txtSearch.Text.Trim();
 
                 SearchForm searchForm = new SearchForm(this, idUser);
                 pnMain.Controls.Clear();
                 pnMain.Controls.Add(searchForm);
+
+                // Gửi từ khóa tìm kiếm sang SearchForm
+                searchForm.SetSearchTerm(searchTerm);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                txtSearch.Focus();
             }
         }
 
-        private void txtSearch_Click(object sender, EventArgs e)
+        private void SearchTimer_Tick(object sender, EventArgs e)
         {
-            txtSearch.Focus();
+            searchTimer.Stop();
+            if (!string.IsNullOrWhiteSpace(currentSearchTerm))
+            // Hiển thị kết quả real-time
+            PerformSearch(currentSearchTerm);
+        }
+
+ 
+        private void PerformSearch(string searchTerm)
+        {
+            searchResults.Clear();
+            pnMain.Controls.Clear();
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                ShowAllSongsAndArtists();
+                return;
+            }
+
+            // Tìm kiếm bài hát
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("searchSongs");
+                    writer.Write(searchTerm);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int songCount = reader.ReadInt32();
+                        for (int i = 0; i < songCount; i++)
+                        {
+                            string id_song = reader.ReadString();
+                            searchResults.Add((id_song, "song"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error searching songs: " + ex.Message);
+            }
+
+            // Tìm kiếm nghệ sĩ
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("searchArtists");
+                    writer.Write(searchTerm);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int singerCount = reader.ReadInt32();
+                        for (int i = 0; i < singerCount; i++)
+                        {
+                            string id_singer = reader.ReadString();
+                            searchResults.Add((id_singer, "artist"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error searching artists: " + ex.Message);
+            }
+
+            // Hiển thị kết quả bằng SongSearch (cho cả bài hát và nghệ sĩ)
+            foreach (var result in searchResults)
+            {
+                SongSearch songSearch = new SongSearch(this, result.id, idUser, null, result.type);
+                pnMain.Controls.Add(songSearch);
+            }
+        }
+
+        private void ShowAllSongsAndArtists()
+        {
+            // Hiển thị tất cả bài hát và nghệ sĩ như mặc định
+            pnMain.Controls.Clear();
+            // Gọi lại các hàm lấy toàn bộ bài hát và nghệ sĩ nếu cần
+            // ...
         }
 
         // Hàm dừng bài hát khi nó đang phát trong form listenMusic
