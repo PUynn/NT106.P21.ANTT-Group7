@@ -448,6 +448,7 @@
             this.pnMain.Name = "pnMain";
             this.pnMain.Size = new System.Drawing.Size(1482, 919);
             this.pnMain.TabIndex = 2;
+            this.pnMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnMain_Paint);
             // 
             // guna2Elipse1
             // 

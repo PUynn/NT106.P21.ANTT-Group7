@@ -361,11 +361,49 @@ namespace SONA
                 MessageBox.Show("Error searching artists: " + ex.Message);
             }
 
-            // Hiển thị kết quả bằng SongSearch (cho cả bài hát và nghệ sĩ)
+            // ALBUMS
+            List<string> albumIds = new List<string>();
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("searchAlbums");
+                    writer.Write(searchTerm);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int albumCount = reader.ReadInt32();
+                        for (int i = 0; i < albumCount; i++)
+                        {
+                            string id_album = reader.ReadString();
+                            albumIds.Add(id_album);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error searching albums: " + ex.Message);
+            }
+
+            // Hiển thị kết quả
+            // SONGS
             foreach (var result in searchResults)
             {
-                SongSearch songSearch = new SongSearch(this, result.id, idUser, null, result.type);
-                pnMain.Controls.Add(songSearch);
+                if (result.type == "song" || result.type == "artist")
+                {
+                    SongSearch songSearch = new SongSearch(this, result.id, idUser, null, result.type);
+                    pnMain.Controls.Add(songSearch);
+                }
+            }
+            // ALBUMS
+            foreach (var id_album in albumIds)
+            {
+                AlbumForm albumForm = new AlbumForm(this, id_album, idUser);
+                pnMain.Controls.Add(albumForm);
             }
         }
 
@@ -392,6 +430,11 @@ namespace SONA
             UserInfor userInfor = new UserInfor(this, S, idUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(userInfor);
+        }
+
+        private void pnMain_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

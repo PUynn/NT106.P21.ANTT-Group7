@@ -28,6 +28,7 @@ namespace SONA
             InitializeComponent();
             this.h = h;
             this.idUser = idUser;
+            this.Dock = DockStyle.Fill; //khung tìm kiếm hiẻn thị đúng 
             
             // Khởi tạo timer cho tìm kiếm real-time
             searchTimer = new System.Windows.Forms.Timer();

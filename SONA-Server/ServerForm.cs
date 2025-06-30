@@ -670,7 +670,7 @@ namespace SONA_Server
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT singer.id_singer, name_singer, picture_singer, birthdate, picture_song, am_thanh FROM songs INNER JOIN singer ON songs.id_singer = singer.id_singer WHERE id_song = @id_song";
+                            string query = "SELECT songs.name_song, singer.id_singer, name_singer, picture_singer, birthdate, picture_song, am_thanh FROM songs INNER JOIN singer ON songs.id_singer = singer.id_singer WHERE id_song = @id_song";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@id_song", id_song);
@@ -679,6 +679,7 @@ namespace SONA_Server
                                     if (readerdb.Read())
                                     {
                                         writer.Write("OK");
+                                        writer.Write(readerdb["name_song"].ToString());
                                         writer.Write(readerdb["id_singer"].ToString());
                                         writer.Write(readerdb["name_singer"].ToString());
                                         writer.Write(readerdb["picture_singer"].ToString());
@@ -1078,6 +1079,40 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi cập nhật thông tin người dùng: " + ex.Message);
+                    }
+                }
+                else if (requestType == "searchAlbums")
+                {
+                    try
+                    {
+                        string searchTerm = reader.ReadString();
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_album FROM albums WHERE LOWER(name_album) LIKE LOWER(@searchTerm) ORDER BY name_album";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> albumIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        albumIds.Add(readerdb["id_album"].ToString());
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(albumIds.Count);
+                                    foreach (var id in albumIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi tìm kiếm album: " + ex.Message);
                     }
                 }
                 else

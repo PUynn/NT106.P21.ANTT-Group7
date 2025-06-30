@@ -30,7 +30,7 @@ namespace SONA
         private List<string> songIds;
         private List<string> originalSongIds; // Danh sách bài hát gốc để sử dụng khi tắt chế độ xáo trộn
 
-        private string id_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
+        private string id_song, name_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
         private string idUser;
         private bool isFavorited = false;
 
@@ -63,6 +63,7 @@ namespace SONA
 
                     if (response == "OK")
                     {
+                        name_song = reader.ReadString();
                         id_singer = reader.ReadString();
                         name_singer = reader.ReadString();
                         picture_singer = reader.ReadString();
@@ -229,8 +230,10 @@ namespace SONA
                 woe.Init(afr);
 
                 lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss");
+                lbNameSong.Text = name_song;
                 lblNameSinger.Text = name_singer;
                 lblSince.Text = ConvertDate(birthdate);
+                CenterLabelInPanel();
 
                 return true;
             }
@@ -253,6 +256,7 @@ namespace SONA
                     btnPlayMusic.Checked = false;
                     timer1.Start();
                     tbsTimeSong.Value = 0;
+                    CenterLabelInPanel();
                 }
                 else
                 {
@@ -415,6 +419,36 @@ namespace SONA
             }
         }
 
+        private void guna2Panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lbNameSong_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2Panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         // Hàm tạm dừng hoặc phát nhạc
         private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
@@ -539,6 +573,11 @@ namespace SONA
             StopMusicAndDispose();
             h.pnMain.Controls.Clear();
             h.pnMain.Controls.Add(new ArtistInfor(h, id_singer, idUser));
+        }
+
+        private void CenterLabelInPanel()
+        {
+            lbNameSong.Left = (guna2Panel7.Width - lbNameSong.Width) / 2;
         }
     }
 }
