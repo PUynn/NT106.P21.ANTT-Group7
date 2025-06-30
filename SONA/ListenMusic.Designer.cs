@@ -34,7 +34,9 @@ namespace SONA
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.pbPictureSong = new Guna.UI2.WinForms.Guna2PictureBox();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.lbNameSong = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
+            this.cpbPictureSinger = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.lblSince = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
@@ -55,15 +57,16 @@ namespace SONA
             this.btnReplay = new Guna.UI2.WinForms.Guna2Button();
             this.btnMore = new Guna.UI2.WinForms.Guna2Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.cpbPictureSinger = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPictureSong)).BeginInit();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbPictureSinger)).BeginInit();
             this.guna2Panel5.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpbPictureSinger)).BeginInit();
+            this.guna2Panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2Panel1
@@ -88,18 +91,29 @@ namespace SONA
             // guna2Panel2
             // 
             this.guna2Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.guna2Panel2.Controls.Add(this.guna2Panel7);
             this.guna2Panel2.Controls.Add(this.guna2Panel6);
             this.guna2Panel2.Controls.Add(this.guna2Panel5);
-            this.guna2Panel2.Controls.Add(this.tbsTimeSong);
-            this.guna2Panel2.Controls.Add(this.lblEnd);
-            this.guna2Panel2.Controls.Add(this.lblProcess);
             this.guna2Panel2.Controls.Add(this.guna2Panel4);
-            this.guna2Panel2.Controls.Add(this.guna2Panel3);
             this.guna2Panel2.Controls.Add(this.btnMore);
             this.guna2Panel2.Location = new System.Drawing.Point(0, 754);
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(1482, 919);
             this.guna2Panel2.TabIndex = 0;
+            this.guna2Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel2_Paint);
+            // 
+            // lbNameSong
+            // 
+            this.lbNameSong.AutoSize = true;
+            this.lbNameSong.BackColor = System.Drawing.Color.Transparent;
+            this.lbNameSong.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNameSong.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lbNameSong.Location = new System.Drawing.Point(217, 3);
+            this.lbNameSong.Name = "lbNameSong";
+            this.lbNameSong.Size = new System.Drawing.Size(191, 42);
+            this.lbNameSong.TabIndex = 8;
+            this.lbNameSong.Text = "name song";
+            this.lbNameSong.Click += new System.EventHandler(this.lbNameSong_Click);
             // 
             // guna2Panel6
             // 
@@ -110,6 +124,21 @@ namespace SONA
             this.guna2Panel6.Name = "guna2Panel6";
             this.guna2Panel6.Size = new System.Drawing.Size(274, 80);
             this.guna2Panel6.TabIndex = 6;
+            this.guna2Panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel6_Paint);
+            // 
+            // cpbPictureSinger
+            // 
+            this.cpbPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbPictureSinger.FillColor = System.Drawing.Color.Transparent;
+            this.cpbPictureSinger.ImageRotate = 0F;
+            this.cpbPictureSinger.Location = new System.Drawing.Point(3, 0);
+            this.cpbPictureSinger.Name = "cpbPictureSinger";
+            this.cpbPictureSinger.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbPictureSinger.Size = new System.Drawing.Size(80, 80);
+            this.cpbPictureSinger.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbPictureSinger.TabIndex = 7;
+            this.cpbPictureSinger.TabStop = false;
+            this.cpbPictureSinger.Click += new System.EventHandler(this.cpbPictureSinger_Click);
             // 
             // lblSince
             // 
@@ -173,9 +202,9 @@ namespace SONA
             // 
             this.tbsTimeSong.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tbsTimeSong.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.tbsTimeSong.Location = new System.Drawing.Point(431, 43);
+            this.tbsTimeSong.Location = new System.Drawing.Point(18, 40);
             this.tbsTimeSong.Name = "tbsTimeSong";
-            this.tbsTimeSong.Size = new System.Drawing.Size(542, 31);
+            this.tbsTimeSong.Size = new System.Drawing.Size(583, 36);
             this.tbsTimeSong.TabIndex = 4;
             this.tbsTimeSong.ThumbColor = System.Drawing.Color.Silver;
             this.tbsTimeSong.Value = 0;
@@ -186,7 +215,7 @@ namespace SONA
             this.lblEnd.BackColor = System.Drawing.Color.Transparent;
             this.lblEnd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEnd.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblEnd.Location = new System.Drawing.Point(943, 73);
+            this.lblEnd.Location = new System.Drawing.Point(513, 71);
             this.lblEnd.Name = "lblEnd";
             this.lblEnd.Size = new System.Drawing.Size(38, 22);
             this.lblEnd.TabIndex = 3;
@@ -197,7 +226,7 @@ namespace SONA
             this.lblProcess.BackColor = System.Drawing.Color.Transparent;
             this.lblProcess.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProcess.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblProcess.Location = new System.Drawing.Point(431, 73);
+            this.lblProcess.Location = new System.Drawing.Point(18, 71);
             this.lblProcess.Name = "lblProcess";
             this.lblProcess.Size = new System.Drawing.Size(38, 22);
             this.lblProcess.TabIndex = 3;
@@ -277,10 +306,11 @@ namespace SONA
             this.guna2Panel3.Controls.Add(this.btnShuffle);
             this.guna2Panel3.Controls.Add(this.btnNext);
             this.guna2Panel3.Controls.Add(this.btnReplay);
-            this.guna2Panel3.Location = new System.Drawing.Point(556, 80);
+            this.guna2Panel3.Location = new System.Drawing.Point(149, 71);
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(298, 80);
             this.guna2Panel3.TabIndex = 1;
+            this.guna2Panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel3_Paint);
             // 
             // btnPlayMusic
             // 
@@ -403,19 +433,18 @@ namespace SONA
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // cpbPictureSinger
+            // guna2Panel7
             // 
-            this.cpbPictureSinger.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cpbPictureSinger.FillColor = System.Drawing.Color.Transparent;
-            this.cpbPictureSinger.ImageRotate = 0F;
-            this.cpbPictureSinger.Location = new System.Drawing.Point(3, 0);
-            this.cpbPictureSinger.Name = "cpbPictureSinger";
-            this.cpbPictureSinger.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.cpbPictureSinger.Size = new System.Drawing.Size(80, 80);
-            this.cpbPictureSinger.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpbPictureSinger.TabIndex = 7;
-            this.cpbPictureSinger.TabStop = false;
-            this.cpbPictureSinger.Click += new System.EventHandler(this.cpbPictureSinger_Click);
+            this.guna2Panel7.Controls.Add(this.lbNameSong);
+            this.guna2Panel7.Controls.Add(this.lblEnd);
+            this.guna2Panel7.Controls.Add(this.tbsTimeSong);
+            this.guna2Panel7.Controls.Add(this.guna2Panel3);
+            this.guna2Panel7.Controls.Add(this.lblProcess);
+            this.guna2Panel7.Location = new System.Drawing.Point(383, 3);
+            this.guna2Panel7.Name = "guna2Panel7";
+            this.guna2Panel7.Size = new System.Drawing.Size(623, 162);
+            this.guna2Panel7.TabIndex = 9;
+            this.guna2Panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel7_Paint);
             // 
             // ListenMusic
             // 
@@ -430,13 +459,14 @@ namespace SONA
             this.guna2Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPictureSong)).EndInit();
             this.guna2Panel2.ResumeLayout(false);
-            this.guna2Panel2.PerformLayout();
             this.guna2Panel6.ResumeLayout(false);
             this.guna2Panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbPictureSinger)).EndInit();
             this.guna2Panel5.ResumeLayout(false);
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cpbPictureSinger)).EndInit();
+            this.guna2Panel7.ResumeLayout(false);
+            this.guna2Panel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -467,6 +497,8 @@ namespace SONA
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNameSinger;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblSince;
         private Guna.UI2.WinForms.Guna2CirclePictureBox cpbPictureSinger;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lbNameSong;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel7;
 
         public FormBorderStyle FormBorderStyle { get; private set; }
     }

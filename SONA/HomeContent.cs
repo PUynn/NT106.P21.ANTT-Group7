@@ -19,12 +19,14 @@ namespace SONA
         private string idUser;
         private List<string> songIds = new List<string>();
         private List<string> artistIds = new List<string>();
+        private List<string> albumIds = new List<string>();
 
         public HomeContent(Home h, string idUser)
         {
             InitializeComponent();
             this.h = h;
             this.idUser = idUser;
+            btnAlbums.Click += btnAlbums_Click;
         }
 
         // Hàm liệt kê các danh sách bài hát và nghệ sĩ ngẫu nhiên vào trong panel tương ứng
@@ -32,6 +34,7 @@ namespace SONA
         {
             btnRefreshSong_Click(sender, e);
             btnRefreshArtist_Click(sender, e);
+            btnRefreshAlbum_Click(sender, e);
         }
 
         // Hàm liệt kê các bài hát từ danh sách đã nhận từ server
@@ -152,6 +155,59 @@ namespace SONA
         {
             flpMusic.Visible = false;
             pnAll.Visible = true;
+        }
+
+        private void btnRefreshAlbum_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                flpHistory.Controls.Clear();
+                albumIds.Clear();
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getIDAlbum");
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int albumCount = reader.ReadInt32();
+                        for (int i = 0; i < albumCount; i++)
+                        {
+                            string id_album = reader.ReadString();
+                            albumIds.Add(id_album);
+                        }
+                        for (int i = 0; i < albumCount; i++)
+                        {
+                            AlbumForm albumForm = new AlbumForm(h, albumIds[i], idUser);
+                            flpHistory.Controls.Add(albumForm);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void btnAlbums_Click(object sender, EventArgs e)
+        {
+            pnAll.Visible = false;
+            flpMusic.Visible = true;
+            flpMusic.Controls.Clear();
+            Title title = new Title("Albums:");
+            flpMusic.Controls.Add(title);
+            foreach (string albumId in albumIds)
+            {
+                AlbumForm albumForm = new AlbumForm(h, albumId, idUser);
+                flpMusic.Controls.Add(albumForm);
+            }
         }
     }
 }
