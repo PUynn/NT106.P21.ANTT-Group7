@@ -295,6 +295,24 @@
     <Compile Include="MusicBar.Designer.cs">
       <DependentUpon>MusicBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Playlist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Playlist.Designer.cs">
+      <DependentUpon>Playlist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlaylistForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PlaylistForm.Designer.cs">
+      <DependentUpon>PlaylistForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlaylistList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PlaylistList.Designer.cs">
+      <DependentUpon>PlaylistList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -394,6 +412,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MusicBar.resx">
       <DependentUpon>MusicBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Playlist.resx">
+      <DependentUpon>Playlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaylistForm.resx">
+      <DependentUpon>PlaylistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaylistList.resx">
+      <DependentUpon>PlaylistList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>

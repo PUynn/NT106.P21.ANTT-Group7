@@ -147,6 +147,16 @@ namespace SONA
         private void btnPlaylists_Click(object sender, EventArgs e)
         {
             MyClick();
+
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            PlaylistList a = new PlaylistList(this, idUser);
+            pnMain.Controls.Clear();
+            pnMain.Controls.Add(a);
         }
 
         private void btnFavorited_Click(object sender, EventArgs e)
