@@ -16,11 +16,14 @@ namespace SONA
     {
         Home H;
         private string id_song, idUser;
-        public SearchForm(Home h, string idUser)
+        private string keyword;
+
+        public SearchForm(Home h, string idUser, string keyword)
         {
             InitializeComponent();
             H = h;
             this.idUser = idUser;
+            this.keyword = keyword;
         }
 
         // Hàm in ra các bài hát tìm thấy bằng cách gọi form SongSearch và truyền vào các thông tin cần thiết
@@ -35,13 +38,14 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("getIDSong"); // Gửi yêu cầu lấy bài hát
-                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    writer.Write("songSearch"); // server cần xử lý lệnh này
+                    writer.Write(keyword); // gửi từ khóa tìm kiếm
+
+                    string response = reader.ReadString(); // OK hoặc lỗi
 
                     if (response == "OK")
                     {
-                        int songCount = reader.ReadInt32(); // Đọc số lượng bài hát
-
+                        int songCount = reader.ReadInt32();
                         for (int i = 0; i < songCount; i++)
                         {
                             string id_song = reader.ReadString();
@@ -51,7 +55,7 @@ namespace SONA
                     }
                     else
                     {
-                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                        MessageBox.Show(response);
                     }
                 }
             }

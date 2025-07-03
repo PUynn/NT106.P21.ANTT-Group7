@@ -196,9 +196,13 @@ namespace SONA
                     currentListenMusic = null;
                 }
 
-                SearchForm searchForm = new SearchForm(this, idUser);
-                pnMain.Controls.Clear();
-                pnMain.Controls.Add(searchForm);
+                string keyword = txtSearch.Text.Trim();
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    SearchForm searchForm = new SearchForm(this, idUser, keyword);
+                    pnMain.Controls.Clear();
+                    pnMain.Controls.Add(searchForm);
+                }
             }
         }
 
@@ -230,5 +234,6 @@ namespace SONA
                 MessageBox.Show("User ID is not set. Please log in first.");
             }
         }
+
     }
 }
