@@ -209,5 +209,75 @@ namespace SONA
                 flpMusic.Controls.Add(albumForm);
             }
         }
+
+        private void pnAll_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnHomeContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpArtists_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpHistory_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpSongs_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pbBackground_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRefresh3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblForYou_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblArtists_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAlbums_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flpMusic_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

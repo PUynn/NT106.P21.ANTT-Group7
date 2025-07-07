@@ -538,7 +538,7 @@ namespace SONA_Server
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT id_song FROM songs WHERE id_album = @id_album";
+                            string query = "SELECT id_song FROM album_songs WHERE id_album = @id_album";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@id_album", id_album);

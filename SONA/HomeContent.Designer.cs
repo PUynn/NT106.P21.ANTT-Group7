@@ -65,6 +65,7 @@
             this.pnHomeContent.Name = "pnHomeContent";
             this.pnHomeContent.Size = new System.Drawing.Size(1485, 919);
             this.pnHomeContent.TabIndex = 2;
+            this.pnHomeContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnHomeContent_Paint);
             // 
             // pnAll
             // 
@@ -83,6 +84,7 @@
             this.pnAll.Name = "pnAll";
             this.pnAll.Size = new System.Drawing.Size(1479, 848);
             this.pnAll.TabIndex = 1;
+            this.pnAll.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAll_Paint);
             // 
             // flpArtists
             // 
@@ -92,6 +94,7 @@
             this.flpArtists.Size = new System.Drawing.Size(1449, 290);
             this.flpArtists.TabIndex = 7;
             this.flpArtists.WrapContents = false;
+            this.flpArtists.Paint += new System.Windows.Forms.PaintEventHandler(this.flpArtists_Paint);
             // 
             // flpHistory
             // 
@@ -101,6 +104,7 @@
             this.flpHistory.Size = new System.Drawing.Size(1449, 290);
             this.flpHistory.TabIndex = 7;
             this.flpHistory.WrapContents = false;
+            this.flpHistory.Paint += new System.Windows.Forms.PaintEventHandler(this.flpHistory_Paint);
             // 
             // flpSongs
             // 
@@ -110,6 +114,7 @@
             this.flpSongs.Size = new System.Drawing.Size(1449, 290);
             this.flpSongs.TabIndex = 6;
             this.flpSongs.WrapContents = false;
+            this.flpSongs.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSongs_Paint);
             // 
             // lblHistory
             // 
@@ -121,6 +126,7 @@
             this.lblHistory.Size = new System.Drawing.Size(81, 32);
             this.lblHistory.TabIndex = 5;
             this.lblHistory.Text = "Albums";
+            this.lblHistory.Click += new System.EventHandler(this.lblHistory_Click);
             // 
             // guna2Panel6
             // 
@@ -129,6 +135,7 @@
             this.guna2Panel6.Name = "guna2Panel6";
             this.guna2Panel6.Size = new System.Drawing.Size(1452, 482);
             this.guna2Panel6.TabIndex = 3;
+            this.guna2Panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel6_Paint);
             // 
             // pbBackground
             // 
@@ -141,6 +148,7 @@
             this.pbBackground.Size = new System.Drawing.Size(1429, 476);
             this.pbBackground.TabIndex = 0;
             this.pbBackground.TabStop = false;
+            this.pbBackground.Click += new System.EventHandler(this.pbBackground_Click);
             // 
             // btnRefresh3
             // 
@@ -162,6 +170,7 @@
             this.btnRefresh3.Size = new System.Drawing.Size(108, 39);
             this.btnRefresh3.TabIndex = 5;
             this.btnRefresh3.Text = "Refresh";
+            this.btnRefresh3.Click += new System.EventHandler(this.btnRefresh3_Click);
             // 
             // lblForYou
             // 
@@ -173,6 +182,7 @@
             this.lblForYou.Size = new System.Drawing.Size(146, 32);
             this.lblForYou.TabIndex = 5;
             this.lblForYou.Text = "Made For You";
+            this.lblForYou.Click += new System.EventHandler(this.lblForYou_Click);
             // 
             // lblArtists
             // 
@@ -184,6 +194,7 @@
             this.lblArtists.Size = new System.Drawing.Size(209, 32);
             this.lblArtists.TabIndex = 5;
             this.lblArtists.Text = "Your favorite artists";
+            this.lblArtists.Click += new System.EventHandler(this.lblArtists_Click);
             // 
             // btnRefreshArtist
             // 
@@ -240,6 +251,7 @@
             this.pnHeader.Name = "pnHeader";
             this.pnHeader.Size = new System.Drawing.Size(1479, 59);
             this.pnHeader.TabIndex = 1;
+            this.pnHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.pnHeader_Paint);
             // 
             // btnAlbums
             // 
@@ -262,6 +274,7 @@
             this.btnAlbums.Size = new System.Drawing.Size(107, 33);
             this.btnAlbums.TabIndex = 3;
             this.btnAlbums.Text = "Albums";
+            this.btnAlbums.Click += new System.EventHandler(this.btnAlbums_Click_1);
             // 
             // btnArtists
             // 
@@ -341,6 +354,7 @@
             this.flpMusic.Size = new System.Drawing.Size(1479, 848);
             this.flpMusic.TabIndex = 0;
             this.flpMusic.Visible = false;
+            this.flpMusic.Paint += new System.Windows.Forms.PaintEventHandler(this.flpMusic_Paint);
             // 
             // HomeContent
             // 

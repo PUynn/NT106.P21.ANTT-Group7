@@ -295,6 +295,12 @@
     <Compile Include="MusicBar.Designer.cs">
       <DependentUpon>MusicBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="MusicRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MusicRoom.Designer.cs">
+      <DependentUpon>MusicRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -395,6 +401,9 @@
     <EmbeddedResource Include="MusicBar.resx">
       <DependentUpon>MusicBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MusicRoom.resx">
+      <DependentUpon>MusicRoom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -491,6 +500,7 @@
     <None Include="Resources\FavouriteOn.png" />
     <None Include="Resources\ShuffleOn.png" />
     <None Include="Resources\BaseAvatar.png" />
+    <None Include="Resources\jam.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

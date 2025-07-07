@@ -123,7 +123,7 @@ namespace SONA
         private void MyClick()
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
-            btnDiscover.Checked = false;
+            btnMusicRoom.Checked = false;
             btnHome.Checked = false;
             btnSearch.Checked = false;
             txtSearch.Visible = false;

@@ -38,7 +38,7 @@
             this.btnLibrary = new Guna.UI2.WinForms.Guna2Button();
             this.pnMenu = new Guna.UI2.WinForms.Guna2Panel();
             this.cpbUserInfor = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.btnDiscover = new Guna.UI2.WinForms.Guna2Button();
+            this.btnMusicRoom = new Guna.UI2.WinForms.Guna2Button();
             this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
             this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnMinimize = new Guna.UI2.WinForms.Guna2Button();
@@ -225,7 +225,7 @@
             // pnMenu
             // 
             this.pnMenu.Controls.Add(this.cpbUserInfor);
-            this.pnMenu.Controls.Add(this.btnDiscover);
+            this.pnMenu.Controls.Add(this.btnMusicRoom);
             this.pnMenu.Controls.Add(this.btnSetting);
             this.pnMenu.Controls.Add(this.txtSearch);
             this.pnMenu.Controls.Add(this.btnMinimize);
@@ -252,31 +252,31 @@
             this.cpbUserInfor.TabStop = false;
             this.cpbUserInfor.Click += new System.EventHandler(this.cpbUserInfor_Click);
             // 
-            // btnDiscover
+            // btnMusicRoom
             // 
-            this.btnDiscover.Animated = true;
-            this.btnDiscover.BorderColor = System.Drawing.Color.Transparent;
-            this.btnDiscover.BorderRadius = 10;
-            this.btnDiscover.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnDiscover.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnDiscover.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnDiscover.CheckedState.Image = global::SONA.Properties.Resources.DisON;
-            this.btnDiscover.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnDiscover.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.btnDiscover.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDiscover.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnDiscover.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnDiscover.Image = global::SONA.Properties.Resources.discoverOff;
-            this.btnDiscover.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnDiscover.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnDiscover.Location = new System.Drawing.Point(195, 7);
-            this.btnDiscover.Name = "btnDiscover";
-            this.btnDiscover.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnDiscover.Size = new System.Drawing.Size(180, 54);
-            this.btnDiscover.TabIndex = 2;
-            this.btnDiscover.Text = "Discover";
-            this.btnDiscover.TextOffset = new System.Drawing.Point(0, -2);
-            this.btnDiscover.Click += new System.EventHandler(this.btnDiscover_Click);
+            this.btnMusicRoom.Animated = true;
+            this.btnMusicRoom.BorderColor = System.Drawing.Color.Transparent;
+            this.btnMusicRoom.BorderRadius = 10;
+            this.btnMusicRoom.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnMusicRoom.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnMusicRoom.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnMusicRoom.CheckedState.Image = global::SONA.Properties.Resources.DisON;
+            this.btnMusicRoom.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnMusicRoom.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.btnMusicRoom.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMusicRoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
+            this.btnMusicRoom.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMusicRoom.Image = global::SONA.Properties.Resources.jam;
+            this.btnMusicRoom.ImageOffset = new System.Drawing.Point(0, -2);
+            this.btnMusicRoom.ImageSize = new System.Drawing.Size(38, 38);
+            this.btnMusicRoom.Location = new System.Drawing.Point(195, 7);
+            this.btnMusicRoom.Name = "btnMusicRoom";
+            this.btnMusicRoom.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnMusicRoom.Size = new System.Drawing.Size(180, 54);
+            this.btnMusicRoom.TabIndex = 2;
+            this.btnMusicRoom.Text = "Music Room";
+            this.btnMusicRoom.TextOffset = new System.Drawing.Point(0, -2);
+            this.btnMusicRoom.Click += new System.EventHandler(this.btnDiscover_Click);
             // 
             // btnSetting
             // 
@@ -477,7 +477,7 @@
         private Guna.UI2.WinForms.Guna2Panel pnMyLibrary;
         private Guna.UI2.WinForms.Guna2Panel pnMenu;
         private Guna.UI2.WinForms.Guna2Button btnHome;
-        private Guna.UI2.WinForms.Guna2Button btnDiscover;
+        private Guna.UI2.WinForms.Guna2Button btnMusicRoom;
         private Guna.UI2.WinForms.Guna2Button btnArtists;
         private Guna.UI2.WinForms.Guna2Button btnChat;
         private Guna.UI2.WinForms.Guna2Button btnAlbums;
