@@ -14,14 +14,12 @@ namespace SONA
 {
     public partial class Favourite : UserControl
     {
-        private string idUser;
         private List<string> songIds = new List<string>();
         private Home h;
-        public Favourite(Home h, string idUser)
+        public Favourite(Home h)
         {
             InitializeComponent();
             this.h = h;
-            this.idUser = idUser;
             getData();
         }
 
@@ -37,7 +35,7 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("Favourite");
-                    writer.Write(idUser);
+                    writer.Write(User.idUser);
                     string response = reader.ReadString();
 
                     if (response == "OK")
@@ -51,7 +49,7 @@ namespace SONA
 
                         for (int i = 0; i < count; i++)
                         {
-                            SongSearch songSearch = new SongSearch(h, songIds[i], idUser, songIds);
+                            SongSearch songSearch = new SongSearch(h, songIds[i], songIds);
                             flpSongs.Controls.Add(songSearch);
                         }
                     }

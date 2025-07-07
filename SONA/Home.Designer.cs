@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pnMyLibrary = new Guna.UI2.WinForms.Guna2Panel();
             this.btnArtists = new Guna.UI2.WinForms.Guna2Button();
             this.btnChat = new Guna.UI2.WinForms.Guna2Button();
@@ -47,7 +46,6 @@
             this.btnHome = new Guna.UI2.WinForms.Guna2Button();
             this.btnNotification = new Guna.UI2.WinForms.Guna2Button();
             this.pnMain = new System.Windows.Forms.Panel();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.pnMyLibrary.SuspendLayout();
             this.pnMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cpbUserInfor)).BeginInit();
@@ -166,7 +164,7 @@
             this.btnFavorited.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnFavorited.Size = new System.Drawing.Size(248, 41);
             this.btnFavorited.TabIndex = 1;
-            this.btnFavorited.Text = "Favorited";
+            this.btnFavorited.Text = "Favourited";
             this.btnFavorited.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnFavorited.Click += new System.EventHandler(this.btnFavorited_Click);
             // 
@@ -300,6 +298,8 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtSearch.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.txtSearch.BorderRadius = 25;
             this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -325,7 +325,7 @@
             this.txtSearch.Size = new System.Drawing.Size(718, 54);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Visible = false;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearch.Click += new System.EventHandler(this.txtSearch_Click);
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // btnMinimize
@@ -448,11 +448,6 @@
             this.pnMain.Name = "pnMain";
             this.pnMain.Size = new System.Drawing.Size(1482, 919);
             this.pnMain.TabIndex = 2;
-            this.pnMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnMain_Paint);
-            // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 50;
             // 
             // Home
             // 
@@ -487,11 +482,10 @@
         private Guna.UI2.WinForms.Guna2Button btnClose;
         private Guna.UI2.WinForms.Guna2Button btnSetting;
         private Guna.UI2.WinForms.Guna2Button btnNotification;
-        private Guna.UI2.WinForms.Guna2Button btnSearch;
         private Guna.UI2.WinForms.Guna2TextBox txtSearch;
         public System.Windows.Forms.Panel pnMain;
         private Guna.UI2.WinForms.Guna2Button btnMinimize;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         public Guna.UI2.WinForms.Guna2CirclePictureBox cpbUserInfor;
+        private Guna.UI2.WinForms.Guna2Button btnSearch;
     }
 }

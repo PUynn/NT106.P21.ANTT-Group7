@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Guna.UI2.WinForms;
 using System.IO;
 using System.Net.Sockets;
+using Npgsql.Internal.TypeHandlers.LTreeHandlers;
 
 namespace SONA
 {
@@ -26,19 +27,22 @@ namespace SONA
         private bool isAutoReplay;
         private bool isShuffled = false;
         private TimeSpan lastPosition;
+        
+        private string picturePath = null;
+        private bool hasCustomPicture = false;
 
+        private List<string> playlistID;
         private List<string> songIds;
         private List<string> originalSongIds; // Danh sách bài hát gốc để sử dụng khi tắt chế độ xáo trộn
 
-        private string id_song, name_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
-        private string idUser;
+        private string id_song, picture_song, am_thanh, id_singer, name_singer, picture_singer, birthdate;
         private bool isFavorited = false;
 
-        public ListenMusic(Home h, string id_song, string idUser, List<string> songIds)
+        public ListenMusic(Home h, string id_song, List<string> songIds)
         {
             this.h = h;
             this.id_song = id_song;
-            this.idUser = idUser;
+            this.playlistID = new List<string>();
             this.songIds = new List<string>(songIds);
             this.originalSongIds = new List<string>(songIds);
 
@@ -63,7 +67,6 @@ namespace SONA
 
                     if (response == "OK")
                     {
-                        name_song = reader.ReadString();
                         id_singer = reader.ReadString();
                         name_singer = reader.ReadString();
                         picture_singer = reader.ReadString();
@@ -83,6 +86,153 @@ namespace SONA
             }
         }
 
+        private void getPlaylist()
+        {
+            try
+            {
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getIDPlaylist");
+                    writer.Write(User.idUser);
+
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        int playlistCount = reader.ReadInt32();
+
+                        for (int i = 0; i < playlistCount; i++)
+                        {
+                            string id_playlist = reader.ReadString();
+                            playlistID.Add(id_playlist);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error retrieving playlists: " + response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void btnPlaylist_Click(object sender, EventArgs e)
+        {
+            pnAddPlaylist.Visible = !pnAddPlaylist.Visible;
+            getPlaylist();
+            if (pnAddPlaylist.Visible)
+            {
+                flpPlaylist.Controls.Clear();
+
+                for (int i = 0; i < playlistID.Count; i++)
+                {
+                    PlaylistChoice playlistChoice = new PlaylistChoice(h, playlistID[i], id_song);
+                    flpPlaylist.Controls.Add(playlistChoice);
+                }
+                playlistID.Clear();
+            }
+        }
+
+        private void setPicturePlaylist()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                cpbPicturePlaylist.Image = Image.FromFile(openFileDialog.FileName);
+                picturePath = openFileDialog.FileName;
+                hasCustomPicture = true;
+            }
+        }
+
+        private void lblChoosePicture_Click(object sender, EventArgs e)
+        {
+            setPicturePlaylist();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                try
+                {
+                    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                    using (NetworkStream stream = client.GetStream())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        writer.Write("addPlaylist");
+                        writer.Write(User.idUser);
+                        writer.Write(User.emailUser);
+                        writer.Write(tbNamePlaylist.Text.Trim());
+
+                        if (hasCustomPicture && picturePath != null)
+                        {
+                            writer.Write("hasAvatar");
+                            using (var fs = new FileStream(picturePath, FileMode.Open, FileAccess.Read))
+                            {
+                                byte[] imageData = new byte[fs.Length];
+                                fs.Read(imageData, 0, imageData.Length);
+                                writer.Write(imageData.Length);
+                                writer.Write(imageData);
+                            }
+                        }
+                        else
+                        {
+                            writer.Write("noAvatar");
+                        }
+                        string response = reader.ReadString();
+                        if (response == "OK")
+                        {
+                            getPlaylist();
+                            flpPlaylist.Controls.Clear();
+
+                            for (int i = 0; i < playlistID.Count; i++)
+                            {
+                                PlaylistChoice playlistChoice = new PlaylistChoice(h, playlistID[i], id_song);
+                                flpPlaylist.Controls.Add(playlistChoice);
+                            }
+                            playlistID.Clear();
+                            pnCreatePlaylist.Visible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error adding playlist: " + response);
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error connecting to server: " + ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            pnCreatePlaylist.Visible = !pnCreatePlaylist.Visible;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            pnCreatePlaylist.Visible = false;
+        }
+
+        private void btnCloseflpPlaylist_Click(object sender, EventArgs e)
+        {
+            pnAddPlaylist.Visible = false;
+        }
+
         private void showSongsFavourite()
         {
             try
@@ -92,8 +242,8 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("songFavurite");
-                    writer.Write(idUser);
+                    writer.Write("songFavourite");
+                    writer.Write(User.idUser);
                     writer.Write(id_song);
 
                     string response = reader.ReadString();
@@ -230,10 +380,8 @@ namespace SONA
                 woe.Init(afr);
 
                 lblEnd.Text = afr.TotalTime.ToString(@"mm\:ss");
-                lbNameSong.Text = name_song;
                 lblNameSinger.Text = name_singer;
                 lblSince.Text = ConvertDate(birthdate);
-                CenterLabelInPanel();
 
                 return true;
             }
@@ -256,7 +404,6 @@ namespace SONA
                     btnPlayMusic.Checked = false;
                     timer1.Start();
                     tbsTimeSong.Value = 0;
-                    CenterLabelInPanel();
                 }
                 else
                 {
@@ -284,7 +431,7 @@ namespace SONA
                     if (!isFavorited)
                     {
                         writer.Write("addFavourite");
-                        writer.Write(idUser);
+                        writer.Write(User.idUser);
                         writer.Write(id_song);
 
                         string response = reader.ReadString();
@@ -303,7 +450,7 @@ namespace SONA
                     else
                     {
                         writer.Write("removeFavourite");
-                        writer.Write(idUser);
+                        writer.Write(User.idUser);
                         writer.Write(id_song);
 
                         string response = reader.ReadString();
@@ -419,36 +566,6 @@ namespace SONA
             }
         }
 
-        private void guna2Panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lbNameSong_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Panel7_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         // Hàm tạm dừng hoặc phát nhạc
         private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
@@ -481,6 +598,11 @@ namespace SONA
                 isPlaying = false;
                 btnPlayMusic.Checked = true;
             }
+        }
+
+        private void btnMore_Click(object sender, EventArgs e)
+        {
+
         }
 
         // Hàm cập nhật thanh thời gian và lấy thời gian bài hát
@@ -572,12 +694,7 @@ namespace SONA
         {
             StopMusicAndDispose();
             h.pnMain.Controls.Clear();
-            h.pnMain.Controls.Add(new ArtistInfor(h, id_singer, idUser));
-        }
-
-        private void CenterLabelInPanel()
-        {
-            lbNameSong.Left = (guna2Panel7.Width - lbNameSong.Width) / 2;
+            h.pnMain.Controls.Add(new ArtistInfor(h, id_singer));
         }
     }
 }

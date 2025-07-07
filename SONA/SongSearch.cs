@@ -17,44 +17,22 @@ namespace SONA
     public partial class SongSearch : UserControl
     {
         private Home h;
-        private bool isFavorited = false;
 
         private List<string> songIds;
         private string id_song, name_song, picture_song, id_singer, name_singer;
-        private string idUser;
-        private string type; // "song" hoặc "artist"
 
-        public SongSearch(Home h, string id, string idUser, List<string> songIds, string type)
+        public SongSearch(Home h, string id_song, List<string> songIds)
         {
             this.h = h;
-            this.idUser = idUser;
-            this.type = type;
-            this.songIds = songIds != null ? new List<string>(songIds) : new List<string>();
-
-            if (type == "song")
-                this.id_song = id;
-            else
-                this.id_singer = id;
+            this.id_song = id_song;
+            this.songIds = new List<string>(songIds);
 
             InitializeComponent();
-            if (type == "song")
-            {
-                GetData();
-                showSongsFavourite();
-            }
-            else if (type == "artist")
-            {
-                GetArtistData();
-                btnFavourite.Visible = false; // Ẩn nút yêu thích với nghệ sĩ
-            }
+            getData();
+            showSongsFavourite();
         }
 
-        public SongSearch(Home h, string id_song, string idUser, List<string> songIds)
-            : this(h, id_song, idUser, songIds, "song")
-        {
-        }
-
-        private void GetData()
+        private void getData()
         {
             try
             {
@@ -86,59 +64,44 @@ namespace SONA
             }
         }
 
-        private void GetArtistData()
+        // Hàm ghi các nội dung cần thiết cho 1 bài hát
+        private void SongSearch_Load(object sender, EventArgs e)
         {
+            lblNameSong.Text = name_song;
+            lblNameSinger.Text = name_singer;
+
             try
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                using (var wc = new System.Net.WebClient())
+                using (var stream = wc.OpenRead(picture_song))
                 {
-                    writer.Write("artistForm");
-                    writer.Write(id_singer);
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        name_singer = reader.ReadString();
-                        picture_song = reader.ReadString(); // Tận dụng picture_song để lưu ảnh nghệ sĩ
-                    }
-                    else
-                    {
-                        MessageBox.Show(response);
-                    }
+                    btnPictureSong.BackgroundImage = Image.FromStream(stream);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading artist: " + ex.Message);
+                MessageBox.Show("Error loading image: " + ex.Message);
             }
         }
 
+        // Hàm gọi form ListenMusic để phát nhạc
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            if (type == "song")
-            {
-                ListenMusic listenMusic = new ListenMusic(h, id_song, idUser, songIds);
-                h.pnMain.Controls.Clear();
-                h.pnMain.Controls.Add(listenMusic);
-                h.SetCurrentListenMusic(listenMusic);
-            }
+            ListenMusic listenMusic = new ListenMusic(h, id_song, songIds);
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(listenMusic);
+            h.SetCurrentListenMusic(listenMusic);
         }
 
         private void lblNameSinger_Click(object sender, EventArgs e)
         {
-            if (type == "song")
-            {
-                ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
-                h.pnMain.Controls.Clear();
-                h.pnMain.Controls.Add(artistInfor);
-            }
+            ArtistInfor artistInfor = new ArtistInfor(h, id_singer);
+            h.pnMain.Controls.Clear();
+            h.pnMain.Controls.Add(artistInfor);
         }
 
         private void showSongsFavourite()
         {
-            if (type != "song") return;
             try
             {
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
@@ -146,24 +109,22 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("songFavurite");
-                    writer.Write(idUser);
+                    writer.Write("songFavourite");
+                    writer.Write(User.idUser);
                     writer.Write(id_song);
 
                     string response = reader.ReadString();
                     if (response == "Exists")
                     {
-                        isFavorited = true;
                         btnFavourite.Checked = true;
                     }
                     else if (response == "Nothing")
                     {
-                        isFavorited = false;
                         btnFavourite.Checked = false;
                     }
                     else
                     {
-                        MessageBox.Show(response);
+                        MessageBox.Show("Error check songs in Favourite: " + response);
                     }
                 }
             }
@@ -175,7 +136,6 @@ namespace SONA
 
         private void btnFavorited_Click(object sender, EventArgs e)
         {
-            if (type != "song") return;
             try
             {
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
@@ -183,41 +143,35 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    if (!isFavorited)
+                    if (!btnFavourite.Checked)
                     {
                         writer.Write("addFavourite");
-                        writer.Write(idUser);
+                        writer.Write(User.idUser);
                         writer.Write(id_song);
 
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            isFavorited = true;
-                            btnFavourite.Checked = true;
+                            btnFavourite.Checked = !btnFavourite.Checked;
                         }
                         else
                         {
-                            isFavorited = false;
-                            btnFavourite.Checked = false;
                             MessageBox.Show(response);
                         }
                     }
                     else
                     {
                         writer.Write("removeFavourite");
-                        writer.Write(idUser);
+                        writer.Write(User.idUser);
                         writer.Write(id_song);
 
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            isFavorited = false;
-                            btnFavourite.Checked = false;
+                            btnFavourite.Checked = !btnFavourite.Checked;
                         }
                         else
                         {
-                            isFavorited = true;
-                            btnFavourite.Checked = true;
                             MessageBox.Show(response);
                         }
                     }
@@ -226,44 +180,6 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
-            }
-        }
-
-        private void SongSearch_Load(object sender, EventArgs e)
-        {
-            if (type == "song")
-            {
-                lblNameSong.Text = name_song;
-                lblNameSinger.Text = name_singer;
-                try
-                {
-                    using (var wc = new System.Net.WebClient())
-                    using (var stream = wc.OpenRead(picture_song))
-                    {
-                        btnPictureSong.BackgroundImage = Image.FromStream(stream);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading image: " + ex.Message);
-                }
-            }
-            else if (type == "artist")
-            {
-                lblNameSong.Text = name_singer;
-                lblNameSinger.Text = "Artist";
-                try
-                {
-                    using (var wc = new System.Net.WebClient())
-                    using (var stream = wc.OpenRead(picture_song))
-                    {
-                        btnPictureSong.BackgroundImage = Image.FromStream(stream);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading image: " + ex.Message);
-                }
             }
         }
     }

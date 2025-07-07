@@ -19,32 +19,83 @@ namespace SONA
 {
     public partial class Home : UserControl
     {
-        SONA S;
+        private SONA S;
         private ListenMusic currentListenMusic;
-        private string emailUser;
-        private string idUser;
-
-        // Biến cho tìm kiếm real-time và gợi ý
-        private string currentSearchTerm = "";
-        private System.Windows.Forms.Timer searchTimer;
-        private List<(string id, string type)> searchResults = new List<(string, string)>();
+        
+        public List<string> songNames;
+        public List<string> singerNames;
 
         public Home(SONA s, string email)
         {
             S = s;
-            emailUser = email;
+            User.emailUser = email;
+            songNames = new List<string>();
+            singerNames = new List<string>();
+
             InitializeComponent();
             getIdUser();
             getAvatarUser();
+            getSongName();
+            getSingerName();
 
-            // Khởi tạo timer
-            searchTimer = new System.Windows.Forms.Timer();
-            searchTimer.Interval = 500;
-            searchTimer.Tick += SearchTimer_Tick;
+            AutoCompleteStringCollection autoSource = new AutoCompleteStringCollection();
+            autoSource.AddRange(songNames.ToArray());
+            autoSource.AddRange(singerNames.ToArray());
+            txtSearch.AutoCompleteCustomSource = autoSource;
+        }
 
-            // Đăng ký event cho txtSearch
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            txtSearch.KeyDown += txtSearch_KeyDown;
+        private void getSongName()
+        {
+            using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+            using (NetworkStream stream = client.GetStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                writer.Write("getAllSongName");
+                string response = reader.ReadString();
+
+                if (response == "OK")
+                {
+                    int songCount = reader.ReadInt32();
+
+                    for (int i = 0; i < songCount; i++)
+                    {
+                        string songName = reader.ReadString();
+                        songNames.Add(songName);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(response);
+                }
+            }
+        }
+
+        private void getSingerName()
+        {
+            using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+            using (NetworkStream stream = client.GetStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                writer.Write("getAllSingerName");
+                string response = reader.ReadString();
+
+                if (response == "OK")
+                {
+                    int singerCount = reader.ReadInt32();
+
+                    for (int i = 0; i < singerCount; i++)
+                    {
+                        string singerName = reader.ReadString();
+                        singerNames.Add(singerName);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(response);
+                }
+            }
         }
 
         private void getIdUser()
@@ -57,12 +108,12 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("getIDUser");
-                    writer.Write(emailUser);
+                    writer.Write(User.emailUser);
                     string response = reader.ReadString();
 
                     if (response == "OK")
                     {
-                        idUser = reader.ReadString();
+                        User.idUser = reader.ReadString();
                     }
                     else
                     {
@@ -86,7 +137,7 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("getAvatarUser");
-                    writer.Write(idUser);
+                    writer.Write(User.idUser);
 
                     string response = reader.ReadString(); // Nhận phản hồi từ server
                     if (response == "OK")
@@ -133,7 +184,7 @@ namespace SONA
         // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
-            HomeContent homeContent = new HomeContent(this, idUser);
+            HomeContent homeContent = new HomeContent(this);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(homeContent);
 
@@ -154,9 +205,11 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            PlaylistList a = new PlaylistList(this, idUser);
+            PlaylistList playlistList = new PlaylistList(this);
             pnMain.Controls.Clear();
-            pnMain.Controls.Add(a);
+            pnMain.Controls.Add(playlistList);
+
+
         }
 
         private void btnFavorited_Click(object sender, EventArgs e)
@@ -169,7 +222,7 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            Favourite favourite = new Favourite(this, idUser);
+            Favourite favourite = new Favourite(this);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(favourite);
         }
@@ -184,7 +237,7 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            AlbumList albumList = new AlbumList(this, idUser);
+            AlbumList albumList = new AlbumList(this);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(albumList);
         }
@@ -192,8 +245,8 @@ namespace SONA
         private void btnSearch_Click(object sender, EventArgs e)
         {
             MenuClick();
-            txtSearch.Visible = true;
             btnSearch.Visible = false;
+            txtSearch.Visible = true;
             txtSearch.Focus();
         }
 
@@ -221,7 +274,7 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            HomeContent home = new HomeContent(this, idUser);
+            HomeContent home = new HomeContent(this);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(home);
         }
@@ -237,7 +290,13 @@ namespace SONA
         {
             MyClick();
 
-            ChatForm chatForm = new ChatForm(emailUser);
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            ChatForm chatForm = new ChatForm(User.emailUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(chatForm);
         }
@@ -252,7 +311,7 @@ namespace SONA
                 currentListenMusic = null;
             }
 
-            ArtistList artistList = new ArtistList(this, idUser);
+            ArtistList artistList = new ArtistList(this);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(artistList);
         }
@@ -267,162 +326,26 @@ namespace SONA
             S.WindowState = FormWindowState.Minimized;
         }
 
-        // Event handler cho textbox tìm kiếm
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            currentSearchTerm = txtSearch.Text.Trim();
-            searchTimer.Stop();
-            searchTimer.Start();
-           
-        }
-
+        // Hàm tìm kiếm bài hát khi nhấn enter vào ô tìm kiếm
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchTimer.Stop();
+                if (currentListenMusic != null)
+                {
+                    currentListenMusic.StopMusicAndDispose();
+                    currentListenMusic = null;
+                }
 
-                string searchTerm = txtSearch.Text.Trim();
-
-                SearchForm searchForm = new SearchForm(this, idUser);
+                SearchForm searchForm = new SearchForm(this, txtSearch.Text);
                 pnMain.Controls.Clear();
                 pnMain.Controls.Add(searchForm);
-
-                // Gửi từ khóa tìm kiếm sang SearchForm
-                searchForm.SetSearchTerm(searchTerm);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                txtSearch.Focus();
             }
         }
 
-        private void SearchTimer_Tick(object sender, EventArgs e)
+        private void txtSearch_Click(object sender, EventArgs e)
         {
-            searchTimer.Stop();
-            if (!string.IsNullOrWhiteSpace(currentSearchTerm))
-            // Hiển thị kết quả real-time
-            PerformSearch(currentSearchTerm);
-        }
-
- 
-        private void PerformSearch(string searchTerm)
-        {
-            searchResults.Clear();
-            pnMain.Controls.Clear();
-
-            if (string.IsNullOrWhiteSpace(searchTerm))
-            {
-                ShowAllSongsAndArtists();
-                return;
-            }
-
-            // Tìm kiếm bài hát
-            try
-            {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("searchSongs");
-                    writer.Write(searchTerm);
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        int songCount = reader.ReadInt32();
-                        for (int i = 0; i < songCount; i++)
-                        {
-                            string id_song = reader.ReadString();
-                            searchResults.Add((id_song, "song"));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error searching songs: " + ex.Message);
-            }
-
-            // Tìm kiếm nghệ sĩ
-            try
-            {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("searchArtists");
-                    writer.Write(searchTerm);
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        int singerCount = reader.ReadInt32();
-                        for (int i = 0; i < singerCount; i++)
-                        {
-                            string id_singer = reader.ReadString();
-                            searchResults.Add((id_singer, "artist"));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error searching artists: " + ex.Message);
-            }
-
-            // ALBUMS
-            List<string> albumIds = new List<string>();
-            try
-            {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    writer.Write("searchAlbums");
-                    writer.Write(searchTerm);
-                    string response = reader.ReadString();
-                    if (response == "OK")
-                    {
-                        int albumCount = reader.ReadInt32();
-                        for (int i = 0; i < albumCount; i++)
-                        {
-                            string id_album = reader.ReadString();
-                            albumIds.Add(id_album);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error searching albums: " + ex.Message);
-            }
-
-            // Hiển thị kết quả
-            // SONGS
-            foreach (var result in searchResults)
-            {
-                if (result.type == "song" || result.type == "artist")
-                {
-                    SongSearch songSearch = new SongSearch(this, result.id, idUser, null, result.type);
-                    pnMain.Controls.Add(songSearch);
-                }
-            }
-            // ALBUMS
-            foreach (var id_album in albumIds)
-            {
-                AlbumForm albumForm = new AlbumForm(this, id_album, idUser);
-                pnMain.Controls.Add(albumForm);
-            }
-        }
-
-        private void ShowAllSongsAndArtists()
-        {
-            // Hiển thị tất cả bài hát và nghệ sĩ như mặc định
-            pnMain.Controls.Clear();
-            // Gọi lại các hàm lấy toàn bộ bài hát và nghệ sĩ nếu cần
-            // ...
+            txtSearch.Focus();
         }
 
         // Hàm dừng bài hát khi nó đang phát trong form listenMusic
@@ -437,14 +360,20 @@ namespace SONA
 
         private void cpbUserInfor_Click(object sender, EventArgs e)
         {
-            UserInfor userInfor = new UserInfor(this, S, idUser);
+            if (currentListenMusic != null)
+            {
+                currentListenMusic.StopMusicAndDispose();
+                currentListenMusic = null;
+            }
+
+            UserInfor userInfor = new UserInfor(this, S);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(userInfor);
         }
-
-        private void pnMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+    }
+    public static class User
+    {
+        public static string idUser;
+        public static string emailUser;
     }
 }

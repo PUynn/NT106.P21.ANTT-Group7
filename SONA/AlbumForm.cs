@@ -17,14 +17,13 @@ namespace SONA
     public partial class AlbumForm: UserControl
     {
         private Home h;
-        private string idAlbum, idUser;
+        private string idAlbum;
 
-        public AlbumForm(Home h, string idAlbum, string idUser)
+        public AlbumForm(Home h, string idAlbum)
         {
             InitializeComponent();
             this.h = h;
             this.idAlbum = idAlbum;
-            this.idUser = idUser;
         }
 
         private async void AlbumForm_Load(object sender, EventArgs e)
@@ -64,20 +63,20 @@ namespace SONA
                     }
                     else
                     {
-                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                        MessageBox.Show("Error loading playlist image: " + response); // Hiển thị lỗi từ server
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading singer image: {ex.Message}");
+                MessageBox.Show($"Error connecting to server: {ex.Message}");
                 btnPictureAlbum.BackgroundImage = null;
             }
         }
 
         private void btnPictureAlbum_Click(object sender, EventArgs e)
         {
-            Album album = new Album(h, idAlbum, idUser);
+            Album album = new Album(h, idAlbum);
             h.pnMain.Controls.Clear();
             h.pnMain.Controls.Add(album);
         }

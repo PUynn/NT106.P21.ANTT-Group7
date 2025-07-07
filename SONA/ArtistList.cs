@@ -15,12 +15,10 @@ namespace SONA
     public partial class ArtistList: UserControl
     {
         private Home h;
-        private string idUser;
         
-        public ArtistList(Home h, string idUser)
+        public ArtistList(Home h)
         {
             this.h = h;
-            this.idUser = idUser;
             InitializeComponent();
             getIdArtist();
         }
@@ -48,7 +46,7 @@ namespace SONA
                         for (int i = 0; i < singerCount; i++)
                         {
                             string id_singer = reader.ReadString();
-                            ArtistForm artistForm = new ArtistForm(h, id_singer, idUser);
+                            ArtistForm artistForm = new ArtistForm(h, id_singer);
                             flpArtists.Controls.Add(artistForm);
                         }
                     }

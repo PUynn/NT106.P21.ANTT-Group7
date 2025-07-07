@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.cpbArtist = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.lbNameSinger = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.lbNameAlbum = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cpbArtist)).BeginInit();
             this.SuspendLayout();
@@ -40,7 +38,7 @@
             // guna2Panel1
             // 
             this.guna2Panel1.Controls.Add(this.cpbArtist);
-            this.guna2Panel1.Controls.Add(this.lbNameSinger);
+            this.guna2Panel1.Controls.Add(this.lbNameAlbum);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
@@ -61,22 +59,18 @@
             this.cpbArtist.TabStop = false;
             this.cpbArtist.Click += new System.EventHandler(this.cpbArtist_Click);
             // 
-            // lbNameSinger
+            // lbNameAlbum
             // 
-            this.lbNameSinger.AutoSize = false;
-            this.lbNameSinger.BackColor = System.Drawing.Color.Transparent;
-            this.lbNameSinger.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNameSinger.ForeColor = System.Drawing.Color.White;
-            this.lbNameSinger.Location = new System.Drawing.Point(13, 230);
-            this.lbNameSinger.Name = "lbNameSinger";
-            this.lbNameSinger.Size = new System.Drawing.Size(224, 24);
-            this.lbNameSinger.TabIndex = 10;
-            this.lbNameSinger.Text = "A";
-            this.lbNameSinger.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 224;
+            this.lbNameAlbum.AutoSize = false;
+            this.lbNameAlbum.BackColor = System.Drawing.Color.Transparent;
+            this.lbNameAlbum.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNameAlbum.ForeColor = System.Drawing.Color.White;
+            this.lbNameAlbum.Location = new System.Drawing.Point(13, 230);
+            this.lbNameAlbum.Name = "lbNameAlbum";
+            this.lbNameAlbum.Size = new System.Drawing.Size(224, 24);
+            this.lbNameAlbum.TabIndex = 10;
+            this.lbNameAlbum.Text = "A";
+            this.lbNameAlbum.TextAlignment = System.Drawing.ContentAlignment.TopCenter;
             // 
             // ArtistForm
             // 
@@ -96,8 +90,7 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lbNameSinger;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lbNameAlbum;
         private Guna.UI2.WinForms.Guna2CirclePictureBox cpbArtist;
     }
 }

@@ -21,18 +21,15 @@ namespace SONA
 {
     public partial class UserInfor : UserControl
     {
-        private string idUser;
         private string avatarPath = null; // Lưu đường dẫn ảnh tạm thời
         private bool hasCustomAvatar = false; // Kiểm tra xem người dùng có chọn ảnh không
         private Home h;
         private SONA S;
 
-        public UserInfor(Home h, SONA S, string idUser)
+        public UserInfor(Home h, SONA S)
         {
             this.S = S;
-            this.h = h;
-            this.idUser = idUser;
-            
+            this.h = h;           
             InitializeComponent();
             getUserInfor();
             getAvatarUser();
@@ -51,7 +48,7 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("getUserInfor");
-                    writer.Write(idUser);
+                    writer.Write(User.idUser);
                     string response = reader.ReadString();
 
                     if (response == "OK")
@@ -83,7 +80,7 @@ namespace SONA
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     writer.Write("getAvatarUser");
-                    writer.Write(idUser);
+                    writer.Write(User.idUser);
 
                     string response = reader.ReadString(); // Nhận phản hồi từ server
                     if (response == "OK")
