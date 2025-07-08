@@ -579,5 +579,15 @@ namespace SONA
         {
             lbNameSong.Left = (guna2Panel7.Width - lbNameSong.Width) / 2;
         }
+
+        public void SetHostMode(bool isHost)
+        {
+            btnPlayMusic.Enabled = isHost;
+            btnNext.Enabled = isHost;
+            btnPrev.Enabled = isHost;
+            // Nếu có các nút thêm/xóa bài hát, hãy enable/disable ở đây
+            // btnAddSong.Enabled = isHost;
+            // btnRemoveSong.Enabled = isHost;
+        }
     }
 }

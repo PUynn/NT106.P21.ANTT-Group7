@@ -42,6 +42,33 @@ namespace SONA_Server
         private const int OTPResendCooldown = 60; // Giới hạn thời gian gửi là 60 giây
         private const int OTPExpirationMinutes = 5; // OTP hết hạn sau 5 phút
 
+        #region Room Models
+        public class RoomMember
+        {
+            public string UserId { get; set; }
+            public string UserName { get; set; }
+            public TcpClient Client { get; set; }
+        }
+
+        public class Room
+        {
+            public string RoomId { get; set; }
+            public string HostId { get; set; }
+            public List<RoomMember> Members { get; set; } = new List<RoomMember>();
+        }
+        #endregion
+
+        #region Room Management
+        private Dictionary<string, Room> rooms = new Dictionary<string, Room>();
+        private static readonly Random randomRoom = new Random();
+        private string GenerateRoomId(int length = 6)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[randomRoom.Next(s.Length)]).ToArray());
+        }
+        #endregion
+
         public ServerForm()
         {
             InitializeComponent();
@@ -1114,6 +1141,105 @@ namespace SONA_Server
                     {
                         writer.Write("Lỗi tìm kiếm album: " + ex.Message);
                     }
+                }
+                else if (requestType == "createRoom")
+                {
+                    string userId = reader.ReadString();
+                    string userName = reader.ReadString();
+
+                    string roomId;
+                    do
+                    {
+                        roomId = GenerateRoomId();
+                    } while (rooms.ContainsKey(roomId));
+
+                    var room = new Room
+                    {
+                        RoomId = roomId,
+                        HostId = userId
+                    };
+                    room.Members.Add(new RoomMember
+                    {
+                        UserId = userId,
+                        UserName = userName,
+                        Client = client
+                    });
+                    rooms[roomId] = room;
+
+                    writer.Write("OK");
+                    writer.Write(roomId);
+                    writer.Flush();
+                    return;
+                }
+                else if (requestType == "joinRoom")
+                {
+                    string roomId = reader.ReadString();
+                    string userId = reader.ReadString();
+                    string userName = reader.ReadString();
+
+                    if (!rooms.ContainsKey(roomId))
+                    {
+                        writer.Write("FAIL");
+                        writer.Write("Room not found!");
+                        writer.Flush();
+                        return;
+                    }
+                    var room = rooms[roomId];
+                    if (room.Members.Any(m => m.UserId == userId))
+                    {
+                        writer.Write("FAIL");
+                        writer.Write("Already in room!");
+                        writer.Flush();
+                        return;
+                    }
+                    room.Members.Add(new RoomMember
+                    {
+                        UserId = userId,
+                        UserName = userName,
+                        Client = client
+                    });
+
+                    writer.Write("OK");
+                    writer.Write(room.HostId == userId ? "host" : "client");
+                    writer.Flush();
+                    return;
+                }
+                else if (requestType == "leaveRoom")
+                {
+                    string roomId = reader.ReadString();
+                    string userId = reader.ReadString();
+
+                    if (rooms.ContainsKey(roomId))
+                    {
+                        var room = rooms[roomId];
+                        var member = room.Members.FirstOrDefault(m => m.UserId == userId);
+                        if (member != null)
+                        {
+                            room.Members.Remove(member);
+                            // Nếu host rời phòng, đóng phòng
+                            if (room.HostId == userId)
+                            {
+                                foreach (var m in room.Members)
+                                {
+                                    try
+                                    {
+                                        var w = new BinaryWriter(m.Client.GetStream());
+                                        w.Write("roomClosed");
+                                        w.Flush();
+                                    }
+                                    catch { }
+                                }
+                                rooms.Remove(roomId);
+                            }
+                            else if (room.Members.Count == 0)
+                            {
+                                rooms.Remove(roomId);
+                            }
+                        }
+                    }
+                    writer.Write("OK");
+                    writer.Flush();
+                    return;
                 }
                 else
                 {

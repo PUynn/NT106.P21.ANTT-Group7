@@ -216,11 +216,12 @@ namespace SONA
             pnMain.Controls.Add(home);
         }
 
-        private void btnDiscover_Click(object sender, EventArgs e)
+        private void btnMusicRoom_Click(object sender, EventArgs e)
         {
-            MenuClick();
-            txtSearch.Visible = false;
-            btnSearch.Visible = true;
+            pnMain.Controls.Clear();
+            var musicRoom = new MusicRoom();
+            musicRoom.Dock = DockStyle.Fill;
+            pnMain.Controls.Add(musicRoom);
         }
 
         private void btnChat_Click(object sender, EventArgs e)

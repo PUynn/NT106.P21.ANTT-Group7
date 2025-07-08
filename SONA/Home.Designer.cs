@@ -276,7 +276,7 @@
             this.btnMusicRoom.TabIndex = 2;
             this.btnMusicRoom.Text = "Music Room";
             this.btnMusicRoom.TextOffset = new System.Drawing.Point(0, -2);
-            this.btnMusicRoom.Click += new System.EventHandler(this.btnDiscover_Click);
+            this.btnMusicRoom.Click += new System.EventHandler(this.btnMusicRoom_Click);
             // 
             // btnSetting
             // 

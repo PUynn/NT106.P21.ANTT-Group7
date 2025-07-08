@@ -28,6 +28,9 @@ namespace SONA
         private string serverIp = IPAddressServer.serverIP;
         private string nameUser;
 
+        public ChatRoom() : this("Guest") 
+        {
+        }
         public ChatRoom(string name)
         {
             InitializeComponent();
