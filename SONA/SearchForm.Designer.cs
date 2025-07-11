@@ -13,19 +13,9 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && (components != null))
             {
-                if (searchTimer != null)
-                {
-                    searchTimer.Dispose();
-                    searchTimer = null;
-                }
-
-                if (components != null)
-                {
-                    components.Dispose();
-                    components = null;
-                }
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -92,11 +82,11 @@
             this.btnArtists.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnArtists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnArtists.ForeColor = System.Drawing.Color.White;
-            this.btnArtists.Location = new System.Drawing.Point(209, 13);
+            this.btnArtists.Location = new System.Drawing.Point(173, 13);
             this.btnArtists.Name = "btnArtists";
             this.btnArtists.Size = new System.Drawing.Size(106, 33);
             this.btnArtists.TabIndex = 9;
-            this.btnArtists.Text = "Singers";
+            this.btnArtists.Text = "Artists";
             this.btnArtists.Click += new System.EventHandler(this.btnArtists_Click);
             // 
             // btnAll
@@ -115,7 +105,7 @@
             this.btnAll.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnAll.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAll.ForeColor = System.Drawing.Color.White;
-            this.btnAll.Location = new System.Drawing.Point(21, 13);
+            this.btnAll.Location = new System.Drawing.Point(16, 13);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(55, 33);
             this.btnAll.TabIndex = 11;
@@ -137,7 +127,7 @@
             this.btnSongs.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnSongs.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSongs.ForeColor = System.Drawing.Color.White;
-            this.btnSongs.Location = new System.Drawing.Point(96, 13);
+            this.btnSongs.Location = new System.Drawing.Point(77, 13);
             this.btnSongs.Name = "btnSongs";
             this.btnSongs.Size = new System.Drawing.Size(90, 33);
             this.btnSongs.TabIndex = 10;

@@ -47,7 +47,7 @@
             // 
             // btnPictureAlbum
             // 
-            this.btnPictureAlbum.BackColor = System.Drawing.Color.White;
+            this.btnPictureAlbum.BackColor = System.Drawing.Color.Transparent;
             this.btnPictureAlbum.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnPictureAlbum.BorderRadius = 10;
             this.btnPictureAlbum.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -57,7 +57,7 @@
             this.btnPictureAlbum.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnPictureAlbum.FillColor = System.Drawing.Color.Transparent;
             this.btnPictureAlbum.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPictureAlbum.ForeColor = System.Drawing.Color.White;
+            this.btnPictureAlbum.ForeColor = System.Drawing.Color.Black;
             this.btnPictureAlbum.ImageSize = new System.Drawing.Size(50, 50);
             this.btnPictureAlbum.Location = new System.Drawing.Point(13, 12);
             this.btnPictureAlbum.Name = "btnPictureAlbum";

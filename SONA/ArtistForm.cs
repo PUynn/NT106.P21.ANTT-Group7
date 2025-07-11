@@ -16,14 +16,13 @@ namespace SONA
     public partial class ArtistForm : UserControl
     {
         private Home h;
-        private string id_singer, idUser;
+        private string id_singer;
 
-        public ArtistForm(Home h, string id_singer, string idUser)
+        public ArtistForm(Home h, string id_singer)
         {
             InitializeComponent();
             this.h = h;
             this.id_singer = id_singer;
-            this.idUser = idUser;
         }
 
         // Hàm ghi các nội dung cần thiết cho 1 nghệ sĩ
@@ -42,7 +41,7 @@ namespace SONA
                     string response = reader.ReadString();
                     if (response == "OK")
                     {
-                        lbNameSinger.Text = reader.ReadString();
+                        lbNameAlbum.Text = reader.ReadString();
 
                         // Tải hình ảnh từ URL
                         string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
@@ -77,7 +76,7 @@ namespace SONA
 
         private void cpbArtist_Click(object sender, EventArgs e)
         {
-            ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
+            ArtistInfor artistInfor = new ArtistInfor(h, id_singer);
             h.pnMain.Controls.Clear();
             h.pnMain.Controls.Add(artistInfor);
         }

@@ -7,32 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NAudio.Wave;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Net.Sockets;
+using System.Net.Http;
 
 namespace SONA
 {
-    public partial class SongSearch : UserControl
+    public partial class PlaylistChoice: UserControl
     {
         private Home h;
+        private string idPlaylist, idSong;
 
-        private List<string> songIds;
-        private string id_song, name_song, picture_song, id_singer, name_singer;
-
-        public SongSearch(Home h, string id_song, List<string> songIds)
+        public PlaylistChoice(Home h, string idPlaylist, string idSong)
         {
             this.h = h;
-            this.id_song = id_song;
-            this.songIds = new List<string>(songIds);
+            this.idPlaylist = idPlaylist;
+            this.idSong = idSong;
 
             InitializeComponent();
-            getData();
-            showSongsFavourite();
         }
 
-        private void getData()
+        private async void getPlaylistInfor()
         {
             try
             {
@@ -41,20 +36,35 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("songSearch");
-                    writer.Write(id_song);
-                    string response = reader.ReadString();
+                    writer.Write("getPlaylistInfor");
+                    writer.Write(idPlaylist);
 
+                    string response = reader.ReadString();
                     if (response == "OK")
                     {
-                        name_song = reader.ReadString();
-                        picture_song = reader.ReadString();
-                        id_singer = reader.ReadString();
-                        name_singer = reader.ReadString();
+                        string namePlaylist = reader.ReadString();
+                        string picturePlaylist = reader.ReadString();
+                        
+                        lblNamePlaylist.Text = namePlaylist;
+                        if (!string.IsNullOrEmpty(picturePlaylist))
+                        {
+                            using (var htppClient = new HttpClient())
+                            {
+                                var imageData = await htppClient.GetByteArrayAsync(picturePlaylist);
+                                using (var ms = new MemoryStream(imageData))
+                                {
+                                    btnPicturePlaylist.BackgroundImage = Image.FromStream(ms);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            btnPicturePlaylist.BackgroundImage = null;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show(response);
+                        MessageBox.Show("Error retrieving playlist information: " + response);
                     }
                 }
             }
@@ -64,40 +74,7 @@ namespace SONA
             }
         }
 
-        // Hàm ghi các nội dung cần thiết cho 1 bài hát
-        private void SongSearch_Load(object sender, EventArgs e)
-        {
-            lblNameSong.Text = name_song;
-            lblNameSinger.Text = name_singer;
-
-            try
-            {
-                using (var wc = new System.Net.WebClient())
-                using (var stream = wc.OpenRead(picture_song))
-                {
-                    btnPictureSong.BackgroundImage = Image.FromStream(stream);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading image: " + ex.Message);
-            }
-        }
-
-        // Hàm gọi form ListenMusic để phát nhạc
-        private void btnPictureSong_Click(object sender, EventArgs e)
-        {
-            h.listenMusic(id_song, songIds);
-        }
-
-        private void lblNameSinger_Click(object sender, EventArgs e)
-        {
-            ArtistInfor artistInfor = new ArtistInfor(h, id_singer);
-            h.pnMain.Controls.Clear();
-            h.pnMain.Controls.Add(artistInfor);
-        }
-
-        private void showSongsFavourite()
+        private void checkSonginPlaylist()
         {
             try
             {
@@ -106,22 +83,22 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    writer.Write("songFavourite");
-                    writer.Write(User.idUser);
-                    writer.Write(id_song);
+                    writer.Write("checkSongInPlaylist");
+                    writer.Write(idPlaylist);
+                    writer.Write(idSong);
 
                     string response = reader.ReadString();
                     if (response == "Exists")
                     {
-                        btnFavourite.Checked = true;
+                        btnCheck.Checked = true;
                     }
                     else if (response == "Nothing")
                     {
-                        btnFavourite.Checked = false;
+                        btnCheck.Checked = false;
                     }
                     else
                     {
-                        MessageBox.Show("Error check songs in Favourite: " + response);
+                        MessageBox.Show("Error checking song in playlist: " + response);
                     }
                 }
             }
@@ -131,7 +108,7 @@ namespace SONA
             }
         }
 
-        private void btnFavorited_Click(object sender, EventArgs e)
+        private void btnCheck_Click(object sender, EventArgs e)
         {
             try
             {
@@ -140,36 +117,36 @@ namespace SONA
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    if (!btnFavourite.Checked)
+                    if (!btnCheck.Checked)
                     {
-                        writer.Write("addFavourite");
-                        writer.Write(User.idUser);
-                        writer.Write(id_song);
+                        writer.Write("insertSongToPlaylist");
+                        writer.Write(idPlaylist);
+                        writer.Write(idSong);
 
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            btnFavourite.Checked = !btnFavourite.Checked;
+                            btnCheck.Checked = !btnCheck.Checked;
                         }
                         else
                         {
-                            MessageBox.Show(response);
+                            MessageBox.Show("Error insert song to playlist: " + response);
                         }
                     }
                     else
                     {
-                        writer.Write("removeFavourite");
-                        writer.Write(User.idUser);
-                        writer.Write(id_song);
+                        writer.Write("deleteSongFromPlaylist");
+                        writer.Write(idPlaylist);
+                        writer.Write(idSong);
 
                         string response = reader.ReadString();
                         if (response == "OK")
                         {
-                            btnFavourite.Checked = !btnFavourite.Checked;
+                            btnCheck.Checked = !btnCheck.Checked;
                         }
                         else
                         {
-                            MessageBox.Show(response);
+                            MessageBox.Show("Error remove song to playlist: " + response);
                         }
                     }
                 }
@@ -178,6 +155,11 @@ namespace SONA
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
             }
+        }
+        private void PlaylistChoice_Load(object sender, EventArgs e)
+        {
+            getPlaylistInfor();
+            checkSonginPlaylist();
         }
     }
 }

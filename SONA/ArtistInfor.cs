@@ -16,15 +16,14 @@ namespace SONA
     public partial class ArtistInfor : UserControl
     {
         private Home h;
-        private string id_singer, name_singer, picture_singer, birthdate, nationality, idUser;
+        private string id_singer, name_singer, picture_singer, birthdate, nationality;
 
         private List<string> id_song;
 
-        public ArtistInfor(Home h, string id_singer, string idUser)
+        public ArtistInfor(Home h, string id_singer)
         {
             this.h = h;
             this.id_singer = id_singer;
-            this.idUser = idUser;
             id_song = new List<string>();
 
             InitializeComponent();
@@ -95,7 +94,7 @@ namespace SONA
                 flpSongs.Controls.Clear();
                 foreach (string id in id_song)
                 {
-                    SongSearch songSearch = new SongSearch(h, id, idUser, id_song);
+                    SongSearch songSearch = new SongSearch(h, id, id_song);
                     flpSongs.Controls.Add(songSearch);
                 }
 

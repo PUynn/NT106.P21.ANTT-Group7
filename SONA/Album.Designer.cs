@@ -31,22 +31,22 @@
             this.lblNameAlbum = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblNameUser = new System.Windows.Forms.Label();
+            this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
+            this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
+            this.pbPictureAlbum = new Guna.UI2.WinForms.Guna2PictureBox();
             this.btnPlay = new Guna.UI2.WinForms.Guna2Button();
             this.btnShuffle = new Guna.UI2.WinForms.Guna2Button();
             this.btnUpload = new Guna.UI2.WinForms.Guna2Button();
             this.btnAdd = new Guna.UI2.WinForms.Guna2Button();
             this.btnDownload = new Guna.UI2.WinForms.Guna2Button();
-            this.lblNameUser = new System.Windows.Forms.Label();
-            this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
-            this.pbPictureAlbum = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
-            this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.guna2Panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPictureAlbum)).BeginInit();
             this.guna2Panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPictureAlbum)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNameAlbum
@@ -82,6 +82,66 @@
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(989, 65);
             this.guna2Panel3.TabIndex = 3;
+            // 
+            // lblNameUser
+            // 
+            this.lblNameUser.AutoSize = true;
+            this.lblNameUser.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameUser.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblNameUser.Location = new System.Drawing.Point(7, 54);
+            this.lblNameUser.Name = "lblNameUser";
+            this.lblNameUser.Size = new System.Drawing.Size(226, 23);
+            this.lblNameUser.TabIndex = 2;
+            this.lblNameUser.Text = "By: Trần Nguyễn Việt Hoàng";
+            // 
+            // guna2Panel5
+            // 
+            this.guna2Panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.guna2Panel5.Controls.Add(this.pbPictureAlbum);
+            this.guna2Panel5.Controls.Add(this.lblDescription);
+            this.guna2Panel5.Location = new System.Drawing.Point(1041, 22);
+            this.guna2Panel5.Name = "guna2Panel5";
+            this.guna2Panel5.Size = new System.Drawing.Size(400, 894);
+            this.guna2Panel5.TabIndex = 2;
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblDescription.Location = new System.Drawing.Point(3, 417);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(100, 23);
+            this.lblDescription.TabIndex = 2;
+            this.lblDescription.Text = "Description:";
+            // 
+            // guna2Panel9
+            // 
+            this.guna2Panel9.Controls.Add(this.flpSongs);
+            this.guna2Panel9.Controls.Add(this.guna2Panel5);
+            this.guna2Panel9.Controls.Add(this.guna2Panel1);
+            this.guna2Panel9.Location = new System.Drawing.Point(0, 0);
+            this.guna2Panel9.Name = "guna2Panel9";
+            this.guna2Panel9.Size = new System.Drawing.Size(1482, 919);
+            this.guna2Panel9.TabIndex = 4;
+            // 
+            // flpSongs
+            // 
+            this.flpSongs.AutoScroll = true;
+            this.flpSongs.Location = new System.Drawing.Point(25, 209);
+            this.flpSongs.Name = "flpSongs";
+            this.flpSongs.Size = new System.Drawing.Size(995, 707);
+            this.flpSongs.TabIndex = 3;
+            // 
+            // pbPictureAlbum
+            // 
+            this.pbPictureAlbum.FillColor = System.Drawing.Color.Transparent;
+            this.pbPictureAlbum.ImageRotate = 0F;
+            this.pbPictureAlbum.Location = new System.Drawing.Point(0, 0);
+            this.pbPictureAlbum.Name = "pbPictureAlbum";
+            this.pbPictureAlbum.Size = new System.Drawing.Size(400, 400);
+            this.pbPictureAlbum.TabIndex = 0;
+            this.pbPictureAlbum.TabStop = false;
             // 
             // btnPlay
             // 
@@ -173,64 +233,6 @@
             this.btnDownload.Size = new System.Drawing.Size(45, 40);
             this.btnDownload.TabIndex = 4;
             // 
-            // lblNameUser
-            // 
-            this.lblNameUser.AutoSize = true;
-            this.lblNameUser.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameUser.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblNameUser.Location = new System.Drawing.Point(7, 54);
-            this.lblNameUser.Name = "lblNameUser";
-            this.lblNameUser.Size = new System.Drawing.Size(226, 23);
-            this.lblNameUser.TabIndex = 2;
-            this.lblNameUser.Text = "By: Trần Nguyễn Việt Hoàng";
-            // 
-            // guna2Panel5
-            // 
-            this.guna2Panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.guna2Panel5.Controls.Add(this.pbPictureAlbum);
-            this.guna2Panel5.Controls.Add(this.lblDescription);
-            this.guna2Panel5.Location = new System.Drawing.Point(1041, 22);
-            this.guna2Panel5.Name = "guna2Panel5";
-            this.guna2Panel5.Size = new System.Drawing.Size(400, 894);
-            this.guna2Panel5.TabIndex = 2;
-            // 
-            // pbPictureAlbum
-            // 
-            this.pbPictureAlbum.ImageRotate = 0F;
-            this.pbPictureAlbum.Location = new System.Drawing.Point(0, 0);
-            this.pbPictureAlbum.Name = "pbPictureAlbum";
-            this.pbPictureAlbum.Size = new System.Drawing.Size(400, 400);
-            this.pbPictureAlbum.TabIndex = 0;
-            this.pbPictureAlbum.TabStop = false;
-            // 
-            // lblDescription
-            // 
-            this.lblDescription.AutoSize = true;
-            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblDescription.Location = new System.Drawing.Point(3, 417);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(100, 23);
-            this.lblDescription.TabIndex = 2;
-            this.lblDescription.Text = "Description:";
-            // 
-            // guna2Panel9
-            // 
-            this.guna2Panel9.Controls.Add(this.flpSongs);
-            this.guna2Panel9.Controls.Add(this.guna2Panel5);
-            this.guna2Panel9.Controls.Add(this.guna2Panel1);
-            this.guna2Panel9.Location = new System.Drawing.Point(0, 0);
-            this.guna2Panel9.Name = "guna2Panel9";
-            this.guna2Panel9.Size = new System.Drawing.Size(1482, 919);
-            this.guna2Panel9.TabIndex = 4;
-            // 
-            // flpSongs
-            // 
-            this.flpSongs.Location = new System.Drawing.Point(25, 209);
-            this.flpSongs.Name = "flpSongs";
-            this.flpSongs.Size = new System.Drawing.Size(995, 707);
-            this.flpSongs.TabIndex = 3;
-            // 
             // Album
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -244,8 +246,8 @@
             this.guna2Panel3.ResumeLayout(false);
             this.guna2Panel5.ResumeLayout(false);
             this.guna2Panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPictureAlbum)).EndInit();
             this.guna2Panel9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbPictureAlbum)).EndInit();
             this.ResumeLayout(false);
 
         }

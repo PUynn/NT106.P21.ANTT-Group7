@@ -44,10 +44,10 @@
             // 
             // flpAlbum
             // 
-            this.flpAlbum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(9)))), ((int)(((byte)(8)))));
+            this.flpAlbum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.flpAlbum.Location = new System.Drawing.Point(3, 62);
             this.flpAlbum.Name = "flpAlbum";
-            this.flpAlbum.Size = new System.Drawing.Size(1476, 854);
+            this.flpAlbum.Size = new System.Drawing.Size(1471, 854);
             this.flpAlbum.TabIndex = 2;
             // 
             // pnFavourite
@@ -70,14 +70,13 @@
             this.pnHeader.Controls.Add(this.btnRecent);
             this.pnHeader.Location = new System.Drawing.Point(3, 0);
             this.pnHeader.Name = "pnHeader";
-            this.pnHeader.Size = new System.Drawing.Size(1476, 56);
+            this.pnHeader.Size = new System.Drawing.Size(1471, 56);
             this.pnHeader.TabIndex = 0;
             // 
             // btnAdd
             // 
             this.btnAdd.Animated = true;
             this.btnAdd.BorderRadius = 5;
-            this.btnAdd.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnAdd.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnAdd.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnAdd.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -159,6 +158,7 @@
             this.btnLarge.Animated = true;
             this.btnLarge.BorderRadius = 5;
             this.btnLarge.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnLarge.Checked = true;
             this.btnLarge.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnLarge.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnLarge.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));

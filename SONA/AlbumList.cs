@@ -15,12 +15,10 @@ namespace SONA
     public partial class AlbumList : UserControl
     {
         private Home h;
-        private string idUser;
-        public AlbumList(Home h, string idUser)
+        public AlbumList(Home h)
         {
             InitializeComponent();
             this.h = h;
-            this.idUser = idUser;
             getAlbumList();
         }
 
@@ -28,7 +26,7 @@ namespace SONA
         {
             try
             {
-                Title title = new Title("Albums:");
+                Title title = new Title("All albums:");
                 flpAlbum.Controls.Clear();
                 flpAlbum.Controls.Add(title);
 
@@ -46,7 +44,7 @@ namespace SONA
                         for (int i = 0; i < albumCount; i++)
                         {
                             string id_album = reader.ReadString();
-                            AlbumForm albumForm = new AlbumForm(h, id_album, idUser);
+                            AlbumForm albumForm = new AlbumForm(h, id_album);
                             flpAlbum.Controls.Add(albumForm);
                         }
                     }
