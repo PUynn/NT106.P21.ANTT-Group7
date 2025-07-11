@@ -1394,6 +1394,49 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy hình ảnh người dùng: " + ex.Message);
                     }
                 }
+                else if (requestType == "SearchFavourite")
+                {
+                    try
+                    {
+                        int id_user = int.Parse(reader.ReadString());
+                        string keyword = reader.ReadString();
+
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = @"
+                                SELECT s.id_song
+                                FROM favourites f
+                                JOIN songs s ON f.id_song = s.id_song
+                                WHERE f.id_user = @id_user AND LOWER(s.name_song) LIKE LOWER(@keyword)
+                                ORDER BY s.name_song";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> songIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        songIds.Add(readerdb["id_song"].ToString());
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(songIds.Count);
+                                    foreach (var id in songIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi tìm kiếm bài hát yêu thích: " + ex.Message);
+                    }
+                }
                 else if (requestType == "updateUserInfor")
                 {
                     string email = reader.ReadString();
