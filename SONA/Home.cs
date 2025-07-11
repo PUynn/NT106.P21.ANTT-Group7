@@ -219,7 +219,7 @@ namespace SONA
         private void btnMusicRoom_Click(object sender, EventArgs e)
         {
             pnMain.Controls.Clear();
-            var musicRoom = new MusicRoom();
+            var musicRoom = new MusicRoom(idUser, emailUser); 
             musicRoom.Dock = DockStyle.Fill;
             pnMain.Controls.Add(musicRoom);
         }

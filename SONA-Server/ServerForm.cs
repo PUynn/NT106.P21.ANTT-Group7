@@ -1241,6 +1241,35 @@ namespace SONA_Server
                     writer.Flush();
                     return;
                 }
+                else if (requestType == "musicSync")
+                {
+                    string roomId = reader.ReadString();
+                    string action = reader.ReadString();
+                    string songId = reader.ReadString();
+                    double position = reader.ReadDouble();
+
+                    if (rooms.ContainsKey(roomId))
+                    {
+                        var room = rooms[roomId];
+                        foreach (var member in room.Members)
+                        {
+                            if (member.Client != client)
+                            {
+                                try
+                                {
+                                    var w = new BinaryWriter(member.Client.GetStream());
+                                    w.Write("musicSync");
+                                    w.Write(action);
+                                    w.Write(songId);
+                                    w.Write(position);
+                                    w.Flush();
+                                }
+                                catch { }
+                            }
+                        }
+                    }
+                    return;
+                }
                 else
                 {
                     writer.Write("Yêu cầu không hợp lệ!");

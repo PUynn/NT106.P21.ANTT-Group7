@@ -229,6 +229,12 @@
     <Compile Include="ArtistInfor.Designer.cs">
       <DependentUpon>ArtistInfor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChatBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatBox.Designer.cs">
+      <DependentUpon>ChatBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChatForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -379,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ArtistList.resx">
       <DependentUpon>ArtistList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatBox.resx">
+      <DependentUpon>ChatBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>

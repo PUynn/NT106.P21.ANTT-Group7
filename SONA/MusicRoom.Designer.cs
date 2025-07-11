@@ -79,6 +79,7 @@
             this.buttonJoin.Size = new System.Drawing.Size(178, 49);
             this.buttonJoin.TabIndex = 2;
             this.buttonJoin.Text = "Tham gia";
+            this.buttonJoin.Click += new System.EventHandler(this.btnJoinRoom_Click);
             // 
             // buttonCreate
             // 
@@ -119,7 +120,6 @@
             this.lbMusicRoom.Size = new System.Drawing.Size(291, 91);
             this.lbMusicRoom.TabIndex = 6;
             this.lbMusicRoom.Text = "Music Room";
-            this.lbMusicRoom.Click += new System.EventHandler(this.lbMusicRoom_Click);
             // 
             // MusicRoom
             // 

@@ -34,18 +34,25 @@ namespace SONA
         private string idUser;
         private bool isFavorited = false;
 
-        public ListenMusic(Home h, string id_song, string idUser, List<string> songIds)
+        // --- Music Room ---
+        private NetworkStream stream;
+        private string roomId;
+        private bool isHost;
+
+        public ListenMusic(Home h, string id_song, string idUser, List<string> songIds, NetworkStream stream = null, string roomId = null, bool isHost = false)
         {
             this.h = h;
             this.id_song = id_song;
             this.idUser = idUser;
-            this.songIds = new List<string>(songIds);
-            this.originalSongIds = new List<string>(songIds);
-
+            this.songIds = new List<string>(songIds ?? new List<string>());
+            this.originalSongIds = new List<string>(songIds ?? new List<string>());
+            this.stream = stream;
+            this.roomId = roomId;
+            this.isHost = isHost;
             InitializeComponent();
             GetData();
             showSongsFavourite();
-            this.Disposed += (s, e) => StopMusicAndDispose(); // Giải phóng tài nguyên khi điều khiển bị hủy        
+            this.Disposed += (s, e) => StopMusicAndDispose();
         }
 
         private void GetData()
@@ -327,6 +334,24 @@ namespace SONA
             }
         }
 
+        // --- Đồng bộ nhạc ---
+        private void SendMusicSync(string action, double position = 0)
+        {
+            if (!isHost || stream == null || string.IsNullOrEmpty(roomId)) return;
+            try
+            {
+                using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
+                {
+                    writer.Write("musicSync");
+                    writer.Write(roomId);
+                    writer.Write(action); // "play", "pause", "next", "prev", "seek"
+                    writer.Write(id_song ?? "");
+                    writer.Write(position);
+                }
+            }
+            catch { }
+        }
+
         private async void btnNext_Click(object sender, EventArgs e)
         {
             try
@@ -366,6 +391,7 @@ namespace SONA
                 }
 
                 showSongsFavourite();
+                if (isHost) SendMusicSync("next", 0);
             }
             catch (Exception ex)
             {
@@ -412,6 +438,7 @@ namespace SONA
                 }
 
                 showSongsFavourite();
+                if (isHost) SendMusicSync("prev", 0);
             }
             catch (Exception ex)
             {
@@ -461,6 +488,7 @@ namespace SONA
                     btnPlayMusic.Checked = true;
                     isPlaying = false;
                     timer1.Stop();
+                    if (isHost) SendMusicSync("pause", afr.CurrentTime.TotalMilliseconds);
                 }
                 else
                 {
@@ -473,6 +501,7 @@ namespace SONA
                     btnPlayMusic.Checked = false;
                     isPlaying = true;
                     timer1.Start();
+                    if (isHost) SendMusicSync("play", afr.CurrentTime.TotalMilliseconds);
                 }
             }
             catch (Exception ex)
@@ -582,12 +611,43 @@ namespace SONA
 
         public void SetHostMode(bool isHost)
         {
+            this.isHost = isHost;
             btnPlayMusic.Enabled = isHost;
             btnNext.Enabled = isHost;
             btnPrev.Enabled = isHost;
             // Nếu có các nút thêm/xóa bài hát, hãy enable/disable ở đây
             // btnAddSong.Enabled = isHost;
             // btnRemoveSong.Enabled = isHost;
+        }
+
+        // --- Hàm này được RoomForm gọi khi nhận tín hiệu từ server ---
+        public void SyncPlayback(string action, double position)
+        {
+            if (afr == null) return;
+            switch (action)
+            {
+                case "play":
+                    afr.CurrentTime = TimeSpan.FromMilliseconds(position);
+                    woe?.Play();
+                    isPlaying = true;
+                    btnPlayMusic.Checked = false;
+                    timer1.Start();
+                    break;
+                case "pause":
+                    afr.CurrentTime = TimeSpan.FromMilliseconds(position);
+                    woe?.Pause();
+                    isPlaying = false;
+                    btnPlayMusic.Checked = true;
+                    timer1.Stop();
+                    break;
+                case "next":
+                    btnNext_Click(this, EventArgs.Empty);
+                    break;
+                case "prev":
+                    btnPrev_Click(this, EventArgs.Empty);
+                    break;
+                // ... có thể mở rộng thêm các action khác như "seek"
+            }
         }
     }
 }
