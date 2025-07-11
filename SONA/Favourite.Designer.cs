@@ -32,10 +32,7 @@
             this.pnFavourite = new Guna.UI2.WinForms.Guna2Panel();
             this.flpSongs = new System.Windows.Forms.FlowLayoutPanel();
             this.pnTitle = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblAlbum = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblDuration = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblNumber = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pnHeader = new Guna.UI2.WinForms.Guna2Panel();
             this.btnList = new Guna.UI2.WinForms.Guna2Button();
             this.btnFilter = new Guna.UI2.WinForms.Guna2Button();
@@ -43,6 +40,7 @@
             this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
             this.btnLarge = new Guna.UI2.WinForms.Guna2Button();
             this.btnRecent = new Guna.UI2.WinForms.Guna2Button();
+            this.txtKeyword = new Guna.UI2.WinForms.Guna2TextBox();
             this.pnFavourite.SuspendLayout();
             this.pnTitle.SuspendLayout();
             this.pnHeader.SuspendLayout();
@@ -68,62 +66,27 @@
             // 
             // pnTitle
             // 
-            this.pnTitle.Controls.Add(this.lblAlbum);
-            this.pnTitle.Controls.Add(this.lblDuration);
             this.pnTitle.Controls.Add(this.lblNumber);
-            this.pnTitle.Controls.Add(this.lblTitle);
             this.pnTitle.Location = new System.Drawing.Point(3, 65);
             this.pnTitle.Name = "pnTitle";
             this.pnTitle.Size = new System.Drawing.Size(1479, 35);
             this.pnTitle.TabIndex = 1;
             // 
-            // lblAlbum
-            // 
-            this.lblAlbum.BackColor = System.Drawing.Color.Transparent;
-            this.lblAlbum.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAlbum.ForeColor = System.Drawing.Color.LightGray;
-            this.lblAlbum.Location = new System.Drawing.Point(379, 5);
-            this.lblAlbum.Name = "lblAlbum";
-            this.lblAlbum.Size = new System.Drawing.Size(56, 27);
-            this.lblAlbum.TabIndex = 0;
-            this.lblAlbum.Text = "Album";
-            // 
-            // lblDuration
-            // 
-            this.lblDuration.BackColor = System.Drawing.Color.Transparent;
-            this.lblDuration.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDuration.ForeColor = System.Drawing.Color.LightGray;
-            this.lblDuration.Location = new System.Drawing.Point(1076, 5);
-            this.lblDuration.Name = "lblDuration";
-            this.lblDuration.Size = new System.Drawing.Size(72, 27);
-            this.lblDuration.TabIndex = 0;
-            this.lblDuration.Text = "Duration";
-            // 
             // lblNumber
             // 
             this.lblNumber.BackColor = System.Drawing.Color.Transparent;
-            this.lblNumber.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumber.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblNumber.ForeColor = System.Drawing.Color.LightGray;
-            this.lblNumber.Location = new System.Drawing.Point(55, 5);
+            this.lblNumber.Location = new System.Drawing.Point(52, 3);
             this.lblNumber.Name = "lblNumber";
-            this.lblNumber.Size = new System.Drawing.Size(14, 27);
+            this.lblNumber.Size = new System.Drawing.Size(98, 27);
             this.lblNumber.TabIndex = 0;
-            this.lblNumber.Text = "#";
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.LightGray;
-            this.lblTitle.Location = new System.Drawing.Point(191, 5);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(35, 27);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Title";
+            this.lblNumber.Text = "Name song";
             // 
             // pnHeader
             // 
             this.pnHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.pnHeader.Controls.Add(this.txtKeyword);
             this.pnHeader.Controls.Add(this.btnList);
             this.pnHeader.Controls.Add(this.btnFilter);
             this.pnHeader.Controls.Add(this.btnAdd);
@@ -215,6 +178,7 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(40, 40);
             this.btnSearch.TabIndex = 2;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnLarge
             // 
@@ -257,6 +221,30 @@
             this.btnRecent.TabIndex = 3;
             this.btnRecent.Text = "Recent";
             // 
+            // txtKeyword
+            // 
+            this.txtKeyword.BorderColor = System.Drawing.Color.Black;
+            this.txtKeyword.BorderRadius = 20;
+            this.txtKeyword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtKeyword.DefaultText = "";
+            this.txtKeyword.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtKeyword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtKeyword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtKeyword.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtKeyword.FillColor = System.Drawing.Color.DarkGray;
+            this.txtKeyword.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtKeyword.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtKeyword.ForeColor = System.Drawing.Color.Black;
+            this.txtKeyword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtKeyword.Location = new System.Drawing.Point(1027, 6);
+            this.txtKeyword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.PlaceholderText = "";
+            this.txtKeyword.SelectedText = "";
+            this.txtKeyword.Size = new System.Drawing.Size(388, 42);
+            this.txtKeyword.TabIndex = 6;
+            this.txtKeyword.Visible = false;
+            // 
             // Favourite
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -265,6 +253,7 @@
             this.Controls.Add(this.pnFavourite);
             this.Name = "Favourite";
             this.Size = new System.Drawing.Size(1482, 919);
+            this.Load += new System.EventHandler(this.Favourite_Load);
             this.pnFavourite.ResumeLayout(false);
             this.pnTitle.ResumeLayout(false);
             this.pnTitle.PerformLayout();
@@ -285,9 +274,7 @@
         private Guna.UI2.WinForms.Guna2Button btnList;
         private Guna.UI2.WinForms.Guna2Panel pnTitle;
         private System.Windows.Forms.FlowLayoutPanel flpSongs;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblAlbum;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblDuration;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblNumber;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblTitle;
+        private Guna.UI2.WinForms.Guna2TextBox txtKeyword;
     }
 }
