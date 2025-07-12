@@ -148,7 +148,7 @@ namespace SONA
             tbPass.UseSystemPasswordChar = !isPasswordVisible; // Cập nhật thuộc tính UseSystemPasswordChar của tbPass
 
             // Thay đổi nội dung của lbViewPassword để phản ánh trạng thái
-            lbViewPassword.Text = !isPasswordVisible ? "Ẩn" : "Hiện";
+            lbViewPassword.Text = !isPasswordVisible ? "Hiện" : "Ẩn";
             pnViewPass.BackgroundImage = !isPasswordVisible ? Properties.Resources.icons8_hide_30 : Properties.Resources.Show;
         }
 

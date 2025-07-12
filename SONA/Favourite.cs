@@ -14,22 +14,31 @@ namespace SONA
 {
     public partial class Favourite : UserControl
     {
-        private List<string> songIds = new List<string>();
+        private List<string> songIds;
+        private List<string> songFavouriteNames;
+
         private Home h;
-        private string idUser;
         public Favourite(Home h)
         {
-            InitializeComponent();
             this.h = h;
-            this.idUser = User.idUser; // Assuming User.idUser is set somewhere in your application
+            songIds = new List<string>();
+            songFavouriteNames = new List<string>();
+
+            InitializeComponent();
             getData();
+            getSongFavourireName();
+
+            AutoCompleteStringCollection autoSource = new AutoCompleteStringCollection();
+            autoSource.AddRange(songFavouriteNames.ToArray());
+            txtSearch.AutoCompleteCustomSource = autoSource;
         }
 
         private void getData()
         {
             try
             {
-                flpSongs.Controls.Clear();
+                flpSongFavourites.Controls.Clear();
+                songIds.Clear();
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
@@ -52,7 +61,7 @@ namespace SONA
                         for (int i = 0; i < count; i++)
                         {
                             SongSearch songSearch = new SongSearch(h, songIds[i], songIds);
-                            flpSongs.Controls.Add(songSearch);
+                            flpSongFavourites.Controls.Add(songSearch);
                         }
                     }
                     else
@@ -64,80 +73,85 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void getSongFavourireName()
+        {
+            using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+            using (NetworkStream stream = client.GetStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                writer.Write("getAllSongFavouriteName");
+                writer.Write(User.idUser);
+
+                string response = reader.ReadString();
+
+                if (response == "OK")
+                {
+                    int songCount = reader.ReadInt32();
+
+                    for (int i = 0; i < songCount; i++)
+                    {
+                        string songName = reader.ReadString();
+                        songFavouriteNames.Add(songName);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(response);
+                }
             }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            txtKeyword.Visible = true;
-            txtKeyword.Focus();
+            txtSearch.Visible = true;
+            btnSearch.Visible = false;
         }
 
-        private void Favourite_Load(object sender, EventArgs e)
-        {
-            txtKeyword.KeyDown += txtKeyword_KeyDown;
-            txtKeyword.Leave += TxtKeyword_Leave;
-        }
-
-        private void TxtKeyword_Leave(object sender, EventArgs e)
-        {
-            txtKeyword.Visible = false;
-        }
-
-        private void txtKeyword_KeyDown(object sender, KeyEventArgs e)
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true;
-                SearchFavouriteSongs(txtKeyword.Text.Trim());
-            }
-        }
+                string searchText = txtSearch.Text.Trim();
+                flpSongFavourites.Controls.Clear();
 
-        private void SearchFavouriteSongs(string keyword)
-        {
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                getData(); // Nếu không nhập gì thì load lại toàn bộ
-                return;
-            }
-
-            try
-            {
-                flpSongs.Controls.Clear();
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                try
                 {
-                    writer.Write("SearchFavourite"); // Lệnh này bạn cần xử lý ở server
-                    writer.Write(User.idUser);
-                    writer.Write(keyword);
+                    flpSongFavourites.Controls.Clear();
+                    songIds.Clear();
 
-                    string response = reader.ReadString();
-                    if (response == "OK")
+                    using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                    using (NetworkStream stream = client.GetStream())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        int count = reader.ReadInt32();
-                        var songIds = new List<string>();
-                        for (int i = 0; i < count; i++)
+                        writer.Write("getIDSearchSongFavourite");
+                        writer.Write(searchText);
+
+                        string response = reader.ReadString();
+                        if (response == "OK")
                         {
-                            string id_song = reader.ReadString();
-                            songIds.Add(id_song);
+                            int songCount = reader.ReadInt32();
+                            for (int i = 0; i < songCount; i++)
+                            {
+                                string id_song = reader.ReadString();
+                                songIds.Add(id_song);
+                            }
+                            foreach (var songId in songIds)
+                            {
+                                SongSearch songSearch = new SongSearch(h, songId, songIds);
+                                flpSongFavourites.Controls.Add(songSearch);
+                            }
                         }
-                        for (int i = 0; i < count; i++)
-                        {
-                            SongSearch songSearch = new SongSearch(h, songIds[i], songIds);
-                            flpSongs.Controls.Add(songSearch);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(response);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error connecting to server: " + ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error connecting to server: " + ex.Message);
+                }
             }
         }
     }

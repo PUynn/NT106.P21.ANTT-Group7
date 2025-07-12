@@ -337,6 +337,38 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy id nghệ sĩ: " + ex.Message);
                     }
                 }
+                else if (requestType == "getIDAlbum")
+                {
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT id_album FROM albums ORDER BY RANDOM()";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> albumIds = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        albumIds.Add(readerdb["id_album"].ToString());
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(albumIds.Count);
+                                    foreach (var id in albumIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy id album: " + ex.Message);
+                    }
+                }    
                 else if (requestType == "getIDUser")
                 {
                     string email = reader.ReadString();
@@ -406,7 +438,7 @@ namespace SONA_Server
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT name_album, picture_album FROM albums WHERE id_album = @id_album";
+                            string query = "SELECT name_album, description, picture_album FROM albums WHERE id_album = @id_album";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@id_album", id_album);
@@ -416,6 +448,7 @@ namespace SONA_Server
                                     {
                                         writer.Write("OK");
                                         writer.Write(readerdb["name_album"].ToString());
+                                        writer.Write(readerdb["description"].ToString());
                                         writer.Write(readerdb["picture_album"].ToString());
                                     }
                                     else
@@ -437,7 +470,7 @@ namespace SONA_Server
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT id_song FROM songs WHERE id_album = @id_album";
+                            string query = "SELECT id_song FROM album_songs WHERE id_album = @id_album";
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@id_album", id_album);
@@ -777,6 +810,43 @@ namespace SONA_Server
                         writer.Write("Lỗi lấy id bài hát: " + ex.Message);
                     }
                 }
+                else if (requestType == "getIDSearchSongFavourite")
+                {
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string keyword = reader.ReadString();
+                            string query = "SELECT favourites.id_song FROM favourites INNER JOIN songs ON favourites.id_song = songs.id_song WHERE name_song ILIKE @keyword";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> songIds = new List<string>();
+
+                                    while (readerdb.Read())
+                                    {
+                                        songIds.Add(readerdb["id_song"].ToString());
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(songIds.Count);
+
+                                    foreach (var id in songIds)
+                                    {
+                                        writer.Write(id);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy id bài hát yêu thích: " + ex.Message);
+                    }
+                }    
                 else if (requestType == "getIDSearchArtis")
                 {
                     try
@@ -845,6 +915,42 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy tên bài hát: " + ex.Message);
+                    }
+                }
+                else if (requestType == "getAllSongFavouriteName")
+                {
+                    try
+                    {
+                        int id_user = int.Parse(reader.ReadString());
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = "SELECT name_song FROM songs INNER JOIN favourites ON songs.id_song = favourites.id_song WHERE id_user = @id_user";
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> songName = new List<string>();
+
+                                    while (readerdb.Read())
+                                    {
+                                        songName.Add(readerdb["name_song"].ToString());
+                                    }
+                                    writer.Write("OK");
+                                    writer.Write(songName.Count);
+
+                                    foreach (var name in songName)
+                                    {
+                                        writer.Write(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        writer.Write("Lỗi lấy tên bài hát yêu thích: " + ex.Message);
                     }
                 }
                 else if (requestType == "getAllSingerName")
@@ -997,7 +1103,7 @@ namespace SONA_Server
                                     {
                                         writer.Write("OK");
                                         writer.Write(readerdb["am_thanh"].ToString());
-                                        writer.Write(readerdb["name_song"].ToString());           
+                                        writer.Write(readerdb["name_song"].ToString());
 
                                     }
                                     else
@@ -1392,49 +1498,6 @@ namespace SONA_Server
                     catch (Exception ex)
                     {
                         writer.Write("Lỗi lấy hình ảnh người dùng: " + ex.Message);
-                    }
-                }
-                else if (requestType == "SearchFavourite")
-                {
-                    try
-                    {
-                        int id_user = int.Parse(reader.ReadString());
-                        string keyword = reader.ReadString();
-
-                        using (var conn = new NpgsqlConnection(connSona))
-                        {
-                            conn.Open();
-                            string query = @"
-                                SELECT s.id_song
-                                FROM favourites f
-                                JOIN songs s ON f.id_song = s.id_song
-                                WHERE f.id_user = @id_user AND LOWER(s.name_song) LIKE LOWER(@keyword)
-                                ORDER BY s.name_song";
-                            using (var cmd = new NpgsqlCommand(query, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@id_user", id_user);
-                                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
-                                using (var readerdb = cmd.ExecuteReader())
-                                {
-                                    List<string> songIds = new List<string>();
-                                    while (readerdb.Read())
-                                    {
-                                        songIds.Add(readerdb["id_song"].ToString());
-                                    }
-
-                                    writer.Write("OK");
-                                    writer.Write(songIds.Count);
-                                    foreach (var id in songIds)
-                                    {
-                                        writer.Write(id);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.Write("Lỗi tìm kiếm bài hát yêu thích: " + ex.Message);
                     }
                 }
                 else if (requestType == "updateUserInfor")

@@ -153,6 +153,16 @@ namespace SONA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BackgroundMusic {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundMusic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BaseAvatar {
             get {
                 object obj = ResourceManager.GetObject("BaseAvatar", resourceCulture);
@@ -343,6 +353,16 @@ namespace SONA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GridOn {
+            get {
+                object obj = ResourceManager.GetObject("GridOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap homeOff {
             get {
                 object obj = ResourceManager.GetObject("homeOff", resourceCulture);
@@ -416,6 +436,16 @@ namespace SONA.Properties {
         internal static System.Drawing.Bitmap ListOff {
             get {
                 object obj = ResourceManager.GetObject("ListOff", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ListOn {
+            get {
+                object obj = ResourceManager.GetObject("ListOn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

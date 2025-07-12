@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.pnMyLibrary = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnArtists = new Guna.UI2.WinForms.Guna2Button();
             this.btnChat = new Guna.UI2.WinForms.Guna2Button();
             this.btnAlbums = new Guna.UI2.WinForms.Guna2Button();
             this.btnFavourited = new Guna.UI2.WinForms.Guna2Button();
@@ -74,7 +73,6 @@
             // 
             // pnMyLibrary
             // 
-            this.pnMyLibrary.Controls.Add(this.btnArtists);
             this.pnMyLibrary.Controls.Add(this.btnChat);
             this.pnMyLibrary.Controls.Add(this.btnAlbums);
             this.pnMyLibrary.Controls.Add(this.btnFavourited);
@@ -85,32 +83,6 @@
             this.pnMyLibrary.Size = new System.Drawing.Size(273, 1001);
             this.pnMyLibrary.TabIndex = 0;
             // 
-            // btnArtists
-            // 
-            this.btnArtists.Animated = true;
-            this.btnArtists.BackColor = System.Drawing.Color.Transparent;
-            this.btnArtists.BorderColor = System.Drawing.Color.Transparent;
-            this.btnArtists.BorderRadius = 7;
-            this.btnArtists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnArtists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnArtists.CheckedState.ForeColor = System.Drawing.Color.White;
-            this.btnArtists.FillColor = System.Drawing.Color.Transparent;
-            this.btnArtists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnArtists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
-            this.btnArtists.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnArtists.Image = ((System.Drawing.Image)(resources.GetObject("btnArtists.Image")));
-            this.btnArtists.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnArtists.ImageOffset = new System.Drawing.Point(0, -2);
-            this.btnArtists.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnArtists.Location = new System.Drawing.Point(0, 281);
-            this.btnArtists.Name = "btnArtists";
-            this.btnArtists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnArtists.Size = new System.Drawing.Size(248, 41);
-            this.btnArtists.TabIndex = 1;
-            this.btnArtists.Text = "Artists";
-            this.btnArtists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnArtists.Click += new System.EventHandler(this.btnArtists_Click);
-            // 
             // btnChat
             // 
             this.btnChat.Animated = true;
@@ -120,6 +92,7 @@
             this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnChat.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnChat.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnChat.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnChat.FillColor = System.Drawing.Color.Transparent;
             this.btnChat.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -128,10 +101,10 @@
             this.btnChat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnChat.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnChat.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnChat.Location = new System.Drawing.Point(0, 234);
+            this.btnChat.Location = new System.Drawing.Point(0, 291);
             this.btnChat.Name = "btnChat";
             this.btnChat.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnChat.Size = new System.Drawing.Size(248, 41);
+            this.btnChat.Size = new System.Drawing.Size(270, 60);
             this.btnChat.TabIndex = 1;
             this.btnChat.Text = "Chat";
             this.btnChat.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -146,6 +119,7 @@
             this.btnAlbums.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnAlbums.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnAlbums.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnAlbums.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAlbums.FillColor = System.Drawing.Color.Transparent;
             this.btnAlbums.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlbums.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -154,10 +128,10 @@
             this.btnAlbums.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnAlbums.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnAlbums.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnAlbums.Location = new System.Drawing.Point(0, 187);
+            this.btnAlbums.Location = new System.Drawing.Point(0, 159);
             this.btnAlbums.Name = "btnAlbums";
             this.btnAlbums.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnAlbums.Size = new System.Drawing.Size(248, 41);
+            this.btnAlbums.Size = new System.Drawing.Size(270, 60);
             this.btnAlbums.TabIndex = 1;
             this.btnAlbums.Text = "Albums";
             this.btnAlbums.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -172,6 +146,7 @@
             this.btnFavourited.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnFavourited.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnFavourited.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnFavourited.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFavourited.FillColor = System.Drawing.Color.Transparent;
             this.btnFavourited.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFavourited.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -180,10 +155,10 @@
             this.btnFavourited.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnFavourited.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnFavourited.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnFavourited.Location = new System.Drawing.Point(0, 140);
+            this.btnFavourited.Location = new System.Drawing.Point(0, 225);
             this.btnFavourited.Name = "btnFavourited";
             this.btnFavourited.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnFavourited.Size = new System.Drawing.Size(248, 41);
+            this.btnFavourited.Size = new System.Drawing.Size(270, 60);
             this.btnFavourited.TabIndex = 1;
             this.btnFavourited.Text = "Favourited";
             this.btnFavourited.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -198,6 +173,7 @@
             this.btnPlaylists.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             this.btnPlaylists.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnPlaylists.CheckedState.ForeColor = System.Drawing.Color.White;
+            this.btnPlaylists.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPlaylists.FillColor = System.Drawing.Color.Transparent;
             this.btnPlaylists.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlaylists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -209,7 +185,7 @@
             this.btnPlaylists.Location = new System.Drawing.Point(0, 93);
             this.btnPlaylists.Name = "btnPlaylists";
             this.btnPlaylists.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnPlaylists.Size = new System.Drawing.Size(248, 41);
+            this.btnPlaylists.Size = new System.Drawing.Size(270, 60);
             this.btnPlaylists.TabIndex = 1;
             this.btnPlaylists.Text = "Playlists";
             this.btnPlaylists.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -235,7 +211,7 @@
             this.btnLibrary.Location = new System.Drawing.Point(0, 7);
             this.btnLibrary.Name = "btnLibrary";
             this.btnLibrary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.btnLibrary.Size = new System.Drawing.Size(248, 54);
+            this.btnLibrary.Size = new System.Drawing.Size(270, 60);
             this.btnLibrary.TabIndex = 1;
             this.btnLibrary.Text = "My Library";
             this.btnLibrary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -251,9 +227,9 @@
             this.pnMenu.Controls.Add(this.btnClose);
             this.pnMenu.Controls.Add(this.btnHome);
             this.pnMenu.Controls.Add(this.btnNotification);
-            this.pnMenu.Location = new System.Drawing.Point(286, 3);
+            this.pnMenu.Location = new System.Drawing.Point(283, 3);
             this.pnMenu.Name = "pnMenu";
-            this.pnMenu.Size = new System.Drawing.Size(1485, 74);
+            this.pnMenu.Size = new System.Drawing.Size(1488, 74);
             this.pnMenu.TabIndex = 1;
             // 
             // cpbUserInfor
@@ -279,7 +255,7 @@
             this.btnDiscover.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.btnDiscover.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnDiscover.CheckedState.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.btnDiscover.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnDiscover.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDiscover.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnDiscover.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDiscover.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -302,6 +278,7 @@
             this.btnSetting.BorderColor = System.Drawing.Color.Transparent;
             this.btnSetting.BorderRadius = 7;
             this.btnSetting.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnSetting.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSetting.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -353,6 +330,7 @@
             this.btnMinimize.BorderColor = System.Drawing.Color.Transparent;
             this.btnMinimize.BorderRadius = 7;
             this.btnMinimize.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMinimize.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnMinimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -399,7 +377,7 @@
             this.btnHome.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.btnHome.CheckedState.ForeColor = System.Drawing.Color.White;
             this.btnHome.CheckedState.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image2")));
-            this.btnHome.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHome.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnHome.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -421,6 +399,7 @@
             this.btnNotification.BorderColor = System.Drawing.Color.Transparent;
             this.btnNotification.BorderRadius = 7;
             this.btnNotification.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.btnNotification.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNotification.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnNotification.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNotification.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
@@ -429,7 +408,7 @@
             this.btnNotification.Image = ((System.Drawing.Image)(resources.GetObject("btnNotification.Image")));
             this.btnNotification.ImageOffset = new System.Drawing.Point(0, -2);
             this.btnNotification.ImageSize = new System.Drawing.Size(38, 38);
-            this.btnNotification.Location = new System.Drawing.Point(1119, 0);
+            this.btnNotification.Location = new System.Drawing.Point(1110, 0);
             this.btnNotification.Name = "btnNotification";
             this.btnNotification.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.btnNotification.Size = new System.Drawing.Size(63, 63);
@@ -437,14 +416,15 @@
             // 
             // pnMain
             // 
-            this.pnMain.Location = new System.Drawing.Point(286, 83);
+            this.pnMain.Location = new System.Drawing.Point(283, 83);
             this.pnMain.Name = "pnMain";
-            this.pnMain.Size = new System.Drawing.Size(1482, 921);
+            this.pnMain.Size = new System.Drawing.Size(1485, 921);
             this.pnMain.TabIndex = 2;
             // 
             // pnMusicBar
             // 
             this.pnMusicBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.pnMusicBar.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.pnMusicBar.Controls.Add(this.lblNameSong);
             this.pnMusicBar.Controls.Add(this.guna2Panel5);
             this.pnMusicBar.Controls.Add(this.tbsTimeSong);
@@ -664,10 +644,11 @@
             this.btnMaximum.ForeColor = System.Drawing.Color.White;
             this.btnMaximum.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMaximum.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximum.Image")));
-            this.btnMaximum.ImageSize = new System.Drawing.Size(45, 45);
-            this.btnMaximum.Location = new System.Drawing.Point(1324, 3);
+            this.btnMaximum.ImageOffset = new System.Drawing.Point(0, -3);
+            this.btnMaximum.ImageSize = new System.Drawing.Size(50, 50);
+            this.btnMaximum.Location = new System.Drawing.Point(1310, 3);
             this.btnMaximum.Name = "btnMaximum";
-            this.btnMaximum.Size = new System.Drawing.Size(50, 39);
+            this.btnMaximum.Size = new System.Drawing.Size(59, 59);
             this.btnMaximum.TabIndex = 0;
             this.btnMaximum.Click += new System.EventHandler(this.btnMaximum_Click);
             // 
@@ -683,10 +664,12 @@
             this.btnCloseMusicBar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnCloseMusicBar.ForeColor = System.Drawing.Color.White;
             this.btnCloseMusicBar.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnCloseMusicBar.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseMusicBar.Image")));
-            this.btnCloseMusicBar.Location = new System.Drawing.Point(1380, 3);
+            this.btnCloseMusicBar.Image = global::SONA.Properties.Resources.Close;
+            this.btnCloseMusicBar.ImageOffset = new System.Drawing.Point(0, -5);
+            this.btnCloseMusicBar.ImageSize = new System.Drawing.Size(60, 60);
+            this.btnCloseMusicBar.Location = new System.Drawing.Point(1375, 3);
             this.btnCloseMusicBar.Name = "btnCloseMusicBar";
-            this.btnCloseMusicBar.Size = new System.Drawing.Size(50, 39);
+            this.btnCloseMusicBar.Size = new System.Drawing.Size(59, 59);
             this.btnCloseMusicBar.TabIndex = 0;
             this.btnCloseMusicBar.Click += new System.EventHandler(this.btnCloseMusicBar_Click);
             // 
@@ -723,7 +706,6 @@
         private Guna.UI2.WinForms.Guna2Panel pnMenu;
         private Guna.UI2.WinForms.Guna2Button btnHome;
         private Guna.UI2.WinForms.Guna2Button btnDiscover;
-        private Guna.UI2.WinForms.Guna2Button btnArtists;
         private Guna.UI2.WinForms.Guna2Button btnChat;
         private Guna.UI2.WinForms.Guna2Button btnAlbums;
         private Guna.UI2.WinForms.Guna2Button btnFavourited;
@@ -749,9 +731,9 @@
         private Guna.UI2.WinForms.Guna2Button btnShuffle;
         private Guna.UI2.WinForms.Guna2Button btnNext;
         private Guna.UI2.WinForms.Guna2Button btnReplay;
-        private Guna.UI2.WinForms.Guna2Button btnMaximum;
         private Guna.UI2.WinForms.Guna2Button btnCloseMusicBar;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblNameSong;
+        private Guna.UI2.WinForms.Guna2Button btnMaximum;
     }
 }

@@ -46,6 +46,7 @@ namespace SONA
             try
             {
                 flpListSong.Controls.Clear();
+                songIds.Clear();
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
@@ -68,7 +69,6 @@ namespace SONA
                             SongChoice songChoice = new SongChoice(h, idPlaylist, songId);
                             flpListSong.Controls.Add(songChoice);
                         }
-                        songIds.Clear();
                     }
                 }
             }
@@ -170,6 +170,7 @@ namespace SONA
             {
                 string searchText = txtSearch.Text.Trim();
                 flpListSong.Controls.Clear();
+                songIds.Clear();
 
                 try
                 {
@@ -197,7 +198,6 @@ namespace SONA
                                 SongChoice songChoice = new SongChoice(h, idPlaylist, songId);
                                 flpListSong.Controls.Add(songChoice);
                             }
-                            songIds.Clear();
                         }
                     }
                 }
@@ -237,6 +237,7 @@ namespace SONA
                             string id_song = reader.ReadString();
                             songInPlaylist.Add(id_song);
                         }
+                        h.listenMusic(songInPlaylist[0], songInPlaylist);
                     }
                     else
                     {
@@ -246,10 +247,14 @@ namespace SONA
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error connecting to server: " + ex.Message);
-            }
 
-            h.listenMusic(songInPlaylist[0], songInPlaylist);
+            }
+        }
+
+        private void btnShuffle_Click(object sender, EventArgs e)
+        {
+            btnPlay_Click(sender, e);
+            h.btnShuffle_Click(sender, e);
         }
 
         private void btnOk_Click(object sender, EventArgs e)

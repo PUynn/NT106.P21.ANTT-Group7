@@ -18,6 +18,7 @@ namespace SONA
         private Home h;
         private List<string> songIds = new List<string>();
         private List<string> artistIds = new List<string>();
+        private List<string> albumIds = new List<string>();
 
         public HomeContent(Home h)
         {
@@ -30,6 +31,7 @@ namespace SONA
         {
             btnRefreshSong_Click(sender, e);
             btnRefreshArtist_Click(sender, e);
+            btnRefreshAlbum_Click(sender, e);
         }
 
         // Hàm liệt kê các bài hát từ danh sách đã nhận từ server
@@ -38,6 +40,7 @@ namespace SONA
             try
             {
                 flpSongs.Controls.Clear();
+                songIds.Clear();
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
@@ -57,7 +60,7 @@ namespace SONA
                             songIds.Add(id_song);
 
                         }
-                        for (int i = 0; i < songCount; i++)
+                        for (int i = 0; i < 10; i++)
                         {
                             SongForm songForm = new SongForm(h, songIds[i], songIds);
                             flpSongs.Controls.Add(songForm);
@@ -81,6 +84,7 @@ namespace SONA
             try
             {
                 flpArtists.Controls.Clear();
+                artistIds.Clear();
 
                 using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
                 using (NetworkStream stream = client.GetStream())
@@ -98,13 +102,54 @@ namespace SONA
                         {
                             string id_singer = reader.ReadString();
                             artistIds.Add(id_singer);
+
                             ArtistForm artistForm = new ArtistForm(h, id_singer);
                             flpArtists.Controls.Add(artistForm);
                         }
                     }
                     else
                     {
-                        MessageBox.Show(response); // Hiển thị lỗi từ server
+                        MessageBox.Show(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to server: " + ex.Message);
+            }
+        }
+
+        private void btnRefreshAlbum_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                flpAlbums.Controls.Clear();
+                albumIds.Clear();
+
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("getIDAlbum");
+                    string response = reader.ReadString();
+
+                    if (response == "OK")
+                    {
+                        int albumCount = reader.ReadInt32();
+
+                        for (int i = 0; i < albumCount; i++)
+                        {
+                            string id_album = reader.ReadString();
+                            albumIds.Add(id_album);
+
+                            AlbumForm albumForm = new AlbumForm(h, id_album);
+                            flpAlbums.Controls.Add(albumForm);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(response);
                     }
                 }
             }

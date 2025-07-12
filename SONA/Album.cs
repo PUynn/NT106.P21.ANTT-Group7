@@ -11,23 +11,49 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Net.Sockets;
+using System.Net.Http;
 
 namespace SONA
 {
     public partial class Album : UserControl
     {
         private Home h;
-        private string idAlbum;
+        private string idAlbum, nameAlbum, pictureAlbum, description;
         private List<string> songIds;
 
-        public Album(Home h, string idAlbum)
+        public Album(Home h, string idAlbum, string nameAlbum, string pictureAlbum, string description)
         {
             this.h = h;
             this.idAlbum = idAlbum;
+            this.nameAlbum = nameAlbum;
+            this.pictureAlbum = pictureAlbum;
+            this.description = description;
             songIds = new List<string>();
 
             InitializeComponent();
             getIdSongFromAlbum();
+        }
+
+        private void Album_Load(object sender, EventArgs e)
+        {
+            lblNameAlbum.Text = nameAlbum;
+            lblDescription.Text = description;
+
+            if (!string.IsNullOrEmpty(pictureAlbum))
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var imageData = httpClient.GetByteArrayAsync(pictureAlbum).Result;
+                    using (var ms = new MemoryStream(imageData))
+                    {
+                        pbPictureAlbum.BackgroundImage = Image.FromStream(ms);
+                    }
+                }
+            }
+            else
+            {
+                pbPictureAlbum.BackgroundImage = null;
+            }
         }
 
         private void getIdSongFromAlbum()
@@ -54,9 +80,8 @@ namespace SONA
                         }
                         for (int i = 0; i < count; i++)
                         {
-                            SongSearch songSearch = new SongSearch(h, songIds[i], songIds);
-                            songSearch.Dock = DockStyle.Top;
-                            flpSongs.Controls.Add(songSearch);
+                            SongAlbum songAlbum = new SongAlbum(h, songIds[i], songIds);
+                            flpSongs.Controls.Add(songAlbum);
                         }
                     }
                     else
@@ -69,6 +94,23 @@ namespace SONA
             {
                 MessageBox.Show("Lỗi kết nối tới Server: " + ex.Message);
             }
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                h.listenMusic(songIds[0], songIds);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+        private void btnShuffle_Click(object sender, EventArgs e)
+        {
+            btnPlay_Click(sender, e);
+            h.btnShuffle_Click(sender, e);
         }
     }
 }

@@ -72,7 +72,6 @@ namespace SONA
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading song image: {ex.Message}");
                 btnPictureSong.BackgroundImage = null; // Xử lý lỗi bằng cách không hiển thị hình
             }
         }

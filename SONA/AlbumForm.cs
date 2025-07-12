@@ -17,7 +17,8 @@ namespace SONA
     public partial class AlbumForm: UserControl
     {
         private Home h;
-        private string idAlbum;
+        private string idAlbum, nameAlbum, pictureAlbum, description;
+
 
         public AlbumForm(Home h, string idAlbum)
         {
@@ -41,10 +42,11 @@ namespace SONA
                     string response = reader.ReadString();
                     if (response == "OK")
                     {
-                        lblNameAlbum.Text = reader.ReadString();
+                        lblNameAlbum.Text = nameAlbum = reader.ReadString();
+                        description = reader.ReadString();
 
                         // Tải hình ảnh từ URL
-                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
+                        string pictureUrl = pictureAlbum = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
                         if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
                         {
                             using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
@@ -76,7 +78,7 @@ namespace SONA
 
         private void btnPictureAlbum_Click(object sender, EventArgs e)
         {
-            Album album = new Album(h, idAlbum);
+            Album album = new Album(h, idAlbum, nameAlbum, pictureAlbum, description);
             h.pnMain.Controls.Clear();
             h.pnMain.Controls.Add(album);
         }

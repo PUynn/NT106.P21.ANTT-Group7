@@ -31,7 +31,7 @@ namespace SONA
         {
             try
             {
-                Title title = new Title("Your playlist:");
+                Title title = new Title("My playlist:");
                 flpPlaylist.Controls.Clear();
                 flpPlaylist.Controls.Add(title);
 

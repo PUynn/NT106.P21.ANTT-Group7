@@ -46,7 +46,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pnUserInfo = new Guna.UI2.WinForms.Guna2Panel();
             this.pnUser = new Guna.UI2.WinForms.Guna2Panel();
-            this.cpbAvatar = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.lblNameUser = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
             this.pnInfor = new Guna.UI2.WinForms.Guna2Panel();
@@ -54,10 +53,11 @@
             this.btnRefresh = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.cpbAvatar = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.pnUserInfo.SuspendLayout();
             this.pnUser.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).BeginInit();
             this.pnInfor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCheckConfirm
@@ -325,22 +325,8 @@
             this.pnUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(137)))), ((int)(((byte)(137)))));
             this.pnUser.Location = new System.Drawing.Point(3, 3);
             this.pnUser.Name = "pnUser";
-            this.pnUser.Size = new System.Drawing.Size(428, 913);
+            this.pnUser.Size = new System.Drawing.Size(432, 916);
             this.pnUser.TabIndex = 64;
-            // 
-            // cpbAvatar
-            // 
-            this.cpbAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cpbAvatar.FillColor = System.Drawing.Color.Transparent;
-            this.cpbAvatar.ImageRotate = 0F;
-            this.cpbAvatar.Location = new System.Drawing.Point(56, 68);
-            this.cpbAvatar.Name = "cpbAvatar";
-            this.cpbAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.cpbAvatar.Size = new System.Drawing.Size(300, 300);
-            this.cpbAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpbAvatar.TabIndex = 0;
-            this.cpbAvatar.TabStop = false;
-            this.cpbAvatar.Click += new System.EventHandler(this.cpbAvatar_Click);
             // 
             // lblNameUser
             // 
@@ -388,7 +374,7 @@
             this.pnInfor.Controls.Add(this.tbNameUser);
             this.pnInfor.Location = new System.Drawing.Point(434, 3);
             this.pnInfor.Name = "pnInfor";
-            this.pnInfor.Size = new System.Drawing.Size(1045, 913);
+            this.pnInfor.Size = new System.Drawing.Size(1045, 916);
             this.pnInfor.TabIndex = 63;
             // 
             // btnOut
@@ -396,6 +382,7 @@
             this.btnOut.Animated = true;
             this.btnOut.BackColor = System.Drawing.Color.Transparent;
             this.btnOut.BorderRadius = 10;
+            this.btnOut.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnOut.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnOut.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnOut.ForeColor = System.Drawing.Color.White;
@@ -413,6 +400,7 @@
             this.btnRefresh.Animated = true;
             this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.BorderRadius = 8;
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
@@ -430,6 +418,7 @@
             this.btnSave.Animated = true;
             this.btnSave.BackColor = System.Drawing.Color.Transparent;
             this.btnSave.BorderRadius = 8;
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSave.FillColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnSave.ForeColor = System.Drawing.Color.Black;
@@ -453,6 +442,20 @@
             this.lblStatus.TabIndex = 59;
             this.lblStatus.Text = "Cập nhật thông tin thành công!";
             // 
+            // cpbAvatar
+            // 
+            this.cpbAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cpbAvatar.FillColor = System.Drawing.Color.Transparent;
+            this.cpbAvatar.ImageRotate = 0F;
+            this.cpbAvatar.Location = new System.Drawing.Point(56, 68);
+            this.cpbAvatar.Name = "cpbAvatar";
+            this.cpbAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.cpbAvatar.Size = new System.Drawing.Size(300, 300);
+            this.cpbAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpbAvatar.TabIndex = 0;
+            this.cpbAvatar.TabStop = false;
+            this.cpbAvatar.Click += new System.EventHandler(this.cpbAvatar_Click);
+            // 
             // UserInfor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -464,9 +467,9 @@
             this.pnUserInfo.ResumeLayout(false);
             this.pnUserInfo.PerformLayout();
             this.pnUser.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).EndInit();
             this.pnInfor.ResumeLayout(false);
             this.pnInfor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpbAvatar)).EndInit();
             this.ResumeLayout(false);
 
         }

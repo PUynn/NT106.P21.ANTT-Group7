@@ -271,12 +271,6 @@
     <Compile Include="HomeContent.Designer.cs">
       <DependentUpon>HomeContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="ArtistList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ArtistList.Designer.cs">
-      <DependentUpon>ArtistList.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListenMusic.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -320,6 +314,12 @@
       <DependentUpon>PlaylistList.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="SongAlbum.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SongAlbum.Designer.cs">
+      <DependentUpon>SongAlbum.cs</DependentUpon>
+    </Compile>
     <Compile Include="SongChoice.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -401,9 +401,6 @@
     <EmbeddedResource Include="ArtistInfor.resx">
       <DependentUpon>ArtistInfor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ArtistList.resx">
-      <DependentUpon>ArtistList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,6 +442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PlaylistList.resx">
       <DependentUpon>PlaylistList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SongAlbum.resx">
+      <DependentUpon>SongAlbum.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SongChoice.resx">
       <DependentUpon>SongChoice.cs</DependentUpon>
@@ -552,6 +552,9 @@
     <None Include="Resources\Whale.png" />
     <None Include="Resources\BasePlaylist.jpeg" />
     <None Include="Resources\FullScreen.png" />
+    <None Include="Resources\BackgroundMusic.jpeg" />
+    <None Include="Resources\GridOn.png" />
+    <None Include="Resources\ListOn.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />

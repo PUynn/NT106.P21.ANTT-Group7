@@ -39,7 +39,6 @@
             this.lblNameUser = new System.Windows.Forms.Label();
             this.pnDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.pbPicturePlaylist = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.lblDescription = new System.Windows.Forms.Label();
             this.pnPlaylist = new Guna.UI2.WinForms.Guna2Panel();
             this.pnAddSong = new Guna.UI2.WinForms.Guna2Panel();
             this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
@@ -128,6 +127,7 @@
             this.btnShuffle.Name = "btnShuffle";
             this.btnShuffle.Size = new System.Drawing.Size(45, 40);
             this.btnShuffle.TabIndex = 1;
+            this.btnShuffle.Click += new System.EventHandler(this.btnShuffle_Click);
             // 
             // btnUpload
             // 
@@ -202,7 +202,6 @@
             // 
             this.pnDescription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.pnDescription.Controls.Add(this.pbPicturePlaylist);
-            this.pnDescription.Controls.Add(this.lblDescription);
             this.pnDescription.Location = new System.Drawing.Point(1041, 22);
             this.pnDescription.Name = "pnDescription";
             this.pnDescription.Size = new System.Drawing.Size(400, 894);
@@ -219,22 +218,11 @@
             this.pbPicturePlaylist.TabIndex = 0;
             this.pbPicturePlaylist.TabStop = false;
             // 
-            // lblDescription
-            // 
-            this.lblDescription.AutoSize = true;
-            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblDescription.Location = new System.Drawing.Point(3, 417);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(100, 23);
-            this.lblDescription.TabIndex = 2;
-            this.lblDescription.Text = "Description:";
-            // 
             // pnPlaylist
             // 
+            this.pnPlaylist.Controls.Add(this.pnAddSong);
             this.pnPlaylist.Controls.Add(this.pnDescription);
             this.pnPlaylist.Controls.Add(this.pnHeader);
-            this.pnPlaylist.Controls.Add(this.pnAddSong);
             this.pnPlaylist.Controls.Add(this.flpSongs);
             this.pnPlaylist.Location = new System.Drawing.Point(0, 0);
             this.pnPlaylist.Name = "pnPlaylist";
@@ -250,7 +238,7 @@
             this.pnAddSong.Controls.Add(this.flpListSong);
             this.pnAddSong.Controls.Add(this.btnOk);
             this.pnAddSong.Controls.Add(this.btnClose);
-            this.pnAddSong.Location = new System.Drawing.Point(364, 230);
+            this.pnAddSong.Location = new System.Drawing.Point(364, 150);
             this.pnAddSong.Name = "pnAddSong";
             this.pnAddSong.Size = new System.Drawing.Size(628, 582);
             this.pnAddSong.TabIndex = 6;
@@ -368,7 +356,6 @@
             this.pnHeader.PerformLayout();
             this.pnTask.ResumeLayout(false);
             this.pnDescription.ResumeLayout(false);
-            this.pnDescription.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPicturePlaylist)).EndInit();
             this.pnPlaylist.ResumeLayout(false);
             this.pnAddSong.ResumeLayout(false);
@@ -390,7 +377,6 @@
         private Guna.UI2.WinForms.Guna2PictureBox pbPicturePlaylist;
         private Guna.UI2.WinForms.Guna2Panel pnPlaylist;
         private Guna.UI2.WinForms.Guna2Button btnPlay;
-        private System.Windows.Forms.Label lblDescription;
         public Guna.UI2.WinForms.Guna2Panel pnAddSong;
         private Guna.UI2.WinForms.Guna2Button btnClose;
         private System.Windows.Forms.FlowLayoutPanel flpListSong;

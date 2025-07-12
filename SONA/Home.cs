@@ -207,6 +207,7 @@ namespace SONA
         private void btnPlaylists_Click(object sender, EventArgs e)
         {
             MyClick();
+            btnMaximum.Checked = false;
 
             PlaylistList playlistList = new PlaylistList(this);
             pnMain.Controls.Clear();
@@ -216,6 +217,7 @@ namespace SONA
         private void btnFavourited_Click(object sender, EventArgs e)
         {
             MyClick();
+            btnMaximum.Checked = false;
 
             Favourite favourite = new Favourite(this);
             pnMain.Controls.Clear();
@@ -225,6 +227,7 @@ namespace SONA
         private void btnAlbums_Click(object sender, EventArgs e)
         {
             MyClick();
+            btnMaximum.Checked = false;
 
             AlbumList albumList = new AlbumList(this);
             pnMain.Controls.Clear();
@@ -245,6 +248,7 @@ namespace SONA
         private void btnHome_Click(object sender, EventArgs e)
         {
             MenuClick();
+            btnMaximum.Checked = false;
 
             HomeContent home = new HomeContent(this);
             pnMain.Controls.Clear();
@@ -259,19 +263,11 @@ namespace SONA
         private void btnChat_Click(object sender, EventArgs e)
         {
             MyClick();
+            btnMaximum.Checked = false;
 
             ChatForm chatForm = new ChatForm(User.emailUser);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(chatForm);
-        }
-
-        private void btnArtists_Click(object sender, EventArgs e)
-        {
-            MyClick();
-
-            ArtistList artistList = new ArtistList(this);
-            pnMain.Controls.Clear();
-            pnMain.Controls.Add(artistList);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -596,7 +592,7 @@ namespace SONA
             btnReplay.Checked = isAutoReplay;
         }
 
-        private void btnShuffle_Click(object sender, EventArgs e)
+        public void btnShuffle_Click(object sender, EventArgs e)
         {
             try
             {
@@ -646,6 +642,8 @@ namespace SONA
         {
             if (e.KeyCode == Keys.Enter)
             {
+                btnMaximum.Checked = false;
+
                 SearchForm searchForm = new SearchForm(this, txtSearch.Text);
                 pnMain.Controls.Clear();
                 pnMain.Controls.Add(searchForm);
@@ -659,6 +657,9 @@ namespace SONA
 
         private void cpbUserInfor_Click(object sender, EventArgs e)
         {
+            btnCloseMusicBar_Click(sender, e);
+            btnMaximum.Checked = false;
+
             UserInfor userInfor = new UserInfor(this, S);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(userInfor);
@@ -666,6 +667,8 @@ namespace SONA
 
         private void btnMaximum_Click(object sender, EventArgs e)
         {
+            btnMaximum.Checked = true;
+
             ListenMusic listenMusic = new ListenMusic(this, id_song);
             pnMain.Controls.Clear();
             pnMain.Controls.Add(listenMusic);

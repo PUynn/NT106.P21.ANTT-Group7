@@ -172,6 +172,7 @@
             this.btnDangNhap.Animated = true;
             this.btnDangNhap.BackColor = System.Drawing.Color.Transparent;
             this.btnDangNhap.BorderRadius = 33;
+            this.btnDangNhap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDangNhap.FillColor = System.Drawing.Color.DarkGray;
             this.btnDangNhap.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.btnDangNhap.ForeColor = System.Drawing.Color.White;
@@ -255,6 +256,7 @@
             this.btnLoginGoogle.Animated = true;
             this.btnLoginGoogle.BorderRadius = 30;
             this.btnLoginGoogle.BorderThickness = 1;
+            this.btnLoginGoogle.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLoginGoogle.FillColor = System.Drawing.Color.Transparent;
             this.btnLoginGoogle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginGoogle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
