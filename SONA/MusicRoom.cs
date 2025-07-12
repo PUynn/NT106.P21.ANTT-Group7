@@ -39,32 +39,41 @@ namespace SONA
 
         private void btnCreateRoom_Click(object sender, EventArgs e)
         {
-            using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            using (BinaryReader reader = new BinaryReader(stream))
+            
+            MessageBox.Show("IP đang dùng để kết nối: " + IPAddressServer.serverIP);
+            try
             {
-                writer.Write("createRoom");
-                writer.Write(UserId);
-                writer.Write(UserName);
-                string response = reader.ReadString();
-                if (response == "OK")
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    string roomId = reader.ReadString();
-                    // Mở RoomForm với quyền host
-                    var roomForm = new RoomForm(roomId,UserId, "host",UserName);
-                    var parentPanel = this.Parent as Panel;
-                    if (parentPanel != null)
+                    writer.Write("createRoom");
+                    writer.Write(UserId);
+                    writer.Write(UserName);
+                    string response = reader.ReadString();
+                    if (response == "OK")
                     {
-                        parentPanel.Controls.Clear();
-                        roomForm.Dock = DockStyle.Fill;
-                        parentPanel.Controls.Add(roomForm);
+                        string roomId = reader.ReadString();
+                        // Mở RoomForm với quyền host
+                        var roomForm = new RoomForm(roomId,UserId, "host",UserName);
+                        var parentPanel = this.Parent as Panel;
+                        if (parentPanel != null)
+                        {
+                            parentPanel.Controls.Clear();
+                            roomForm.Dock = DockStyle.Fill;
+                            parentPanel.Controls.Add(roomForm);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tạo phòng thất bại!");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Tạo phòng thất bại!");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối tới server: " + ex.Message);
             }
         }
 

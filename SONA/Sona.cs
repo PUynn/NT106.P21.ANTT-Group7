@@ -20,8 +20,9 @@ namespace SONA
         public SONA()
         {
             InitializeComponent();
-            ShowLogin();
             GetIP();
+            ShowLogin();
+            
         }
         private void GetIP()
         {
@@ -31,13 +32,19 @@ namespace SONA
                 using (var selectCmd = new NpgsqlCommand("SELECT address FROM IP LIMIT 1", conn))
                 {
                     var result = selectCmd.ExecuteScalar();
-                    if (result != null)
+                    if (result != null && !string.IsNullOrWhiteSpace(result.ToString()))
                     {
                         IPAddressServer.serverIP = result.ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không lấy được địa chỉ IP server từ database. Vui lòng kiểm tra lại dữ liệu bảng IP!");
+                        IPAddressServer.serverIP = null;
                     }
                 }
             }
         }
+
 
         public void ShowLogin()
         {
@@ -73,4 +80,5 @@ namespace SONA
     {
         public static string serverIP;
     }
-}
+
+    }
