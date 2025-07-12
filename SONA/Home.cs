@@ -218,10 +218,37 @@ namespace SONA
 
         private void btnMusicRoom_Click(object sender, EventArgs e)
         {
-            pnMain.Controls.Clear();
-            var musicRoom = new MusicRoom(idUser, emailUser); 
-            musicRoom.Dock = DockStyle.Fill;
-            pnMain.Controls.Add(musicRoom);
+            try
+            {
+                // Lấy tên người dùng từ server
+                string userName = "";
+                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    writer.Write("chatForm");
+                    writer.Write(emailUser);
+                    string response = reader.ReadString();
+                    if (response == "OK")
+                    {
+                        userName = reader.ReadString();
+                    }
+                    else
+                    {
+                        userName = emailUser; // Fallback to email if can't get name
+                    }
+                }
+
+                pnMain.Controls.Clear();
+                var musicRoom = new MusicRoom(idUser, userName); 
+                musicRoom.Dock = DockStyle.Fill;
+                pnMain.Controls.Add(musicRoom);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi vào Music Room: " + ex.Message);
+            }
         }
 
         private void btnChat_Click(object sender, EventArgs e)

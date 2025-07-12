@@ -57,7 +57,7 @@
             this.tbEnterChat.PlaceholderForeColor = System.Drawing.Color.White;
             this.tbEnterChat.PlaceholderText = "Enter chat ...";
             this.tbEnterChat.SelectedText = "";
-            this.tbEnterChat.Size = new System.Drawing.Size(443, 66);
+            this.tbEnterChat.Size = new System.Drawing.Size(352, 66);
             this.tbEnterChat.TabIndex = 17;
             this.tbEnterChat.TextOffset = new System.Drawing.Point(23, 0);
             // 
@@ -76,10 +76,10 @@
             this.btnSendMessage.FillColor = System.Drawing.Color.Transparent;
             this.btnSendMessage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnSendMessage.ForeColor = System.Drawing.Color.White;
-            this.btnSendMessage.Location = new System.Drawing.Point(390, 827);
+            this.btnSendMessage.Location = new System.Drawing.Point(310, 828);
             this.btnSendMessage.Name = "btnSendMessage";
             this.btnSendMessage.PressedColor = System.Drawing.Color.Transparent;
-            this.btnSendMessage.Size = new System.Drawing.Size(56, 44);
+            this.btnSendMessage.Size = new System.Drawing.Size(55, 42);
             this.btnSendMessage.TabIndex = 55;
             // 
             // lbChatBox
@@ -88,7 +88,7 @@
             this.lbChatBox.BackColor = System.Drawing.Color.Transparent;
             this.lbChatBox.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbChatBox.ForeColor = System.Drawing.Color.White;
-            this.lbChatBox.Location = new System.Drawing.Point(185, 3);
+            this.lbChatBox.Location = new System.Drawing.Point(135, 3);
             this.lbChatBox.Name = "lbChatBox";
             this.lbChatBox.Size = new System.Drawing.Size(136, 63);
             this.lbChatBox.TabIndex = 8;
@@ -103,7 +103,7 @@
             this.pnLayout.Margin = new System.Windows.Forms.Padding(2);
             this.pnLayout.Name = "pnLayout";
             this.pnLayout.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.pnLayout.Size = new System.Drawing.Size(467, 654);
+            this.pnLayout.Size = new System.Drawing.Size(381, 654);
             this.pnLayout.TabIndex = 56;
             this.pnLayout.WrapContents = false;
             // 
@@ -111,13 +111,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
+            this.BackColor = System.Drawing.Color.Gray;
             this.Controls.Add(this.pnLayout);
             this.Controls.Add(this.lbChatBox);
             this.Controls.Add(this.btnSendMessage);
             this.Controls.Add(this.tbEnterChat);
             this.Name = "ChatBox";
-            this.Size = new System.Drawing.Size(469, 887);
+            this.Size = new System.Drawing.Size(383, 913);
             this.ResumeLayout(false);
 
         }

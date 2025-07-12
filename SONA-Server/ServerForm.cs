@@ -56,6 +56,17 @@ namespace SONA_Server
             public string HostId { get; set; }
             public List<RoomMember> Members { get; set; } = new List<RoomMember>();
         }
+
+        // Thêm vào đầu class ServerForm
+        private class RoomChatMember
+        {
+            public string RoomId;
+            public string UserId;
+            public string UserName;
+            public TcpClient Client;
+        }
+        private List<RoomChatMember> roomChatMembers = new List<RoomChatMember>();
+        private object roomChatLock = new object();
         #endregion
 
         #region Room Management
@@ -1269,6 +1280,67 @@ namespace SONA_Server
                         }
                     }
                     return;
+                }
+
+                else if (requestType == "roomChat")
+                {
+                    string roomId = reader.ReadString();
+                    string userId = reader.ReadString();
+                    string userName = reader.ReadString();
+
+                    var member = new RoomChatMember
+                    {
+                        RoomId = roomId,
+                        UserId = userId,
+                        UserName = userName,
+                        Client = client
+                    };
+                    lock (roomChatLock)
+                    {
+                        roomChatMembers.Add(member);
+                    }
+
+                    // Lắng nghe tin nhắn trong phòng
+                    try
+                    {
+                        while (true)
+                        {
+                            string msgType = reader.ReadString();
+                            if (msgType == "roomMessage")
+                            {
+                                string msgRoomId = reader.ReadString();
+                                string msgUserId = reader.ReadString();
+                                string msgUserName = reader.ReadString();
+                                string message = reader.ReadString();
+
+                                string fullMsg = $"{msgUserName}: {message}";
+                                // Gửi cho tất cả thành viên cùng phòng
+                                lock (roomChatLock)
+                                {
+                                    foreach (var m in roomChatMembers.Where(m => m.RoomId == msgRoomId).ToList())
+                                    {
+                                        try
+                                        {
+                                            var w = new BinaryWriter(m.Client.GetStream());
+                                            w.Write("message");
+                                            w.Write(fullMsg);
+                                            w.Flush();
+                                        }
+                                        catch { }
+                                    }
+                                }
+                            }
+                            // Có thể thêm xử lý rời phòng nếu cần
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        lock (roomChatLock)
+                        {
+                            roomChatMembers.RemoveAll(m => m.Client == client);
+                        }
+                    }
                 }
                 else
                 {

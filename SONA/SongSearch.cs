@@ -117,7 +117,7 @@ namespace SONA
 
         private void btnPictureSong_Click(object sender, EventArgs e)
         {
-            if (type == "song")
+            if (type == "song" && h != null) // Chỉ thực hiện khi h không null (không phải trong RoomForm)
             {
                 ListenMusic listenMusic = new ListenMusic(h, id_song, idUser, songIds);
                 h.pnMain.Controls.Clear();
@@ -128,7 +128,7 @@ namespace SONA
 
         private void lblNameSinger_Click(object sender, EventArgs e)
         {
-            if (type == "song")
+            if (type == "song" && h != null) // Chỉ thực hiện khi h không null (không phải trong RoomForm)
             {
                 ArtistInfor artistInfor = new ArtistInfor(h, id_singer, idUser);
                 h.pnMain.Controls.Clear();

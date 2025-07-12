@@ -599,9 +599,12 @@ namespace SONA
         // Hàm gọi form ArtsitInfor chứa các thông tin về nghệ sĩ
         private void cpbPictureSinger_Click(object sender, EventArgs e)
         {
-            StopMusicAndDispose();
-            h.pnMain.Controls.Clear();
-            h.pnMain.Controls.Add(new ArtistInfor(h, id_singer, idUser));
+            if (h != null) // Chỉ thực hiện khi h không null (không phải trong RoomForm)
+            {
+                StopMusicAndDispose();
+                h.pnMain.Controls.Clear();
+                h.pnMain.Controls.Add(new ArtistInfor(h, id_singer, idUser));
+            }
         }
 
         private void CenterLabelInPanel()
