@@ -1389,6 +1389,12 @@ namespace SONA_Server
                     string receiverId = reader.ReadString();
                     string message = reader.ReadString();
 
+                    if (string.IsNullOrEmpty(senderId) || string.IsNullOrEmpty(receiverId) || string.IsNullOrEmpty(message))
+                    {
+                        writer.Write("ERROR: Missing required fields");
+                        return;
+                    }
+
                     string roomId = int.Parse(senderId) < int.Parse(receiverId)
                         ? $"{senderId}-{receiverId}"
                         : $"{receiverId}-{senderId}";
@@ -1397,12 +1403,12 @@ namespace SONA_Server
                     {
                         conn.Open();
                         string insertQuery = @"
-                                INSERT INTO chat_messages (created_at, sender, message, room_id)
-                                VALUES (NOW(), @sender, @message, @room_id)";
+            INSERT INTO chat_messages (created_at, sender, message, room_id)
+            VALUES (NOW(), @sender, @message, @room_id)";
 
                         using (var cmd = new NpgsqlCommand(insertQuery, conn))
                         {
-                            cmd.Parameters.AddWithValue("@sender", senderId);
+                            cmd.Parameters.AddWithValue("@sender", int.Parse(senderId));
                             cmd.Parameters.AddWithValue("@message", message);
                             cmd.Parameters.AddWithValue("@room_id", roomId);
                             cmd.ExecuteNonQuery();
@@ -1413,52 +1419,59 @@ namespace SONA_Server
                 }
                 else if (requestType == "getMessages")
                 {
-                    int id_user = int.Parse(reader.ReadString());
-                    int target_id = int.Parse(reader.ReadString());
-
                     try
                     {
+                        int id_user = int.Parse(reader.ReadString());
+                        int target_id = int.Parse(reader.ReadString());
+                        Console.WriteLine($"[Server] Nhận getMessages từ {id_user} -> {target_id} tại {DateTime.Now}");
+
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
+                            string room_id1 = $"{id_user}-{target_id}";
+                            string room_id2 = $"{target_id}-{id_user}";
+
                             string query = @"
-                SELECT message 
+                SELECT sender, message 
                 FROM chat_messages 
-                WHERE (sender = @id_user AND room_id LIKE @room_id) 
-                   OR (sender = @target_id AND room_id LIKE @room_id_reverse)
-                ORDER BY created_at"; // Giả sử có cột created_at
+                WHERE room_id = @room_id1 OR room_id = @room_id2 
+                ORDER BY created_at";
 
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
-                                string room_id = $"{id_user}-{target_id}";
-                                string room_id_reverse = $"{target_id}-{id_user}";
-                                cmd.Parameters.AddWithValue("@id_user", id_user);
-                                cmd.Parameters.AddWithValue("@target_id", target_id);
-                                cmd.Parameters.AddWithValue("@room_id", $"%{room_id}%");
-                                cmd.Parameters.AddWithValue("@room_id_reverse", $"%{room_id_reverse}%");
+                                cmd.Parameters.AddWithValue("@room_id1", room_id1);
+                                cmd.Parameters.AddWithValue("@room_id2", room_id2);
 
                                 using (var readerdb = cmd.ExecuteReader())
                                 {
-                                    var messages = new List<string>();
+                                    var messages = new List<(string sender, string content)>();
                                     while (readerdb.Read())
                                     {
-                                        messages.Add(readerdb["message"].ToString());
+                                        string sender = readerdb["sender"].ToString();
+                                        string content = readerdb["message"].ToString();
+                                        messages.Add((sender, content));
                                     }
 
-                                    writer.Write("OK");
-                                    writer.Write(messages.Count);
+                                    writer.Write(messages.Count); // Gửi số lượng tin nhắn
+                                    Console.WriteLine($"[Server] Gửi count={messages.Count} tại {DateTime.Now}");
                                     foreach (var msg in messages)
                                     {
-                                        writer.Write(msg);
+                                        writer.Write(msg.sender);   // senderId
+                                        writer.Write(msg.content);  // message content
+                                        Console.WriteLine($"[Server] Gửi message: sender={msg.sender}, content={msg.content} tại {DateTime.Now}");
                                     }
+
+                                    writer.Write("ready"); // Gửi tín hiệu hoàn tất
+                                    Console.WriteLine($"[Server] Gửi ready tại {DateTime.Now}");
                                 }
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[Server] Lỗi getMessages: {ex.Message} tại {DateTime.Now}");
-                        writer.Write("Lỗi getMessages: " + ex.Message);
+                        Console.WriteLine($"[Server] Lỗi getMessages: {ex.Message} - StackTrace: {ex.StackTrace} tại {DateTime.Now}");
+                        writer.Write("ERROR: " + ex.Message);
+                        writer.Write(0); // Gửi count = 0 nếu lỗi
                     }
                 }
                 if (requestType == "getRecentChats")
