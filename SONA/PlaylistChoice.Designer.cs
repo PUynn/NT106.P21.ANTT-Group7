@@ -74,7 +74,7 @@
             this.btnCheck.ForeColor = System.Drawing.Color.White;
             this.btnCheck.Image = global::SONA.Properties.Resources.CheckOff;
             this.btnCheck.ImageSize = new System.Drawing.Size(50, 50);
-            this.btnCheck.Location = new System.Drawing.Point(214, 12);
+            this.btnCheck.Location = new System.Drawing.Point(234, 12);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(34, 34);
             this.btnCheck.TabIndex = 4;
@@ -89,7 +89,7 @@
             this.Controls.Add(this.lblNamePlaylist);
             this.Controls.Add(this.btnPicturePlaylist);
             this.Name = "PlaylistChoice";
-            this.Size = new System.Drawing.Size(260, 59);
+            this.Size = new System.Drawing.Size(280, 59);
             this.Load += new System.EventHandler(this.PlaylistChoice_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

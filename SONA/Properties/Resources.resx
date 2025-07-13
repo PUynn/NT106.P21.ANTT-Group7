@@ -124,9 +124,6 @@
   <data name="Lyrics" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lyrics.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -211,9 +208,6 @@
   <data name="GridOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GridOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Download" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Download.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Next" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Next.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -237,6 +231,9 @@
   </data>
   <data name="Volume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Volume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecoreOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecoreOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FavouriteOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FavouriteOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -271,6 +268,9 @@
   <data name="Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Search1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="MyLibraryON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MyLibraryON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -280,11 +280,14 @@
   <data name="discoverOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\discoverOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RecoreOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecoreOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Chat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ListOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ListOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -319,8 +322,8 @@
   <data name="Notification" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Notification.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Search1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Download" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Download.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Saves" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Saves.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -328,7 +331,7 @@
   <data name="icons8-hide-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-hide-30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ListOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ListOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SendMess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SendMess.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

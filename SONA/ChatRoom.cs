@@ -23,7 +23,7 @@ namespace SONA
 
         private BinaryReader reader;
         private BinaryWriter writer;
-        
+
         private bool isConnected = false;
         private string serverIp = IPAddressServer.serverIP;
         private string nameUser;
@@ -99,7 +99,7 @@ namespace SONA
             {
                 client = new TcpClient(serverIp, 5000);
                 stream = client.GetStream();
-                
+
                 reader = new BinaryReader(stream);
                 writer = new BinaryWriter(stream);
 
@@ -107,7 +107,7 @@ namespace SONA
                 writer.Write(nameUser);
 
                 isConnected = true;
-                
+
                 receiveThread = new Thread(ReceiveMessages);
                 receiveThread.IsBackground = true;
                 receiveThread.Start();

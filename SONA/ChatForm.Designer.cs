@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pnChatForm = new Guna.UI2.WinForms.Guna2Panel();
-            this.pnListChat = new Guna.UI2.WinForms.Guna2Panel();
             this.pnChatRoom = new Guna.UI2.WinForms.Guna2Panel();
             this.pnChatForm.SuspendLayout();
             this.SuspendLayout();
@@ -37,26 +36,17 @@
             // pnChatForm
             // 
             this.pnChatForm.Controls.Add(this.pnChatRoom);
-            this.pnChatForm.Controls.Add(this.pnListChat);
             this.pnChatForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnChatForm.Location = new System.Drawing.Point(0, 0);
             this.pnChatForm.Name = "pnChatForm";
-            this.pnChatForm.Size = new System.Drawing.Size(1485, 919);
+            this.pnChatForm.Size = new System.Drawing.Size(1485, 932);
             this.pnChatForm.TabIndex = 0;
-            // 
-            // pnListChat
-            // 
-            this.pnListChat.AutoScroll = true;
-            this.pnListChat.Location = new System.Drawing.Point(3, 3);
-            this.pnListChat.Name = "pnListChat";
-            this.pnListChat.Size = new System.Drawing.Size(405, 913);
-            this.pnListChat.TabIndex = 0;
             // 
             // pnChatRoom
             // 
-            this.pnChatRoom.Location = new System.Drawing.Point(436, 3);
+            this.pnChatRoom.Location = new System.Drawing.Point(3, 3);
             this.pnChatRoom.Name = "pnChatRoom";
-            this.pnChatRoom.Size = new System.Drawing.Size(1046, 913);
+            this.pnChatRoom.Size = new System.Drawing.Size(1485, 932);
             this.pnChatRoom.TabIndex = 0;
             // 
             // ChatForm
@@ -66,7 +56,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Controls.Add(this.pnChatForm);
             this.Name = "ChatForm";
-            this.Size = new System.Drawing.Size(1485, 919);
+            this.Size = new System.Drawing.Size(1485, 932);
             this.Load += new System.EventHandler(this.ChatForm_Load);
             this.pnChatForm.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -76,7 +66,6 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel pnChatForm;
-        private Guna.UI2.WinForms.Guna2Panel pnListChat;
         private Guna.UI2.WinForms.Guna2Panel pnChatRoom;
     }
 }

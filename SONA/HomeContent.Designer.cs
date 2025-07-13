@@ -97,7 +97,7 @@
             this.flpAlbums.AutoScroll = true;
             this.flpAlbums.Location = new System.Drawing.Point(6, 1455);
             this.flpAlbums.Name = "flpAlbums";
-            this.flpAlbums.Size = new System.Drawing.Size(1449, 290);
+            this.flpAlbums.Size = new System.Drawing.Size(1449, 310);
             this.flpAlbums.TabIndex = 7;
             this.flpAlbums.WrapContents = false;
             // 

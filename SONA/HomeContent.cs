@@ -102,10 +102,13 @@ namespace SONA
                         {
                             string id_singer = reader.ReadString();
                             artistIds.Add(id_singer);
-
-                            ArtistForm artistForm = new ArtistForm(h, id_singer);
+                        }
+                        for (int i = 0; i < 10; i++)
+                        {
+                            ArtistForm artistForm = new ArtistForm(h, artistIds[i]);
                             flpArtists.Controls.Add(artistForm);
                         }
+
                     }
                     else
                     {

@@ -416,9 +416,9 @@
             // 
             // pnMain
             // 
-            this.pnMain.Location = new System.Drawing.Point(283, 83);
+            this.pnMain.Location = new System.Drawing.Point(283, 72);
             this.pnMain.Name = "pnMain";
-            this.pnMain.Size = new System.Drawing.Size(1485, 921);
+            this.pnMain.Size = new System.Drawing.Size(1485, 932);
             this.pnMain.TabIndex = 2;
             // 
             // pnMusicBar

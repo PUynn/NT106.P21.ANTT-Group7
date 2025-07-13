@@ -12,7 +12,7 @@ using System.Net.Sockets;
 
 namespace SONA
 {
-    public partial class SongAlbum: UserControl
+    public partial class SongAlbum : UserControl
     {
         private Home h;
 

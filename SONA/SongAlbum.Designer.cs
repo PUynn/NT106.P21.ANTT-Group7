@@ -42,7 +42,8 @@
             this.pnSongAlbum.Controls.Add(this.btnFavourite);
             this.pnSongAlbum.Controls.Add(this.lblNameSong);
             this.pnSongAlbum.Controls.Add(this.btnPictureSong);
-            this.pnSongAlbum.Location = new System.Drawing.Point(8, 8);
+            this.pnSongAlbum.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnSongAlbum.Location = new System.Drawing.Point(0, 0);
             this.pnSongAlbum.Name = "pnSongAlbum";
             this.pnSongAlbum.Size = new System.Drawing.Size(960, 100);
             this.pnSongAlbum.TabIndex = 1;
@@ -58,6 +59,7 @@
             this.lblNameSinger.Size = new System.Drawing.Size(88, 20);
             this.lblNameSinger.TabIndex = 3;
             this.lblNameSinger.Text = "Charlie Puth";
+            this.lblNameSinger.Click += new System.EventHandler(this.lblNameSinger_Click);
             // 
             // btnFavourite
             // 
@@ -80,6 +82,7 @@
             this.btnFavourite.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnFavourite.Size = new System.Drawing.Size(55, 41);
             this.btnFavourite.TabIndex = 2;
+            this.btnFavourite.Click += new System.EventHandler(this.btnFavorited_Click);
             // 
             // lblNameSong
             // 
@@ -107,6 +110,7 @@
             this.btnPictureSong.Name = "btnPictureSong";
             this.btnPictureSong.Size = new System.Drawing.Size(80, 80);
             this.btnPictureSong.TabIndex = 0;
+            this.btnPictureSong.Click += new System.EventHandler(this.btnPictureSong_Click);
             // 
             // SongAlbum
             // 
@@ -116,6 +120,7 @@
             this.Controls.Add(this.pnSongAlbum);
             this.Name = "SongAlbum";
             this.Size = new System.Drawing.Size(960, 100);
+            this.Load += new System.EventHandler(this.SongSearch_Load);
             this.pnSongAlbum.ResumeLayout(false);
             this.pnSongAlbum.PerformLayout();
             this.ResumeLayout(false);

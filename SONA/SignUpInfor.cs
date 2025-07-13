@@ -155,9 +155,7 @@ namespace SONA
         // Hàm quay lại form đăng nhập
         private void lblLogin_Click(object sender, EventArgs e)
         {
-            SignUp signUp = new SignUp(S);
-            S.pnLogin.Controls.Clear();
-            S.pnLogin.Controls.Add(signUp);
+            S.ShowLogin();
         }
 
         // Hàm để chọn ảnh đại diện bằng cách mở file ảnh trong thư mục

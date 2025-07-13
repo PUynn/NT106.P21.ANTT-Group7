@@ -29,8 +29,8 @@ namespace SONA_Server
     {
         // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         string connIP = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
-        // string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
-        string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        // string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
 
         private TcpListener server; // Đối tượng TcpListener để lắng nghe kết nối từ client
         private List<ClientInfor> chatClients; // Lưu danh sách client trong nhóm chat
@@ -368,7 +368,7 @@ namespace SONA_Server
                     {
                         writer.Write("Lỗi lấy id album: " + ex.Message);
                     }
-                }    
+                }
                 else if (requestType == "getIDUser")
                 {
                     string email = reader.ReadString();
@@ -846,7 +846,7 @@ namespace SONA_Server
                     {
                         writer.Write("Lỗi lấy id bài hát yêu thích: " + ex.Message);
                     }
-                }    
+                }
                 else if (requestType == "getIDSearchArtis")
                 {
                     try

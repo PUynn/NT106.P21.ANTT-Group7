@@ -12,7 +12,7 @@ using System.Net.Sockets;
 
 namespace SONA
 {
-    public partial class ChatForm: UserControl
+    public partial class ChatForm : UserControl
     {
         private string emailUser, name_user;
         public ChatForm(string email)
@@ -32,8 +32,8 @@ namespace SONA
                 {
                     writer.Write("chatForm");
                     writer.Write(emailUser);
-                    
-                    string response = reader.ReadString();            
+
+                    string response = reader.ReadString();
 
                     if (response == "OK")
                     {

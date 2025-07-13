@@ -241,6 +241,18 @@
     <Compile Include="ChatRoom.Designer.cs">
       <DependentUpon>ChatRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChatList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatList.Designer.cs">
+      <DependentUpon>ChatList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChatUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatUser.Designer.cs">
+      <DependentUpon>ChatUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Favourite.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -407,6 +419,12 @@
     <EmbeddedResource Include="ChatRoom.resx">
       <DependentUpon>ChatRoom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChatList.resx">
+      <DependentUpon>ChatList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatUser.resx">
+      <DependentUpon>ChatUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Favourite.resx">
       <DependentUpon>Favourite.cs</DependentUpon>
     </EmbeddedResource>
@@ -555,6 +573,7 @@
     <None Include="Resources\BackgroundMusic.jpeg" />
     <None Include="Resources\GridOn.png" />
     <None Include="Resources\ListOn.png" />
+    <None Include="Resources\SendMess.png" />
     <Content Include="SONALogo.ico" />
     <None Include="Resources\icons8-hide-30.png" />
     <None Include="Resources\SONA2.png" />
