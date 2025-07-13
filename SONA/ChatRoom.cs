@@ -53,10 +53,33 @@ namespace SONA
                 return;
             }
 
+            Console.WriteLine($"[DEBUG] ChatRoom_Load: idUser={idUser}, targetId={targetId} at {DateTime.Now}");
             if (!isConnected && !isConnecting)
             {
                 InfoMessage($"Chào mừng {idUser} đến với phòng chat với {targetId}!");
                 await ConnectToServerWithRetryAsync();
+            }
+
+            // Gửi yêu cầu getMessages để lấy lịch sử hội thoại
+            if (isConnected)
+            {
+                try
+                {
+                    if (!int.TryParse(idUser, out _) || !int.TryParse(targetId, out _))
+                    {
+                        InfoMessage("❗ ID người dùng hoặc người nhận không hợp lệ.");
+                        return;
+                    }
+                    writer.Write("getMessages");
+                    writer.Write(idUser);
+                    writer.Write(targetId);
+                    Console.WriteLine($"[DEBUG] Sent getMessages request for idUser={idUser}, targetId={targetId} at {DateTime.Now}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[DEBUG] Error sending getMessages: {ex.Message} at {DateTime.Now}");
+                    InfoMessage("⚠️ Lỗi khi tải lịch sử hội thoại: " + ex.Message);
+                }
             }
         }
 
@@ -85,10 +108,10 @@ namespace SONA
                     writer = new BinaryWriter(stream);
                     Console.WriteLine($"[DEBUG] Stream opened at {DateTime.Now}");
 
-                    // Match the working code's protocol
                     writer.Write("chatRoom");
                     writer.Write(idUser);
-                    Console.WriteLine($"[DEBUG] Sent chatRoom request with idUser={idUser} at {DateTime.Now}");
+                    writer.Write(targetId);
+                    Console.WriteLine($"[DEBUG] Sent chatRoom request with idUser={idUser}, targetId={targetId} at {DateTime.Now}");
 
                     isConnected = true;
                     isConnecting = false;
@@ -98,7 +121,6 @@ namespace SONA
                     receiveThread.IsBackground = true;
                     receiveThread.Start();
                     Console.WriteLine($"[DEBUG] Started receiveThread at {DateTime.Now}");
-                    return;
                 }
                 catch (Exception ex)
                 {
@@ -108,7 +130,7 @@ namespace SONA
                     isConnected = false;
                     isConnecting = false;
                     CleanupConnection();
-                    await Task.Delay(2000); // Wait longer before retrying
+                    await Task.Delay(2000);
                 }
             }
 
@@ -146,14 +168,40 @@ namespace SONA
                     }
                     else if (messageType == "Message")
                     {
+                        string sender = reader.ReadString();
                         string message = reader.ReadString();
-                        Console.WriteLine($"[DEBUG] Received message={message} at {DateTime.Now}");
+                        Console.WriteLine($"[DEBUG] Received message={message} from sender={sender} at {DateTime.Now}");
                         if (!string.IsNullOrEmpty(message))
                         {
-                            // Format message to show sender
-                            string prefix = message.StartsWith(idUser) ? "Bạn: " : $"{targetId}: ";
+                            string prefix = sender == idUser ? "Bạn: " : $"{sender}: ";
                             InfoMessage(prefix + message);
                         }
+                    }
+                    else if (int.TryParse(messageType, out int messageCount))
+                    {
+                        Console.WriteLine($"[DEBUG] Received messageCount={messageCount} for getMessages at {DateTime.Now}");
+                        for (int i = 0; i < messageCount; i++)
+                        {
+                            string sender = reader.ReadString();
+                            string message = reader.ReadString();
+                            Console.WriteLine($"[DEBUG] Received message {i + 1}/{messageCount}: sender={sender}, content={message} at {DateTime.Now}");
+                            if (!string.IsNullOrEmpty(sender) && !string.IsNullOrEmpty(message))
+                            {
+                                string prefix = sender == idUser ? "Bạn: " : $"{sender}: ";
+                                InfoMessage(prefix + message);
+                            }
+                        }
+                        string readySignal = reader.ReadString();
+                        Console.WriteLine($"[DEBUG] Received readySignal={readySignal} at {DateTime.Now}");
+                        if (readySignal != "ready")
+                        {
+                            InfoMessage($"Lỗi: Nhận tín hiệu không đúng: {readySignal}");
+                        }
+                    }
+                    else if (messageType.StartsWith("ERROR:"))
+                    {
+                        Console.WriteLine($"[DEBUG] Received error: {messageType} at {DateTime.Now}");
+                        InfoMessage(messageType);
                     }
                     else
                     {
@@ -214,17 +262,38 @@ namespace SONA
             }
 
             string text = tbMessage.Text.Trim();
-            if (string.IsNullOrEmpty(text)) return;
+            if (string.IsNullOrEmpty(text))
+            {
+                InfoMessage("❗ Vui lòng nhập tin nhắn.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(idUser) || string.IsNullOrEmpty(targetId))
+            {
+                InfoMessage("❗ ID người dùng hoặc người nhận không hợp lệ.");
+                return;
+            }
+
+            if (!int.TryParse(idUser, out _) || !int.TryParse(targetId, out _))
+            {
+                InfoMessage("❗ ID người dùng hoặc người nhận không phải là số hợp lệ.");
+                return;
+            }
 
             try
             {
-                writer.Write(text); // Match the working code's protocol
-                Console.WriteLine($"[DEBUG] Sent message: {text} at {DateTime.Now}");
+                writer.Write("sendMessage");
+                writer.Write(idUser);
+                writer.Write(targetId);
+                writer.Write(text);
+                Console.WriteLine($"[DEBUG] Sent message: idUser={idUser}, targetId={targetId}, text={text} at {DateTime.Now}");
+                // Thêm tin nhắn của chính mình ngay lập tức để người dùng thấy phản hồi
+                InfoMessage($"Bạn: {text}");
                 tbMessage.Clear();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[DEBUG] Error sending message: {ex.Message} at {DateTime.Now}");
+                Console.WriteLine($"[DEBUG] Error sending message: {ex.Message} - StackTrace: {ex.StackTrace} at {DateTime.Now}");
                 InfoMessage("⚠️ Lỗi gửi, đang thử kết nối lại...");
                 isConnected = false;
                 Task.Run(() => ConnectToServerWithRetryAsync());
