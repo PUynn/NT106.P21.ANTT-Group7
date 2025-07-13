@@ -241,6 +241,18 @@
     <Compile Include="ChatRoom.Designer.cs">
       <DependentUpon>ChatRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Chat_List.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Chat_List.Designer.cs">
+      <DependentUpon>Chat_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Chat_User.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Chat_User.Designer.cs">
+      <DependentUpon>Chat_User.cs</DependentUpon>
+    </Compile>
     <Compile Include="Favourite.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -406,6 +418,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ChatRoom.resx">
       <DependentUpon>ChatRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat_List.resx">
+      <DependentUpon>Chat_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat_User.resx">
+      <DependentUpon>Chat_User.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Favourite.resx">
       <DependentUpon>Favourite.cs</DependentUpon>

@@ -17,80 +17,37 @@ namespace SONA
 {
     public partial class ChatRoom : UserControl
     {
+        private string serverIp = IPAddressServer.serverIP;
+        private string idUser;
+        private string targetId;
+
         private TcpClient client;
         private NetworkStream stream;
-        private Thread receiveThread;
-
         private BinaryReader reader;
         private BinaryWriter writer;
-        
+        private Thread receiveThread;
         private bool isConnected = false;
-        private string serverIp = IPAddressServer.serverIP;
-        private string nameUser;
 
-        public ChatRoom(string name)
+        public ChatRoom(string idUser, string targetId)
         {
             InitializeComponent();
-            lvMessages.Columns.Add("Messages", -2);
-            nameUser = name;
+            this.idUser = idUser;
+            this.targetId = targetId;
+
+            this.Load += ChatRoom_Load;
+            this.Leave += ChatRoom_Leave;
         }
 
-        private void InfoMessage(string message)
+        private void ChatRoom_Load(object sender, EventArgs e)
         {
-            if (lvMessages.InvokeRequired)
+            if (string.IsNullOrEmpty(serverIp))
             {
-                lvMessages.Invoke(new Action<string>(InfoMessage), message);
+                InfoMessage("Lỗi: Địa chỉ IP server không hợp lệ.");
+                return;
             }
-            else
-            {
-                lvMessages.Items.Add(message);
-                lvMessages.EnsureVisible(lvMessages.Items.Count - 1);
-            }
-        }
 
-        private void ReceiveMessages()
-        {
-            try
-            {
-                while (isConnected)
-                {
-                    string messageType = reader.ReadString();
-                    if (messageType == "ClientList")
-                    {
-                        int clientCount = reader.ReadInt32();
-                        for (int i = 0; i < clientCount; i++)
-                        {
-                            string clientInfo = reader.ReadString();
-                            InfoMessage(clientInfo);
-                        }
-                    }
-                    else if (messageType == "Message")
-                    {
-                        string message = reader.ReadString();
-                        if (!string.IsNullOrEmpty(message))
-                            InfoMessage(message);
-                    }
-                    else
-                    {
-                        InfoMessage($"Loại tin nhắn không xác định: {messageType}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (isConnected)
-                {
-                    InfoMessage("Disconnected from server: " + ex.Message);
-                    isConnected = false;
-                }
-            }
-            finally
-            {
-                stream?.Close();
-                reader?.Close();
-                writer?.Close();
-                client?.Close();
-            }
+            InfoMessage("Đang kết nối đến server...");
+            ConnectToServer();
         }
 
         private void ConnectToServer()
@@ -99,22 +56,69 @@ namespace SONA
             {
                 client = new TcpClient(serverIp, 5000);
                 stream = client.GetStream();
-                
                 reader = new BinaryReader(stream);
                 writer = new BinaryWriter(stream);
 
-                writer.Write("chatRoom");
-                writer.Write(nameUser);
+                writer.Write("getMessages");
+                writer.Write(idUser);
+                writer.Write(targetId);
 
                 isConnected = true;
-                
+
                 receiveThread = new Thread(ReceiveMessages);
                 receiveThread.IsBackground = true;
                 receiveThread.Start();
             }
             catch (Exception ex)
             {
-                InfoMessage("Lỗi kết nối tới Server: " + ex.Message);
+                InfoMessage("❌ Không kết nối được server: " + ex.Message);
+            }
+        }
+
+        private void ReceiveMessages()
+        {
+            try
+            {
+                int historyCount = reader.ReadInt32();
+                for (int i = 0; i < historyCount; i++)
+                {
+                    string senderId = reader.ReadString();
+                    string content = reader.ReadString();
+
+                    string prefix = senderId == idUser ? "Bạn: " : $"{targetId}: ";
+                    InfoMessage(prefix + content);
+                }
+
+                string readySignal = reader.ReadString();
+                if (readySignal != "ready")
+                {
+                    InfoMessage("❌ Server không gửi tín hiệu 'ready'.");
+                    return;
+                }
+
+                while (isConnected)
+                {
+                    string messageType = reader.ReadString();
+                    if (messageType == "newMessage")
+                    {
+                        string senderId = reader.ReadString();
+                        string content = reader.ReadString();
+                        string prefix = senderId == idUser ? "Bạn: " : $"{targetId}: ";
+                        InfoMessage(prefix + content);
+                    }
+                }
+            }
+            catch (IOException)
+            {
+                InfoMessage("💥 Mất kết nối đến server.");
+            }
+            catch (Exception ex)
+            {
+                InfoMessage("💥 Lỗi nhận tin nhắn: " + ex.Message);
+            }
+            finally
+            {
+                isConnected = false;
                 stream?.Close();
                 reader?.Close();
                 writer?.Close();
@@ -126,36 +130,35 @@ namespace SONA
         {
             if (!isConnected)
             {
-                InfoMessage("Không thể gửi tin nhắn: Bạn chưa kết nối tới server.");
+                InfoMessage("❗ Bạn chưa kết nối đến server.");
                 return;
             }
-            if (string.IsNullOrEmpty(tbMessage.Text))
-            {
-                InfoMessage("Vui lòng nhập tin nhắn trước khi gửi.");
-                return;
-            }
+
+            string text = tbMessage.Text.Trim();
+            if (string.IsNullOrEmpty(text)) return;
+
             try
             {
-                writer.Write(tbMessage.Text);
+                writer.Write("sendMessage");
+                writer.Write(idUser);
+                writer.Write(targetId);
+                writer.Write(text);
+
                 tbMessage.Clear();
             }
             catch (Exception ex)
             {
-                InfoMessage("Lỗi gửi tin nhắn: " + ex.Message);
+                InfoMessage("⚠️ Lỗi gửi: " + ex.Message);
+                isConnected = false;
             }
         }
 
-        private void ChatRoom_Load(object sender, EventArgs e)
+        private void tbMessage_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!isConnected)
+            if (e.KeyCode == Keys.Enter && !e.Shift)
             {
-                if (string.IsNullOrEmpty(serverIp))
-                {
-                    InfoMessage("Lỗi: Địa chỉ IP của server không hợp lệ.");
-                    return;
-                }
-                InfoMessage($"Chào mừng {nameUser} đến với phòng chat!");
-                ConnectToServer();
+                e.SuppressKeyPress = true;
+                btnSend_Click(sender, e);
             }
         }
 
@@ -164,7 +167,10 @@ namespace SONA
             try
             {
                 isConnected = false;
-                if (client != null && client.Connected) writer.Write("disconnect");
+                if (writer != null && client?.Connected == true)
+                {
+                    writer.Write("disconnect");
+                }
 
                 if (receiveThread != null && receiveThread.IsAlive)
                 {
@@ -179,15 +185,20 @@ namespace SONA
             }
             catch (Exception ex)
             {
-                InfoMessage("Lỗi đóng kết nối: " + ex.Message);
+                InfoMessage("⚠️ Lỗi ngắt kết nối: " + ex.Message);
             }
         }
 
-        private void tbMessage_KeyDown(object sender, KeyEventArgs e)
+        private void InfoMessage(string message)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (lvMessages.InvokeRequired)
             {
-                btnSend_Click(sender, e);
+                lvMessages.Invoke(new Action<string>(InfoMessage), message);
+            }
+            else
+            {
+                lvMessages.Items.Add(message);
+                lvMessages.EnsureVisible(lvMessages.Items.Count - 1);
             }
         }
     }

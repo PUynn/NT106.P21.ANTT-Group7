@@ -32,7 +32,6 @@ namespace SONA
         private bool isShuffled = false;
         private TimeSpan lastPosition;
 
-
         private List<string> songIds;
         private List<string> originalSongIds; // Danh sách bài hát gốc để sử dụng khi tắt chế độ xáo trộn
 
@@ -46,7 +45,7 @@ namespace SONA
             singerNames = new List<string>();
 
             InitializeComponent();
-            getIdUser();
+            getIdUser(); // Lấy idUser ngay từ đầu
             getAvatarUser();
             getSongName();
             getSingerName();
@@ -55,6 +54,8 @@ namespace SONA
             autoSource.AddRange(songNames.ToArray());
             autoSource.AddRange(singerNames.ToArray());
             txtSearch.AutoCompleteCustomSource = autoSource;
+
+            Console.WriteLine($"Home initialized with email={email}, idUser={User.idUser}");
         }
 
         private void getSongName()
@@ -123,20 +124,23 @@ namespace SONA
                     writer.Write("getIDUser");
                     writer.Write(User.emailUser);
                     string response = reader.ReadString();
+                    Console.WriteLine($"getIDUser response for email {User.emailUser}: {response}");
 
                     if (response == "OK")
                     {
                         User.idUser = reader.ReadString();
+                        Console.WriteLine($"Fetched idUser: {User.idUser}");
                     }
                     else
                     {
-                        MessageBox.Show(response);
+                        MessageBox.Show($"Error from server: {response}");
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
+                Console.WriteLine($"Error in getIdUser: {ex.Message}");
             }
         }
 
@@ -152,18 +156,19 @@ namespace SONA
                     writer.Write("getAvatarUser");
                     writer.Write(User.idUser);
 
-                    string response = reader.ReadString(); // Nhận phản hồi từ server
+                    string response = reader.ReadString();
+                    Console.WriteLine($"getAvatarUser response for idUser {User.idUser}: {response}");
                     if (response == "OK")
                     {
-                        string pictureUrl = reader.ReadString(); // Lấy đường dẫn URL của hình ảnh trên supabase
-                        if (!string.IsNullOrEmpty(pictureUrl))  // Nếu có tồn tại đường dẫn tới file hình ảnh
+                        string pictureUrl = reader.ReadString();
+                        if (!string.IsNullOrEmpty(pictureUrl))
                         {
-                            using (var htppClient = new HttpClient()) // Tạo HttpClient để tải hình ảnh
+                            using (var httpClient = new HttpClient())
                             {
-                                var imageData = await htppClient.GetByteArrayAsync(pictureUrl); // Tải hình ảnh từ URL bằng phương thức GetByteArrayAsync
-                                using (var ms = new MemoryStream(imageData)) // Tạo MemoryStream dể lấy dữ liệu hình ảnh
+                                var imageData = await httpClient.GetByteArrayAsync(pictureUrl);
+                                using (var ms = new MemoryStream(imageData))
                                 {
-                                    cpbUserInfor.Image = Image.FromStream(ms); // Chuyển đổi MemoryStream thành Image
+                                    cpbUserInfor.Image = Image.FromStream(ms);
                                 }
                             }
                         }
@@ -182,8 +187,10 @@ namespace SONA
             catch (Exception ex)
             {
                 MessageBox.Show("Error connecting to server: " + ex.Message);
+                Console.WriteLine($"Error in getAvatarUser: {ex.Message}");
             }
         }
+
         private void MyClick()
         {
             pnMyLibrary.FillColor = Color.FromArgb(17, 17, 17);
@@ -191,7 +198,6 @@ namespace SONA
             btnHome.Checked = false;
         }
 
-        // Hàm gọi form homeContent chứa các nội dung trong home
         private void Home_Load(object sender, EventArgs e)
         {
             HomeContent homeContent = new HomeContent(this);
@@ -244,7 +250,6 @@ namespace SONA
             btnChat.Checked = false;
         }
 
-        // Hàm quay trở lại màn hình chính khi nhấn nút home và gọi hàm StopMusicAndDispose để dừng bài hát đang phát
         private void btnHome_Click(object sender, EventArgs e)
         {
             MenuClick();
@@ -265,9 +270,15 @@ namespace SONA
             MyClick();
             btnMaximum.Checked = false;
 
-            ChatForm chatForm = new ChatForm(User.emailUser);
+            if (string.IsNullOrEmpty(User.idUser))
+            {
+                MessageBox.Show("idUser không được thiết lập. Vui lòng kiểm tra kết nối server.");
+                getIdUser(); // Thử lấy lại idUser nếu chưa có
+            }
+            ChatForm chatForm = new ChatForm(User.emailUser); // Chỉ truyền emailUser
             pnMain.Controls.Clear();
             pnMain.Controls.Add(chatForm);
+            Console.WriteLine($"Navigated to ChatForm with email={User.emailUser}, idUser={User.idUser}");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -323,26 +334,24 @@ namespace SONA
             playMusic();
         }
 
-        // Hàm bật nhạc lại từ đầu khi nhạc kết thúc
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (isAutoReplay)
             {
-                afr.Position = 0; // Đặt lại vị trí phát nhạc về đầu
+                afr.Position = 0;
                 woe.Play();
             }
             else
             {
-                btnNext_Click(sender, e); // Tự động chuyển sang bài hát tiếp theo nếu không lặp lại
+                btnNext_Click(sender, e);
             }
         }
 
-        // Hàm dừng nhạc và giải phóng tài nguyên
         public void StopMusicAndDispose()
         {
             if (woe != null)
             {
-                lastPosition = TimeSpan.Zero; // Đặt lại vị trí về 0 khi dừng
+                lastPosition = TimeSpan.Zero;
                 woe.PlaybackStopped -= OnPlaybackStopped;
                 woe.Stop();
                 woe.Dispose();
@@ -356,24 +365,21 @@ namespace SONA
             timer1.Stop();
         }
 
-        // Hàm khởi tạo âm thanh
         private async Task<bool> InitializeAudio()
         {
             try
             {
-                StopMusicAndDispose(); // Đảm bảo tài nguyên cũ được giải phóng
+                StopMusicAndDispose();
 
                 isPlaying = false;
                 isAutoReplay = false;
 
-                // Phát nhạc từ URL (tải về tạm thời)
                 string tempFile = Path.GetTempFileName();
                 using (var wc = new System.Net.WebClient())
                 {
                     await wc.DownloadFileTaskAsync(new Uri(am_thanh), tempFile);
                 }
 
-                // Tạo mới AudioFileReader để đảm bảo reset vị trí
                 afr = new AudioFileReader(tempFile);
                 afr.Volume = tbsVolume.Value / 100f;
 
@@ -438,7 +444,7 @@ namespace SONA
                 }
 
                 int nextIndex = (currentIndex + 1) % songIds.Count;
-                string nextSongId = isShuffled ? songIds[nextIndex] : originalSongIds[nextIndex]; // Sử dụng danh sách xáo trộn nếu bật
+                string nextSongId = isShuffled ? songIds[nextIndex] : originalSongIds[nextIndex];
 
                 StopMusicAndDispose();
                 id_song = nextSongId;
@@ -489,7 +495,7 @@ namespace SONA
                 }
 
                 int prevIndex = (currentIndex - 1 + songIds.Count) % songIds.Count;
-                string prevSongId = isShuffled ? songIds[prevIndex] : originalSongIds[prevIndex]; // Sử dụng danh sách xáo trộn nếu bật
+                string prevSongId = isShuffled ? songIds[prevIndex] : originalSongIds[prevIndex];
 
                 StopMusicAndDispose();
                 id_song = prevSongId;
@@ -522,7 +528,6 @@ namespace SONA
             }
         }
 
-        // Hàm tạm dừng hoặc phát nhạc
         private async void btnPlayMusic_Click(object sender, EventArgs e)
         {
             try
@@ -556,7 +561,6 @@ namespace SONA
             }
         }
 
-        // Hàm cập nhật thanh thời gian và lấy thời gian bài hát
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (afr != null)
@@ -566,7 +570,6 @@ namespace SONA
             }
         }
 
-        // Hàm cho phép người dùng tua bài hát
         private void tbsTimeSong_Scroll(object sender, ScrollEventArgs e)
         {
             if (afr != null)
@@ -576,7 +579,6 @@ namespace SONA
             }
         }
 
-        // Hàm cho phép người dùng điều chỉnh âm lượng
         private void tbsVolume_Scroll(object sender, ScrollEventArgs e)
         {
             if (afr != null)
@@ -585,7 +587,6 @@ namespace SONA
             }
         }
 
-        // Hàm lặp lại bài hát
         private void btnReplay_Click(object sender, EventArgs e)
         {
             isAutoReplay = !isAutoReplay;
@@ -611,7 +612,6 @@ namespace SONA
 
                 if (!isShuffled)
                 {
-                    // Xáo trộn danh sách
                     Random rng = new Random();
                     int n = songIds.Count;
                     while (n > 1)
@@ -625,7 +625,7 @@ namespace SONA
                 }
                 else
                 {
-                    songIds = new List<string>(originalSongIds); // Khôi phục danh sách gốc
+                    songIds = new List<string>(originalSongIds);
                 }
 
                 isShuffled = !isShuffled;
@@ -637,7 +637,6 @@ namespace SONA
             }
         }
 
-        // Hàm tìm kiếm bài hát khi nhấn enter vào ô tìm kiếm
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -680,6 +679,7 @@ namespace SONA
             pnMusicBar.Visible = false;
         }
     }
+
     public static class User
     {
         public static string idUser;

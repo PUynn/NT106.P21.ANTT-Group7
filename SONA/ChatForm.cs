@@ -12,42 +12,95 @@ using System.Net.Sockets;
 
 namespace SONA
 {
-    public partial class ChatForm: UserControl
+    public partial class ChatForm : UserControl
     {
-        private string emailUser, name_user;
-        public ChatForm(string email)
+        private string emailUser, name_user, idUser;
+        private ChatRoom currentChatRoom;
+
+        public ChatForm(string emailUser)
         {
             InitializeComponent();
-            emailUser = email;
+            this.emailUser = emailUser;
+            this.Load += ChatForm_Load;
+            Console.WriteLine($"ChatForm initialized with email={emailUser}");
         }
 
         private void ChatForm_Load(object sender, EventArgs e)
         {
+            if (!FetchUserInfo())
+            {
+                MessageBox.Show("Không thể tải thông tin người dùng.");
+                return;
+            }
+
+            LoadChatList();
+        }
+
+        private bool FetchUserInfo()
+        {
             try
             {
-                using (TcpClient client = new TcpClient(IPAddressServer.serverIP, 5000))
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                using (BinaryReader reader = new BinaryReader(stream))
+                using (var client = new TcpClient(IPAddressServer.serverIP, 5000))
+                using (var stream = client.GetStream())
+                using (var writer = new BinaryWriter(stream))
+                using (var reader = new BinaryReader(stream))
                 {
                     writer.Write("chatForm");
                     writer.Write(emailUser);
-                    
-                    string response = reader.ReadString();            
+                    Console.WriteLine($"Sending chatForm request with email: {emailUser}");
 
+                    string response = reader.ReadString();
+                    Console.WriteLine($"Server response: {response}");
                     if (response == "OK")
                     {
                         name_user = reader.ReadString();
+                        idUser = reader.ReadString();
+                        Console.WriteLine($"Fetched user: email={emailUser}, name={name_user}, id={idUser}");
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Server trả về lỗi: {response}");
+                        return false;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối tới Server: " + ex.Message);
+                Console.WriteLine($"Error in FetchUserInfo: {ex.GetType()} - {ex.Message}");
+                MessageBox.Show("Lỗi kết nối: " + ex.Message);
+                return false;
             }
-            ChatRoom chatRoom = new ChatRoom(name_user);
+        }
+
+        private void LoadChatList()
+        {
+            if (string.IsNullOrEmpty(idUser))
+            {
+                MessageBox.Show("idUser không được thiết lập. Vui lòng kiểm tra lại.");
+                return;
+            }
+            Console.WriteLine($"Loading chat list with idUser: {idUser}");
+            Chat_List chatListControl = new Chat_List(idUser);
+            chatListControl.Dock = DockStyle.Fill;
+            chatListControl.OnUserSelected += LoadChatRoom;
+
+            pnListChat.Controls.Clear();
+            pnListChat.Controls.Add(chatListControl);
+        }
+
+        private void LoadChatRoom(string targetId)
+        {
+            if (currentChatRoom != null)
+            {
+                currentChatRoom.Dispose();
+            }
+
+            currentChatRoom = new ChatRoom(idUser, targetId);
+            currentChatRoom.Dock = DockStyle.Fill;
+
             pnChatRoom.Controls.Clear();
-            pnChatRoom.Controls.Add(chatRoom);
+            pnChatRoom.Controls.Add(currentChatRoom);
         }
     }
 }

@@ -29,8 +29,8 @@ namespace SONA_Server
     {
         // Chuỗi kết nối tới cơ sở dữ liệu PostgreSQL trên Supabase
         string connIP = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
-        // string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
-        string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.lgnvhovprubrxohnhwph;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
+        //string connSona = "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ebrkvdctytawbdqmtrsk;Password=laptrinhmang;SSL Mode=Require;Trust Server Certificate=true";
 
         private TcpListener server; // Đối tượng TcpListener để lắng nghe kết nối từ client
         private List<ClientInfor> chatClients; // Lưu danh sách client trong nhóm chat
@@ -117,14 +117,17 @@ namespace SONA_Server
             string username = null;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).ToString();
             ClientInfor clientInfor = null;
+            Console.WriteLine($"[Server] Kết nối mới từ {clientIP} tại {DateTime.Now}");
 
             try
             {
                 stream = client.GetStream(); // Lấy luồng mạng từ client
+                Console.WriteLine($"[Server] Mở stream cho {clientIP} tại {DateTime.Now}");
                 reader = new BinaryReader(stream); // Tạo đối tượng BinaryReader để đọc dữ liệu từ luồng
                 writer = new BinaryWriter(stream); // Tạo đối tượng BinaryWriter để ghi dữ liệu vào luồng
 
                 string requestType = reader.ReadString(); // Đọc loại yêu cầu từ client (login, signup, chat)
+                Console.WriteLine($"[Server] Nhận requestType={requestType} từ {clientIP} tại {DateTime.Now}");
 
                 #region Login
                 if (requestType == "loginUser")
@@ -385,8 +388,15 @@ namespace SONA_Server
                                 {
                                     if (readerdb.Read())
                                     {
+                                        string id = readerdb["id_user"].ToString();
                                         writer.Write("OK");
-                                        writer.Write(readerdb["id_user"].ToString());
+                                        writer.Write(id);
+                                        Console.WriteLine($"[DEBUG] Fetched id_user from DB for email {email}: {id}");
+                                    }
+                                    else
+                                    {
+                                        writer.Write("ERROR: User not found");
+                                        Console.WriteLine($"[DEBUG] User not found for email: {email}");
                                     }
                                 }
                             }
@@ -394,7 +404,8 @@ namespace SONA_Server
                     }
                     catch (Exception ex)
                     {
-                        writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
+                        writer.Write("ERROR: " + ex.Message);
+                        Console.WriteLine($"[DEBUG] Error in getIDUser for email {email}: {ex.Message} - StackTrace: {ex.StackTrace}");
                     }
                 }
                 else if (requestType == "getIDAlbum")
@@ -1249,22 +1260,36 @@ namespace SONA_Server
                 }
                 else if (requestType == "chatForm")
                 {
-                    string email = reader.ReadString();
                     try
                     {
+                        string email = reader.ReadString();
+                        Console.WriteLine($"Received chatForm request with email: {email}");
+
                         using (var conn = new NpgsqlConnection(connSona))
                         {
                             conn.Open();
-                            string query = "SELECT name_user FROM users WHERE email = @email";
+                            string query = "SELECT id_user, name_user FROM users WHERE email = @email";
+                            Console.WriteLine($"Executing query: {query} with email = {email}");
                             using (var cmd = new NpgsqlCommand(query, conn))
                             {
                                 cmd.Parameters.AddWithValue("@email", email);
+
                                 using (var readerdb = cmd.ExecuteReader())
                                 {
                                     if (readerdb.Read())
                                     {
+                                        string id = readerdb["id_user"].ToString();
+                                        string name = readerdb["name_user"].ToString();
+                                        Console.WriteLine($"Raw data: id_user={readerdb["id_user"]}, name_user={readerdb["name_user"]}");
                                         writer.Write("OK");
-                                        writer.Write(readerdb["name_user"].ToString());
+                                        writer.Write(name);
+                                        writer.Write(id);
+                                        Console.WriteLine($"Returning user: name={name}, id={id}");
+                                    }
+                                    else
+                                    {
+                                        writer.Write("ERROR: User not found");
+                                        Console.WriteLine("User not found for email: {email}");
                                     }
                                 }
                             }
@@ -1272,7 +1297,8 @@ namespace SONA_Server
                     }
                     catch (Exception ex)
                     {
-                        writer.Write("Lỗi kết nối tới người dùng: " + ex.Message);
+                        Console.WriteLine($"Error in chatForm: {ex.GetType()} - {ex.Message} - StackTrace: {ex.StackTrace}");
+                        writer.Write("ERROR: " + ex.Message);
                     }
                 }
                 else if (requestType == "chatRoom")
@@ -1304,6 +1330,211 @@ namespace SONA_Server
                         string fullMessage = $"{clientIP}: {username}: {message}";
                         AddToListView(fullMessage);
                         BroadcastMessage(fullMessage);
+                    }
+                }
+                else if (requestType == "searchUsers")
+                {
+                    try
+                    {
+                        string keyword = reader.ReadString();
+                        int id_user = int.Parse(reader.ReadString());
+                        Console.WriteLine($"Received search: keyword={keyword}, id_user={id_user}");
+
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = @"
+                SELECT id_user, name_user
+                FROM users 
+                WHERE LOWER(name_user) LIKE '%' || LOWER(@keyword) || '%'
+                  AND id_user != @id_user";
+                            Console.WriteLine($"Executing query: {query} with keyword={keyword}, id_user={id_user}");
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@keyword", keyword);
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    List<string> users = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        string id = readerdb["id_user"].ToString();
+                                        string name = readerdb["name_user"].ToString();
+                                        users.Add($"{id}|{name}");
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(users.Count);
+                                    Console.WriteLine($"Returning {users.Count} users");
+                                    foreach (var user in users)
+                                    {
+                                        writer.Write(user);
+                                        Console.WriteLine($"[Server] Gửi {user} đến {clientIP} tại {DateTime.Now}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error in searchUsers: {ex.GetType()} - {ex.Message} - StackTrace: {ex.StackTrace}");
+                        writer.Write("ERROR: " + ex.Message);
+                        writer.Write(0); // Gửi count = 0 để client xử lý
+                    }
+                }
+                else if (requestType == "sendMessage")
+                {
+                    string senderId = reader.ReadString();
+                    string receiverId = reader.ReadString();
+                    string message = reader.ReadString();
+
+                    string roomId = int.Parse(senderId) < int.Parse(receiverId)
+                        ? $"{senderId}-{receiverId}"
+                        : $"{receiverId}-{senderId}";
+
+                    using (var conn = new NpgsqlConnection(connSona))
+                    {
+                        conn.Open();
+                        string insertQuery = @"
+                                INSERT INTO chat_messages (created_at, sender, message, room_id)
+                                VALUES (NOW(), @sender, @message, @room_id)";
+
+                        using (var cmd = new NpgsqlCommand(insertQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@sender", senderId);
+                            cmd.Parameters.AddWithValue("@message", message);
+                            cmd.Parameters.AddWithValue("@room_id", roomId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        writer.Write("OK");
+                    }
+                }
+                else if (requestType == "getMessages")
+                {
+                    int id_user = int.Parse(reader.ReadString());
+                    int target_id = int.Parse(reader.ReadString());
+
+                    try
+                    {
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            string query = @"
+                SELECT message 
+                FROM chat_messages 
+                WHERE (sender = @id_user AND room_id LIKE @room_id) 
+                   OR (sender = @target_id AND room_id LIKE @room_id_reverse)
+                ORDER BY created_at"; // Giả sử có cột created_at
+
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                string room_id = $"{id_user}-{target_id}";
+                                string room_id_reverse = $"{target_id}-{id_user}";
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@target_id", target_id);
+                                cmd.Parameters.AddWithValue("@room_id", $"%{room_id}%");
+                                cmd.Parameters.AddWithValue("@room_id_reverse", $"%{room_id_reverse}%");
+
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    var messages = new List<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        messages.Add(readerdb["message"].ToString());
+                                    }
+
+                                    writer.Write("OK");
+                                    writer.Write(messages.Count);
+                                    foreach (var msg in messages)
+                                    {
+                                        writer.Write(msg);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Server] Lỗi getMessages: {ex.Message} tại {DateTime.Now}");
+                        writer.Write("Lỗi getMessages: " + ex.Message);
+                    }
+                }
+                if (requestType == "getRecentChats")
+                {
+                    try
+                    {
+                        int id_user = int.Parse(reader.ReadString());
+                        Console.WriteLine($"[Server] Nhận id_user={id_user} từ {clientIP} tại {DateTime.Now}");
+
+                        using (var conn = new NpgsqlConnection(connSona))
+                        {
+                            conn.Open();
+                            Console.WriteLine($"[Server] Mở kết nối DB cho {clientIP} tại {DateTime.Now}");
+
+                            string query = @"
+                        SELECT DISTINCT 
+                            CASE 
+                                WHEN POSITION('-' IN room_id) > 0 THEN 
+                                    CASE 
+                                        WHEN SPLIT_PART(room_id, '-', 1)::integer = @id_user THEN SPLIT_PART(room_id, '-', 2)::integer
+                                        ELSE SPLIT_PART(room_id, '-', 1)::integer
+                                    END
+                                ELSE NULL
+                            END AS other_user
+                        FROM chat_messages
+                        WHERE (sender = @id_user OR room_id LIKE @like_id)
+                          AND room_id IS NOT NULL";
+
+                            using (var cmd = new NpgsqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id_user", id_user);
+                                cmd.Parameters.AddWithValue("@like_id", "%" + id_user.ToString() + "%");
+                                Console.WriteLine($"[Server] Thực thi truy vấn cho id_user={id_user} tại {DateTime.Now}");
+
+                                using (var readerdb = cmd.ExecuteReader())
+                                {
+                                    HashSet<string> otherUsers = new HashSet<string>();
+                                    while (readerdb.Read())
+                                    {
+                                        string otherUser = readerdb["other_user"].ToString();
+                                        if (!string.IsNullOrEmpty(otherUser) && otherUser != id_user.ToString())
+                                        {
+                                            otherUsers.Add(otherUser);
+                                        }
+                                    }
+                                    Console.WriteLine($"[Server] Tìm thấy {otherUsers.Count} người dùng khác cho id_user={id_user} tại {DateTime.Now}");
+
+                                    writer.Write("OK");
+                                    writer.Write(otherUsers.Count);
+                                    Console.WriteLine($"[Server] Gửi OK và count={otherUsers.Count} đến {clientIP} tại {DateTime.Now}");
+
+                                    foreach (var uid in otherUsers)
+                                    {
+                                        string queryUser = "SELECT name_user FROM users WHERE id_user = @uid";
+                                        using (var cmdUser = new NpgsqlCommand(queryUser, conn))
+                                        {
+                                            cmdUser.Parameters.AddWithValue("@uid", int.Parse(uid));
+                                            using (var r = cmdUser.ExecuteReader())
+                                            {
+                                                if (r.Read())
+                                                {
+                                                    string name = r["name_user"].ToString();
+                                                    writer.Write($"{uid}|{name}");
+                                                    Console.WriteLine($"[Server] Gửi {uid}|{name} đến {clientIP} tại {DateTime.Now}");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Server] Lỗi getRecentChats: {ex.Message} - StackTrace: {ex.StackTrace} tại {DateTime.Now}");
+                        writer.Write("Lỗi getRecentChats: " + ex.Message);
                     }
                 }
                 else if (requestType == "addFavourite")
