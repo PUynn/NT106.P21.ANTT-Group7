@@ -4,7 +4,9 @@
 ## Tổng quan
 
 **Tên dự án:** SONA - Ứng dụng âm nhạc 
+
 **Đồ án môn học:** Lập trình mạng căn bản - NT106.P21.ANTT
+
 **Giảng viên hướng dẫn:** Trần Hồng Nghi 
 
 **Thành viên nhóm 7**
